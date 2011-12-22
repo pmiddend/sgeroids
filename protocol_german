@@ -1,0 +1,13 @@
+- MVP einsetzen, um Logik von Darstellugn zu trennen.
+- Model und View sind Interfaces
+- Integerkoordinaten: position += velocity (ohne Delta)
+- Frameratebegrenzer!
+- Geschwindigkeit = 2D-Vektor reicht nicht, weil man sich auch auf der Stelle drehen kann
+  - Daher Darstellung Winkel + Magnitude
+  - Wenn man Schub geben will, muss man umrechnen in 2D-Vektor
+  - Das via Lookuptable: 1000*sin(x) für x in [0,360]
+  - Zusätzlich noch 2D-Vektor mit aktueller Geschwindigkeit
+- Schießen mit einer Projektilwaffe. Wenn Objekt getroffen wird, wird Geschwindigkeit des Objekts angepasst (Torque beachten)
+- Asteroiden können zerbersten, haben Health, wenn die zu niedrig ist, werden die zweigeteilt, es sei denn zu klein
+- Instantdeath
+- Doubledispatch via: a.collide(b) und b.collide(a) und nur das "aktive" Objekt tut etwas.
