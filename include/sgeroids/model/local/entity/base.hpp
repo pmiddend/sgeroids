@@ -59,11 +59,17 @@ public:
 	subclass of entity called <code>with_rotation</code> that contains a
 	rotation. But currently, we'll keep it simple and give each entity a
 	rotation.
-
-	This value is used for collision detection.
 	*/
 	virtual model::rotation const
 	rotation() const = 0;
+
+	/**
+	\brief Returns the entity's radius
+
+	This value is used for collision detection.
+	*/
+	virtual model::radius const
+	radius() const = 0;
 
 	/**
 	\brief Is called when one entity colles with another entity.

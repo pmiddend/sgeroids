@@ -1,6 +1,13 @@
 #ifndef SGEROIDS_MODEL_LOCAL_OBJECT_HPP_INCLUDED
 #define SGEROIDS_MODEL_LOCAL_OBJECT_HPP_INCLUDED
 
+#include <sgeroids/model/base.hpp>
+#include <sgeroids/entity/unique_base_ptr.hpp>
+#include <fcppt/noncopypable.hpp>
+#include <fcppt/signal/auto_connection.hpp>
+#include <fcppt/signal/object.hpp>
+#include <boost/ptr_container/ptr_map.hpp>
+
 namespace sgeroids
 {
 namespace model
@@ -50,15 +57,19 @@ public:
 
 	fcppt::signal::auto_connection
 	position_entity_callback(
-		callbacks::entity_position const &);
+		callbacks::position_entity const &);
 
 	fcppt::signal::auto_connection
 	rotation_entity_callback(
-		callbacks::entity_rotation const &);
+		callbacks::rotation_entity const &);
 
 	fcppt::signal::auto_connection
 	gameover_callback(
 		callbacks::gameover const &);
+
+	fcppt::signal::auto_connection
+	error_callback(
+		callbacks::error const &);
 
 	fcppt::signal::auto_connection
 	error_callback(
@@ -122,6 +133,16 @@ private:
 
 	model::entity_id::value_type next_id_;
 	entity_map entities_;
+	fcppt::signal::object<callbacks::add_spaceship_function> add_spaceship_;
+	fcppt::signal::object<callbacks::add_asteroid_function> add_asteroid_;
+	fcppt::signal::object<callbacks::add_projectile_function> add_projectile_;
+	fcppt::signal::object<callbacks::collide_projectile_asteroid_function> collide_projectile_asteroid_;
+	fcppt::signal::object<callbacks::score_change_function> score_change_;
+	fcppt::signal::object<callbacks::destroy_asteroid_function> destroy_asteroid_;
+	fcppt::signal::object<callbacks::remove_entity_function> remove_entity_;
+	fcppt::signal::object<callbacks::position_entity_function> position_entity_;
+	fcppt::signal::object<callbacks::rotation_entity_function> rotation_entity_;
+	fcppt::signal::object<callbacks::gameover_function> gameover_;
 
 	/**
 	\brief Updates all entities, deletes the dead ones

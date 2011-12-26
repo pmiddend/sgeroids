@@ -1,4 +1,20 @@
 #include <sgeroids/model/local/object.hpp>
+#include <sgeroids/model/local/entity/spaceship.hpp>
+#include <sgeroids/math/unit_magnitude.hpp>
+#include <sgeroids/exception.hpp>
+#include <fcppt/optional_dynamic_cast.hpp>
+#include <fcppt/insert_to_fcppt_string.hpp>
+#include <fcppt/math/box/center.hpp>
+#include <fcppt/container/ptr/insert_unique_ptr_map.hpp>
+#include <fcppt/make_unique_ptr.hpp>
+#include <fcppt/tr1/functional.hpp>
+#include <fcppt/text.hpp>
+#include <fcppt/type_name.hpp>
+#include <fcppt/move.hpp>
+#include <fcppt/math/box/basic_impl.hpp>
+#include <fcppt/math/vector/basic_impl.hpp>
+#include <fcppt/math/vector/length_quad.hpp>
+#include <fcppt/math/dim/basic_impl.hpp>
 
 sgeroids::model::local::object::object()
 :
@@ -17,62 +33,101 @@ sgeroids::model::local::object::update()
 
 fcppt::signal::auto_connection
 sgeroids::model::local::object::add_spaceship_callback(
-	callbacks::add_spaceship const &)
+	callbacks::add_spaceship const &_f)
 {
+	return
+		add_spaceship_.connect(
+			_f);
 }
 
 fcppt::signal::auto_connection
 sgeroids::model::local::object::add_asteroid_callback(
-	callbacks::add_asteroid const &)
+	callbacks::add_asteroid const &_f)
 {
+	return
+		add_asteroid_.connect(
+			_f);
 }
 
 fcppt::signal::auto_connection
 sgeroids::model::local::object::add_projectile_callback(
-	callbacks::add_projectile const &)
+	callbacks::add_projectile const &_f)
 {
+	return
+		add_projectile_.connect(
+			_f);
 }
 
 fcppt::signal::auto_connection
 sgeroids::model::local::object::collide_projectile_asteroid_callback(
-	callbacks::collide_projectile_asteroid const &)
+	callbacks::collide_projectile_asteroid const &_f)
 {
+	return
+		collide_projectile_asteroid_.connect(
+			_f);
 }
 
 fcppt::signal::auto_connection
 sgeroids::model::local::object::score_change_callback(
-	callbacks::score_change const &)
+	callbacks::score_change const &_f)
 {
+	return
+		score_change_.connect(
+			_f);
 }
 
 fcppt::signal::auto_connection
 sgeroids::model::local::object::destroy_asteroid_callback(
-	callbacks::destroy_asteroid const &)
+	callbacks::destroy_asteroid const &_f)
 {
+	return
+		destroy_asteroid_.connect(
+			_f);
 }
 
 fcppt::signal::auto_connection
 sgeroids::model::local::object::remove_entity_callback(
-	callbacks::remove_entity const &)
+	callbacks::remove_entity const &_f)
 {
+	return
+		remove_entity_.connect(
+			_f);
 }
 
 fcppt::signal::auto_connection
 sgeroids::model::local::object::position_entity_callback(
-	callbacks::entity_position const &)
+	callbacks::position_entity const &_f)
 {
+	return
+		position_entity_.connect(
+			_f);
 }
 
 fcppt::signal::auto_connection
 sgeroids::model::local::object::rotation_entity_callback(
-	callbacks::entity_rotation const &)
+	callbacks::rotation_entity const &_f)
 {
+	return
+		rotation_entity_.connect(
+			_f);
 }
 
 fcppt::signal::auto_connection
 sgeroids::model::local::object::gameover_callback(
-	callbacks::gameover const &)
+	callbacks::gameover const &_f)
 {
+	return
+		gameover_.connect(
+			_f);
+}
+
+fcppt::signal::auto_connection
+sgeroids::model::local::object::error_callback(
+	callbacks::error const &_f)
+{
+	return
+		error_.connect(
+			_f);
 }
 
 void

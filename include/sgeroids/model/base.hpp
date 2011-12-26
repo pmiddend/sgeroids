@@ -1,6 +1,25 @@
 #ifndef SGEROIDS_MODEL_BASE_HPP_INCLUDED
 #define SGEROIDS_MODEL_BASE_HPP_INCLUDED
 
+#include <sgeroids/model/callbacks/add_spaceship.hpp>
+#include <sgeroids/model/callbacks/add_asteroid.hpp>
+#include <sgeroids/model/callbacks/add_projectile.hpp>
+#include <sgeroids/model/callbacks/collide_projectile_asteroid.hpp>
+#include <sgeroids/model/callbacks/score_change.hpp>
+#include <sgeroids/model/callbacks/destroy_asteroid.hpp>
+#include <sgeroids/model/callbacks/remove_entity.hpp>
+#include <sgeroids/model/callbacks/position_entity.hpp>
+#include <sgeroids/model/callbacks/rotation_entity.hpp>
+#include <sgeroids/model/callbacks/gameover.hpp>
+#include <sgeroids/model/callbacks/error.hpp>
+#include <sgeroids/model/player_name.hpp>
+#include <sgeroids/model/entity_id.hpp>
+#include <sgeroids/model/rotation_direction.hpp>
+#include <sgeroids/model/thrust.hpp>
+#include <sgeroids/model/play_area.hpp>
+#include <fcppt/signal/auto_connection.hpp>
+#include <fcppt/noncopyable.hpp>
+
 namespace sgeroids
 {
 namespace model
@@ -43,15 +62,19 @@ public:
 
 	virtual fcppt::signal::auto_connection
 	position_entity_callback(
-		callbacks::entity_position const &) = 0;
+		callbacks::position_entity const &) = 0;
 
 	virtual fcppt::signal::auto_connection
 	rotation_entity_callback(
-		callbacks::entity_rotation const &) = 0;
+		callbacks::rotation_entity const &) = 0;
 
 	virtual fcppt::signal::auto_connection
 	gameover_callback(
 		callbacks::gameover const &) = 0;
+
+	virtual fcppt::signal::auto_connection
+	error_callback(
+		callbacks::error const &) = 0;
 
 	virtual void
 	add_player(
@@ -60,7 +83,7 @@ public:
 	virtual void
 	start_rotation(
 		model::entity_id const &,
-		model::rotation::type) = 0;
+		model::rotation_direction const &) = 0;
 
 	virtual void
 	end_rotation() = 0;

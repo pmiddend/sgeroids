@@ -1,14 +1,26 @@
 #include <sgeroids/model/local/entity/spaceship.hpp>
+#include <sgeroids/math/wrap_point_in_torus.hpp>
+#include <sgeroids/math/discrete_pos.hpp>
+#include <sgeroids/math/discrete_sin.hpp>
+#include <fcppt/optional_dynamic_cast.hpp>
+#include <fcppt/math/vector/arithmetic.hpp>
 
 sgeroids::model::local::entity::spaceship::spaceship(
 	model::player_name const &,
 	model::position const &_position,
 	model::rotation const &_rotation,
 	model::play_area const &_play_area,
-	callbacks::insert_entity_function const &,
-	callbacks::change_position_function const &,
-	callbacks::change_rotation_function const &)
+	callbacks::insert_entity_function const &_insert_entity,
+	callbacks::change_position_function const &_change_position,
+	callbacks::change_rotation_function const &_change_rotation)
 :
+	entity::base(),
+	insert_entity_(
+		_insert_entity),
+	change_position_(
+		_change_position),
+	change_rotation_(
+		_change_rotation)
 	play_area_(
 		_play_area.get()),
 	position_(
@@ -32,6 +44,15 @@ sgeroids::model::local::entity::spaceship::update()
 	position_ +=
 		velocity_;
 
+	position_ =
+		sgeroids::math::wrap_point_in_torus(
+			position_,
+			play_area_);
+
+	if(velocity_ != vector2::null())
+		change_position_(
+			position_);
+
 	velocity_ +=
 		thrust_ *
 		sgeroids::vector2(
@@ -42,6 +63,10 @@ sgeroids::model::local::entity::spaceship::update()
 
 	rotation_ +=
 		rotation_direction_;
+
+	if(rotation_direction_ != 0)
+		change_rotation_(
+			rotation_);
 }
 
 bool
@@ -64,6 +89,14 @@ sgeroids::model::local::entity::spaceship::rotation() const
 	return
 		model::rotation(
 			rotation_);
+}
+
+sgeroids::model::radius const
+sgeroids::model::local::entity::spaceship::radius() const
+{
+	return
+		model::radius(
+			math::unit_magnitude() * 10);
 }
 
 void

@@ -13,6 +13,8 @@ class spaceship
 :
 	public entity::base
 {
+FCPPT_NONCOPYABLE(
+	spaceship);
 public:
 	explicit
 	spaceship(
@@ -35,6 +37,9 @@ public:
 
 	model::rotation const
 	rotation() const;
+
+	model::radius const
+	radius() const;
 
 	void
 	collides_with(
@@ -60,6 +65,9 @@ public:
 	~spaceship();
 private:
 	sgeroids::rect const play_area_;
+	callbacks::insert_entity_function const insert_entity_;
+	callbacks::change_position_function const change_position_;
+	callbacks::change_rotation_function const change_rotation_;
 	sgeroids::vector2 position_;
 	sgeroids::vector2 velocity_;
 	int rotation_;
