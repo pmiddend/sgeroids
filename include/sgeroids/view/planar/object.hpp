@@ -1,27 +1,30 @@
 #ifndef SGEROIDS_VIEW_PLANAR_OBJECT_HPP_INCLUDED
 #define SGEROIDS_VIEW_PLANAR_OBJECT_HPP_INCLUDED
 
-#include <sgeroids/view/base.hpp>
-#include <sgeroids/rect.hpp>
 #include <sgeroids/random_generator.hpp>
-#include <sge/renderer/device_fwd.hpp>
+#include <sgeroids/rect.hpp>
+#include <sgeroids/resource_tree/object.hpp>
+#include <sgeroids/view/base.hpp>
+#include <sgeroids/view/planar/error_context.hpp>
+#include <sgeroids/view/planar/entity/base_fwd.hpp>
+#include <sgeroids/view/planar/sprite/system.hpp>
 #include <sge/audio/buffer_ptr.hpp>
 #include <sge/audio/loader_fwd.hpp>
 #include <sge/audio/player_fwd.hpp>
-#include <sge/renderer/matrix4.hpp>
-#include <sge/texture/manager.hpp>
-#include <sgeroids/resource_tree/object.hpp>
-#include <boost/ptr_container/ptr_map.hpp>
-#include <sgeroids/view/planar/entity/base_fwd.hpp>
-#include <sgeroids/view/planar/sprite/system.hpp>
-#include <sgeroids/view/planar/error_context.hpp>
-#include <sge/texture/fragmented_unique_ptr.hpp>
 #include <sge/font/device_fwd.hpp>
-#include <fcppt/filesystem/path.hpp>
 #include <sge/image2d/system_fwd.hpp>
+#include <sge/renderer/device_fwd.hpp>
+#include <sge/renderer/matrix4.hpp>
+#include <sge/texture/fragmented_unique_ptr.hpp>
+#include <sge/texture/manager.hpp>
 #include <fcppt/noncopyable.hpp>
+#include <fcppt/filesystem/path.hpp>
 #include <fcppt/math/box/basic_impl.hpp>
 #include <fcppt/math/matrix/basic_impl.hpp>
+#include <fcppt/config/external_begin.hpp>
+#include <boost/ptr_container/ptr_map.hpp>
+#include <fcppt/config/external_end.hpp>
+
 
 namespace sgeroids
 {

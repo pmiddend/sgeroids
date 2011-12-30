@@ -1,28 +1,27 @@
-#include <sgeroids/model/local/entity/spaceship.hpp>
-#include <sgeroids/math/wrap_point_in_torus.hpp>
-#include <sgeroids/math/discrete_pos.hpp>
+#include <sgeroids/math/discrete_cos.hpp>
 #include <sgeroids/math/discrete_sin.hpp>
+#include <sgeroids/math/wrap_point_in_torus.hpp>
+#include <sgeroids/math/unit_magnitude.hpp>
+#include <sgeroids/model/local/entity/spaceship.hpp>
 #include <fcppt/optional_dynamic_cast.hpp>
 #include <fcppt/math/vector/arithmetic.hpp>
+
 
 sgeroids::model::local::entity::spaceship::spaceship(
 	model::player_name const &,
 	model::position const &_position,
 	model::rotation const &_rotation,
 	model::play_area const &_play_area,
-	callbacks::insert_entity_function const &_insert_entity,
-	callbacks::change_position_function const &_change_position,
-	callbacks::change_rotation_function const &_change_rotation)
+	callbacks::position_entity const &_position_entity,
+	callbacks::rotation_entity const &_rotation_entity)
 :
 	entity::base(),
-	insert_entity_(
-		_insert_entity),
-	change_position_(
-		_change_position),
-	change_rotation_(
-		_change_rotation)
 	play_area_(
 		_play_area.get()),
+	position_entity_(
+		_position_entity),
+	rotation_entity_(
+		_rotation_entity),
 	position_(
 		_position.get()),
 	velocity_(
@@ -50,8 +49,9 @@ sgeroids::model::local::entity::spaceship::update()
 			play_area_);
 
 	if(velocity_ != vector2::null())
-		change_position_(
-			position_);
+		position_entity_(
+			model::position(
+				position_));
 
 	velocity_ +=
 		thrust_ *
@@ -65,8 +65,9 @@ sgeroids::model::local::entity::spaceship::update()
 		rotation_direction_;
 
 	if(rotation_direction_ != 0)
-		change_rotation_(
-			rotation_);
+		rotation_entity_(
+			model::rotation(
+				rotation_));
 }
 
 bool
@@ -103,13 +104,15 @@ void
 sgeroids::model::local::entity::spaceship::collides_with(
 	entity::base &_other)
 {
+	/*
 	if(fcppt::optional_dynamic_cast<entity::asteroid const &>(_other))
 		dead_ =
 			true;
+			*/
 }
 
 void
-ssgeroids::model::local::entity::spaceship::start_rotation(
+sgeroids::model::local::entity::spaceship::start_rotation(
 	model::rotation_direction const &_rotation_direction)
 {
 	rotation_direction_ =

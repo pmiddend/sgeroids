@@ -1,5 +1,8 @@
 #include <sgeroids/view/planar/sprite_size_from_texture_and_radius.hpp>
+#include <fcppt/config/external_begin.hpp>
 #include <algorithm>
+#include <fcppt/config/external_end.hpp>
+
 
 sgeroids::view::planar::sprite::dim const
 sgeroids::view::planar::sprite_size_from_texture_and_radius(

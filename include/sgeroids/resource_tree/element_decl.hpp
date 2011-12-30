@@ -1,11 +1,14 @@
 #ifndef SGEROIDS_RESOURCE_TREE_ELEMENT_DECL_HPP_INCLUDED
 #define SGEROIDS_RESOURCE_TREE_ELEMENT_DECL_HPP_INCLUDED
 
+#include <sgeroids/random_generator.hpp>
 #include <sgeroids/resource_tree/element_fwd.hpp>
 #include <sgeroids/resource_tree/path_with_resource.hpp>
-#include <sgeroids/random_generator.hpp>
 #include <fcppt/random/uniform.hpp>
+#include <fcppt/config/external_begin.hpp>
 #include <vector>
+#include <fcppt/config/external_end.hpp>
+
 
 namespace sgeroids
 {

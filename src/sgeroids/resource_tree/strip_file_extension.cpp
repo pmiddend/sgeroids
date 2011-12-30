@@ -1,8 +1,11 @@
 #include <sgeroids/resource_tree/strip_file_extension.hpp>
 #include <fcppt/text.hpp>
+#include <fcppt/config/external_begin.hpp>
 #include <boost/next_prior.hpp>
 #include <algorithm>
 #include <functional>
+#include <fcppt/config/external_end.hpp>
+
 
 sgeroids::resource_tree::path const
 sgeroids::resource_tree::strip_file_extension(

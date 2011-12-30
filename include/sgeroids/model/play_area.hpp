@@ -1,8 +1,9 @@
 #ifndef SGEROIDS_MODEL_PLAY_AREA_HPP_INCLUDED
 #define SGEROIDS_MODEL_PLAY_AREA_HPP_INCLUDED
 
-#include <fcppt/strong_typedef.hpp>
 #include <sgeroids/rect.hpp>
+#include <fcppt/strong_typedef.hpp>
+
 
 namespace sgeroids
 {

@@ -1,8 +1,11 @@
-#include <sgeoids/resource_tree/path.hpp>
 #include <sgeroids/resource_tree/object_impl.hpp>
-#include <fcppt/text.hpp>
 #include <sgeroids/view/planar/entity/spaceship.hpp>
 #include <sgeroids/view/planar/sprite/dim.hpp>
+#include <fcppt/text.hpp>
+#include <fcppt/config/external_begin.hpp>
+#include <sgeoids/resource_tree/path.hpp>
+#include <fcppt/config/external_end.hpp>
+
 
 sgeroids::view::planar::entity::spaceship::spaceship(
 	planar::sprite::system &_sprite_system,

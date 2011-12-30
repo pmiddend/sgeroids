@@ -1,7 +1,10 @@
 #include <sgeroids/resource_tree/strip_path_prefix.hpp>
-#include <boost/next_prior.hpp>
 #include <fcppt/filesystem/path_to_string.hpp>
+#include <fcppt/config/external_begin.hpp>
+#include <boost/next_prior.hpp>
 #include <iterator>
+#include <fcppt/config/external_end.hpp>
+
 
 sgeroids::resource_tree::path const
 sgeroids::resource_tree::strip_path_prefix(

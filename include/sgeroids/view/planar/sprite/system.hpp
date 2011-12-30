@@ -1,8 +1,9 @@
 #ifndef SGEROIDS_VIEW_PLANAR_SPRITE_SYSTEM_HPP_INCLUDED
 #define SGEROIDS_VIEW_PLANAR_SPRITE_SYSTEM_HPP_INCLUDED
 
-#include <sge/sprite/system.hpp>
 #include <sgeroids/view/planar/sprite/choices.hpp>
+#include <sge/sprite/system.hpp>
+
 
 namespace sgeroids
 {

@@ -1,7 +1,7 @@
 #ifndef SGEROIDS_RECT_HPP_INCLUDED
 #define SGEROIDS_RECT_HPP_INCLUDED
 
-#include <fcppt/math/box/basic.hpp>
+#include <fcppt/math/box/basic_fwd.hpp>
 
 namespace sgeroids
 {

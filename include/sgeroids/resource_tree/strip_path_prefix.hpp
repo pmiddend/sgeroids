@@ -1,9 +1,10 @@
 #ifndef SGEROIDS_RESOURCE_TREE_STRIP_PATH_PREFIX_HPP_INCLUDED
 #define SGEROIDS_RESOURCE_TREE_STRIP_PATH_PREFIX_HPP_INCLUDED
 
-#include <sgeroids/resource_tree/path.hpp>
 #include <sgeroids/resource_tree/base_path.hpp>
+#include <sgeroids/resource_tree/path.hpp>
 #include <sgeroids/resource_tree/sub_path.hpp>
+
 
 namespace sgeroids
 {

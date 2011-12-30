@@ -1,15 +1,18 @@
 #ifndef SGEROIDS_RESOURCE_TREE_OBJECT_DECL_HPP_INCLUDED
 #define SGEROIDS_RESOURCE_TREE_OBJECT_DECL_HPP_INCLUDED
 
-#include <sgeroids/resource_tree/path_to_resource_function.hpp>
-#include <sgeroids/resource_tree/path.hpp>
-#include <sgeroids/resource_tree/element.hpp>
-#include <sgeroids/resource_tree/base_path.hpp>
-#include <sgeroids/resource_tree/sub_path.hpp>
 #include <sgeroids/random_generator.hpp>
-#include <fcppt/filesystem/path.hpp>
+#include <sgeroids/resource_tree/base_path.hpp>
+#include <sgeroids/resource_tree/element.hpp>
+#include <sgeroids/resource_tree/path.hpp>
+#include <sgeroids/resource_tree/path_to_resource_function.hpp>
+#include <sgeroids/resource_tree/sub_path.hpp>
 #include <fcppt/noncopyable.hpp>
+#include <fcppt/filesystem/path.hpp>
+#include <fcppt/config/external_begin.hpp>
 #include <vector>
+#include <fcppt/config/external_end.hpp>
+
 
 namespace sgeroids
 {

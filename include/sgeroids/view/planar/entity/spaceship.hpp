@@ -1,9 +1,10 @@
 #ifndef SGEROIDS_VIEW_PLANAR_ENTITY_SPACESHIP_HPP_INCLUDED
 #define SGEROIDS_VIEW_PLANAR_ENTITY_SPACESHIP_HPP_INCLUDED
 
-#include <sgeroids/view/planar/sprite/system.hpp>
-#include <sgeroids/view/planar/texture_tree.hpp>
 #include <sgeroids/view/planar/radius.hpp>
+#include <sgeroids/view/planar/texture_tree.hpp>
+#include <sgeroids/view/planar/sprite/system.hpp>
+
 
 namespace sgeroids
 {

@@ -1,6 +1,14 @@
 #ifndef SGEROIDS_MODEL_LOCAL_ENTITY_SPACESHIP_HPP_INCLUDED
 #define SGEROIDS_MODEL_LOCAL_ENTITY_SPACESHIP_HPP_INCLUDED
 
+#include <sgeroids/model/local/entity/base.hpp>
+#include <sgeroids/model/callbacks/position_entity.hpp>
+#include <sgeroids/model/callbacks/rotation_entity.hpp>
+#include <sgeroids/model/rotation_direction.hpp>
+#include <sgeroids/model/thrust.hpp>
+#include <sgeroids/model/player_name.hpp>
+#include <sgeroids/model/play_area.hpp>
+
 namespace sgeroids
 {
 namespace model
@@ -22,9 +30,8 @@ public:
 		model::position const &,
 		model::rotation const &,
 		model::play_area const &,
-		callbacks::insert_entity_function const &,
-		callbacks::change_position_function const &,
-		callbacks::change_rotation_function const &);
+		callbacks::position_entity const &,
+		callbacks::rotation_entity const &);
 
 	void
 	update();
@@ -65,9 +72,8 @@ public:
 	~spaceship();
 private:
 	sgeroids::rect const play_area_;
-	callbacks::insert_entity_function const insert_entity_;
-	callbacks::change_position_function const change_position_;
-	callbacks::change_rotation_function const change_rotation_;
+	callbacks::position_entity const position_entity_;
+	callbacks::rotation_entity const rotation_entity_;
 	sgeroids::vector2 position_;
 	sgeroids::vector2 velocity_;
 	int rotation_;

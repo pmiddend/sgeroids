@@ -1,21 +1,24 @@
 #ifndef SGEROIDS_RESOURCE_TREE_OBJECT_IMPL_HPP_INCLUDED
 #define SGEROIDS_RESOURCE_TREE_OBJECT_IMPL_HPP_INCLUDED
 
+#include <sgeroids/exception.hpp>
 #include <sgeroids/resource_tree/object_decl.hpp>
 #include <sgeroids/resource_tree/path_with_resource.hpp>
 #include <sgeroids/resource_tree/strip_file_extension.hpp>
 #include <sgeroids/resource_tree/strip_path_prefix.hpp>
-#include <sgeroids/exception.hpp>
-#include <vector>
+#include <fcppt/text.hpp>
 #include <fcppt/algorithm/copy_if.hpp>
 #include <fcppt/assert/pre.hpp>
-#include <fcppt/filesystem/recursive_directory_iterator.hpp>
 #include <fcppt/filesystem/exists.hpp>
-#include <fcppt/filesystem/is_regular.hpp>
 #include <fcppt/filesystem/is_directory.hpp>
+#include <fcppt/filesystem/is_regular.hpp>
 #include <fcppt/filesystem/path.hpp>
-#include <fcppt/text.hpp>
+#include <fcppt/filesystem/recursive_directory_iterator.hpp>
+#include <fcppt/config/external_begin.hpp>
 #include <iterator>
+#include <vector>
+#include <fcppt/config/external_end.hpp>
+
 
 template<typename T>
 sgeroids::resource_tree::object<T>::object(

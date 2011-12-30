@@ -1,0 +1,178 @@
+#include <sgeroids/exception.hpp>
+#include <sgeroids/media_path.hpp>
+#include <sgeroids/program_version.hpp>
+#include <sgeroids/utf8_file_to_fcppt_string.hpp>
+#include <sgeroids/state_machine/object.hpp>
+#include <sgeroids/state_machine/events/render.hpp>
+#include <sgeroids/state_machine/events/tick.hpp>
+#include <sge/media/extension.hpp>
+#include <sge/media/extension_set.hpp>
+#include <sge/parse/json/convert_from.hpp>
+#include <sge/parse/json/find_and_convert_member.hpp>
+#include <sge/parse/json/parse_string_exn.hpp>
+#include <sge/parse/json/path.hpp>
+#include <sge/parse/json/config/create_command_line_parameters.hpp>
+#include <sge/parse/json/config/merge_command_line_parameters.hpp>
+#include <sge/parse/json/config/merge_trees.hpp>
+#include <sge/renderer/parameters.hpp>
+#include <sge/systems/audio_loader.hpp>
+#include <sge/systems/audio_player_default.hpp>
+#include <sge/systems/image2d.hpp>
+#include <sge/systems/renderer.hpp>
+#include <sge/systems/window.hpp>
+#include <sge/viewport/fill_on_resize.hpp>
+#include <sge/window/parameters.hpp>
+#include <sge/window/title.hpp>
+#include <fcppt/insert_to_fcppt_string.hpp>
+#include <fcppt/text.hpp>
+#include <fcppt/assign/make_container.hpp>
+#include <fcppt/container/bitfield/basic_impl.hpp>
+#include <fcppt/variant/holds_type.hpp>
+
+
+namespace
+{
+// This helper function takes config file parameters and creates renderer
+// parameters from it.
+sge::renderer::parameters const
+renderer_parameters_from_config_file(
+	sge::parse::json::object const &_config)
+{
+	sge::renderer::vsync::type const vsync_enabled =
+		sge::parse::json::find_and_convert_member<bool>(
+			_config,
+			sge::parse::json::path(FCPPT_TEXT("renderer")) / FCPPT_TEXT("vsync-enabled"))
+		?
+			sge::renderer::vsync::on
+		:
+			sge::renderer::vsync::off;
+
+	sge::parse::json::value const &multi_sampling_json =
+		sge::parse::json::find_and_convert_member<sge::parse::json::value>(
+			_config,
+			sge::parse::json::path(FCPPT_TEXT("renderer")) / FCPPT_TEXT("multi-sample-type"));
+
+	sge::renderer::multi_sample_type multi_sampling_sge =
+		sge::renderer::no_multi_sampling;
+
+	if(!fcppt::variant::holds_type<sge::parse::json::null>(multi_sampling_json))
+		multi_sampling_sge =
+			sge::renderer::multi_sample_type(
+				sge::parse::json::convert_from<sge::renderer::multi_sample_type::value_type>(
+					multi_sampling_json));
+
+	unsigned const visual_depth_value =
+		sge::parse::json::find_and_convert_member<unsigned>(
+			_config,
+			sge::parse::json::path(FCPPT_TEXT("renderer")) / FCPPT_TEXT("visual_depth"));
+
+	sge::renderer::visual_depth::type const
+		visual_depth_sge =
+			visual_depth_value == 16
+			?
+				sge::renderer::visual_depth::depth16
+			:
+				(visual_depth_value == 32
+				?
+					sge::renderer::visual_depth::depth32
+				:
+					throw
+						sgeroids::exception(
+							FCPPT_TEXT("Unknown visual depth value encountered: ")+
+							fcppt::insert_to_fcppt_string(
+								visual_depth_value)));
+
+	return
+		sge::renderer::parameters(
+				visual_depth_sge,
+				sge::renderer::depth_stencil_buffer::off,
+				vsync_enabled,
+				multi_sampling_sge);
+}
+}
+
+sgeroids::state_machine::object::object(
+	int const _argc,
+	char * _argv[])
+:
+	config_(
+		sge::parse::json::config::merge_command_line_parameters(
+			sge::parse::json::parse_string_exn(
+				sgeroids::utf8_file_to_fcppt_string(
+					sgeroids::media_path()/FCPPT_TEXT("config.json"))),
+			sge::parse::json::config::create_command_line_parameters(
+				_argc,
+				_argv))),
+	systems_(
+		sge::systems::list()
+			(sge::systems::window(
+				sge::window::parameters(
+					sge::window::title(
+						FCPPT_TEXT("sgeroids")+
+						sgeroids::program_version()),
+					window_dim)))
+			(sge::systems::renderer(
+				renderer_parameters_from_config_file(
+					this->config()),
+				sge::viewport::fill_on_resize()))
+			(sge::systems::input(
+				sge::systems::input_helper_field(
+					sge::systems::input_helper::keyboard_collector),
+				sge::systems::cursor_option_field::null()))
+			(sge::systems::audio_player_default())
+			(sge::systems::image2d(
+				sge::image::capabilities_field::null(),
+				sge::media::optional_extension_set(
+					fcppt::assign::make_container<sge::media::extension_set>(
+						sge::media::extension(
+							FCPPT_TEXT("png"))))))
+			(sge::systems::audio_loader(
+				sge::audio::loader_capabilities_field::null(),
+				sge::media::optional_extension_set(
+					fcppt::assign::make_container<sge::media::extension_set>(
+						sge::media::extension(
+							FCPPT_TEXT("ogg"))))))),
+	running_(
+		true)
+{
+}
+
+sge::parse::json::object const &
+sgeroids::state_machine::object::config() const
+{
+	return config_;
+}
+
+sge::systems::instance const &
+sgeroids::state_machine::object::systems() const
+{
+	return systems_;
+}
+
+void
+sgeroids::state_machine::object::run()
+{
+	while(running_)
+	{
+		systems_.window_system().poll();
+
+		this->process_event(
+			state_machine::events::tick());
+
+		sge::renderer::scoped_block const block_(
+			sys.renderer());
+
+		this->process_event(
+			state_machine::events::render());
+	}
+}
+
+void
+sgeroids::state_machine::object::exit_mainloop()
+{
+	running_ = false;
+}
+
+sgeroids::state_machine::object::~object()
+{
+}

@@ -1,6 +1,11 @@
 #ifndef SGEROIDS_MODEL_LOCAL_ENTITY_BASE_HPP_INCLUDED
 #define SGEROIDS_MODEL_LOCAL_ENTITY_BASE_HPP_INCLUDED
 
+#include <sgeroids/model/radius.hpp>
+#include <sgeroids/model/rotation.hpp>
+#include <sgeroids/model/position.hpp>
+#include <fcppt/noncopyable.hpp>
+
 namespace sgeroids
 {
 namespace model
@@ -17,10 +22,10 @@ This class should contain all of the properties that <em>every</em> entity needs
 It's always difficult to determine what those properties are, so in the method
 documentation you will find some motivation for each of them.
 */
-class entity
+class base
 {
 FCPPT_NONCOPYABLE(
-	entity);
+	base);
 public:
 	/**
 	\brief "Updates" the entity
@@ -79,10 +84,10 @@ public:
 		entity::base &) = 0;
 
 	virtual
-	~entity() = 0;
+	~base() = 0;
 protected:
 	explicit
-	entity();
+	base();
 };
 }
 }

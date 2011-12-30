@@ -1,12 +1,15 @@
 #ifndef SGEROIDS_MODEL_LOCAL_OBJECT_HPP_INCLUDED
 #define SGEROIDS_MODEL_LOCAL_OBJECT_HPP_INCLUDED
 
+#include <sgeroids/model/local/entity/unique_base_ptr.hpp>
 #include <sgeroids/model/base.hpp>
-#include <sgeroids/entity/unique_base_ptr.hpp>
-#include <fcppt/noncopypable.hpp>
+#include <fcppt/noncopyable.hpp>
 #include <fcppt/signal/auto_connection.hpp>
 #include <fcppt/signal/object.hpp>
+#include <fcppt/config/external_begin.hpp>
 #include <boost/ptr_container/ptr_map.hpp>
+#include <fcppt/config/external_end.hpp>
+
 
 namespace sgeroids
 {
@@ -69,10 +72,6 @@ public:
 	fcppt::signal::auto_connection
 	gameover_callback(
 		callbacks::gameover const &);
-
-	fcppt::signal::auto_connection
-	error_callback(
-		callbacks::error const &);
 
 	fcppt::signal::auto_connection
 	error_callback(

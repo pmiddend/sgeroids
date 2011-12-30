@@ -1,8 +1,9 @@
 #ifndef SGEROIDS_RESOURCE_TREE_BASE_PATH_HPP_INCLUDED
 #define SGEROIDS_RESOURCE_TREE_BASE_PATH_HPP_INCLUDED
 
-#include <fcppt/filesystem/path.hpp>
 #include <fcppt/strong_typedef.hpp>
+#include <fcppt/filesystem/path.hpp>
+
 
 namespace sgeroids
 {

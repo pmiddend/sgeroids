@@ -1,58 +1,48 @@
-find_package(
+FIND_PACKAGE(
 	Doxygen
-	REQUIRED
-)
+	REQUIRED)
 
-set(
+SET(
 	DOC_OUTPUT
-	"${CMAKE_BINARY_DIR}/doc_generated"
-)
+	"${CMAKE_BINARY_DIR}/doc_generated")
 
-configure_file(
+CONFIGURE_FILE(
 	Doxyfile.in
-	"${DOC_OUTPUT}/Doxyfile"
-)
+	"${DOC_OUTPUT}/Doxyfile")
 
 # For now, use COPYONLY (since I don't know which escape sequences are in the
 # html/css files that cmake might accidentally replace. Could be changed in
 # the future.
-configure_file(
+CONFIGURE_FILE(
 	header.html
 	"${DOC_OUTPUT}/header.html"
-	COPYONLY
-)
+	COPYONLY)
 
-configure_file(
+CONFIGURE_FILE(
 	footer.html
 	"${DOC_OUTPUT}/footer.html"
-	COPYONLY
-)
+	COPYONLY)
 
-configure_file(
+CONFIGURE_FILE(
 	stylesheet.css
 	"${DOC_OUTPUT}/stylesheet.css"
-	COPYONLY
-)
+	COPYONLY)
 
-configure_file(
+CONFIGURE_FILE(
 	layout.xml
 	"${DOC_OUTPUT}/layout.xml"
-	COPYONLY
-)
+	COPYONLY)
 
-add_custom_target(
-	doc
-)
+ADD_CUSTOM_TARGET(
+	doc)
 
-add_custom_command(
+ADD_CUSTOM_COMMAND(
 	TARGET doc
 	COMMAND ${DOXYGEN_EXECUTABLE}
-	WORKING_DIRECTORY "${DOC_OUTPUT}"
-)
+	WORKING_DIRECTORY "${DOC_OUTPUT}")
 
-install(
+INSTALL(
 	DIRECTORY
 	"${DOC_OUTPUT}/html"
 	DESTINATION
-	"${INSTALL_DOC_DIR}"
-)
+	"${INSTALL_DOC_DIR}")

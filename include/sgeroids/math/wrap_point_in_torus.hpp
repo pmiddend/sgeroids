@@ -1,8 +1,9 @@
 #ifndef SGEROIDS_MATH_WRAP_POINT_IN_TORUS_HPP_INCLUDED
 #define SGEROIDS_MATH_WRAP_POINT_IN_TORUS_HPP_INCLUDED
 
-#include <fcppt/math/vector/basic_impl.hpp>
 #include <fcppt/math/box/basic_impl.hpp>
+#include <fcppt/math/vector/basic_impl.hpp>
+
 
 namespace sgeroids
 {

@@ -1,8 +1,9 @@
 #ifndef SGEROIDS_MODEL_CALLBACKS_COLLIDE_PROJECTILE_ASTEROID_FUNCTION_HPP_INCLUDED
 #define SGEROIDS_MODEL_CALLBACKS_COLLIDE_PROJECTILE_ASTEROID_FUNCTION_HPP_INCLUDED
 
-#include <sgeroids/model/projectile_id.hpp>
 #include <sgeroids/model/asteroid_id.hpp>
+#include <sgeroids/model/projectile_id.hpp>
+
 
 namespace sgeroids
 {

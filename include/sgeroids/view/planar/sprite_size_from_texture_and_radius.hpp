@@ -1,10 +1,11 @@
 #ifndef SGEROIDS_VIEW_PLANAR_SPRITE_SIZE_FROM_TEXTURE_AND_RADIUS_HPP_INCLUDED
 #define SGEROIDS_VIEW_PLANAR_SPRITE_SIZE_FROM_TEXTURE_AND_RADIUS_HPP_INCLUDED
 
-#include <sgeroids/view/planar/sprite/dim.hpp>
 #include <sgeroids/view/planar/radius.hpp>
+#include <sgeroids/view/planar/sprite/dim.hpp>
 #include <sge/texture/const_part_ptr.hpp>
 #include <fcppt/math/dim/basic_impl.hpp>
+
 
 namespace sgeroids
 {

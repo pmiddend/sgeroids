@@ -1,5 +1,8 @@
 #include <sgeroids/resource_tree/path.hpp>
+#include <fcppt/config/external_begin.hpp>
 #include <algorithm>
+#include <fcppt/config/external_end.hpp>
+
 
 sgeroids::resource_tree::path::path()
 :

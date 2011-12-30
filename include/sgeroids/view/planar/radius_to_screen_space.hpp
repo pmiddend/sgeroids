@@ -1,8 +1,9 @@
 #ifndef SGEROIDS_VIEW_PLANAR_RADIUS_TO_SCREEN_SPACE_HPP_INCLUDED
 #define SGEROIDS_VIEW_PLANAR_RADIUS_TO_SCREEN_SPACE_HPP_INCLUDED
 
-#include <sgeroids/view/planar/radius.hpp>
 #include <sgeroids/model/radius.hpp>
+#include <sgeroids/view/planar/radius.hpp>
+
 
 namespace sgeroids
 {

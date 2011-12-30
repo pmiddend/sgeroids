@@ -1,20 +1,21 @@
+#include <sgeroids/exception.hpp>
+#include <sgeroids/math/unit_magnitude.hpp>
 #include <sgeroids/model/local/object.hpp>
 #include <sgeroids/model/local/entity/spaceship.hpp>
-#include <sgeroids/math/unit_magnitude.hpp>
-#include <sgeroids/exception.hpp>
-#include <fcppt/optional_dynamic_cast.hpp>
 #include <fcppt/insert_to_fcppt_string.hpp>
-#include <fcppt/math/box/center.hpp>
-#include <fcppt/container/ptr/insert_unique_ptr_map.hpp>
 #include <fcppt/make_unique_ptr.hpp>
-#include <fcppt/tr1/functional.hpp>
+#include <fcppt/move.hpp>
+#include <fcppt/optional_dynamic_cast.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/type_name.hpp>
-#include <fcppt/move.hpp>
+#include <fcppt/container/ptr/insert_unique_ptr_map.hpp>
 #include <fcppt/math/box/basic_impl.hpp>
-#include <fcppt/math/vector/basic_impl.hpp>
-#include <fcppt/math/vector/length_quad.hpp>
+#include <fcppt/math/box/center.hpp>
 #include <fcppt/math/dim/basic_impl.hpp>
+#include <fcppt/math/vector/basic_impl.hpp>
+#include <fcppt/math/vector/length_square.hpp>
+#include <fcppt/tr1/functional.hpp>
+
 
 sgeroids::model::local::object::object()
 :
@@ -175,19 +176,19 @@ sgeroids::model::local::object::add_player(
 			ship_position,
 			ship_rotation,
 			this->play_area(),
-			callbacks::insert_entity_function(
+			callbacks::insert_entity(
 				std::tr1::bind(
 					&object::insert_entity,
 					this,
 					std::tr1::placeholders::_1)),
-			callbacks::change_position_function(
+			callbacks::position_entity(
 				std::tr1::bind(
 					&object::change_entity_position,
 					this,
 					model::entity_id(
 						next_id_),
 					std::tr1::placeholders::_1)),
-			callbacks::change_rotation_function(
+			callbacks::rotation_entity(
 				std::tr1::bind(
 					&object::change_entity_rotation,
 					this,
@@ -349,7 +350,7 @@ sgeroids::model::local::object::collision_detection_narrow_phase(
 	entity::base &_right)
 {
 	int const object_distance =
-		fcppt::math::vector::length_quad(
+		fcppt::math::vector::length_square(
 			_left.position() - _right.position());
 
 	int const sum_radii =

@@ -1,24 +1,25 @@
 #ifndef SGEROIDS_MODEL_BASE_HPP_INCLUDED
 #define SGEROIDS_MODEL_BASE_HPP_INCLUDED
 
-#include <sgeroids/model/callbacks/add_spaceship.hpp>
-#include <sgeroids/model/callbacks/add_asteroid.hpp>
-#include <sgeroids/model/callbacks/add_projectile.hpp>
-#include <sgeroids/model/callbacks/collide_projectile_asteroid.hpp>
-#include <sgeroids/model/callbacks/score_change.hpp>
-#include <sgeroids/model/callbacks/destroy_asteroid.hpp>
-#include <sgeroids/model/callbacks/remove_entity.hpp>
-#include <sgeroids/model/callbacks/position_entity.hpp>
-#include <sgeroids/model/callbacks/rotation_entity.hpp>
-#include <sgeroids/model/callbacks/gameover.hpp>
-#include <sgeroids/model/callbacks/error.hpp>
-#include <sgeroids/model/player_name.hpp>
 #include <sgeroids/model/entity_id.hpp>
+#include <sgeroids/model/play_area.hpp>
+#include <sgeroids/model/player_name.hpp>
 #include <sgeroids/model/rotation_direction.hpp>
 #include <sgeroids/model/thrust.hpp>
-#include <sgeroids/model/play_area.hpp>
-#include <fcppt/signal/auto_connection.hpp>
+#include <sgeroids/model/callbacks/add_asteroid.hpp>
+#include <sgeroids/model/callbacks/add_projectile.hpp>
+#include <sgeroids/model/callbacks/add_spaceship.hpp>
+#include <sgeroids/model/callbacks/collide_projectile_asteroid.hpp>
+#include <sgeroids/model/callbacks/destroy_asteroid.hpp>
+#include <sgeroids/model/callbacks/error.hpp>
+#include <sgeroids/model/callbacks/gameover.hpp>
+#include <sgeroids/model/callbacks/position_entity.hpp>
+#include <sgeroids/model/callbacks/remove_entity.hpp>
+#include <sgeroids/model/callbacks/rotation_entity.hpp>
+#include <sgeroids/model/callbacks/score_change.hpp>
 #include <fcppt/noncopyable.hpp>
+#include <fcppt/signal/auto_connection.hpp>
+
 
 namespace sgeroids
 {

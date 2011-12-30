@@ -1,8 +1,9 @@
 #ifndef SGEROIDS_MODEL_PLAYER_NAME_HPP_INCLUDED
 #define SGEROIDS_MODEL_PLAYER_NAME_HPP_INCLUDED
 
-#include <fcppt/strong_typedef.hpp>
 #include <fcppt/string.hpp>
+#include <fcppt/strong_typedef.hpp>
+
 
 namespace sgeroids
 {

@@ -4,4 +4,123 @@
 \section main_structure Structure
 
 Explain model/view/presenter here, also resources
+
+\section main_state_machine The state machine
+
+The state machine is just that: a <a
+href="http://en.wikipedia.org/wiki/State_machine">state machine</a>. The game
+consists of multiple states, forming a hierarchy. Below the
+\link sgeroids::state_machine::states::ingame::superstate states::ingame::superstate \endlink, there are
+\link sgeroids::state_machine::states::ingame::running states::ingame::running \endlink and
+\link sgeroids::state_machine::states::ingame::paused states::ingame::paused
+\endlink, for example. The parent object of all states is the state machine:
+sgeroids::state_machine::object. It contains all the data structures that are
+"valid" and usable throughout the whole game. These are very general structures
+such as the json configuration file (see below) and the renderer. The following
+list should clarify what happens when the game starts and what happens when it
+is running:
+
+<ol>
+	<li>
+		<code>main</code> is called by the operating system (it's located in <code>src/main.cpp</code>).
+	</li>
+	<li>
+		<code>main</code> creates an instance of
+		sgeroids::state_machine::object, which reads the configuration
+		file and initializes the renderer, the audio player and so on
+		(it has an instance of sge::systems::instance).
+	</li>
+	<li>
+		Then, the states are constructed from the outside to the
+		inside. The first (and currently only) state is the \link
+		sgeroids::state_machine::states::ingame::superstate
+		ingame::superstate \endlink which contains the model and the
+		view.
+	</li>
+	<li>
+		After all states are constructed, <code>main</code> calls
+		sgeroids::machine::run.
+	</li>
+	<li>
+		The <code>run</code> function enters a loop that stops when
+		someone calls sgeroids::machine::exit_mainloop.
+	</li>
+	<li>
+		The main loop first dispatches all events (input events,
+		viewport changes and so on).
+	</li>
+	<li>
+		Then, the main loop sends sgeroids::state_machine::events::tick
+		to the currently active state, which is supposed to trigger a
+		global <code>update</code> on all active systems (the model
+		will update the entities' positions, the view will update the
+		particle positions and so on).
+	</li>
+	<li>
+		Then, a scoped render block is entered and the main loop sends
+		sgeroids::state_machine::events::tick, which is forwarded to
+		the view, which renders its objects and displays other
+		information.
+	</li>
+</ol>
+
+\section main_configuration Configuration
+
+sgeroids is configured using a <a
+href="http://en.wikipedia.org/wiki/Json">json</a> configuration file located in
+
+<pre>
+media/config.json
+</pre>
+
+The file is supposed to be stored in UTF-8 encoding (if it's not, you're
+screwed). sgeroids::utf8_file_to_fcppt_string is used to convert the UTF-8 file
+to an fcppt::string.
+
+Additionally, you can change any value of that configuration file using the
+command line. To do that, specify the "path" to the option, then an equal sign,
+then the option value. For example:
+
+<pre>
+sgeroids 'renderer/screen-size=[1024,768]'
+</pre>
+
+Note the apostrophes. Some characters are reserved by the shell, such as all
+sorts of parentheses. It's advised to put everything into apostrophes. Also note that strings in json have to be surrounded by &quot;:
+
+<pre>
+sgeroids 'player-name="foobar"'
+</pre>
+
+The configuration file is read in sgeroids::machine, a class which also has a
+getter function (sgeroids::machine::config), so that all system can access it
+easily.
+
+\section main_logging Logging
+
+We use fcppt::log to do our logging. This means that we need instances of
+fcppt::log::object to "log into". Every major subsystem has a log object. This
+is one of the rare occurences where we actually use the <a
+href="http://en.wikipedia.org/wiki/Singleton_pattern">singleton</a> design
+pattern: The log objects are created as static variables inside a function.
+
+Loggers in fcppt::log can form a hierarchy, which is a feature we're taking
+advantage of. The root logger can be queried using sgeroids::log and logged
+into.
+
+Another thing we can use with fcppt::log are "log context". A log context is
+sort of a father class for log objects. With it, you can traverse the logger
+tree and modify the loggers' attributes. For example, you could disable a
+single logger.
+
+There is only one context (singleton) in sgeroids, and it's queryable using
+sgeroids::log_context.
+
+\section main_exceptions Exceptions
+
+sgeroids currently defines only one exception class: sgeroids::exception. This
+exception is thrown when an error in sgeroids occurs. It's derived from
+fcppt::exception.
+
+In main.cpp, we catch fcppt::exception and std::exception.
 */

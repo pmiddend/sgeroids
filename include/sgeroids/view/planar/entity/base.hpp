@@ -1,9 +1,10 @@
 #ifndef SGEROIDS_VIEW_PLANAR_ENTITY_BASE_HPP_INCLUDED
 #define SGEROIDS_VIEW_PLANAR_ENTITY_BASE_HPP_INCLUDED
 
-#include <fcppt/noncopyable.hpp>
 #include <sgeroids/view/planar/position.hpp>
 #include <sgeroids/view/planar/rotation.hpp>
+#include <fcppt/noncopyable.hpp>
+
 
 namespace sgeroids
 {
