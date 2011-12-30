@@ -24,6 +24,13 @@ namespace sgeroids
 {
 namespace model
 {
+/**
+\brief The base class for all models
+
+This class represents the model in the model-view-presenter scheme. You can
+communicate in both ways with the model: You can either register for a signal
+(like "score changed") or you can send it a message by calling a function.
+*/
 class base
 {
 FCPPT_NONCOPYABLE(
@@ -76,10 +83,19 @@ public:
 	error_callback(
 		callbacks::error const &) = 0;
 
+	/**
+	\brief Try to add the player with the given name.
+
+	This operation might not result in a new player being added, but in an
+	error message. That's because a name must be unique.
+	*/
 	virtual void
 	add_player(
 		model::player_name const &);
 
+	/**
+	\brief Start the rotation of a ship.
+	*/
 	virtual void
 	start_rotation(
 		model::entity_id const &,

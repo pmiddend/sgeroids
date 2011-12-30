@@ -1,6 +1,15 @@
 #ifndef SGEROIDS_VIEW_BASE_HPP_INCLUDED
 #define SGEROIDS_VIEW_BASE_HPP_INCLUDED
 
+#include <fcppt/noncopyable.hpp>
+#include <sgeroids/model/entity_id.hpp>
+#include <sgeroids/model/player_name.hpp>
+#include <sgeroids/model/radius.hpp>
+#include <sgeroids/model/projectile_id.hpp>
+#include <sgeroids/model/asteroid_id.hpp>
+#include <sgeroids/model/score.hpp>
+#include <sgeroids/model/position.hpp>
+#include <sgeroids/model/rotation.hpp>
 
 namespace sgeroids
 {
@@ -57,8 +66,8 @@ public:
 	*/
 	virtual void
 	collide_projectile_asteroid(
-		view::projectile_id const &,
-		view::asteroid_id const &) = 0;
+		model::projectile_id const &,
+		model::asteroid_id const &) = 0;
 
 	/**
 	\brief Called when the score changes

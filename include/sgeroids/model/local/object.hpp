@@ -14,6 +14,9 @@ namespace model
 {
 namespace local
 {
+/**
+\brief Represents a "local" model in the sense that no networking occurs.
+*/
 class object
 :
 	public model::base
