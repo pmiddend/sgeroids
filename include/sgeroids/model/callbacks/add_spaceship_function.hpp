@@ -3,6 +3,7 @@
 
 #include <sgeroids/model/entity_id.hpp>
 #include <sgeroids/model/player_name.hpp>
+#include <sgeroids/model/radius.hpp>
 
 namespace sgeroids
 {
@@ -14,6 +15,7 @@ typedef
 void
 add_spaceship_function(
 	model::entity_id const &,
+	model::radius const &,
 	model::player_name const &);
 }
 }

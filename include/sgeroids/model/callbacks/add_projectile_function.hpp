@@ -2,6 +2,7 @@
 #define SGEROIDS_MODEL_CALLBACKS_ADD_PROJECTILE_FUNCTION_HPP_INCLUDED
 
 #include <sgeroids/model/entity_id.hpp>
+#include <sgeroids/model/radius.hpp>
 
 namespace sgeroids
 {
@@ -12,7 +13,8 @@ namespace callbacks
 typedef
 void
 add_projectile_function(
-	model::entity_id const &);
+	model::entity_id const &,
+	model::radius const &);
 }
 }
 }

@@ -96,7 +96,7 @@ sgeroids::model::local::entity::spaceship::radius() const
 {
 	return
 		model::radius(
-			math::unit_magnitude() * 10);
+			math::unit_magnitude() * 400);
 }
 
 void

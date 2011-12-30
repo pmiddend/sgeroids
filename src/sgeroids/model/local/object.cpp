@@ -162,20 +162,18 @@ sgeroids::model::local::object::add_player(
 
 	// Store these values here because we need them to create the model and
 	// position/rotate it.
-	model::position const pos(
+	model::position const ship_position(
 		fcppt::math::box::center(
 			this->play_area().get()));
 
-	model::rotation const rot(
+	model::rotation const ship_rotation(
 		0);
 
-	fcppt::container::ptr::insert_unique_ptr_map(
-		entities_,
-		next_id_,
+	fcppt::unique_ptr<entity::spaceship> to_add(
 		fcppt::make_unique_ptr<entity::spaceship>(
 			_player_name,
-			pos,
-			rot,
+			ship_position,
+			ship_rotation,
 			this->play_area(),
 			callbacks::insert_entity_function(
 				std::tr1::bind(
@@ -197,20 +195,29 @@ sgeroids::model::local::object::add_player(
 						next_id_),
 					std::tr1::placeholders::_1))));
 
+	model::radius const ship_radius =
+		to_add->radius();
+
+	fcppt::container::ptr::insert_unique_ptr_map(
+		entities_,
+		next_id_,
+		to_add);
+
 	add_spaceship_(
 		model::entity_id(
 			next_id_),
+		ship_radius,
 		_player_name);
 
 	position_entity_(
 		model::entity_id(
 			next_id_),
-		pos);
+		ship_position);
 
 	rotation_entity_(
 		model::entity_id(
 			next_id_),
-		rot);
+		ship_rotation);
 
 	next_id_++;
 }

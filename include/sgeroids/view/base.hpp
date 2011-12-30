@@ -37,6 +37,7 @@ public:
 	virtual void
 	add_spaceship(
 		model::entity_id const &,
+		model::radius const &,
 		model::player_name const &) = 0;
 
 	/**
@@ -117,6 +118,31 @@ public:
 	*/
 	virtual void
 	gameover() = 0;
+
+	/**
+	\brief Called to set the size of the play area.
+
+	The view can use this information to set up the projection and world
+	matrices. Note that displaying all of the play area might be too much
+	because at the borders, wrapping occurs. The view should reserve some
+	space for that.
+	*/
+	virtual void
+	play_area(
+		model::play_area const &) = 0;
+
+
+	/**
+	\brief Increase the simulation by one timestep
+	*/
+	virtual void
+	update() = 0;
+
+	/**
+	\brief Render the stuff!
+	*/
+	virtual void
+	render() = 0;
 
 	virtual
 	~base() = 0;
