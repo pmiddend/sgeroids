@@ -11,15 +11,15 @@ sgeroids::resource_tree::strip_path_prefix(
 	resource_tree::base_path const &_base_path,
 	resource_tree::sub_path const &_sub_path)
 {
-	sgereoids::resource_tree::path result;
+	sgeroids::resource_tree::path result;
 	for(
 		fcppt::filesystem::path::const_iterator it =
 			boost::next(
-				_sub_path.begin(),
+				_sub_path.get().begin(),
 				std::distance(
-					_base_path.begin(),
-					_base_path.end()));
-		it != _sub_path.end();
+					_base_path.get().begin(),
+					_base_path.get().end()));
+		it != _sub_path.get().end();
 		++it)
 		result /=
 			fcppt::filesystem::path_to_string(

@@ -1,4 +1,5 @@
 #include <sgeroids/view/planar/sprite_size_from_texture_and_radius.hpp>
+#include <sge/texture/part.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <algorithm>
 #include <fcppt/config/external_end.hpp>
@@ -15,10 +16,10 @@ sgeroids::view::planar::sprite_size_from_texture_and_radius(
 	int const
 		texture_width =
 			static_cast<int>(
-				_texture.size().w()),
+				_texture->size().w()),
 		texture_height =
 			static_cast<int>(
-				_texture.size().h()),
+				_texture->size().h()),
 		width =
 			2 * _radius.get(),
 		height =

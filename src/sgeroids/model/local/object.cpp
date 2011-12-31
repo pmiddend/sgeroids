@@ -1,6 +1,8 @@
 #include <sgeroids/exception.hpp>
 #include <sgeroids/math/unit_magnitude.hpp>
 #include <sgeroids/model/local/object.hpp>
+#include <sgeroids/model/vector2.hpp>
+#include <sgeroids/model/dim2.hpp>
 #include <sgeroids/model/local/entity/spaceship.hpp>
 #include <fcppt/insert_to_fcppt_string.hpp>
 #include <fcppt/make_unique_ptr.hpp>
@@ -15,13 +17,24 @@
 #include <fcppt/math/vector/basic_impl.hpp>
 #include <fcppt/math/vector/length_square.hpp>
 #include <fcppt/tr1/functional.hpp>
-
+#include <typeinfo>
 
 sgeroids::model::local::object::object()
 :
-	entities_(),
 	next_id_(
-		0u)
+		0u),
+	entities_(),
+	add_spaceship_(),
+	add_asteroid_(),
+	add_projectile_(),
+	collide_projectile_asteroid_(),
+	score_change_(),
+	destroy_asteroid_(),
+	remove_entity_(),
+	position_entity_(),
+	rotation_entity_(),
+	gameover_(),
+	error_()
 {
 }
 
@@ -29,12 +42,12 @@ void
 sgeroids::model::local::object::update()
 {
 	this->entity_updates();
-	this->collision_detection();
+	this->collision_detection_broadphase();
 }
 
 fcppt::signal::auto_connection
 sgeroids::model::local::object::add_spaceship_callback(
-	callbacks::add_spaceship const &_f)
+	model::callbacks::add_spaceship const &_f)
 {
 	return
 		add_spaceship_.connect(
@@ -43,7 +56,7 @@ sgeroids::model::local::object::add_spaceship_callback(
 
 fcppt::signal::auto_connection
 sgeroids::model::local::object::add_asteroid_callback(
-	callbacks::add_asteroid const &_f)
+	model::callbacks::add_asteroid const &_f)
 {
 	return
 		add_asteroid_.connect(
@@ -52,7 +65,7 @@ sgeroids::model::local::object::add_asteroid_callback(
 
 fcppt::signal::auto_connection
 sgeroids::model::local::object::add_projectile_callback(
-	callbacks::add_projectile const &_f)
+	model::callbacks::add_projectile const &_f)
 {
 	return
 		add_projectile_.connect(
@@ -61,7 +74,7 @@ sgeroids::model::local::object::add_projectile_callback(
 
 fcppt::signal::auto_connection
 sgeroids::model::local::object::collide_projectile_asteroid_callback(
-	callbacks::collide_projectile_asteroid const &_f)
+	model::callbacks::collide_projectile_asteroid const &_f)
 {
 	return
 		collide_projectile_asteroid_.connect(
@@ -70,7 +83,7 @@ sgeroids::model::local::object::collide_projectile_asteroid_callback(
 
 fcppt::signal::auto_connection
 sgeroids::model::local::object::score_change_callback(
-	callbacks::score_change const &_f)
+	model::callbacks::score_change const &_f)
 {
 	return
 		score_change_.connect(
@@ -79,7 +92,7 @@ sgeroids::model::local::object::score_change_callback(
 
 fcppt::signal::auto_connection
 sgeroids::model::local::object::destroy_asteroid_callback(
-	callbacks::destroy_asteroid const &_f)
+	model::callbacks::destroy_asteroid const &_f)
 {
 	return
 		destroy_asteroid_.connect(
@@ -88,7 +101,7 @@ sgeroids::model::local::object::destroy_asteroid_callback(
 
 fcppt::signal::auto_connection
 sgeroids::model::local::object::remove_entity_callback(
-	callbacks::remove_entity const &_f)
+	model::callbacks::remove_entity const &_f)
 {
 	return
 		remove_entity_.connect(
@@ -97,7 +110,7 @@ sgeroids::model::local::object::remove_entity_callback(
 
 fcppt::signal::auto_connection
 sgeroids::model::local::object::position_entity_callback(
-	callbacks::position_entity const &_f)
+	model::callbacks::position_entity const &_f)
 {
 	return
 		position_entity_.connect(
@@ -106,7 +119,7 @@ sgeroids::model::local::object::position_entity_callback(
 
 fcppt::signal::auto_connection
 sgeroids::model::local::object::rotation_entity_callback(
-	callbacks::rotation_entity const &_f)
+	model::callbacks::rotation_entity const &_f)
 {
 	return
 		rotation_entity_.connect(
@@ -115,7 +128,7 @@ sgeroids::model::local::object::rotation_entity_callback(
 
 fcppt::signal::auto_connection
 sgeroids::model::local::object::gameover_callback(
-	callbacks::gameover const &_f)
+	model::callbacks::gameover const &_f)
 {
 	return
 		gameover_.connect(
@@ -124,7 +137,7 @@ sgeroids::model::local::object::gameover_callback(
 
 fcppt::signal::auto_connection
 sgeroids::model::local::object::error_callback(
-	callbacks::error const &_f)
+	model::callbacks::error const &_f)
 {
 	return
 		error_.connect(
@@ -143,8 +156,8 @@ sgeroids::model::local::object::add_player(
 		it != entities_.end();
 		++it)
 	{
-		fcppt::optional<entity::spaceship &> maybe_a_ship(
-			fcppt::optional_dynamic_cast<entity::spaceship &>(
+		fcppt::optional<entity::spaceship const &> maybe_a_ship(
+			fcppt::optional_dynamic_cast<entity::spaceship const &>(
 				*(it->second)));
 
 		if(!maybe_a_ship)
@@ -176,19 +189,14 @@ sgeroids::model::local::object::add_player(
 			ship_position,
 			ship_rotation,
 			this->play_area(),
-			callbacks::insert_entity(
-				std::tr1::bind(
-					&object::insert_entity,
-					this,
-					std::tr1::placeholders::_1)),
-			callbacks::position_entity(
+			local::callbacks::position_entity_no_id(
 				std::tr1::bind(
 					&object::change_entity_position,
 					this,
 					model::entity_id(
 						next_id_),
 					std::tr1::placeholders::_1)),
-			callbacks::rotation_entity(
+			local::callbacks::rotation_entity_no_id(
 				std::tr1::bind(
 					&object::change_entity_rotation,
 					this,
@@ -202,7 +210,8 @@ sgeroids::model::local::object::add_player(
 	fcppt::container::ptr::insert_unique_ptr_map(
 		entities_,
 		next_id_,
-		to_add);
+		fcppt::move(
+			to_add));
 
 	add_spaceship_(
 		model::entity_id(
@@ -297,11 +306,11 @@ sgeroids::model::local::object::play_area() const
 {
 	return
 		sgeroids::model::play_area(
-			sgeroids::rect(
-				sgeroids::vector2(
+			sgeroids::model::rect(
+				sgeroids::model::vector2(
 					0,
 					0),
-				sgeroids::dim2(
+				sgeroids::model::dim2(
 					math::unit_magnitude() * 10000,
 					math::unit_magnitude() * 10000)));
 }
@@ -333,9 +342,9 @@ sgeroids::model::local::object::entity_updates()
 void
 sgeroids::model::local::object::collision_detection_broadphase()
 {
-	for(entity_map::const_iterator left = entities_.begin(); left != entities_.end(); ++left)
+	for(entity_map::iterator left = entities_.begin(); left != entities_.end(); ++left)
 	{
-		for(entity_map::const_iterator right = boost::next(left); right != entities_.end(); ++right)
+		for(entity_map::iterator right = boost::next(left); right != entities_.end(); ++right)
 		{
 			this->collision_detection_narrow_phase(
 				*(left->second),
@@ -351,10 +360,10 @@ sgeroids::model::local::object::collision_detection_narrow_phase(
 {
 	int const object_distance =
 		fcppt::math::vector::length_square(
-			_left.position() - _right.position());
+			_left.position().get() - _right.position().get());
 
 	int const sum_radii =
-		_left.radius() + _right.radius();
+		_left.radius().get() + _right.radius().get();
 
 	if(object_distance <= sum_radii*sum_radii)
 	{
@@ -394,7 +403,8 @@ sgeroids::model::local::object::search_spaceship_with_id(
 					_id.get())+
 				FCPPT_TEXT(" refers to an entity of (invalid) type ")+
 				fcppt::type_name(
-					base_ref));
+					typeid(
+						*(it->second))));
 
 	 return *maybe_a_ship;
 }
@@ -402,21 +412,21 @@ sgeroids::model::local::object::search_spaceship_with_id(
 void
 sgeroids::model::local::object::change_entity_position(
 	model::entity_id const &_id,
-	model::position const &_pos)
+	model::position const &_position)
 {
 	position_entity_(
 		_id,
-		_pos);
+		_position);
 }
 
 void
 sgeroids::model::local::object::change_entity_rotation(
 	model::entity_id const &_id,
-	model::rotation const &)
+	model::rotation const &_rotation)
 {
 	rotation_entity_(
 		_id,
-		_pos);
+		_rotation);
 }
 
 void

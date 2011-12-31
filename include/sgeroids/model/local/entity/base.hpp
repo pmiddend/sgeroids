@@ -1,10 +1,11 @@
 #ifndef SGEROIDS_MODEL_LOCAL_ENTITY_BASE_HPP_INCLUDED
 #define SGEROIDS_MODEL_LOCAL_ENTITY_BASE_HPP_INCLUDED
 
+#include <sgeroids/model/position.hpp>
 #include <sgeroids/model/radius.hpp>
 #include <sgeroids/model/rotation.hpp>
-#include <sgeroids/model/position.hpp>
 #include <fcppt/noncopyable.hpp>
+
 
 namespace sgeroids
 {

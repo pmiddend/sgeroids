@@ -2,12 +2,15 @@
 #define SGEROIDS_MODEL_LOCAL_ENTITY_SPACESHIP_HPP_INCLUDED
 
 #include <sgeroids/model/local/entity/base.hpp>
-#include <sgeroids/model/callbacks/position_entity.hpp>
-#include <sgeroids/model/callbacks/rotation_entity.hpp>
+#include <sgeroids/model/local/callbacks/position_entity_no_id.hpp>
+#include <sgeroids/model/local/callbacks/rotation_entity_no_id.hpp>
 #include <sgeroids/model/rotation_direction.hpp>
 #include <sgeroids/model/thrust.hpp>
 #include <sgeroids/model/player_name.hpp>
 #include <sgeroids/model/play_area.hpp>
+#include <fcppt/math/box/basic_impl.hpp>
+#include <fcppt/math/vector/basic_impl.hpp>
+#include <fcppt/math/dim/basic_impl.hpp>
 
 namespace sgeroids
 {
@@ -30,8 +33,11 @@ public:
 		model::position const &,
 		model::rotation const &,
 		model::play_area const &,
-		callbacks::position_entity const &,
-		callbacks::rotation_entity const &);
+		local::callbacks::position_entity_no_id const &,
+		local::callbacks::rotation_entity_no_id const &);
+
+	model::player_name const &
+	player_name() const;
 
 	void
 	update();
@@ -71,9 +77,10 @@ public:
 
 	~spaceship();
 private:
-	sgeroids::rect const play_area_;
-	callbacks::position_entity const position_entity_;
-	callbacks::rotation_entity const rotation_entity_;
+	model::player_name const player_name_;
+	model::rect const play_area_;
+	local::callbacks::position_entity_no_id const position_entity_;
+	local::callbacks::rotation_entity_no_id const rotation_entity_;
 	sgeroids::vector2 position_;
 	sgeroids::vector2 velocity_;
 	int rotation_;

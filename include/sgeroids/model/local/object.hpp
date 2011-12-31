@@ -1,8 +1,10 @@
 #ifndef SGEROIDS_MODEL_LOCAL_OBJECT_HPP_INCLUDED
 #define SGEROIDS_MODEL_LOCAL_OBJECT_HPP_INCLUDED
 
-#include <sgeroids/model/local/entity/unique_base_ptr.hpp>
 #include <sgeroids/model/base.hpp>
+#include <sgeroids/model/local/entity/unique_base_ptr.hpp>
+#include <sgeroids/model/local/error_context.hpp>
+#include <sgeroids/model/local/entity/spaceship_fwd.hpp>
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/signal/auto_connection.hpp>
 #include <fcppt/signal/object.hpp>
@@ -35,47 +37,47 @@ public:
 
 	fcppt::signal::auto_connection
 	add_spaceship_callback(
-		callbacks::add_spaceship const &);
+		model::callbacks::add_spaceship const &);
 
 	fcppt::signal::auto_connection
 	add_asteroid_callback(
-		callbacks::add_asteroid const &);
+		model::callbacks::add_asteroid const &);
 
 	fcppt::signal::auto_connection
 	add_projectile_callback(
-		callbacks::add_projectile const &);
+		model::callbacks::add_projectile const &);
 
 	fcppt::signal::auto_connection
 	collide_projectile_asteroid_callback(
-		callbacks::collide_projectile_asteroid const &);
+		model::callbacks::collide_projectile_asteroid const &);
 
 	fcppt::signal::auto_connection
 	score_change_callback(
-		callbacks::score_change const &);
+		model::callbacks::score_change const &);
 
 	fcppt::signal::auto_connection
 	destroy_asteroid_callback(
-		callbacks::destroy_asteroid const &);
+		model::callbacks::destroy_asteroid const &);
 
 	fcppt::signal::auto_connection
 	remove_entity_callback(
-		callbacks::remove_entity const &);
+		model::callbacks::remove_entity const &);
 
 	fcppt::signal::auto_connection
 	position_entity_callback(
-		callbacks::position_entity const &);
+		model::callbacks::position_entity const &);
 
 	fcppt::signal::auto_connection
 	rotation_entity_callback(
-		callbacks::rotation_entity const &);
+		model::callbacks::rotation_entity const &);
 
 	fcppt::signal::auto_connection
 	gameover_callback(
-		callbacks::gameover const &);
+		model::callbacks::gameover const &);
 
 	fcppt::signal::auto_connection
 	error_callback(
-		callbacks::error const &);
+		model::callbacks::error const &);
 
 	/**
 	\brief Try to add a player with the given name
@@ -145,6 +147,7 @@ private:
 	fcppt::signal::object<callbacks::position_entity_function> position_entity_;
 	fcppt::signal::object<callbacks::rotation_entity_function> rotation_entity_;
 	fcppt::signal::object<callbacks::gameover_function> gameover_;
+	fcppt::signal::object<callbacks::error_function> error_;
 
 	/**
 	\brief Updates all entities, deletes the dead ones

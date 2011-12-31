@@ -8,6 +8,9 @@ namespace sgeroids
 {
 namespace model
 {
+/**
+\brief Specifies the position of an entity
+*/
 FCPPT_MAKE_STRONG_TYPEDEF(
 	sgeroids::vector2,
 	position);

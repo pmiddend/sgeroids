@@ -2,8 +2,10 @@
 #include <fcppt/text.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/next_prior.hpp>
-#include <algorithm>
+#include <boost/spirit/home/phoenix/core.hpp>
+#include <boost/spirit/home/phoenix/operator.hpp>
 #include <functional>
+#include <numeric>
 #include <fcppt/config/external_end.hpp>
 
 
@@ -27,6 +29,6 @@ sgeroids::resource_tree::strip_file_extension(
 			boost::prior(
 				p.end()),
 			resource_tree::path(),
-			std::divides<resource_tree::path>()) /
+			boost::phoenix::arg_names::arg1 / boost::phoenix::arg_names::arg2) /
 		filename.substr(0,dot_position);
 }

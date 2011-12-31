@@ -11,6 +11,7 @@
 #include <fcppt/assert/pre.hpp>
 #include <fcppt/filesystem/exists.hpp>
 #include <fcppt/filesystem/is_directory.hpp>
+#include <fcppt/filesystem/directory_iterator.hpp>
 #include <fcppt/filesystem/is_regular.hpp>
 #include <fcppt/filesystem/path.hpp>
 #include <fcppt/filesystem/recursive_directory_iterator.hpp>
@@ -91,7 +92,8 @@ sgeroids::resource_tree::object<T>::add_directory(
 			resource_tree::path_with_resource<T>(
 				resource_tree::strip_file_extension(
 					resource_tree::strip_path_prefix(
-						_sub_path.get(),
+						resource_tree::base_path(
+							_sub_path.get()),
 						resource_tree::sub_path(
 							*it))),
 				_path_to_resource(
@@ -122,7 +124,7 @@ sgeroids::resource_tree::object<T>::get(
 	// If it's a _file_, it will be contained inside an element with the
 	// according prefix.
 	for(
-		element_sequence::const_iterator it =
+		typename element_sequence::const_iterator it =
 			elements_.begin();
 		it != elements_.end();
 		++it)

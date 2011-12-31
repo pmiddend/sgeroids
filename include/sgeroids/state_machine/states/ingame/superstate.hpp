@@ -1,10 +1,10 @@
 #ifndef SGEROIDS_STATE_MACHINE_STATES_INGAME_SUPERSTATE_HPP_INCLUDED
 #define SGEROIDS_STATE_MACHINE_STATES_INGAME_SUPERSTATE_HPP_INCLUDED
 
+#include <sgeroids/model/unique_base_ptr.hpp>
+#include <sgeroids/state_machine/object.hpp>
 #include <sgeroids/state_machine/events/render.hpp>
 #include <sgeroids/state_machine/events/tick.hpp>
-#include <sgeroids/state_machine/object.hpp>
-#include <sgeroids/model/unique_base_ptr.hpp>
 #include <sgeroids/view/unique_base_ptr.hpp>
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/signal/scoped_connection.hpp>

@@ -1,7 +1,7 @@
 #include <sgeroids/math/discrete_cos.hpp>
 #include <sgeroids/math/discrete_sin.hpp>
-#include <sgeroids/math/wrap_point_in_torus.hpp>
 #include <sgeroids/math/unit_magnitude.hpp>
+#include <sgeroids/math/wrap_point_in_torus.hpp>
 #include <sgeroids/model/local/entity/spaceship.hpp>
 #include <fcppt/optional_dynamic_cast.hpp>
 #include <fcppt/math/vector/arithmetic.hpp>
@@ -12,8 +12,8 @@ sgeroids::model::local::entity::spaceship::spaceship(
 	model::position const &_position,
 	model::rotation const &_rotation,
 	model::play_area const &_play_area,
-	callbacks::position_entity const &_position_entity,
-	callbacks::rotation_entity const &_rotation_entity)
+	local::callbacks::position_entity_no_id const &_position_entity,
+	local::callbacks::rotation_entity_no_id const &_rotation_entity)
 :
 	entity::base(),
 	play_area_(
@@ -35,6 +35,12 @@ sgeroids::model::local::entity::spaceship::spaceship(
 	dead_(
 		false)
 {
+}
+
+sgeroids::model::player_name const &
+sgeroids::model::local::entity::spaceship::player_name() const
+{
+	return player_name_;
 }
 
 void
@@ -102,7 +108,7 @@ sgeroids::model::local::entity::spaceship::radius() const
 
 void
 sgeroids::model::local::entity::spaceship::collides_with(
-	entity::base &_other)
+	entity::base &/*_other*/)
 {
 	/*
 	if(fcppt::optional_dynamic_cast<entity::asteroid const &>(_other))

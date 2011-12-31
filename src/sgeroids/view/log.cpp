@@ -1,4 +1,9 @@
 #include <sgeroids/view/log.hpp>
+#include <sgeroids/log_context.hpp>
+#include <fcppt/log/object.hpp>
+#include <fcppt/log/parameters/with_context.hpp>
+#include <fcppt/io/cout.hpp>
+#include <fcppt/text.hpp>
 
 fcppt::log::object &
 sgeroids::view::log()

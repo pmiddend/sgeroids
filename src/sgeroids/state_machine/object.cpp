@@ -1,16 +1,20 @@
 #include <sgeroids/exception.hpp>
 #include <sgeroids/media_path.hpp>
-#include <sgeroids/program_version.hpp>
+#include <sgeroids/version.hpp>
 #include <sgeroids/utf8_file_to_fcppt_string.hpp>
 #include <sgeroids/state_machine/object.hpp>
 #include <sgeroids/state_machine/events/render.hpp>
 #include <sgeroids/state_machine/events/tick.hpp>
 #include <sge/media/extension.hpp>
+#include <sge/renderer/no_multi_sampling.hpp>
 #include <sge/media/extension_set.hpp>
+#include <sge/renderer/scoped_block.hpp>
+#include <sge/systems/list.hpp>
 #include <sge/parse/json/convert_from.hpp>
 #include <sge/parse/json/find_and_convert_member.hpp>
 #include <sge/parse/json/parse_string_exn.hpp>
 #include <sge/parse/json/path.hpp>
+#include <sge/window/system.hpp>
 #include <sge/parse/json/config/create_command_line_parameters.hpp>
 #include <sge/parse/json/config/merge_command_line_parameters.hpp>
 #include <sge/parse/json/config/merge_trees.hpp>
@@ -108,9 +112,11 @@ sgeroids::state_machine::object::object(
 			(sge::systems::window(
 				sge::window::parameters(
 					sge::window::title(
-						FCPPT_TEXT("sgeroids")+
-						sgeroids::program_version()),
-					window_dim)))
+						FCPPT_TEXT("sgeroids-")+
+						sgeroids::version()),
+					sge::parse::json::find_and_convert_member<sge::window::dim>(
+						this->config(),
+						sge::parse::json::path(FCPPT_TEXT("renderer")) / FCPPT_TEXT("window-size")))))
 			(sge::systems::renderer(
 				renderer_parameters_from_config_file(
 					this->config()),
@@ -157,13 +163,13 @@ sgeroids::state_machine::object::run()
 		systems_.window_system().poll();
 
 		this->process_event(
-			state_machine::events::tick());
+			sgeroids::state_machine::events::tick());
 
 		sge::renderer::scoped_block const block_(
-			sys.renderer());
+			systems_.renderer());
 
 		this->process_event(
-			state_machine::events::render());
+			sgeroids::state_machine::events::render());
 	}
 }
 

@@ -3,8 +3,11 @@
 #include <sgeroids/random_generator_seed.hpp>
 #include <sgeroids/view/log.hpp>
 #include <sgeroids/view/planar/object.hpp>
+#include <sge/sprite/default_equal.hpp>
+#include <sge/sprite/render_states.hpp>
 #include <sgeroids/view/planar/radius_to_screen_space.hpp>
-#include <sgeroids/view/planar/entities/spaceship.hpp>
+#include <sgeroids/view/planar/rotation_to_screen_space.hpp>
+#include <sgeroids/view/planar/entity/spaceship.hpp>
 #include <sge/audio/loader.hpp>
 #include <sge/audio/player.hpp>
 #include <sge/image/colors.hpp>
@@ -47,7 +50,7 @@ sgeroids::view::planar::object::object(
 	texture_manager_(
 		std::tr1::bind(
 			&object::create_new_texture_callback,
-			this))
+			this)),
 	texture_tree_(
 		sgeroids::media_path() / FCPPT_TEXT("images"),
 		std::tr1::bind(
@@ -55,7 +58,8 @@ sgeroids::view::planar::object::object(
 			this,
 			fcppt::ref(
 				_image_system),
-			std::tr1::placeholders::_1)),
+			std::tr1::placeholders::_1),
+		rng_),
 	audio_buffer_tree_(
 		sgeroids::media_path() / FCPPT_TEXT("sounds"),
 		std::tr1::bind(
@@ -63,7 +67,8 @@ sgeroids::view::planar::object::object(
 			this,
 			fcppt::ref(
 				_audio_loader),
-			std::tr1::placeholders::_1))
+			std::tr1::placeholders::_1),
+		rng_),
 	sprite_system_(
 		renderer_),
 	projection_matrix_(),
@@ -85,10 +90,12 @@ sgeroids::view::planar::object::add_spaceship(
 
 	fcppt::container::ptr::insert_unique_ptr_map(
 		entities_,
-		fcppt::make_unique_ptr<entities::spaceship>(
+		_id.get(),
+		fcppt::make_unique_ptr<entity::spaceship>(
 			fcppt::ref(
 				sprite_system_),
-			texture_tree_,
+			fcppt::ref(
+				texture_tree_),
 			planar::radius_to_screen_space(
 				_radius)));
 }
@@ -131,7 +138,7 @@ sgeroids::view::planar::object::remove_entity(
 {
 	entity_map::size_type const erased_elements =
 		entities_.erase(
-			_id);
+			_id.get());
 
 	if(erased_elements != 1u)
 		throw
@@ -165,7 +172,8 @@ sgeroids::view::planar::object::position_entity(
 				FCPPT_TEXT("position_entity")));
 
 	e.position(
-		_position);
+		planar::position(
+			_position.get()));
 }
 
 void
@@ -173,7 +181,6 @@ sgeroids::view::planar::object::rotation_entity(
 	model::entity_id const &_id,
 	model::rotation const &_rotation)
 {
-}
 	FCPPT_LOG_DEBUG(
 		view::log(),
 		fcppt::log::_
@@ -189,16 +196,18 @@ sgeroids::view::planar::object::rotation_entity(
 				FCPPT_TEXT("rotation_entity")));
 
 	e.rotation(
-		_rotation);
+		planar::rotation_to_screen_space(
+			_rotation));
+}
 
 void
 sgeroids::view::planar::object::play_area(
-	sgeroids::rect const &_area)
+	sgeroids::model::play_area const &_area)
 {
 	projection_matrix_ =
 		sge::renderer::projection::orthogonal(
 			fcppt::math::box::structure_cast<sge::renderer::projection::rect>(
-				_area),
+				_area.get()),
 			// 0 and 10 are just guesses
 			sge::renderer::projection::near(
 				0),
@@ -212,7 +221,7 @@ sgeroids::view::planar::object::update()
 	for(
 		entity_map::iterator it =
 			entities_.begin();
-		it != entities.end();
+		it != entities_.end();
 		++it)
 		it->second->update();
 }
@@ -230,9 +239,9 @@ sgeroids::view::planar::object::render()
 		sge::renderer::matrix_mode::world,
 		sge::renderer::matrix4::identity());
 
-	sge::renderer::state::scoped scoped_sprite-states(
+	sge::renderer::state::scoped scoped_sprite_states(
 		renderer_,
-		sge::sprite::render_states());
+		sge::sprite::render_states<planar::sprite::choices>());
 
 	sge::renderer::state::scoped scoped_states(
 		renderer_,
@@ -243,7 +252,8 @@ sgeroids::view::planar::object::render()
 		sge::renderer::clear_flags_field(
 			sge::renderer::clear_flags::back_buffer));
 
-	sprite_system_.render_advanced();
+	sprite_system_.render_all_advanced(
+		sge::sprite::default_equal());
 }
 
 void
@@ -259,18 +269,19 @@ sge::texture::fragmented_unique_ptr
 sgeroids::view::planar::object::create_new_texture_callback()
 {
 	return
-		fcppt::make_unique_ptr<sge::texture::no_fragmented>(
-			fcppt::ref(
-				renderer_),
-			// Using this color format for the textures is pure
-			// convention. We need an r,g,b and an alpha channel,
-			// but maybe argb8 or something would be better.
-			sge::image::color::format::rgba8,
-			// This is just guesswork. Maybe mipmaps would be
-			// better (especially since we're using no_fragmented
-			// here, which doesn't suffer from "bleeding" artefacts
-			// like the atlased texture).
-			sge::renderer::texture::mipmap::off());
+		sge::texture::fragmented_unique_ptr(
+			fcppt::make_unique_ptr<sge::texture::no_fragmented>(
+				fcppt::ref(
+					renderer_),
+				// Using this color format for the textures is pure
+				// convention. We need an r,g,b and an alpha channel,
+				// but maybe argb8 or something would be better.
+				sge::image::color::format::rgba8,
+				// This is just guesswork. Maybe mipmaps would be
+				// better (especially since we're using no_fragmented
+				// here, which doesn't suffer from "bleeding" artefacts
+				// like the atlased texture).
+				sge::renderer::texture::mipmap::off()));
 }
 
 sge::texture::const_part_ptr const
@@ -281,7 +292,7 @@ sgeroids::view::planar::object::create_texture_from_path(
 	return
 		sge::texture::add_image(
 			texture_manager_,
-			_image_loader.load(
+			*_image_loader.load(
 				_path));
 
 }
@@ -305,7 +316,7 @@ sgeroids::view::planar::object::search_entity(
 {
 	entity_map::iterator const it =
 		entities_.find(
-			_id);
+			_id.get());
 
 	if(it == entities_.end())
 		throw

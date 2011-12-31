@@ -1,5 +1,6 @@
 #include <sgeroids/resource_tree/path.hpp>
 #include <fcppt/config/external_begin.hpp>
+#include <boost/next_prior.hpp>
 #include <algorithm>
 #include <fcppt/config/external_end.hpp>
 
@@ -21,7 +22,7 @@ sgeroids::resource_tree::path::operator/=(
 
 sgeroids::resource_tree::path
 sgeroids::resource_tree::path::operator/(
-	fcppt::string const &s)
+	fcppt::string const &s) const
 {
 	path result(
 		*this);
@@ -48,7 +49,7 @@ sgeroids::resource_tree::path::operator==(
 	path const &_p) const
 {
 	return
-		std::equals(
+		std::equal(
 			elements_.begin(),
 			elements_.end(),
 			_p.elements_.begin());
@@ -61,7 +62,7 @@ sgeroids::resource_tree::path::back() const
 }
 
 fcppt::string const
-sgeroids::resource_tree::string() const
+sgeroids::resource_tree::path::string() const
 {
 	fcppt::string result;
 

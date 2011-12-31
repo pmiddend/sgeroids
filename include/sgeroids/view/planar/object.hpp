@@ -2,16 +2,16 @@
 #define SGEROIDS_VIEW_PLANAR_OBJECT_HPP_INCLUDED
 
 #include <sgeroids/random_generator.hpp>
-#include <sgeroids/rect.hpp>
 #include <sgeroids/resource_tree/object.hpp>
 #include <sgeroids/view/base.hpp>
+#include <sgeroids/view/planar/texture_tree.hpp>
 #include <sgeroids/view/planar/error_context.hpp>
 #include <sgeroids/view/planar/entity/base_fwd.hpp>
 #include <sgeroids/view/planar/sprite/system.hpp>
 #include <sge/audio/buffer_ptr.hpp>
 #include <sge/audio/loader_fwd.hpp>
 #include <sge/audio/player_fwd.hpp>
-#include <sge/font/device_fwd.hpp>
+#include <sge/font/system_fwd.hpp>
 #include <sge/image2d/system_fwd.hpp>
 #include <sge/renderer/device_fwd.hpp>
 #include <sge/renderer/matrix4.hpp>
@@ -24,6 +24,7 @@
 #include <fcppt/config/external_begin.hpp>
 #include <boost/ptr_container/ptr_map.hpp>
 #include <fcppt/config/external_end.hpp>
+#include <sgeroids/view/planar/sprite/system_impl.hpp>
 
 
 namespace sgeroids
@@ -53,7 +54,7 @@ public:
 	void
 	add_spaceship(
 		model::entity_id const &,
-		model::radius const &
+		model::radius const &,
 		model::player_name const &);
 
 	void
@@ -94,7 +95,7 @@ public:
 
 	void
 	play_area(
-		sgeroids::rect const &);
+		sgeroids::model::play_area const &);
 
 	void
 	gameover();
@@ -117,8 +118,8 @@ private:
 	sge::texture::manager texture_manager_;
 	planar::texture_tree texture_tree_;
 	sgeroids::resource_tree::object<sge::audio::buffer_ptr> audio_buffer_tree_;
-	sge::renderer::matrix4 projection_matrix_;
 	planar::sprite::system sprite_system_;
+	sge::renderer::matrix4 projection_matrix_;
 	entity_map entities_;
 
 	/**
@@ -138,7 +139,7 @@ private:
 	/**
 	\brief This function is called by the audio buffer tree to create an audio buffer out of a path
 	*/
-	sge::texture::const_part_ptr const
+	sge::audio::buffer_ptr const
 	create_audio_buffer_from_path(
 		sge::audio::loader &,
 		fcppt::filesystem::path const &);

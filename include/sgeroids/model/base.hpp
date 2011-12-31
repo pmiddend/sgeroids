@@ -103,7 +103,8 @@ public:
 		model::rotation_direction const &) = 0;
 
 	virtual void
-	end_rotation() = 0;
+	end_rotation(
+		model::entity_id const &) = 0;
 
 	virtual void
 	change_thrust(

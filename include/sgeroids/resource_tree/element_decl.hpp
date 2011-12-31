@@ -5,6 +5,7 @@
 #include <sgeroids/resource_tree/element_fwd.hpp>
 #include <sgeroids/resource_tree/path_with_resource.hpp>
 #include <fcppt/random/uniform.hpp>
+#include <fcppt/noncopyable.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
@@ -76,7 +77,7 @@ public:
 private:
 	resource_tree::path const base_path_;
 	resource_container resources_;
-	fcppt::random::uniform<typename resource_container::size_type> rng_;
+	mutable fcppt::random::uniform<typename resource_container::size_type> rng_;
 };
 }
 }

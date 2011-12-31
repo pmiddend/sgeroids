@@ -1,9 +1,14 @@
+#include <sge/image/color/any/object.hpp>
+#include <sge/image/colors.hpp>
 #include <sgeroids/resource_tree/object_impl.hpp>
 #include <sgeroids/view/planar/entity/spaceship.hpp>
 #include <sgeroids/view/planar/sprite/dim.hpp>
+#include <sgeroids/view/planar/sprite/parameters.hpp>
+#include <sgeroids/view/planar/sprite/system_impl.hpp>
+#include <sgeroids/view/planar/sprite_size_from_texture_and_radius.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <sgeoids/resource_tree/path.hpp>
+#include <sgeroids/resource_tree/path.hpp>
 #include <fcppt/config/external_end.hpp>
 
 
@@ -14,6 +19,8 @@ sgeroids::view::planar::entity::spaceship::spaceship(
 :
 	sprite_(
 		planar::sprite::parameters()
+			.system(
+				_sprite_system)
 			.size(
 				planar::sprite_size_from_texture_and_radius(
 					_texture_tree.get(

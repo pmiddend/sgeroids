@@ -4,8 +4,11 @@
 #include <sgeroids/state_machine/states/ingame/superstate_fwd.hpp>
 #include <sge/parse/json/object.hpp>
 #include <sge/systems/instance.hpp>
-#include <boost/statechart/state_machine.hpp>
 #include <fcppt/noncopyable.hpp>
+#include <fcppt/config/external_begin.hpp>
+#include <boost/statechart/state_machine.hpp>
+#include <fcppt/config/external_end.hpp>
+
 
 namespace sgeroids
 {

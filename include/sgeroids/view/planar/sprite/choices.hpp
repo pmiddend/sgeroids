@@ -5,6 +5,7 @@
 #include <sge/sprite/with_color.hpp>
 #include <sge/sprite/with_dim.hpp>
 #include <sge/sprite/with_rotation.hpp>
+#include <sge/sprite/choices.hpp>
 #include <sge/sprite/with_texture.hpp>
 #include <sge/sprite/intrusive/tag.hpp>
 #include <fcppt/config/external_begin.hpp>

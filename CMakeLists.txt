@@ -1,27 +1,61 @@
 # 2.6 is more or less guesswork
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+cmake_minimum_required(VERSION 2.6)
 
-PROJECT(
+project(
 	sgeroids)
 
-INCLUDE(
+include(
 	FcpptCMakeUtils)
 
 # Versioning stuff begin
-SET(SGEROIDS_MAJOR_VERSION 0)
-SET(SGEROIDS_MINOR_VERSION 1)
-SET(SGEROIDS_MICRO_VERSION 0)
+set(SGEROIDS_MAJOR_VERSION 0)
+set(SGEROIDS_MINOR_VERSION 1)
+set(SGEROIDS_MICRO_VERSION 0)
 
-SET(
+set(
 	SGEROIDS_VERSION
 	"${SGEROIDS_MAJOR_VERSION}.${SGEROIDS_MINOR_VERSION}.${SGEROIDS_MICRO_VERSION}")
 
-# TODO: Does this work on Windows?
-SET_SOURCE_FILES_PROPERTIES(
-	src/sgeroids/program_version.cpp
-	PROPERTIES
-	COMPILE_FLAGS
-	"-D SGEROIDS_VERSION=\"\\\"${SGEROIDS_VERSION}\\\"\"")
+file(
+	WRITE
+	${CMAKE_CURRENT_BINARY_DIR}/version.hpp.in
+"
+#ifndef SGEROIDS_BUILD_VERSION_HPP_INCLUDED
+#define SGEROIDS_BUILD_VERSION_HPP_INCLUDED
+
+#include <fcppt/text.hpp>
+#include <fcppt/string.hpp>
+
+#define SGEROIDS_CONFIG_TEXT_WRAPPER(\\
+	text\\
+)\\
+	FCPPT_TEXT(\\
+		text\\
+	)
+
+namespace sgeroids
+{
+inline fcppt::string const
+build_version()
+{
+	return
+		SGEROIDS_CONFIG_TEXT_WRAPPER(\"@SGEROIDS_VERSION\");
+}
+}
+
+#endif
+")
+
+set(
+	SGEROIDS_CONFIG_INCLUDE_DIR
+	${CMAKE_BINARY_DIR}/sgeroidsconfig/include)
+
+configure_file(
+	${CMAKE_CURRENT_BINARY_DIR}/version.hpp.in
+	${SGEROIDS_CONFIG_INCLUDE_DIR}/sgeroids/build/version.hpp)
+
+include_directories(
+	${SGEROIDS_CONFIG_INCLUDE_DIR})
 # Versioning stuff end
 
 # Boost begin
@@ -109,10 +143,10 @@ SET(
 	src/sgeroids/math/discrete_cos.cpp
 	src/sgeroids/math/discrete_sin.cpp
 	src/sgeroids/math/unit_magnitude.cpp
+	src/sgeroids/media_path.cpp
 	src/sgeroids/model/local/entity/base.cpp
 	src/sgeroids/model/local/entity/spaceship.cpp
 	src/sgeroids/model/local/object.cpp
-	src/sgeroids/program_version.cpp
 	src/sgeroids/random_generator_seed.cpp
 	src/sgeroids/resource_tree/path.cpp
 	src/sgeroids/resource_tree/strip_file_extension.cpp
@@ -120,6 +154,7 @@ SET(
 	src/sgeroids/state_machine/object.cpp
 	src/sgeroids/state_machine/states/ingame/superstate.cpp
 	src/sgeroids/utf8_file_to_fcppt_string.cpp
+	src/sgeroids/version.cpp
 	src/sgeroids/view/base.cpp
 	src/sgeroids/view/log.cpp
 	src/sgeroids/view/planar/entity/base.cpp
