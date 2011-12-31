@@ -10,15 +10,14 @@ Explain model/view/presenter here, also resources
 The state machine is just that: a <a
 href="http://en.wikipedia.org/wiki/State_machine">state machine</a>. The game
 consists of multiple states, forming a hierarchy. Below the
-\link sgeroids::state_machine::states::ingame::superstate states::ingame::superstate \endlink, there are
-\link sgeroids::state_machine::states::ingame::running states::ingame::running \endlink and
-\link sgeroids::state_machine::states::ingame::paused states::ingame::paused
-\endlink, for example. The parent object of all states is the state machine:
-sgeroids::state_machine::object. It contains all the data structures that are
-"valid" and usable throughout the whole game. These are very general structures
-such as the json configuration file (see below) and the renderer. The following
-list should clarify what happens when the game starts and what happens when it
-is running:
+\link sgeroids::state_machine::states::ingame::superstate
+states::ingame::superstate \endlink, there are states::ingame::running and
+states::ingame::paused, for example. The parent object of all states is the
+state machine: sgeroids::state_machine::object. It contains all the data
+structures that are "valid" and usable throughout the whole game. These are
+very general structures such as the json configuration file (see below) and the
+renderer. The following list should clarify what happens when the game starts
+and what happens when it is running:
 
 <ol>
 	<li>
@@ -39,11 +38,11 @@ is running:
 	</li>
 	<li>
 		After all states are constructed, <code>main</code> calls
-		sgeroids::machine::run.
+		sgeroids::state_machine::object::run.
 	</li>
 	<li>
 		The <code>run</code> function enters a loop that stops when
-		someone calls sgeroids::machine::exit_mainloop.
+		someone calls sgeroids::state_machine::object::exit_mainloop.
 	</li>
 	<li>
 		The main loop first dispatches all events (input events,

@@ -162,7 +162,7 @@ private:
 	element_sequence elements_;
 
 	void
-	sgeroids::resource_tree::object<T>::add_directory(
+	add_directory(
 		resource_tree::base_path const &,
 		resource_tree::sub_path const &,
 		path_to_resource_function const &,
