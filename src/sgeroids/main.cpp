@@ -19,6 +19,7 @@ main(
 try
 {
 	fcppt::io::cerr() << sgeroids::version() << FCPPT_TEXT("\n");
+
 	sgeroids::state_machine::object m(
 		argc,
 		argv);

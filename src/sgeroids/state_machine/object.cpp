@@ -10,6 +10,7 @@
 #include <sge/media/extension_set.hpp>
 #include <sge/renderer/scoped_block.hpp>
 #include <sge/systems/list.hpp>
+#include <sge/systems/font.hpp>
 #include <sge/parse/json/convert_from.hpp>
 #include <sge/parse/json/find_and_convert_member.hpp>
 #include <sge/parse/json/parse_string_exn.hpp>
@@ -68,7 +69,7 @@ renderer_parameters_from_config_file(
 	unsigned const visual_depth_value =
 		sge::parse::json::find_and_convert_member<unsigned>(
 			_config,
-			sge::parse::json::path(FCPPT_TEXT("renderer")) / FCPPT_TEXT("visual_depth"));
+			sge::parse::json::path(FCPPT_TEXT("renderer")) / FCPPT_TEXT("visual-depth"));
 
 	sge::renderer::visual_depth::type const
 		visual_depth_sge =
@@ -126,6 +127,7 @@ sgeroids::state_machine::object::object(
 					sge::systems::input_helper::keyboard_collector),
 				sge::systems::cursor_option_field::null()))
 			(sge::systems::audio_player_default())
+			(sge::systems::font())
 			(sge::systems::image2d(
 				sge::image::capabilities_field::null(),
 				sge::media::optional_extension_set(
