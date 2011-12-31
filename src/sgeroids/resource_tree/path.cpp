@@ -1,4 +1,5 @@
 #include <sgeroids/resource_tree/path.hpp>
+#include <fcppt/text.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/next_prior.hpp>
 #include <algorithm>
@@ -73,7 +74,7 @@ sgeroids::resource_tree::path::string() const
 		++it)
 	{
 		if(it != boost::prior(elements_.end()))
-			result += (*it)+"/";
+			result += (*it)+FCPPT_TEXT("/");
 		else
 			result += (*it);
 	}
