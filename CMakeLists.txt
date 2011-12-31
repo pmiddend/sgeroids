@@ -26,20 +26,13 @@ file(
 #include <fcppt/text.hpp>
 #include <fcppt/string.hpp>
 
-#define SGEROIDS_CONFIG_TEXT_WRAPPER(\\
-	text\\
-)\\
-	FCPPT_TEXT(\\
-		text\\
-	)
-
 namespace sgeroids
 {
 inline fcppt::string const
 build_version()
 {
 	return
-		SGEROIDS_CONFIG_TEXT_WRAPPER(\"@SGEROIDS_VERSION\");
+		FCPPT_TEXT(\"@SGEROIDS_VERSION@\");
 }
 }
 
@@ -91,6 +84,7 @@ FIND_PACKAGE(
 	image
 	image2d
 	input
+	core
 	renderer
 	sprite
 	texture
@@ -144,6 +138,7 @@ SET(
 	src/sgeroids/math/discrete_sin.cpp
 	src/sgeroids/math/unit_magnitude.cpp
 	src/sgeroids/media_path.cpp
+	src/sgeroids/model/base.cpp
 	src/sgeroids/model/local/entity/base.cpp
 	src/sgeroids/model/local/entity/spaceship.cpp
 	src/sgeroids/model/local/object.cpp

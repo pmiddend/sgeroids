@@ -1,5 +1,6 @@
 #include <sgeroids/state_machine/object.hpp>
 #include <sgeroids/state_machine/states/ingame/superstate.hpp>
+#include <sgeroids/version.hpp>
 #include <fcppt/scoped_state_machine.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/io/cerr.hpp>
@@ -17,6 +18,7 @@ main(
 	char *argv[])
 try
 {
+	fcppt::io::cerr() << sgeroids::version() << FCPPT_TEXT("\n");
 	sgeroids::state_machine::object m(
 		argc,
 		argv);

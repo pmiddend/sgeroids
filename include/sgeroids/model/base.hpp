@@ -92,7 +92,7 @@ public:
 	*/
 	virtual void
 	add_player(
-		model::player_name const &);
+		model::player_name const &) = 0;
 
 	/**
 	\brief Start the rotation of a ship.
@@ -120,7 +120,7 @@ public:
 		model::entity_id const &) = 0;
 
 	virtual model::play_area const
-	play_area() const;
+	play_area() const = 0;
 
 	virtual
 	~base() = 0;

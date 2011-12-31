@@ -14,6 +14,9 @@
 #include <fcppt/filesystem/directory_iterator.hpp>
 #include <fcppt/filesystem/is_regular.hpp>
 #include <fcppt/filesystem/path.hpp>
+#include <fcppt/container/ptr/push_back_unique_ptr.hpp>
+#include <fcppt/make_unique_ptr.hpp>
+#include <fcppt/ref.hpp>
 #include <fcppt/filesystem/recursive_directory_iterator.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <iterator>
@@ -101,13 +104,15 @@ sgeroids::resource_tree::object<T>::add_directory(
 	}
 
 	// Second, create the element structure containing the files
-	elements_.push_back(
-		element_type(
+	fcppt::container::ptr::push_back_unique_ptr(
+		elements_,
+		fcppt::make_unique_ptr<element_type>(
 			resource_tree::strip_path_prefix(
 					_base_path,
 					_sub_path),
 			resources,
-			_random_generator));
+			fcppt::ref(
+				_random_generator)));
 }
 
 template<typename T>
@@ -141,6 +146,10 @@ sgeroids::resource_tree::object<T>::get(
 		FCPPT_TEXT("Tried to access the location ")+
 		_p.string()+
 		FCPPT_TEXT(" which could not be found in the resource tree."));
+}
+template<typename T>
+sgeroids::resource_tree::object<T>::~object()
+{
 }
 
 #endif

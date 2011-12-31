@@ -11,6 +11,7 @@
 #include <fcppt/filesystem/path.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <vector>
+#include <boost/ptr_container/ptr_vector.hpp>
 #include <fcppt/config/external_end.hpp>
 
 
@@ -156,7 +157,7 @@ private:
 	element_type;
 
 	typedef
-	std::vector<element_type>
+	boost::ptr_vector<element_type>
 	element_sequence;
 
 	element_sequence elements_;
