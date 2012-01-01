@@ -23,6 +23,9 @@
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
+#include <iostream>
+#include <fcppt/filesystem/path_to_string.hpp>
+
 
 template<typename T>
 sgeroids::resource_tree::object<T>::object(
@@ -43,6 +46,9 @@ sgeroids::resource_tree::object<T>::object(
 
 	path_vector directories;
 
+	directories.push_back(
+		_path);
+
 	fcppt::algorithm::copy_if(
 		fcppt::filesystem::recursive_directory_iterator(
 			_path),
@@ -50,7 +56,6 @@ sgeroids::resource_tree::object<T>::object(
 		std::back_inserter<path_vector>(
 			directories),
 		&fcppt::filesystem::is_directory);
-
 
 	for(
 		path_vector::const_iterator it = directories.begin();
@@ -143,9 +148,9 @@ sgeroids::resource_tree::object<T>::get(
 	}
 
 	throw sgeroids::exception(
-		FCPPT_TEXT("Tried to access the location ")+
+		FCPPT_TEXT("Tried to access the location \"")+
 		_p.string()+
-		FCPPT_TEXT(" which could not be found in the resource tree."));
+		FCPPT_TEXT("\" which could not be found in the resource tree."));
 }
 template<typename T>
 sgeroids::resource_tree::object<T>::~object()

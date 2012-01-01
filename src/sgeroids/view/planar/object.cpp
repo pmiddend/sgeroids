@@ -33,7 +33,6 @@
 #include <fcppt/math/vector/output.hpp>
 #include <fcppt/tr1/functional.hpp>
 
-
 sgeroids::view::planar::object::object(
 	sge::renderer::device &_renderer,
 	sge::font::system &,
@@ -86,7 +85,8 @@ sgeroids::view::planar::object::add_spaceship(
 		view::log(),
 		fcppt::log::_
 			<< FCPPT_TEXT("Adding spaceship with player name \"")
-			<< _name.get());
+			<< _name.get()
+			<< FCPPT_TEXT("\""));
 
 	fcppt::container::ptr::insert_unique_ptr_map(
 		entities_,
@@ -160,7 +160,7 @@ sgeroids::view::planar::object::position_entity(
 	FCPPT_LOG_DEBUG(
 		view::log(),
 		fcppt::log::_
-			<< FCPPT_TEXT("New position for entity \"")
+			<< FCPPT_TEXT("New position for entity ")
 			<< _id.get()
 			<< FCPPT_TEXT(": ")
 			<< _position.get());
@@ -184,7 +184,7 @@ sgeroids::view::planar::object::rotation_entity(
 	FCPPT_LOG_DEBUG(
 		view::log(),
 		fcppt::log::_
-			<< FCPPT_TEXT("New rotation for entity \"")
+			<< FCPPT_TEXT("New rotation for entity ")
 			<< _id.get()
 			<< FCPPT_TEXT(": ")
 			<< _rotation.get());
@@ -248,9 +248,11 @@ sgeroids::view::planar::object::render()
 		sge::renderer::state::list
 			(sge::renderer::state::color::back_buffer_clear_color = sge::image::colors::black()));
 
+	/*
 	renderer_.clear(
 		sge::renderer::clear_flags_field(
 			sge::renderer::clear_flags::back_buffer));
+			*/
 
 	sprite_system_.render_all_advanced(
 		sge::sprite::default_equal());

@@ -1,3 +1,4 @@
+#include <fcppt/tr1/functional.hpp>
 #include <sgeroids/model/local/object.hpp>
 #include <sgeroids/state_machine/states/ingame/superstate.hpp>
 #include <sgeroids/view/planar/object.hpp>
@@ -33,8 +34,69 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 				sge::input::keyboard::key_code::escape,
 				std::tr1::bind(
 					&state_machine::object::exit_mainloop,
-					&(this->context<state_machine::object>())))))
+					&(this->context<state_machine::object>()))))),
+	add_spaceship_connection_(
+		model_->add_spaceship_callback(
+			std::tr1::bind(
+				&view::base::add_spaceship,
+				view_.get(),
+				std::tr1::placeholders::_1,
+				std::tr1::placeholders::_2,
+				std::tr1::placeholders::_3))),
+	add_asteroid_connection_(
+		model_->add_asteroid_callback(
+			std::tr1::bind(
+				&view::base::add_asteroid,
+				view_.get(),
+				std::tr1::placeholders::_1,
+				std::tr1::placeholders::_2))),
+	add_projectile_connection_(
+		model_->add_projectile_callback(
+			std::tr1::bind(
+				&view::base::add_projectile,
+				view_.get(),
+				std::tr1::placeholders::_1))),
+	collide_projectile_asteroid_connection_(
+		model_->collide_projectile_asteroid_callback(
+			std::tr1::bind(
+				&view::base::collide_projectile_asteroid,
+				view_.get(),
+				std::tr1::placeholders::_1,
+				std::tr1::placeholders::_2))),
+	score_change_connection_(
+		model_->score_change_callback(
+			std::tr1::bind(
+				&view::base::score_change,
+				view_.get(),
+				std::tr1::placeholders::_1))),
+	destroy_asteroid_connection_(
+		model_->destroy_asteroid_callback(
+			std::tr1::bind(
+				&view::base::destroy_asteroid,
+				view_.get(),
+				std::tr1::placeholders::_1))),
+	remove_entity_connection_(
+		model_->remove_entity_callback(
+			std::tr1::bind(
+				&view::base::remove_entity,
+				view_.get(),
+				std::tr1::placeholders::_1))),
+	position_entity_connection_(
+		model_->position_entity_callback(
+			std::tr1::bind(
+				&view::base::position_entity,
+				view_.get(),
+				std::tr1::placeholders::_1,
+				std::tr1::placeholders::_2))),
+	gameover_connection_(
+		model_->gameover_callback(
+			std::tr1::bind(
+				&view::base::gameover,
+				view_.get())))
 {
+	view_->play_area(
+		model_->play_area());
+
 	model_->add_player(
 		model::player_name(
 			FCPPT_TEXT("Spast")));

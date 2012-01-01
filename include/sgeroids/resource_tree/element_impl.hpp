@@ -20,7 +20,14 @@ sgeroids::resource_tree::element<T>::element(
 		fcppt::random::make_last_exclusive_range(
 			static_cast<typename resource_container::size_type>(
 				0),
-			resources_.size()),
+			// Empty elements are allowed, but last_exclusive_range
+			// must not be empty, so hack here
+			resources_.empty()
+			?
+				static_cast<typename resource_container::size_type>(
+					1)
+			:
+				resources_.size()),
 		_rng)
 {
 }

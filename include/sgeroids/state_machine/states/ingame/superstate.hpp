@@ -56,6 +56,17 @@ private:
 	sgeroids::model::unique_base_ptr model_;
 	sgeroids::view::unique_base_ptr view_;
 	fcppt::signal::scoped_connection escape_exit_connection_;
+
+	// Connections from the model to the view
+	fcppt::signal::scoped_connection add_spaceship_connection_;
+	fcppt::signal::scoped_connection add_asteroid_connection_;
+	fcppt::signal::scoped_connection add_projectile_connection_;
+	fcppt::signal::scoped_connection collide_projectile_asteroid_connection_;
+	fcppt::signal::scoped_connection score_change_connection_;
+	fcppt::signal::scoped_connection destroy_asteroid_connection_;
+	fcppt::signal::scoped_connection remove_entity_connection_;
+	fcppt::signal::scoped_connection position_entity_connection_;
+	fcppt::signal::scoped_connection gameover_connection_;
 };
 }
 }
