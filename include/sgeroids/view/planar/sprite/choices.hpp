@@ -7,6 +7,7 @@
 #include <sge/sprite/with_rotation.hpp>
 #include <sge/sprite/choices.hpp>
 #include <sge/sprite/with_texture.hpp>
+#include <sge/sprite/with_depth.hpp>
 #include <sge/sprite/intrusive/tag.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/mpl/vector/vector10.hpp>
@@ -25,9 +26,10 @@ typedef
 sge::sprite::choices
 <
 	sprite::type_choices,
-	boost::mpl::vector5
+	boost::mpl::vector6
 	<
 		sge::sprite::with_color,
+		sge::sprite::with_depth,
 		sge::sprite::with_texture,
 		sge::sprite::with_dim,
 		sge::sprite::with_rotation,

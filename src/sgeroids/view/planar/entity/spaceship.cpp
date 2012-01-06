@@ -1,5 +1,6 @@
 #include <sge/image/color/any/object.hpp>
 #include <sge/image/colors.hpp>
+#include <sge/sprite/center.hpp>
 #include <sgeroids/resource_tree/object_impl.hpp>
 #include <sgeroids/view/planar/entity/spaceship.hpp>
 #include <sgeroids/view/planar/sprite/dim.hpp>
@@ -10,7 +11,6 @@
 #include <fcppt/config/external_begin.hpp>
 #include <sgeroids/resource_tree/path.hpp>
 #include <fcppt/config/external_end.hpp>
-
 
 sgeroids::view::planar::entity::spaceship::spaceship(
 	planar::sprite::system &_sprite_system,
@@ -29,6 +29,12 @@ sgeroids::view::planar::entity::spaceship::spaceship(
 			.texture(
 				_texture_tree.get(
 						sgeroids::resource_tree::path() / FCPPT_TEXT("spaceship")))
+			.depth(
+				0)
+			.order(
+				0)
+			.rotation(
+				0)
 			.any_color(
 				sge::image::colors::white()))
 {
@@ -38,7 +44,8 @@ void
 sgeroids::view::planar::entity::spaceship::position(
 	planar::position const &_position)
 {
-	sprite_.pos(
+	sge::sprite::center(
+		sprite_,
 		_position.get());
 }
 

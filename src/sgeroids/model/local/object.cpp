@@ -19,6 +19,9 @@
 #include <fcppt/tr1/functional.hpp>
 #include <typeinfo>
 
+#include <iostream>
+#include <fcppt/math/box/output.hpp>
+
 sgeroids::model::local::object::object()
 :
 	next_id_(
@@ -170,6 +173,8 @@ sgeroids::model::local::object::add_player(
 			return;
 		}
 	}
+
+	std::cout << this->play_area().get() << "\n";
 
 	// Now we know: There's no other player with that name. We can add
 	// him/her!

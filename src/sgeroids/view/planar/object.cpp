@@ -1,3 +1,4 @@
+#include <fcppt/math/matrix/scaling.hpp>
 #include <sgeroids/exception.hpp>
 #include <sgeroids/media_path.hpp>
 #include <sgeroids/random_generator_seed.hpp>
@@ -32,6 +33,8 @@
 #include <fcppt/math/box/structure_cast.hpp>
 #include <fcppt/math/vector/output.hpp>
 #include <fcppt/tr1/functional.hpp>
+
+#include <fcppt/math/matrix/output.hpp>
 
 sgeroids::view::planar::object::object(
 	sge::renderer::device &_renderer,
@@ -210,7 +213,7 @@ sgeroids::view::planar::object::play_area(
 				_area.get()),
 			// 0 and 10 are just guesses
 			sge::renderer::projection::near(
-				0),
+				-10),
 			sge::renderer::projection::far(
 				10));
 }
@@ -226,18 +229,13 @@ sgeroids::view::planar::object::update()
 		it->second->update();
 }
 
+#include <sge/renderer/state/cull_mode.hpp>
+#include <sge/renderer/state/depth_func.hpp>
+
 void
 sgeroids::view::planar::object::render()
 {
-	sge::renderer::scoped_transform(
-		renderer_,
-		sge::renderer::matrix_mode::projection,
-		projection_matrix_);
 
-	sge::renderer::scoped_transform(
-		renderer_,
-		sge::renderer::matrix_mode::world,
-		sge::renderer::matrix4::identity());
 
 	sge::renderer::state::scoped scoped_sprite_states(
 		renderer_,
@@ -246,13 +244,24 @@ sgeroids::view::planar::object::render()
 	sge::renderer::state::scoped scoped_states(
 		renderer_,
 		sge::renderer::state::list
-			(sge::renderer::state::color::back_buffer_clear_color = sge::image::colors::black()));
+			(sge::renderer::state::color::back_buffer_clear_color = sge::image::colors::black())
+			(sge::renderer::state::cull_mode::off)
+			(sge::renderer::state::depth_func::off));
 
-	/*
+
 	renderer_.clear(
 		sge::renderer::clear_flags_field(
 			sge::renderer::clear_flags::back_buffer));
-			*/
+
+	sge::renderer::scoped_transform world_transform(
+		renderer_,
+		sge::renderer::matrix_mode::world,
+		sge::renderer::matrix4::identity());
+
+	sge::renderer::scoped_transform projection_transform(
+		renderer_,
+		sge::renderer::matrix_mode::projection,
+		projection_matrix_);
 
 	sprite_system_.render_all_advanced(
 		sge::sprite::default_equal());
