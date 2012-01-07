@@ -1,9 +1,5 @@
 #include <sgeroids/math/discrete_cos.hpp>
-#include <fcppt/math/ceil_div.hpp>
-#include <fcppt/config/external_begin.hpp>
-#include <cstdlib>
-#include <fcppt/config/external_end.hpp>
-
+#include <sgeroids/math/positive_mod.hpp>
 
 namespace
 {
@@ -376,18 +372,9 @@ int
 sgeroids::math::discrete_cos(
 	int const x)
 {
-	std::size_t const index =
-		x < 0
-		?
-			static_cast<std::size_t>(
-				fcppt::math::ceil_div(
-					static_cast<unsigned>(
-						-x),
-					360u)*360u -
-				static_cast<unsigned>(x))
-		:
-			static_cast<std::size_t>(
-					x % 360);
-
-	return lookup_table[index];
+	return
+		lookup_table[
+			sgeroids::math::positive_mod(
+					x,
+					360)];
 }
