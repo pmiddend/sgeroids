@@ -90,6 +90,12 @@ public:
 	void
 	add_player(
 		model::player_name const &);
+	/**
+	\brief Remove a player
+	*/
+	void
+	remove_player(
+		model::player_name const &);
 
 	/**
 	\brief Start rotation (turning) of a spaceship

@@ -28,6 +28,9 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 				this->context<state_machine::object>().systems().audio_loader()),
 			fcppt::ref(
 				this->context<state_machine::object>().systems().audio_player()))),
+	input_manager_(
+		this->context<state_machine::object>().systems().input_processor(),
+		*model_),
 	escape_exit_connection_(
 		this->context<state_machine::object>().systems().keyboard_collector().key_callback(
 			sge::input::keyboard::action(
@@ -96,10 +99,6 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 {
 	view_->play_area(
 		model_->play_area());
-
-	model_->add_player(
-		model::player_name(
-			FCPPT_TEXT("Spast")));
 }
 
 boost::statechart::result

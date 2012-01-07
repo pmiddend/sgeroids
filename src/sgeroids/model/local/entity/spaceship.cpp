@@ -8,7 +8,7 @@
 
 
 sgeroids::model::local::entity::spaceship::spaceship(
-	model::player_name const &,
+	model::player_name const &_player_name,
 	model::position const &_position,
 	model::rotation const &_rotation,
 	model::play_area const &_play_area,
@@ -16,6 +16,8 @@ sgeroids::model::local::entity::spaceship::spaceship(
 	local::callbacks::rotation_entity_no_id const &_rotation_entity)
 :
 	entity::base(),
+	player_name_(
+		_player_name),
 	play_area_(
 		_play_area.get()),
 	position_entity_(

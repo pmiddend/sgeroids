@@ -95,6 +95,13 @@ public:
 		model::player_name const &) = 0;
 
 	/**
+	\brief Remove a player with the given name
+	*/
+	virtual void
+	remove_player(
+		model::player_name const &) = 0;
+
+	/**
 	\brief Start the rotation of a ship.
 	*/
 	virtual void

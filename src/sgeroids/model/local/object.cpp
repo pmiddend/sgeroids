@@ -1,12 +1,15 @@
+#include <fcppt/assert/unreachable.hpp>
 #include <sgeroids/exception.hpp>
 #include <sgeroids/math/unit_magnitude.hpp>
 #include <sgeroids/model/local/object.hpp>
 #include <sgeroids/model/vector2.hpp>
 #include <sgeroids/model/dim2.hpp>
+#include <sgeroids/model/log.hpp>
 #include <sgeroids/model/local/entity/spaceship.hpp>
 #include <fcppt/insert_to_fcppt_string.hpp>
 #include <fcppt/make_unique_ptr.hpp>
 #include <fcppt/move.hpp>
+#include <fcppt/log/headers.hpp>
 #include <fcppt/optional_dynamic_cast.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/type_name.hpp>
@@ -18,9 +21,6 @@
 #include <fcppt/math/vector/length_square.hpp>
 #include <fcppt/tr1/functional.hpp>
 #include <typeinfo>
-
-#include <iostream>
-#include <fcppt/math/box/output.hpp>
 
 sgeroids::model::local::object::object()
 :
@@ -151,6 +151,12 @@ void
 sgeroids::model::local::object::add_player(
 	model::player_name const &_player_name)
 {
+	FCPPT_LOG_DEBUG(
+		model::log(),
+		fcppt::log::_
+			<< FCPPT_TEXT("Adding player ")
+			<< _player_name.get());
+
 	// First, search for a player with the given name. If one already
 	// exists, we have to signal an error.
 	for(
@@ -168,13 +174,18 @@ sgeroids::model::local::object::add_player(
 
 		if(maybe_a_ship->player_name().get() == _player_name.get())
 		{
+			FCPPT_LOG_DEBUG(
+				model::log(),
+				fcppt::log::_
+					<< FCPPT_TEXT("Got add_player with existing player name ")
+					<< _player_name.get());
+
 			error_(
 				error_code::name_not_available);
+
 			return;
 		}
 	}
-
-	std::cout << this->play_area().get() << "\n";
 
 	// Now we know: There's no other player with that name. We can add
 	// him/her!
@@ -218,6 +229,11 @@ sgeroids::model::local::object::add_player(
 		fcppt::move(
 			to_add));
 
+	FCPPT_LOG_DEBUG(
+		model::log(),
+		fcppt::log::_
+			<< FCPPT_TEXT("Sending add_spaceship signal."));
+
 	add_spaceship_(
 		model::entity_id(
 			next_id_),
@@ -235,6 +251,47 @@ sgeroids::model::local::object::add_player(
 		ship_rotation);
 
 	next_id_++;
+}
+
+void
+sgeroids::model::local::object::remove_player(
+	model::player_name const &_player_name)
+{
+	FCPPT_LOG_DEBUG(
+		model::log(),
+		fcppt::log::_
+			<< FCPPT_TEXT("Removing the player: ") << _player_name.get());
+
+	for(
+		entity_map::iterator it =
+			entities_.begin();
+		it != entities_.end();
+		++it)
+	{
+		fcppt::optional<entity::spaceship const &> maybe_a_ship(
+			fcppt::optional_dynamic_cast<entity::spaceship const &>(
+				*(it->second)));
+
+		if(!maybe_a_ship)
+			continue;
+
+		FCPPT_LOG_DEBUG(
+			model::log(),
+			fcppt::log::_
+				<< FCPPT_TEXT("Testing the ship ") << maybe_a_ship->player_name().get());
+
+		if(maybe_a_ship->player_name().get() == _player_name.get())
+		{
+			remove_entity_(
+				model::entity_id(
+					it->first));
+			entities_.erase(
+				it);
+			return;
+		}
+	}
+
+	FCPPT_ASSERT_UNREACHABLE;
 }
 
 void

@@ -6,6 +6,7 @@
 #include <sgeroids/state_machine/events/render.hpp>
 #include <sgeroids/state_machine/events/tick.hpp>
 #include <sgeroids/view/unique_base_ptr.hpp>
+#include <sgeroids/input/manager.hpp>
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/signal/scoped_connection.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -55,6 +56,7 @@ public:
 private:
 	sgeroids::model::unique_base_ptr model_;
 	sgeroids::view::unique_base_ptr view_;
+	sgeroids::input::manager input_manager_;
 	fcppt::signal::scoped_connection escape_exit_connection_;
 
 	// Connections from the model to the view

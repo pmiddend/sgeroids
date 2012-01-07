@@ -131,6 +131,9 @@ INCLUDE_DIRECTORIES(
 SET(
 	SGEROIDS_FILES
 	src/sgeroids/exception.cpp
+	src/sgeroids/input/keyboard.cpp
+	src/sgeroids/input/log.cpp
+	src/sgeroids/input/manager.cpp
 	src/sgeroids/log.cpp
 	src/sgeroids/log_context.cpp
 	src/sgeroids/main.cpp
@@ -142,6 +145,7 @@ SET(
 	src/sgeroids/model/local/entity/base.cpp
 	src/sgeroids/model/local/entity/spaceship.cpp
 	src/sgeroids/model/local/object.cpp
+	src/sgeroids/model/log.cpp
 	src/sgeroids/random_generator_seed.cpp
 	src/sgeroids/resource_tree/path.cpp
 	src/sgeroids/resource_tree/strip_file_extension.cpp

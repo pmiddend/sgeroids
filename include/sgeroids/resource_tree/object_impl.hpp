@@ -140,8 +140,11 @@ sgeroids::resource_tree::object<T>::get(
 		++it)
 	{
 		if(it->base_path() == _p)
+		{
+			std::cout << "comparison of " << it->base_path().string() << " with " << _p.string() << "\n";
 			return
 				it->get_random();
+		}
 
 		if(it->contains(_p))
 			return it->get(_p);
