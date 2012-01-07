@@ -2,9 +2,9 @@
 #define SGEROIDS_MODEL_LOCAL_OBJECT_HPP_INCLUDED
 
 #include <sgeroids/model/base.hpp>
-#include <sgeroids/model/local/entity/unique_base_ptr.hpp>
 #include <sgeroids/model/local/error_context.hpp>
 #include <sgeroids/model/local/entity/spaceship_fwd.hpp>
+#include <sgeroids/model/local/entity/unique_base_ptr.hpp>
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/signal/auto_connection.hpp>
 #include <fcppt/signal/object.hpp>

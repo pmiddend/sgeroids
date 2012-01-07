@@ -1,11 +1,8 @@
-#include <fcppt/math/matrix/scaling.hpp>
 #include <sgeroids/exception.hpp>
 #include <sgeroids/media_path.hpp>
 #include <sgeroids/random_generator_seed.hpp>
 #include <sgeroids/view/log.hpp>
 #include <sgeroids/view/planar/object.hpp>
-#include <sge/sprite/default_equal.hpp>
-#include <sge/sprite/render_states.hpp>
 #include <sgeroids/view/planar/radius_to_screen_space.hpp>
 #include <sgeroids/view/planar/rotation_to_screen_space.hpp>
 #include <sgeroids/view/planar/entity/spaceship.hpp>
@@ -17,9 +14,12 @@
 #include <sge/renderer/scoped_transform.hpp>
 #include <sge/renderer/projection/orthogonal.hpp>
 #include <sge/renderer/state/color.hpp>
+#include <sge/renderer/state/cull_mode.hpp>
+#include <sge/renderer/state/depth_func.hpp>
 #include <sge/renderer/state/list.hpp>
 #include <sge/renderer/state/scoped.hpp>
 #include <sge/renderer/texture/mipmap/off.hpp>
+#include <sge/sprite/default_equal.hpp>
 #include <sge/sprite/render_states.hpp>
 #include <sge/texture/add_image.hpp>
 #include <sge/texture/no_fragmented.hpp>
@@ -31,10 +31,11 @@
 #include <fcppt/container/ptr/insert_unique_ptr_map.hpp>
 #include <fcppt/log/headers.hpp>
 #include <fcppt/math/box/structure_cast.hpp>
+#include <fcppt/math/matrix/scaling.hpp>
+#include <fcppt/math/matrix/output.hpp>
 #include <fcppt/math/vector/output.hpp>
 #include <fcppt/tr1/functional.hpp>
 
-#include <fcppt/math/matrix/output.hpp>
 
 sgeroids::view::planar::object::object(
 	sge::renderer::device &_renderer,
@@ -216,6 +217,8 @@ sgeroids::view::planar::object::play_area(
 				-10),
 			sge::renderer::projection::far(
 				10));
+
+	std::cout << "projection matrix: " << projection_matrix_ << "\n";
 }
 
 void
@@ -228,9 +231,6 @@ sgeroids::view::planar::object::update()
 		++it)
 		it->second->update();
 }
-
-#include <sge/renderer/state/cull_mode.hpp>
-#include <sge/renderer/state/depth_func.hpp>
 
 void
 sgeroids::view::planar::object::render()

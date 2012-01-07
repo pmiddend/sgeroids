@@ -1,11 +1,12 @@
-#include <sgeroids/input/log.hpp>
-#include <fcppt/log/headers.hpp>
-#include <sgeroids/model/base.hpp>
-#include <fcppt/text.hpp>
-#include <sge/input/keyboard/device.hpp>
-#include <fcppt/tr1/functional.hpp>
-#include <sge/input/keyboard/key_event.hpp>
 #include <sgeroids/input/keyboard.hpp>
+#include <sgeroids/input/log.hpp>
+#include <sgeroids/model/base.hpp>
+#include <sge/input/keyboard/device.hpp>
+#include <sge/input/keyboard/key_event.hpp>
+#include <fcppt/text.hpp>
+#include <fcppt/log/headers.hpp>
+#include <fcppt/tr1/functional.hpp>
+
 
 sgeroids::input::keyboard::keyboard(
 	sgeroids::model::base &_model,
@@ -83,7 +84,7 @@ sgeroids::input::keyboard::key(
 				model::thrust(
 					e.pressed()
 					?
-						400
+						1
 					:
 						0));
 			break;

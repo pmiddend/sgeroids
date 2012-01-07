@@ -1,32 +1,33 @@
 #include <sgeroids/exception.hpp>
 #include <sgeroids/media_path.hpp>
-#include <sgeroids/version.hpp>
+#include <sgeroids/scoped_frame_limiter.hpp>
 #include <sgeroids/utf8_file_to_fcppt_string.hpp>
+#include <sgeroids/version.hpp>
 #include <sgeroids/state_machine/object.hpp>
 #include <sgeroids/state_machine/events/render.hpp>
 #include <sgeroids/state_machine/events/tick.hpp>
 #include <sge/media/extension.hpp>
-#include <sge/renderer/no_multi_sampling.hpp>
 #include <sge/media/extension_set.hpp>
-#include <sge/renderer/scoped_block.hpp>
-#include <sge/systems/list.hpp>
-#include <sge/systems/font.hpp>
 #include <sge/parse/json/convert_from.hpp>
 #include <sge/parse/json/find_and_convert_member.hpp>
 #include <sge/parse/json/parse_string_exn.hpp>
 #include <sge/parse/json/path.hpp>
-#include <sge/window/system.hpp>
 #include <sge/parse/json/config/create_command_line_parameters.hpp>
 #include <sge/parse/json/config/merge_command_line_parameters.hpp>
 #include <sge/parse/json/config/merge_trees.hpp>
+#include <sge/renderer/no_multi_sampling.hpp>
 #include <sge/renderer/parameters.hpp>
+#include <sge/renderer/scoped_block.hpp>
 #include <sge/systems/audio_loader.hpp>
 #include <sge/systems/audio_player_default.hpp>
+#include <sge/systems/font.hpp>
 #include <sge/systems/image2d.hpp>
+#include <sge/systems/list.hpp>
 #include <sge/systems/renderer.hpp>
 #include <sge/systems/window.hpp>
 #include <sge/viewport/fill_on_resize.hpp>
 #include <sge/window/parameters.hpp>
+#include <sge/window/system.hpp>
 #include <sge/window/title.hpp>
 #include <fcppt/insert_to_fcppt_string.hpp>
 #include <fcppt/text.hpp>
@@ -162,6 +163,9 @@ sgeroids::state_machine::object::run()
 {
 	while(running_)
 	{
+		sgeroids::scoped_frame_limiter frame_limiter(
+			60);
+
 		systems_.window_system().poll();
 
 		this->process_event(

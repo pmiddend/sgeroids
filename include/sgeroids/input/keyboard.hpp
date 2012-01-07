@@ -1,17 +1,17 @@
 #ifndef SGEROIDS_INPUT_KEYBOARD_HPP_INCLUDED
 #define SGEROIDS_INPUT_KEYBOARD_HPP_INCLUDED
 
-#include <sgeroids/model/base_fwd.hpp>
-#include <sgeroids/model/player_name.hpp>
 #include <sgeroids/input/optional_entity_id.hpp>
-#include <fcppt/noncopyable.hpp>
-#include <fcppt/signal/scoped_connection.hpp>
-#include <fcppt/optional.hpp>
-#include <sge/input/keyboard/device_fwd.hpp>
-#include <sge/input/keyboard/key_event_fwd.hpp>
+#include <sgeroids/model/base_fwd.hpp>
+#include <sgeroids/model/entity_id.hpp>
 #include <sgeroids/model/player_name.hpp>
 #include <sgeroids/model/radius.hpp>
-#include <sgeroids/model/entity_id.hpp>
+#include <sge/input/keyboard/device_fwd.hpp>
+#include <sge/input/keyboard/key_event_fwd.hpp>
+#include <fcppt/noncopyable.hpp>
+#include <fcppt/optional.hpp>
+#include <fcppt/signal/scoped_connection.hpp>
+
 
 namespace sgeroids
 {

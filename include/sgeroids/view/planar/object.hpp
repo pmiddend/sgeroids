@@ -4,10 +4,11 @@
 #include <sgeroids/random_generator.hpp>
 #include <sgeroids/resource_tree/object.hpp>
 #include <sgeroids/view/base.hpp>
-#include <sgeroids/view/planar/texture_tree.hpp>
 #include <sgeroids/view/planar/error_context.hpp>
+#include <sgeroids/view/planar/texture_tree.hpp>
 #include <sgeroids/view/planar/entity/base_fwd.hpp>
 #include <sgeroids/view/planar/sprite/system.hpp>
+#include <sgeroids/view/planar/sprite/system_impl.hpp>
 #include <sge/audio/buffer_ptr.hpp>
 #include <sge/audio/loader_fwd.hpp>
 #include <sge/audio/player_fwd.hpp>
@@ -24,7 +25,6 @@
 #include <fcppt/config/external_begin.hpp>
 #include <boost/ptr_container/ptr_map.hpp>
 #include <fcppt/config/external_end.hpp>
-#include <sgeroids/view/planar/sprite/system_impl.hpp>
 
 
 namespace sgeroids

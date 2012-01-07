@@ -6,6 +6,9 @@
 #include <fcppt/optional_dynamic_cast.hpp>
 #include <fcppt/math/vector/arithmetic.hpp>
 
+// DEBUG
+#include <iostream>
+#include <fcppt/math/vector/output.hpp>
 
 sgeroids::model::local::entity::spaceship::spaceship(
 	model::player_name const &_player_name,
@@ -105,7 +108,7 @@ sgeroids::model::local::entity::spaceship::radius() const
 {
 	return
 		model::radius(
-			math::unit_magnitude() * 400);
+			math::unit_magnitude() * 95000);
 }
 
 void

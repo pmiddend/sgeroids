@@ -1,8 +1,9 @@
 #ifndef SGEROIDS_RESOURCE_TREE_PATH_WITH_RESOURCE_DECL_HPP_INCLUDED
 #define SGEROIDS_RESOURCE_TREE_PATH_WITH_RESOURCE_DECL_HPP_INCLUDED
 
-#include <sgeroids/resource_tree/path_with_resource_fwd.hpp>
 #include <sgeroids/resource_tree/path.hpp>
+#include <sgeroids/resource_tree/path_with_resource_fwd.hpp>
+
 
 namespace sgeroids
 {

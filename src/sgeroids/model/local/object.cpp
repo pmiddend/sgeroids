@@ -1,26 +1,29 @@
-#include <fcppt/assert/unreachable.hpp>
 #include <sgeroids/exception.hpp>
 #include <sgeroids/math/unit_magnitude.hpp>
-#include <sgeroids/model/local/object.hpp>
-#include <sgeroids/model/vector2.hpp>
 #include <sgeroids/model/dim2.hpp>
 #include <sgeroids/model/log.hpp>
+#include <sgeroids/model/vector2.hpp>
+#include <sgeroids/model/local/object.hpp>
 #include <sgeroids/model/local/entity/spaceship.hpp>
 #include <fcppt/insert_to_fcppt_string.hpp>
 #include <fcppt/make_unique_ptr.hpp>
 #include <fcppt/move.hpp>
-#include <fcppt/log/headers.hpp>
 #include <fcppt/optional_dynamic_cast.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/type_name.hpp>
+#include <fcppt/assert/unreachable.hpp>
 #include <fcppt/container/ptr/insert_unique_ptr_map.hpp>
+#include <fcppt/log/headers.hpp>
 #include <fcppt/math/box/basic_impl.hpp>
 #include <fcppt/math/box/center.hpp>
 #include <fcppt/math/dim/basic_impl.hpp>
 #include <fcppt/math/vector/basic_impl.hpp>
 #include <fcppt/math/vector/length_square.hpp>
 #include <fcppt/tr1/functional.hpp>
+#include <fcppt/config/external_begin.hpp>
 #include <typeinfo>
+#include <fcppt/config/external_end.hpp>
+
 
 sgeroids::model::local::object::object()
 :
@@ -373,8 +376,8 @@ sgeroids::model::local::object::play_area() const
 					0,
 					0),
 				sgeroids::model::dim2(
-					math::unit_magnitude() * 10000,
-					math::unit_magnitude() * 10000)));
+					math::unit_magnitude() * 2000000,
+					math::unit_magnitude() * 2000000)));
 }
 
 sgeroids::model::local::object::~object()

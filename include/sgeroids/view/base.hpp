@@ -3,8 +3,8 @@
 
 #include <sgeroids/model/asteroid_id.hpp>
 #include <sgeroids/model/entity_id.hpp>
-#include <sgeroids/model/player_name.hpp>
 #include <sgeroids/model/play_area.hpp>
+#include <sgeroids/model/player_name.hpp>
 #include <sgeroids/model/position.hpp>
 #include <sgeroids/model/projectile_id.hpp>
 #include <sgeroids/model/radius.hpp>

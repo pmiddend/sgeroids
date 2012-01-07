@@ -1,16 +1,17 @@
-#include <fcppt/ref.hpp>
-#include <fcppt/insert_to_fcppt_string.hpp>
-#include <sgeroids/input/log.hpp>
-#include <fcppt/log/headers.hpp>
-#include <fcppt/text.hpp>
-#include <sge/input/keyboard/remove_event.hpp>
-#include <sge/input/keyboard/discover_event.hpp>
 #include <sgeroids/input/keyboard.hpp>
-#include <fcppt/make_unique_ptr.hpp>
-#include <fcppt/container/ptr/push_back_unique_ptr.hpp>
-#include <fcppt/tr1/functional.hpp>
-#include <sge/input/processor.hpp>
+#include <sgeroids/input/log.hpp>
 #include <sgeroids/input/manager.hpp>
+#include <sge/input/processor.hpp>
+#include <sge/input/keyboard/discover_event.hpp>
+#include <sge/input/keyboard/remove_event.hpp>
+#include <fcppt/insert_to_fcppt_string.hpp>
+#include <fcppt/make_unique_ptr.hpp>
+#include <fcppt/ref.hpp>
+#include <fcppt/text.hpp>
+#include <fcppt/container/ptr/push_back_unique_ptr.hpp>
+#include <fcppt/log/headers.hpp>
+#include <fcppt/tr1/functional.hpp>
+
 
 sgeroids::input::manager::manager(
 	sge::input::processor &_input_processor,

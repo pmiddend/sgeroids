@@ -3,14 +3,15 @@
 
 #include <sgeroids/input/keyboard_fwd.hpp>
 #include <sgeroids/model/base_fwd.hpp>
+#include <sge/input/processor_fwd.hpp>
 #include <sge/input/keyboard/discover_event_fwd.hpp>
 #include <sge/input/keyboard/remove_event_fwd.hpp>
-#include <sge/input/processor_fwd.hpp>
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/signal/scoped_connection.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 #include <fcppt/config/external_end.hpp>
+
 
 namespace sgeroids
 {

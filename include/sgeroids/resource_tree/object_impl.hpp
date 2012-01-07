@@ -6,25 +6,24 @@
 #include <sgeroids/resource_tree/path_with_resource.hpp>
 #include <sgeroids/resource_tree/strip_file_extension.hpp>
 #include <sgeroids/resource_tree/strip_path_prefix.hpp>
+#include <fcppt/make_unique_ptr.hpp>
+#include <fcppt/ref.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/algorithm/copy_if.hpp>
 #include <fcppt/assert/pre.hpp>
+#include <fcppt/container/ptr/push_back_unique_ptr.hpp>
+#include <fcppt/filesystem/directory_iterator.hpp>
 #include <fcppt/filesystem/exists.hpp>
 #include <fcppt/filesystem/is_directory.hpp>
-#include <fcppt/filesystem/directory_iterator.hpp>
 #include <fcppt/filesystem/is_regular.hpp>
 #include <fcppt/filesystem/path.hpp>
-#include <fcppt/container/ptr/push_back_unique_ptr.hpp>
-#include <fcppt/make_unique_ptr.hpp>
-#include <fcppt/ref.hpp>
+#include <fcppt/filesystem/path_to_string.hpp>
 #include <fcppt/filesystem/recursive_directory_iterator.hpp>
 #include <fcppt/config/external_begin.hpp>
+#include <iostream>
 #include <iterator>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
-
-#include <iostream>
-#include <fcppt/filesystem/path_to_string.hpp>
 
 
 template<typename T>

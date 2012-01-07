@@ -1,11 +1,11 @@
-#include <fcppt/tr1/functional.hpp>
 #include <sgeroids/model/local/object.hpp>
 #include <sgeroids/state_machine/states/ingame/superstate.hpp>
 #include <sgeroids/view/planar/object.hpp>
 #include <sge/input/keyboard/action.hpp>
 #include <sge/input/keyboard/device.hpp>
-#include <fcppt/text.hpp>
 #include <fcppt/ref.hpp>
+#include <fcppt/text.hpp>
+#include <fcppt/tr1/functional.hpp>
 #include <fcppt/tr1/functional.hpp>
 
 
