@@ -93,6 +93,16 @@ sgeroids::input::keyboard::key(
 					:
 						0));
 			break;
+		case sge::input::keyboard::key_code::s:
+			model_.change_thrust(
+				*id_.get(),
+				model::thrust(
+					e.pressed()
+					?
+						-50
+					:
+						0));
+			break;
 		case sge::input::keyboard::key_code::a:
 			rotation_left_pressed_ =
 				e.pressed();
