@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <fcppt/config/external_end.hpp>
 
+#include <iostream>
 
 sgeroids::view::planar::sprite::dim const
 sgeroids::view::planar::sprite_size_from_texture_and_radius(
@@ -25,7 +26,11 @@ sgeroids::view::planar::sprite_size_from_texture_and_radius(
 		height =
 			// The aspect ratio is just max(tw,th)/min(tw,th) and
 			// we want to calculate w/aspect, so...
-			(width * std::min(texture_width,texture_height)) / std::max(texture_width,texture_height);
+			//
+			// Note that 2*radius*texture_size might cause an
+			// overflow! So go to double precision here (and then
+			// go back)
+			static_cast<int>((static_cast<double>(width) * static_cast<double>(std::min(texture_width,texture_height))) / static_cast<double>(std::max(texture_width,texture_height)));
 
 	return
 		sgeroids::view::planar::sprite::dim(

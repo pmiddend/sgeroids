@@ -5,10 +5,7 @@
 #include <sgeroids/model/local/entity/spaceship.hpp>
 #include <fcppt/optional_dynamic_cast.hpp>
 #include <fcppt/math/vector/arithmetic.hpp>
-
-// DEBUG
-#include <iostream>
-#include <fcppt/math/vector/output.hpp>
+#include <algorithm>
 
 sgeroids::model::local::entity::spaceship::spaceship(
 	model::player_name const &_player_name,
@@ -72,6 +69,15 @@ sgeroids::model::local::entity::spaceship::update()
 			math::discrete_sin(
 				rotation_));
 
+	velocity_ =
+		sgeroids::vector2(
+			std::min(
+				velocity_.x(),
+				14900000),
+			std::min(
+				velocity_.y(),
+				14900000));
+
 	rotation_ +=
 		rotation_direction_;
 
@@ -108,7 +114,7 @@ sgeroids::model::local::entity::spaceship::radius() const
 {
 	return
 		model::radius(
-			math::unit_magnitude() * 95000);
+			math::unit_magnitude() * 60000);
 }
 
 void
