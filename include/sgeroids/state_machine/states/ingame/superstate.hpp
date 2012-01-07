@@ -68,6 +68,7 @@ private:
 	fcppt::signal::scoped_connection destroy_asteroid_connection_;
 	fcppt::signal::scoped_connection remove_entity_connection_;
 	fcppt::signal::scoped_connection position_entity_connection_;
+	fcppt::signal::scoped_connection rotation_entity_connection_;
 	fcppt::signal::scoped_connection gameover_connection_;
 };
 }

@@ -91,6 +91,13 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 				view_.get(),
 				std::tr1::placeholders::_1,
 				std::tr1::placeholders::_2))),
+	rotation_entity_connection_(
+		model_->rotation_entity_callback(
+			std::tr1::bind(
+				&view::base::rotation_entity,
+				view_.get(),
+				std::tr1::placeholders::_1,
+				std::tr1::placeholders::_2))),
 	gameover_connection_(
 		model_->gameover_callback(
 			std::tr1::bind(

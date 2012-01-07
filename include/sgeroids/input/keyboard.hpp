@@ -45,6 +45,7 @@ private:
 	fcppt::signal::scoped_connection add_spaceship_connection_;
 	sgeroids::model::player_name const name_;
 	input::optional_entity_id id_;
+	bool rotation_left_pressed_,rotation_right_pressed_;
 
 	void
 	key(

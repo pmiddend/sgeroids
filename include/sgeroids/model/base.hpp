@@ -102,16 +102,12 @@ public:
 		model::player_name const &) = 0;
 
 	/**
-	\brief Start the rotation of a ship.
+	\brief Set the rotation direction (and speed) of the entity
 	*/
 	virtual void
-	start_rotation(
+	rotation_direction(
 		model::entity_id const &,
 		model::rotation_direction const &) = 0;
-
-	virtual void
-	end_rotation(
-		model::entity_id const &) = 0;
 
 	virtual void
 	change_thrust(

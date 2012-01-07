@@ -1,6 +1,7 @@
 #include <sgeroids/input/keyboard.hpp>
 #include <sgeroids/input/log.hpp>
 #include <sgeroids/model/base.hpp>
+#include <sgeroids/math/unit_magnitude.hpp>
 #include <sge/input/keyboard/device.hpp>
 #include <sge/input/keyboard/key_event.hpp>
 #include <fcppt/text.hpp>
@@ -33,7 +34,11 @@ sgeroids::input::keyboard::keyboard(
 				std::tr1::placeholders::_3))),
 	name_(
 		_name),
-	id_()
+	id_(),
+	rotation_left_pressed_(
+		false),
+	rotation_right_pressed_(
+		false)
 {
 	FCPPT_LOG_DEBUG(
 		input::log(),
@@ -88,9 +93,33 @@ sgeroids::input::keyboard::key(
 					:
 						0));
 			break;
+		case sge::input::keyboard::key_code::a:
+			rotation_left_pressed_ =
+				e.pressed();
+			break;
+		case sge::input::keyboard::key_code::d:
+			rotation_right_pressed_ =
+				e.pressed();
+			break;
 		default:
 			break;
 	}
+
+	int const rotation_speed = 3;
+
+	model_.rotation_direction(
+		*id_.get(),
+		model::rotation_direction(
+			(rotation_left_pressed_ == rotation_right_pressed_
+			?
+				0
+			:
+				rotation_right_pressed_
+				?
+					1
+				:
+					-1)
+			* rotation_speed * sgeroids::math::unit_magnitude()));
 }
 
 void

@@ -98,7 +98,7 @@ public:
 		model::player_name const &);
 
 	/**
-	\brief Start rotation (turning) of a spaceship
+	\brief Set rotation (turning) of a spaceship
 
 	Note that the rotation is not an absolute value (like "n degrees"), but
 	a direction (negative is clockwise, positive is counterclockwise) with
@@ -108,16 +108,9 @@ public:
 	The entity id has to refer to a spaceship, else you'll get an exception.
 	*/
 	void
-	start_rotation(
+	rotation_direction(
 		model::entity_id const &,
 		model::rotation_direction const &);
-
-	/**
-	\brief End rotation (turning) of a spaceship
-	*/
-	void
-	end_rotation(
-		model::entity_id const &);
 
 	void
 	change_thrust(

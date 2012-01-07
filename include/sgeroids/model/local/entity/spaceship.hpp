@@ -60,11 +60,8 @@ public:
 		entity::base &);
 
 	void
-	start_rotation(
+	rotation_direction(
 		model::rotation_direction const &);
-
-	void
-	end_rotation();
 
 	void
 	start_firing();

@@ -161,14 +161,6 @@ sgeroids::view::planar::object::position_entity(
 	model::entity_id const &_id,
 	model::position const &_position)
 {
-	FCPPT_LOG_DEBUG(
-		view::log(),
-		fcppt::log::_
-			<< FCPPT_TEXT("New position for entity ")
-			<< _id.get()
-			<< FCPPT_TEXT(": ")
-			<< _position.get());
-
 	entity::base &e =
 		this->search_entity(
 			_id,
@@ -185,6 +177,7 @@ sgeroids::view::planar::object::rotation_entity(
 	model::entity_id const &_id,
 	model::rotation const &_rotation)
 {
+	/*
 	FCPPT_LOG_DEBUG(
 		view::log(),
 		fcppt::log::_
@@ -192,6 +185,7 @@ sgeroids::view::planar::object::rotation_entity(
 			<< _id.get()
 			<< FCPPT_TEXT(": ")
 			<< _rotation.get());
+			*/
 
 	entity::base &e =
 		this->search_entity(
@@ -217,8 +211,6 @@ sgeroids::view::planar::object::play_area(
 				-10),
 			sge::renderer::projection::far(
 				10));
-
-	std::cout << "projection matrix: " << projection_matrix_ << "\n";
 }
 
 void

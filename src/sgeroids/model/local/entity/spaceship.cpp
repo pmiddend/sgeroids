@@ -3,6 +3,8 @@
 #include <sgeroids/math/unit_magnitude.hpp>
 #include <sgeroids/math/wrap_point_in_torus.hpp>
 #include <sgeroids/model/local/entity/spaceship.hpp>
+#include <sgeroids/model/log.hpp>
+#include <fcppt/log/headers.hpp>
 #include <fcppt/optional_dynamic_cast.hpp>
 #include <fcppt/math/vector/arithmetic.hpp>
 #include <algorithm>
@@ -65,9 +67,9 @@ sgeroids::model::local::entity::spaceship::update()
 		thrust_ *
 		sgeroids::vector2(
 			math::discrete_cos(
-				rotation_),
+				rotation_ / sgeroids::math::unit_magnitude()),
 			math::discrete_sin(
-				rotation_));
+				rotation_ / sgeroids::math::unit_magnitude()));
 
 	velocity_ =
 		sgeroids::vector2(
@@ -129,18 +131,11 @@ sgeroids::model::local::entity::spaceship::collides_with(
 }
 
 void
-sgeroids::model::local::entity::spaceship::start_rotation(
+sgeroids::model::local::entity::spaceship::rotation_direction(
 	model::rotation_direction const &_rotation_direction)
 {
 	rotation_direction_ =
 		_rotation_direction.get();
-}
-
-void
-sgeroids::model::local::entity::spaceship::end_rotation()
-{
-	rotation_direction_ =
-		0;
 }
 
 void

@@ -298,7 +298,7 @@ sgeroids::model::local::object::remove_player(
 }
 
 void
-sgeroids::model::local::object::start_rotation(
+sgeroids::model::local::object::rotation_direction(
 	model::entity_id const &_id,
 	model::rotation_direction const &_rotation)
 {
@@ -306,23 +306,10 @@ sgeroids::model::local::object::start_rotation(
 		this->search_spaceship_with_id(
 			_id,
 			local::error_context(
-				FCPPT_TEXT("start_rotation")));
+				FCPPT_TEXT("rotation_direction")));
 
-	 ship.start_rotation(
+	 ship.rotation_direction(
 		 _rotation);
-}
-
-void
-sgeroids::model::local::object::end_rotation(
-	model::entity_id const &_id)
-{
-	entity::spaceship &ship =
-		this->search_spaceship_with_id(
-			_id,
-			local::error_context(
-				FCPPT_TEXT("end_rotation")));
-
-	 ship.end_rotation();
 }
 
 void
