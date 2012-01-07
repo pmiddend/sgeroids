@@ -50,6 +50,7 @@ sgeroids::resource_tree::path::operator==(
 	path const &_p) const
 {
 	return
+		elements_.size() == _p.elements_.size() &&
 		std::equal(
 			elements_.begin(),
 			elements_.end(),
