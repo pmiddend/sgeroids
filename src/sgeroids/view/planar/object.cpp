@@ -207,7 +207,9 @@ sgeroids::view::planar::object::play_area(
 			sprite_system_,
 			texture_tree_,
 			_area,
-			rng_));
+			rng_,
+			background::star_size(3500),
+			background::star_count(500)));
 
 	projection_matrix_ =
 		sge::renderer::projection::orthogonal(

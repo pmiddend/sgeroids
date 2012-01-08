@@ -19,7 +19,9 @@ sgeroids::view::planar::background::object::object(
 	sgeroids::view::planar::sprite::system &_sprite_system,
 	sgeroids::view::planar::texture_tree &_texture_tree,
 	sgeroids::model::play_area const &_play_area,
-	sgeroids::random_generator &_rng)
+	sgeroids::random_generator &_rng,
+	star_size _star_size,
+	star_count _star_count)
 :
 	sprite_system_(
 		_sprite_system),
@@ -28,7 +30,11 @@ sgeroids::view::planar::background::object::object(
 	play_area_(
 		_play_area),
 	rng_(
-		_rng)
+		_rng),
+	star_size_(
+		_star_size.get()),
+	star_count_(
+		_star_count.get())
 {
 	fcppt::random::uniform<int, sgeroids::random_generator &> random_x(
 			fcppt::random::make_inclusive_range(
@@ -42,36 +48,88 @@ sgeroids::view::planar::background::object::object(
 				play_area_.get().h()),
 			rng_);
 
-	fcppt::random::uniform<int, sgeroids::random_generator &> random_radius(
+	fcppt::random::uniform<float, sgeroids::random_generator &> random_angle(
 			fcppt::random::make_inclusive_range(
-				0,
-			  math::unit_magnitude() * 15000),
+				0.f,
+				6.f),
 			rng_);
 
-	for (unsigned i = 0; i < 1000; ++i)
+	fcppt::random::uniform<int, sgeroids::random_generator &> random_radius(
+		fcppt::random::make_inclusive_range(
+			math::unit_magnitude() * star_size_.get(),
+			math::unit_magnitude() * star_size_.get() * 4),
+		rng_);
+
+	for (int i = 0; i < star_count_.get(); ++i)
 		sprites_.push_back(
 			new planar::sprite::object(
 				planar::sprite::parameters()
 					.system(
-						_sprite_system)
+						sprite_system_)
 					.texture(
-						_texture_tree.get(
+						texture_tree_.get(
 								sgeroids::resource_tree::path() / FCPPT_TEXT("star")))
 					.size(
 						planar::sprite_size_from_texture_and_radius(
-							_texture_tree.get(
+							texture_tree_.get(
 								sgeroids::resource_tree::path() / FCPPT_TEXT("star")),
 							planar::radius(random_radius())))
-					.pos(
+					.center(
 						planar::sprite::object::vector(
 							random_x(),
 							random_y()))
-					.depth(
-						0)
 					.order(
 						0)
 					.rotation(
 						0)
 					.any_color(
 						sge::image::colors::white())));
+
+	sprites_.push_back(
+		new planar::sprite::object(
+			planar::sprite::parameters()
+				.system(
+					sprite_system_)
+				.texture(
+					texture_tree_.get(
+							sgeroids::resource_tree::path() / FCPPT_TEXT("planet")))
+				.size(
+					planar::sprite_size_from_texture_and_radius(
+						texture_tree_.get(
+							sgeroids::resource_tree::path() / FCPPT_TEXT("planet")),
+						planar::radius(30 * random_radius())))
+				.center(
+					planar::sprite::object::vector(
+						random_x(),
+						random_y()))
+				.order(
+					2)
+				.rotation(
+					random_angle())
+				.any_color(
+					sge::image::colors::white())));
+
+	sprites_.push_back(
+		new planar::sprite::object(
+			planar::sprite::parameters()
+				.system(
+					sprite_system_)
+				.texture(
+					texture_tree_.get(
+							sgeroids::resource_tree::path() / FCPPT_TEXT("nebula")))
+				.size(
+					planar::sprite_size_from_texture_and_radius(
+						texture_tree_.get(
+							sgeroids::resource_tree::path() / FCPPT_TEXT("nebula")),
+						planar::radius(math::unit_magnitude() * 1024 * 1024)))
+				.center(
+					planar::sprite::object::vector(
+						random_x(),
+						random_y()))
+				.order(
+					1)
+				.rotation(
+					random_angle())
+				.any_color(
+					sge::image::colors::white())));
 }

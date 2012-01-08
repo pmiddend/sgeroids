@@ -1,6 +1,8 @@
 #ifndef SGEROIDS_VIEW_BACKGROUND_OBJECT_HPP_INCLUDED
 #define SGEROIDS_VIEW_BACKGROUND_OBJECT_HPP_INCLUDED
 
+#include <sgeroids/view/planar/background/star_count.hpp>
+#include <sgeroids/view/planar/background/star_size.hpp>
 #include <sgeroids/model/play_area.hpp>
 #include <sgeroids/random_generator.hpp>
 #include <sgeroids/view/planar/sprite/object.hpp>
@@ -31,8 +33,9 @@ public:
 		sgeroids::view::planar::sprite::system &,
 		sgeroids::view::planar::texture_tree &,
 		sgeroids::model::play_area const &,
-		sgeroids::random_generator &);
-
+		sgeroids::random_generator &,
+		star_size,
+		star_count);
 
 private:
 	typedef
@@ -44,6 +47,8 @@ private:
 	sgeroids::view::planar::texture_tree &texture_tree_;
 	sgeroids::model::play_area play_area_;
 	sgeroids::random_generator rng_;
+	background::star_size star_size_;
+	background::star_size star_count_;
 
 };
 }

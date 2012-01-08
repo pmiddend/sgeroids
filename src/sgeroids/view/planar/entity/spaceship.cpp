@@ -28,10 +28,8 @@ sgeroids::view::planar::entity::spaceship::spaceship(
 			.texture(
 				_texture_tree.get(
 						sgeroids::resource_tree::path() / FCPPT_TEXT("spaceship")))
-			.depth(
-				0)
 			.order(
-				0)
+				3)
 			.rotation(
 				0)
 			.any_color(

@@ -89,7 +89,7 @@ sgeroids::input::keyboard::key(
 				model::thrust(
 					e.pressed()
 					?
-						50
+						100
 					:
 						0));
 			break;

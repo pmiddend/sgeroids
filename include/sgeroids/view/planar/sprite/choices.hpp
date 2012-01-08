@@ -4,7 +4,6 @@
 #include <sgeroids/view/planar/sprite/type_choices.hpp>
 #include <sge/sprite/choices.hpp>
 #include <sge/sprite/with_color.hpp>
-#include <sge/sprite/with_depth.hpp>
 #include <sge/sprite/with_dim.hpp>
 #include <sge/sprite/with_rotation.hpp>
 #include <sge/sprite/with_texture.hpp>
@@ -26,10 +25,9 @@ typedef
 sge::sprite::choices
 <
 	sprite::type_choices,
-	boost::mpl::vector6
+	boost::mpl::vector5
 	<
 		sge::sprite::with_color,
-		sge::sprite::with_depth,
 		sge::sprite::with_texture,
 		sge::sprite::with_dim,
 		sge::sprite::with_rotation,
