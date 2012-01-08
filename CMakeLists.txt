@@ -157,6 +157,7 @@ SET(
 	src/sgeroids/version.cpp
 	src/sgeroids/view/base.cpp
 	src/sgeroids/view/log.cpp
+	src/sgeroids/view/planar/background/object.cpp
 	src/sgeroids/view/planar/entity/base.cpp
 	src/sgeroids/view/planar/entity/spaceship.cpp
 	src/sgeroids/view/planar/object.cpp

@@ -202,6 +202,13 @@ void
 sgeroids::view::planar::object::play_area(
 	sgeroids::model::play_area const &_area)
 {
+	background_.reset(
+		new background::object(
+			sprite_system_,
+			texture_tree_,
+			_area,
+			rng_));
+
 	projection_matrix_ =
 		sge::renderer::projection::orthogonal(
 			fcppt::math::box::structure_cast<sge::renderer::projection::rect>(

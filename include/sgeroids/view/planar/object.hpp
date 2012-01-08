@@ -4,6 +4,7 @@
 #include <sgeroids/random_generator.hpp>
 #include <sgeroids/resource_tree/object.hpp>
 #include <sgeroids/view/base.hpp>
+#include <sgeroids/view/planar/background/object.hpp>
 #include <sgeroids/view/planar/error_context.hpp>
 #include <sgeroids/view/planar/texture_tree.hpp>
 #include <sgeroids/view/planar/entity/base_fwd.hpp>
@@ -121,6 +122,7 @@ private:
 	planar::sprite::system sprite_system_;
 	sge::renderer::matrix4 projection_matrix_;
 	entity_map entities_;
+	fcppt::unique_ptr<background::object> background_;
 
 	/**
 	\brief This function is called by the texture manager whenever it needs to allocate a new texture.
