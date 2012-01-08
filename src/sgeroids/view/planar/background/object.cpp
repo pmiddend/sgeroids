@@ -30,19 +30,19 @@ sgeroids::view::planar::background::object::object(
 	rng_(
 		_rng)
 {
-	fcppt::random::uniform<int> random_x(
+	fcppt::random::uniform<int, sgeroids::random_generator &> random_x(
 			fcppt::random::make_inclusive_range(
 				0,
 				play_area_.get().w()),
 			rng_);
 
-	fcppt::random::uniform<int> random_y(
+	fcppt::random::uniform<int, sgeroids::random_generator &> random_y(
 			fcppt::random::make_inclusive_range(
 				0,
 				play_area_.get().h()),
 			rng_);
 
-	fcppt::random::uniform<int> random_radius(
+	fcppt::random::uniform<int, sgeroids::random_generator &> random_radius(
 			fcppt::random::make_inclusive_range(
 				0,
 			  math::unit_magnitude() * 15000),
