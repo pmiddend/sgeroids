@@ -1,7 +1,7 @@
 {
 	"renderer" :
 	{
-		"window-size" : [1024,768],
+		"window-size" : [1024,1024],
 		"vsync-enabled" : true,
 		"multi-sample-type" : null,
 		"visual-depth" : 32
