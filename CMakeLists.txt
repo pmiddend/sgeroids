@@ -142,6 +142,8 @@ SET(
 	src/sgeroids/math/unit_magnitude.cpp
 	src/sgeroids/media_path.cpp
 	src/sgeroids/model/base.cpp
+	src/sgeroids/model/local/asteroid_generator/object.cpp
+	src/sgeroids/model/local/entity/asteroid.cpp
 	src/sgeroids/model/local/entity/base.cpp
 	src/sgeroids/model/local/entity/spaceship.cpp
 	src/sgeroids/model/local/object.cpp

@@ -1,17 +1,17 @@
-#ifndef SGEROIDS_MODEL_LOCAL_ENTITY_SPACESHIP_HPP_INCLUDED
-#define SGEROIDS_MODEL_LOCAL_ENTITY_SPACESHIP_HPP_INCLUDED
+#ifndef SGEROIDS_MODEL_LOCAL_ENTITY_ASTEROID_HPP_INCLUDED
+#define SGEROIDS_MODEL_LOCAL_ENTITY_ASTEROID_HPP_INCLUDED
 
 #include <sgeroids/model/play_area.hpp>
-#include <sgeroids/model/player_name.hpp>
 #include <sgeroids/model/rotation_direction.hpp>
 #include <sgeroids/model/thrust.hpp>
+#include <sgeroids/model/velocity.hpp>
 #include <sgeroids/model/local/callbacks/position_entity_no_id.hpp>
+#include <sgeroids/model/vector2.hpp>
 #include <sgeroids/model/local/callbacks/rotation_entity_no_id.hpp>
 #include <sgeroids/model/local/entity/base.hpp>
 #include <fcppt/math/box/basic_impl.hpp>
 #include <fcppt/math/dim/basic_impl.hpp>
 #include <fcppt/math/vector/basic_impl.hpp>
-
 
 namespace sgeroids
 {
@@ -21,24 +21,23 @@ namespace local
 {
 namespace entity
 {
-class spaceship
+class asteroid
 :
 	public entity::base
 {
 FCPPT_NONCOPYABLE(
-	spaceship);
+	asteroid);
 public:
 	explicit
-	spaceship(
-		model::player_name const &,
+	asteroid(
 		model::position const &,
 		model::rotation const &,
+		model::rotation_direction const &,
+		model::radius const &,
 		model::play_area const &,
+		model::velocity const &,
 		local::callbacks::position_entity_no_id const &,
 		local::callbacks::rotation_entity_no_id const &);
-
-	model::player_name const &
-	player_name() const;
 
 	void
 	update();
@@ -59,31 +58,16 @@ public:
 	collides_with(
 		entity::base &);
 
-	void
-	rotation_direction(
-		model::rotation_direction const &);
-
-	void
-	start_firing();
-
-	void
-	end_firing();
-
-	void
-	thrust(
-		model::thrust const &);
-
-	~spaceship();
+	~asteroid();
 private:
-	model::player_name const player_name_;
 	model::rect const play_area_;
+	int const radius_;
 	local::callbacks::position_entity_no_id const position_entity_;
 	local::callbacks::rotation_entity_no_id const rotation_entity_;
-	model::vector2 position_;
-	model::vector2 velocity_;
+	sgeroids::model::vector2 position_;
+	sgeroids::model::vector2 velocity_;
 	int rotation_;
 	int rotation_direction_;
-	int thrust_;
 	bool dead_;
 };
 }

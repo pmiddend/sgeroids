@@ -65,14 +65,14 @@ sgeroids::model::local::entity::spaceship::update()
 
 	velocity_ +=
 		thrust_ *
-		sgeroids::vector2(
+		model::vector2(
 			math::discrete_cos(
 				rotation_ / sgeroids::math::unit_magnitude()),
 			math::discrete_sin(
 				rotation_ / sgeroids::math::unit_magnitude()));
 
 	velocity_ =
-		sgeroids::vector2(
+		model::vector2(
 			std::min(
 				velocity_.x(),
 				14900000),

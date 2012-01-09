@@ -2,6 +2,7 @@
 #define SGEROIDS_MODEL_LOCAL_OBJECT_HPP_INCLUDED
 
 #include <sgeroids/model/base.hpp>
+#include <sgeroids/random_generator.hpp>
 #include <sgeroids/model/local/error_context.hpp>
 #include <sgeroids/model/local/entity/spaceship_fwd.hpp>
 #include <sgeroids/model/local/entity/unique_base_ptr.hpp>
@@ -134,6 +135,7 @@ private:
 	boost::ptr_map<model::entity_id::value_type,entity::base>
 	entity_map;
 
+	sgeroids::random_generator rng_;
 	model::entity_id::value_type next_id_;
 	entity_map entities_;
 	fcppt::signal::object<callbacks::add_spaceship_function> add_spaceship_;
