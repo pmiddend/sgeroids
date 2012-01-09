@@ -19,7 +19,7 @@ namespace asteroid_generator
 /**
 \brief Handles timing and creation of asteroids
 
-The \link sgeroids::model::local::asteroid_generator::update update \endlink
+The \link sgeroids::model::local::asteroid_generator::object::update update \endlink
 function checks if the current countdown has expired. If it has expired, new
 random values for the asteroids are generated. The generator then calls the
 asteroid generation callback.

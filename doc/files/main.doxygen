@@ -1,3 +1,4 @@
+#include <>
 /**
 \mainpage sgeroids documentation overview
 
@@ -122,4 +123,79 @@ exception is thrown when an error in sgeroids occurs. It's derived from
 fcppt::exception.
 
 In main.cpp, we catch fcppt::exception and std::exception.
+
+\section main_adding_new_signals Adding new signals to the game
+
+A little explanation first: The model sends and receives messages. It sends
+messages via <em>signals</em>: If something happens, a corresponing signal is
+triggered, and every class that attaches itself to the signal will be notified.
+It you <em>want</em> something to happen, call a method of the model (for
+example, sgeroids::model::base::change_thrust). The following describes
+how to add a signal to the model.
+
+<ol>
+	<li>
+		Add the files
+		<pre>
+		include/sgeroids/model/callbacks/${signal_name}_function.hpp
+		include/sgeroids/model/callbacks/${signal_name}.hpp
+		</pre>
+		where in <code>*_function</code> you specify which parameters the signal takes.
+	</li>
+	<li>
+		Add the pure virtual function to sgeroids::model::base:
+
+		\code
+		virtual fcppt::signal::auto_connection
+		${signal_name}(
+			callbacks::${signal_name} const &) = 0;
+		\endcode
+
+		Don't forget to include the header <code>.../callbacks/${signal_name}.hpp</code>
+	</li>
+	<li>
+		Add the signal to sgeroids::model::local::object:
+
+		\code
+		fcppt::signal::object<callbacks::${signal_name}> ${signal_name}_;
+		\endcode
+	</li>
+	<li>
+		Initialize the signal in the constructor:
+
+		\code
+		...,
+		${signal_name}_()
+		\endcode
+	</li>
+	<li>
+		Implement the pure virtual function in sgeroids::model::local::object:
+
+		\code
+		fcppt::signal::auto_connection
+		${signal_name}(
+			callbacks::${signal_name} const &);
+		\endcode
+
+		and in the <code>cpp</code> file:
+
+		\code
+		fcppt::signal::auto_connection
+		sgeroids::model::local::object::${signal_name}(
+			model::callbacks::${signal_name} const &_f)
+		{
+			return
+				${signal_name}_.connect(
+					_f);
+		}
+		\endcode
+	</li>
+	<li>
+		Trigger the signal in the model somewhere:
+
+		\code
+		${signal_name}_(...);
+		\endcode
+	</li>
+</ol>
 */

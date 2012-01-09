@@ -40,7 +40,8 @@ sgeroids::model::local::object::object()
 	position_entity_(),
 	rotation_entity_(),
 	gameover_(),
-	error_()
+	error_(),
+	change_thrust_()
 {
 }
 
@@ -147,6 +148,15 @@ sgeroids::model::local::object::error_callback(
 {
 	return
 		error_.connect(
+			_f);
+}
+
+fcppt::signal::auto_connection
+sgeroids::model::local::object::change_thrust_callback(
+	model::callbacks::change_thrust const &_f)
+{
+	return
+		change_thrust_.connect(
 			_f);
 }
 
@@ -324,6 +334,10 @@ sgeroids::model::local::object::change_thrust(
 				FCPPT_TEXT("change_thrust")));
 
 	 ship.thrust(
+		 _thrust);
+
+	 change_thrust_(
+		 _id,
 		 _thrust);
 }
 

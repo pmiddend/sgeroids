@@ -80,6 +80,10 @@ public:
 	error_callback(
 		model::callbacks::error const &);
 
+	fcppt::signal::auto_connection
+	change_thrust_callback(
+		model::callbacks::change_thrust const &);
+
 	/**
 	\brief Try to add a player with the given name
 
@@ -149,6 +153,7 @@ private:
 	fcppt::signal::object<callbacks::rotation_entity_function> rotation_entity_;
 	fcppt::signal::object<callbacks::gameover_function> gameover_;
 	fcppt::signal::object<callbacks::error_function> error_;
+	fcppt::signal::object<callbacks::change_thrust_function> change_thrust_;
 
 	/**
 	\brief Updates all entities, deletes the dead ones
