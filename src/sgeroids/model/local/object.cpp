@@ -1,10 +1,12 @@
 #include <sgeroids/exception.hpp>
+#include <sgeroids/random_generator_seed.hpp>
 #include <sgeroids/math/unit_magnitude.hpp>
 #include <sgeroids/model/dim2.hpp>
 #include <sgeroids/model/log.hpp>
 #include <sgeroids/model/vector2.hpp>
 #include <sgeroids/model/local/object.hpp>
 #include <sgeroids/model/local/entity/spaceship.hpp>
+#include <sgeroids/model/local/entity/asteroid.hpp>
 #include <fcppt/insert_to_fcppt_string.hpp>
 #include <fcppt/make_unique_ptr.hpp>
 #include <fcppt/move.hpp>
@@ -24,12 +26,24 @@
 #include <typeinfo>
 #include <fcppt/config/external_end.hpp>
 
-
 sgeroids::model::local::object::object()
 :
+	rng_(
+		sgeroids::random_generator_seed()),
 	next_id_(
 		0u),
 	entities_(),
+	asteroid_generator_(
+		rng_,
+		this->play_area(),
+		std::tr1::bind(
+			&object::asteroid_generated,
+			this,
+			std::tr1::placeholders::_1,
+			std::tr1::placeholders::_2,
+			std::tr1::placeholders::_3,
+			std::tr1::placeholders::_4,
+			std::tr1::placeholders::_5)),
 	add_spaceship_(),
 	add_asteroid_(),
 	add_projectile_(),
@@ -50,6 +64,7 @@ sgeroids::model::local::object::update()
 {
 	this->entity_updates();
 	this->collision_detection_broadphase();
+	asteroid_generator_.update();
 }
 
 fcppt::signal::auto_connection
@@ -504,4 +519,56 @@ sgeroids::model::local::object::insert_entity(
 		next_id_++,
 		fcppt::move(
 			new_entity));
+}
+
+void
+sgeroids::model::local::object::asteroid_generated(
+	model::position const &_position,
+	model::rotation const &_rotation,
+	model::rotation_direction const &_rotation_direction,
+	model::radius const &_radius,
+	model::velocity const &_velocity)
+{
+	/*
+	fcppt::unique_ptr<entity::asteroid> to_add(
+		fcppt::make_unique_ptr<entity::asteroid>(
+			_position,
+			_rotation,
+			_rotation_direction,
+			_radius,
+			this->play_area(),
+			_velocity,
+			local::callbacks::position_entity_no_id(
+				std::tr1::bind(
+					&object::change_entity_position,
+					this,
+					model::entity_id(
+						next_id_),
+					std::tr1::placeholders::_1)),
+			local::callbacks::rotation_entity_no_id(
+				std::tr1::bind(
+					&object::change_entity_rotation,
+					this,
+					model::entity_id(
+						next_id_),
+					std::tr1::placeholders::_1))));
+
+	fcppt::container::ptr::insert_unique_ptr_map(
+		entities_,
+		next_id_,
+		fcppt::move(
+			to_add));
+
+	position_entity_(
+		model::entity_id(
+			next_id_),
+		_position);
+
+	rotation_entity_(
+		model::entity_id(
+			next_id_),
+		_rotation);
+
+	next_id_++;
+	*/
 }

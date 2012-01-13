@@ -95,6 +95,11 @@ public:
 		model::rotation const &);
 
 	void
+	change_thrust(
+		model::entity_id const &,
+		model::thrust const &);
+
+	void
 	play_area(
 		sgeroids::model::play_area const &);
 
