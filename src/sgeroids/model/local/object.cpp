@@ -529,7 +529,11 @@ sgeroids::model::local::object::asteroid_generated(
 	model::radius const &_radius,
 	model::velocity const &_velocity)
 {
-	/*
+	FCPPT_LOG_DEBUG(
+		model::log(),
+		fcppt::log::_
+			<< FCPPT_TEXT("Got an asteroid generation, creating entity"));
+
 	fcppt::unique_ptr<entity::asteroid> to_add(
 		fcppt::make_unique_ptr<entity::asteroid>(
 			_position,
@@ -559,6 +563,11 @@ sgeroids::model::local::object::asteroid_generated(
 		fcppt::move(
 			to_add));
 
+	add_asteroid_(
+		model::entity_id(
+			next_id_),
+		_radius);
+
 	position_entity_(
 		model::entity_id(
 			next_id_),
@@ -570,5 +579,4 @@ sgeroids::model::local::object::asteroid_generated(
 		_rotation);
 
 	next_id_++;
-	*/
 }

@@ -11,6 +11,7 @@
 #include <sgeroids/view/planar/radius_to_screen_space.hpp>
 #include <sgeroids/view/planar/rotation_to_screen_space.hpp>
 #include <sgeroids/view/planar/entity/spaceship.hpp>
+#include <sgeroids/view/planar/entity/asteroid.hpp>
 #include <sge/audio/loader.hpp>
 #include <sge/audio/player.hpp>
 #include <sge/image/colors.hpp>
@@ -111,9 +112,24 @@ sgeroids::view::planar::object::add_spaceship(
 
 void
 sgeroids::view::planar::object::add_asteroid(
-	model::entity_id const &,
-	model::radius const &)
+	model::entity_id const &_id,
+	model::radius const &_radius)
 {
+	FCPPT_LOG_DEBUG(
+		view::log(),
+		fcppt::log::_
+			<< FCPPT_TEXT("Adding new asteroid"));
+
+	fcppt::container::ptr::insert_unique_ptr_map(
+		entities_,
+		_id.get(),
+		fcppt::make_unique_ptr<entity::asteroid>(
+			fcppt::ref(
+				sprite_system_),
+			fcppt::ref(
+				texture_tree_),
+			planar::radius_to_screen_space(
+				_radius)));
 }
 
 void
@@ -372,8 +388,9 @@ sgeroids::view::planar::object::search_entity(
 	if(it == entities_.end())
 		throw
 			sgeroids::exception(
+				FCPPT_TEXT("view: ")+
 				_error_context.get()+
-				FCPPT_TEXT("The entity with id ")+
+				FCPPT_TEXT(": The entity with id ")+
 				fcppt::insert_to_fcppt_string(
 					_id.get())+
 				FCPPT_TEXT(" could not be found."));
