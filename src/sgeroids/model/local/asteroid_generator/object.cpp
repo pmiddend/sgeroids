@@ -45,7 +45,7 @@ sgeroids::model::local::asteroid_generator::object::object(
 	velocity_magnitude_rng_(
 		fcppt::random::make_inclusive_range<int>(
 			0,
-			100 * sgeroids::math::unit_magnitude()),
+			10 * sgeroids::math::unit_magnitude()),
 		_rng),
 	play_area_side_rng_(
 		fcppt::random::make_inclusive_range<int>(

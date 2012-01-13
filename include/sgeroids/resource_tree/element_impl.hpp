@@ -50,7 +50,7 @@ sgeroids::resource_tree::element<T>::contains(
 			resources_.begin();
 		it != resources_.end();
 		++it)
-		if(it->path() == s)
+		if(base_path_ / it->path().string() == s)
 			return true;
 	return false;
 }
@@ -69,7 +69,7 @@ sgeroids::resource_tree::element<T>::get(
 			resources_.begin();
 		it != resources_.end();
 		++it)
-		if(it->path() == s)
+		if(base_path_ / it->path().string() == s)
 			return it->resource();
 
 	FCPPT_ASSERT_UNREACHABLE;

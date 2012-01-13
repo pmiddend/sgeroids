@@ -20,11 +20,16 @@
 #include <fcppt/math/box/center.hpp>
 #include <fcppt/math/dim/basic_impl.hpp>
 #include <fcppt/math/vector/basic_impl.hpp>
-#include <fcppt/math/vector/length_square.hpp>
 #include <fcppt/tr1/functional.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <typeinfo>
 #include <fcppt/config/external_end.hpp>
+#include <cstdlib>
+#include <algorithm>
+
+// DEBUG
+#include <iostream>
+#include <fcppt/math/vector/output.hpp>
 
 sgeroids::model::local::object::object()
 :
@@ -439,15 +444,23 @@ sgeroids::model::local::object::collision_detection_narrow_phase(
 	entity::base &_left,
 	entity::base &_right)
 {
-	int const object_distance =
-		fcppt::math::vector::length_square(
-			_left.position().get() - _right.position().get());
+	model::vector2 const
+		difference_vector =
+			_left.position().get() - _right.position().get();
 
-	int const sum_radii =
-		_left.radius().get() + _right.radius().get();
+	int const
+		sum_radii =
+			_left.radius().get() + _right.radius().get(),
+		maximum_norm =
+			std::max(
+				std::abs(
+					difference_vector.x()),
+				std::abs(
+					difference_vector.y()));
 
-	if(object_distance <= sum_radii*sum_radii)
+	if(maximum_norm <= sum_radii)
 	{
+		//std::cout << "maximum norm: " << maximum_norm << ", sum_radii: " << sum_radii << "\n";
 		_left.collides_with(
 			_right);
 
