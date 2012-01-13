@@ -2,14 +2,16 @@
 #include <sgeroids/math/discrete_sin.hpp>
 #include <sgeroids/math/unit_magnitude.hpp>
 #include <sgeroids/math/wrap_point_in_torus.hpp>
-#include <sgeroids/model/local/entity/spaceship.hpp>
 #include <sgeroids/model/log.hpp>
-#include <fcppt/log/headers.hpp>
+#include <sgeroids/model/local/entity/spaceship.hpp>
 #include <fcppt/optional_dynamic_cast.hpp>
+#include <fcppt/log/headers.hpp>
 #include <fcppt/math/vector/arithmetic.hpp>
+#include <fcppt/config/external_begin.hpp>
 #include <algorithm>
-
 #include <iostream>
+#include <fcppt/config/external_end.hpp>
+
 
 sgeroids::model::local::entity::spaceship::spaceship(
 	model::player_name const &_player_name,
@@ -17,7 +19,8 @@ sgeroids::model::local::entity::spaceship::spaceship(
 	model::rotation const &_rotation,
 	model::play_area const &_play_area,
 	local::callbacks::position_entity_no_id const &_position_entity,
-	local::callbacks::rotation_entity_no_id const &_rotation_entity)
+	local::callbacks::rotation_entity_no_id const &_rotation_entity,
+	local::callbacks::insert_projectile const &_insert_projectile)
 :
 	entity::base(),
 	player_name_(
@@ -28,6 +31,8 @@ sgeroids::model::local::entity::spaceship::spaceship(
 		_position_entity),
 	rotation_entity_(
 		_rotation_entity),
+	insert_projectile_(
+		_insert_projectile),
 	position_(
 		_position.get()),
 	velocity_(
@@ -39,7 +44,10 @@ sgeroids::model::local::entity::spaceship::spaceship(
 	thrust_(
 		0),
 	dead_(
-		false)
+		false),
+	firing_mode_(
+		firing_mode::disabled),
+	fire_cooldown_timer_()
 {
 }
 
@@ -89,12 +97,31 @@ sgeroids::model::local::entity::spaceship::update()
 		rotation_entity_(
 			model::rotation(
 				rotation_));
+
+	if(firing_mode_ == model::firing_mode::enabled)
+	{
+		if(--fire_cooldown_timer_ == 0)
+		{
+			fire_cooldown_timer_ = 30;
+			insert_projectile_(
+				model::position(
+					position_),
+				model::rotation(
+					rotation_));
+		}
+	}
 }
 
 bool
 sgeroids::model::local::entity::spaceship::dead() const
 {
 	return dead_;
+}
+
+void
+sgeroids::model::local::entity::spaceship::kill()
+{
+	dead_ = true;
 }
 
 sgeroids::model::position const
@@ -142,13 +169,17 @@ sgeroids::model::local::entity::spaceship::rotation_direction(
 }
 
 void
-sgeroids::model::local::entity::spaceship::start_firing()
+sgeroids::model::local::entity::spaceship::change_firing_mode(
+	model::firing_mode::type const _firing_mode)
 {
-}
+	if(firing_mode_ == _firing_mode)
+		return;
 
-void
-sgeroids::model::local::entity::spaceship::end_firing()
-{
+	firing_mode_ =
+		_firing_mode;
+
+	if(firing_mode_ == model::firing_mode::enabled)
+		fire_cooldown_timer_ = 1;
 }
 
 void

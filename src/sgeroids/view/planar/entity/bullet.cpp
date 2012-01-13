@@ -1,3 +1,4 @@
+#include <sgeroids/math/unit_magnitude.hpp>
 #include <sgeroids/resource_tree/object_impl.hpp>
 #include <sgeroids/resource_tree/path.hpp>
 #include <sgeroids/view/planar/sprite_size_from_texture_and_radius.hpp>
@@ -5,7 +6,6 @@
 #include <sgeroids/view/planar/sprite/dim.hpp>
 #include <sgeroids/view/planar/sprite/parameters.hpp>
 #include <sgeroids/view/planar/sprite/system_impl.hpp>
-#include <sgeroids/math/unit_magnitude.hpp>
 #include <sge/image/colors.hpp>
 #include <sge/image/color/any/object.hpp>
 #include <sge/sprite/center.hpp>

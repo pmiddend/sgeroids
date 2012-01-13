@@ -5,9 +5,9 @@
 #include <sgeroids/resource_tree/object.hpp>
 #include <sgeroids/view/base.hpp>
 #include <sgeroids/view/planar/audio_buffer_tree.hpp>
-#include <sgeroids/view/planar/background/object.hpp>
 #include <sgeroids/view/planar/error_context.hpp>
 #include <sgeroids/view/planar/texture_tree.hpp>
+#include <sgeroids/view/planar/background/object.hpp>
 #include <sgeroids/view/planar/entity/base_fwd.hpp>
 #include <sgeroids/view/planar/sprite/system.hpp>
 #include <sgeroids/view/planar/sprite/system_impl.hpp>

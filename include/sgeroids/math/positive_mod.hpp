@@ -1,8 +1,11 @@
 #ifndef SGEROIDS_MATH_POSITIVE_MOD_HPP_INCLUDED
 #define SGEROIDS_MATH_POSITIVE_MOD_HPP_INCLUDED
 
-#include <boost/utility/enable_if.hpp>
+#include <fcppt/config/external_begin.hpp>
 #include <boost/type_traits/is_integral.hpp>
+#include <boost/utility/enable_if.hpp>
+#include <fcppt/config/external_end.hpp>
+
 
 namespace sgeroids
 {

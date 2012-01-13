@@ -10,6 +10,7 @@
 #include <sgeroids/view/planar/entity/base.hpp>
 #include <sgeroids/view/planar/sprite/object.hpp>
 #include <sgeroids/view/planar/sprite/system.hpp>
+#include <sge/texture/const_part_ptr.hpp>
 
 
 namespace sgeroids

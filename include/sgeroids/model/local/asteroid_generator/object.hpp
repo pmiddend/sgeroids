@@ -1,12 +1,13 @@
 #ifndef SGEROIDS_MODEL_LOCAL_ASTEROID_GENERATOR_OBJECT_HPP_INCLUDED
 #define SGEROIDS_MODEL_LOCAL_ASTEROID_GENERATOR_OBJECT_HPP_INCLUDED
 
-#include <sgeroids/model/local/callbacks/asteroid_generation.hpp>
-#include <sgeroids/model/play_area.hpp>
 #include <sgeroids/random_generator.hpp>
-#include <fcppt/random/uniform.hpp>
-#include <fcppt/math/box/basic_impl.hpp>
+#include <sgeroids/model/play_area.hpp>
+#include <sgeroids/model/local/callbacks/asteroid_generation.hpp>
 #include <fcppt/noncopyable.hpp>
+#include <fcppt/math/box/basic_impl.hpp>
+#include <fcppt/random/uniform.hpp>
+
 
 namespace sgeroids
 {

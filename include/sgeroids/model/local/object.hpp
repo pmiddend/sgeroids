@@ -1,12 +1,12 @@
 #ifndef SGEROIDS_MODEL_LOCAL_OBJECT_HPP_INCLUDED
 #define SGEROIDS_MODEL_LOCAL_OBJECT_HPP_INCLUDED
 
-#include <sgeroids/model/base.hpp>
 #include <sgeroids/random_generator.hpp>
+#include <sgeroids/model/base.hpp>
 #include <sgeroids/model/velocity.hpp>
 #include <sgeroids/model/local/error_context.hpp>
-#include <sgeroids/model/local/entity/spaceship_fwd.hpp>
 #include <sgeroids/model/local/asteroid_generator/object.hpp>
+#include <sgeroids/model/local/entity/spaceship_fwd.hpp>
 #include <sgeroids/model/local/entity/unique_base_ptr.hpp>
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/signal/auto_connection.hpp>
@@ -125,12 +125,9 @@ public:
 		model::thrust const &);
 
 	void
-	start_firing(
-		model::entity_id const &);
-
-	void
-	end_firing(
-		model::entity_id const &);
+	change_firing_mode(
+		model::entity_id const &,
+		model::firing_mode::type);
 
 	model::play_area const
 	play_area() const;
@@ -221,6 +218,11 @@ private:
 		model::rotation_direction const &,
 		model::radius const &,
 		model::velocity const &);
+
+	void
+	insert_projectile(
+		model::position const &,
+		model::rotation const &);
 };
 }
 }

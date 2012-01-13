@@ -146,6 +146,7 @@ SET(
 	src/sgeroids/model/local/asteroid_generator/object.cpp
 	src/sgeroids/model/local/entity/asteroid.cpp
 	src/sgeroids/model/local/entity/base.cpp
+	src/sgeroids/model/local/entity/projectile.cpp
 	src/sgeroids/model/local/entity/spaceship.cpp
 	src/sgeroids/model/local/object.cpp
 	src/sgeroids/model/log.cpp

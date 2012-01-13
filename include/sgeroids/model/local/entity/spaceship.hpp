@@ -4,9 +4,11 @@
 #include <sgeroids/model/play_area.hpp>
 #include <sgeroids/model/player_name.hpp>
 #include <sgeroids/model/rotation_direction.hpp>
+#include <sgeroids/model/firing_mode.hpp>
 #include <sgeroids/model/thrust.hpp>
 #include <sgeroids/model/local/callbacks/position_entity_no_id.hpp>
 #include <sgeroids/model/local/callbacks/rotation_entity_no_id.hpp>
+#include <sgeroids/model/local/callbacks/insert_projectile.hpp>
 #include <sgeroids/model/local/entity/base.hpp>
 #include <fcppt/math/box/basic_impl.hpp>
 #include <fcppt/math/dim/basic_impl.hpp>
@@ -35,7 +37,8 @@ public:
 		model::rotation const &,
 		model::play_area const &,
 		local::callbacks::position_entity_no_id const &,
-		local::callbacks::rotation_entity_no_id const &);
+		local::callbacks::rotation_entity_no_id const &,
+		local::callbacks::insert_projectile const &);
 
 	model::player_name const &
 	player_name() const;
@@ -45,6 +48,9 @@ public:
 
 	bool
 	dead() const;
+
+	void
+	kill();
 
 	model::position const
 	position() const;
@@ -64,10 +70,8 @@ public:
 		model::rotation_direction const &);
 
 	void
-	start_firing();
-
-	void
-	end_firing();
+	change_firing_mode(
+		model::firing_mode::type);
 
 	void
 	thrust(
@@ -79,12 +83,15 @@ private:
 	model::rect const play_area_;
 	local::callbacks::position_entity_no_id const position_entity_;
 	local::callbacks::rotation_entity_no_id const rotation_entity_;
+	local::callbacks::insert_projectile const insert_projectile_;
 	model::vector2 position_;
 	model::vector2 velocity_;
 	int rotation_;
 	int rotation_direction_;
 	int thrust_;
 	bool dead_;
+	firing_mode::type firing_mode_;
+	int fire_cooldown_timer_;
 };
 }
 }

@@ -2,9 +2,9 @@
 #include <sge/texture/part.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <algorithm>
+#include <iostream>
 #include <fcppt/config/external_end.hpp>
 
-#include <iostream>
 
 sgeroids::view::planar::sprite::dim const
 sgeroids::view::planar::sprite_size_from_texture_and_radius(

@@ -5,8 +5,9 @@
 #include <sgeroids/model/log.hpp>
 #include <sgeroids/model/vector2.hpp>
 #include <sgeroids/model/local/object.hpp>
-#include <sgeroids/model/local/entity/spaceship.hpp>
 #include <sgeroids/model/local/entity/asteroid.hpp>
+#include <sgeroids/model/local/entity/spaceship.hpp>
+#include <sgeroids/model/local/entity/projectile.hpp>
 #include <fcppt/insert_to_fcppt_string.hpp>
 #include <fcppt/make_unique_ptr.hpp>
 #include <fcppt/move.hpp>
@@ -22,14 +23,11 @@
 #include <fcppt/math/vector/basic_impl.hpp>
 #include <fcppt/tr1/functional.hpp>
 #include <fcppt/config/external_begin.hpp>
+#include <algorithm>
+#include <cstdlib>
 #include <typeinfo>
 #include <fcppt/config/external_end.hpp>
-#include <cstdlib>
-#include <algorithm>
 
-// DEBUG
-#include <iostream>
-#include <fcppt/math/vector/output.hpp>
 
 sgeroids::model::local::object::object()
 :
@@ -251,7 +249,13 @@ sgeroids::model::local::object::add_player(
 					this,
 					model::entity_id(
 						next_id_),
-					std::tr1::placeholders::_1))));
+					std::tr1::placeholders::_1)),
+			local::callbacks::insert_projectile(
+				std::tr1::bind(
+					&object::insert_projectile,
+					this,
+					std::tr1::placeholders::_1,
+					std::tr1::placeholders::_2))));
 
 	model::radius const ship_radius =
 		to_add->radius();
@@ -301,8 +305,8 @@ sgeroids::model::local::object::remove_player(
 		it != entities_.end();
 		++it)
 	{
-		fcppt::optional<entity::spaceship const &> maybe_a_ship(
-			fcppt::optional_dynamic_cast<entity::spaceship const &>(
+		fcppt::optional<entity::spaceship &> maybe_a_ship(
+			fcppt::optional_dynamic_cast<entity::spaceship &>(
 				*(it->second)));
 
 		if(!maybe_a_ship)
@@ -315,11 +319,7 @@ sgeroids::model::local::object::remove_player(
 
 		if(maybe_a_ship->player_name().get() == _player_name.get())
 		{
-			remove_entity_(
-				model::entity_id(
-					it->first));
-			entities_.erase(
-				it);
+			maybe_a_ship->kill();
 			return;
 		}
 	}
@@ -362,29 +362,18 @@ sgeroids::model::local::object::change_thrust(
 }
 
 void
-sgeroids::model::local::object::start_firing(
-	model::entity_id const &_id)
+sgeroids::model::local::object::change_firing_mode(
+	model::entity_id const &_id,
+	model::firing_mode::type const _mode)
 {
 	entity::spaceship &ship =
 		this->search_spaceship_with_id(
 			_id,
 			local::error_context(
-				FCPPT_TEXT("start_firing")));
+				FCPPT_TEXT("change_firing_mode")));
 
-	 ship.start_firing();
-}
-
-void
-sgeroids::model::local::object::end_firing(
-	model::entity_id const &_id)
-{
-	entity::spaceship &ship =
-		this->search_spaceship_with_id(
-			_id,
-			local::error_context(
-				FCPPT_TEXT("end_firing")));
-
-	 ship.end_firing();
+	 ship.change_firing_mode(
+		 _mode);
 }
 
 sgeroids::model::play_area const
@@ -413,6 +402,10 @@ sgeroids::model::local::object::entity_updates()
 		it->second->update();
 		if(it->second->dead())
 		{
+			remove_entity_(
+				model::entity_id(
+					it->first));
+
 			entity_map::iterator old_it = it;
 			++it;
 			entities_.erase(
@@ -579,6 +572,63 @@ sgeroids::model::local::object::asteroid_generated(
 		model::entity_id(
 			next_id_),
 		_radius);
+
+	position_entity_(
+		model::entity_id(
+			next_id_),
+		_position);
+
+	rotation_entity_(
+		model::entity_id(
+			next_id_),
+		_rotation);
+
+	next_id_++;
+}
+
+void
+sgeroids::model::local::object::insert_projectile(
+	model::position const &_position,
+	model::rotation const &_rotation)
+{
+	FCPPT_LOG_DEBUG(
+		model::log(),
+		fcppt::log::_
+			<< FCPPT_TEXT("Inserting projectile"));
+
+	fcppt::unique_ptr<entity::projectile> to_add(
+		fcppt::make_unique_ptr<entity::projectile>(
+			_position,
+			_rotation,
+			this->play_area(),
+			local::callbacks::position_entity_no_id(
+				std::tr1::bind(
+					&object::change_entity_position,
+					this,
+					model::entity_id(
+						next_id_),
+					std::tr1::placeholders::_1)),
+			local::callbacks::rotation_entity_no_id(
+				std::tr1::bind(
+					&object::change_entity_rotation,
+					this,
+					model::entity_id(
+						next_id_),
+					std::tr1::placeholders::_1))));
+
+	model::radius const radius =
+		to_add->radius();
+
+	fcppt::container::ptr::insert_unique_ptr_map(
+		entities_,
+		next_id_,
+		fcppt::move(
+			to_add));
+
+	add_projectile_(
+		model::entity_id(
+			next_id_),
+		radius);
 
 	position_entity_(
 		model::entity_id(

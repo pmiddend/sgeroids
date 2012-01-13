@@ -1,15 +1,15 @@
 #ifndef SGEROIDS_VIEW_BACKGROUND_OBJECT_HPP_INCLUDED
 #define SGEROIDS_VIEW_BACKGROUND_OBJECT_HPP_INCLUDED
 
+#include <sgeroids/random_generator.hpp>
+#include <sgeroids/model/play_area.hpp>
+#include <sgeroids/resource_tree/object.hpp>
+#include <sgeroids/view/planar/texture_tree.hpp>
 #include <sgeroids/view/planar/background/star_count.hpp>
 #include <sgeroids/view/planar/background/star_size.hpp>
-#include <sgeroids/model/play_area.hpp>
-#include <sgeroids/random_generator.hpp>
 #include <sgeroids/view/planar/sprite/object.hpp>
 #include <sgeroids/view/planar/sprite/system.hpp>
 #include <sgeroids/view/planar/sprite/system_impl.hpp>
-#include <sgeroids/resource_tree/object.hpp>
-#include <sgeroids/view/planar/texture_tree.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 #include <fcppt/config/external_end.hpp>

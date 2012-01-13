@@ -1,9 +1,9 @@
+#include <sgeroids/math/unit_magnitude.hpp>
 #include <sgeroids/resource_tree/object_impl.hpp>
 #include <sgeroids/resource_tree/path.hpp>
-#include <sgeroids/math/unit_magnitude.hpp>
+#include <sgeroids/view/planar/position.hpp>
 #include <sgeroids/view/planar/sprite_size_from_texture_and_radius.hpp>
 #include <sgeroids/view/planar/background/object.hpp>
-#include <sgeroids/view/planar/position.hpp>
 #include <sgeroids/view/planar/sprite/dim.hpp>
 #include <sgeroids/view/planar/sprite/parameters.hpp>
 #include <sgeroids/view/planar/sprite/system_impl.hpp>
@@ -12,8 +12,9 @@
 #include <sge/sprite/center.hpp>
 #include <sge/texture/part.hpp>
 #include <fcppt/text.hpp>
-#include <fcppt/random/uniform.hpp>
 #include <fcppt/random/make_inclusive_range.hpp>
+#include <fcppt/random/uniform.hpp>
+
 
 sgeroids::view::planar::background::object::object(
 	sgeroids::view::planar::sprite::system &_sprite_system,

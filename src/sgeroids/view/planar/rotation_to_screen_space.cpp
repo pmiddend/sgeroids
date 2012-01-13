@@ -1,6 +1,7 @@
-#include <sgeroids/view/planar/rotation_to_screen_space.hpp>
 #include <sgeroids/math/unit_magnitude.hpp>
+#include <sgeroids/view/planar/rotation_to_screen_space.hpp>
 #include <fcppt/math/deg_to_rad.hpp>
+
 
 sgeroids::view::planar::rotation const
 sgeroids::view::planar::rotation_to_screen_space(
