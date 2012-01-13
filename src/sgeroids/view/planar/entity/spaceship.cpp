@@ -10,6 +10,7 @@
 #include <sge/sprite/center.hpp>
 #include <fcppt/text.hpp>
 
+#include <iostream>
 
 sgeroids::view::planar::entity::spaceship::spaceship(
 	planar::sprite::system &_sprite_system,
@@ -57,6 +58,13 @@ sgeroids::view::planar::entity::spaceship::rotation(
 void
 sgeroids::view::planar::entity::spaceship::update()
 {
+}
+
+void
+sgeroids::view::planar::entity::spaceship::change_thrust(
+	model::thrust const &_thrust)
+{
+	std::cout << "ship changed thrust to " << _thrust.get() << "\n";
 }
 
 sgeroids::view::planar::entity::spaceship::~spaceship()

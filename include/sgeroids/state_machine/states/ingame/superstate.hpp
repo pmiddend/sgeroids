@@ -70,6 +70,7 @@ private:
 	fcppt::signal::scoped_connection position_entity_connection_;
 	fcppt::signal::scoped_connection rotation_entity_connection_;
 	fcppt::signal::scoped_connection gameover_connection_;
+	fcppt::signal::scoped_connection change_thrust_connection_;
 };
 }
 }

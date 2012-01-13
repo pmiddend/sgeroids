@@ -102,7 +102,14 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 		model_->gameover_callback(
 			std::tr1::bind(
 				&view::base::gameover,
-				view_.get())))
+				view_.get()))),
+	change_thrust_connection_(
+		model_->change_thrust_callback(
+			std::tr1::bind(
+				&view::base::change_thrust,
+				view_.get(),
+				std::tr1::placeholders::_1,
+				std::tr1::placeholders::_2)))
 {
 	view_->play_area(
 		model_->play_area());

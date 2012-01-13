@@ -1,3 +1,8 @@
+#include <typeinfo>
+#include <fcppt/type_name.hpp>
+#include <fcppt/optional_impl.hpp>
+#include <fcppt/optional_dynamic_cast.hpp>
+#include <fcppt/insert_to_fcppt_string.hpp>
 #include <sgeroids/exception.hpp>
 #include <sgeroids/media_path.hpp>
 #include <sgeroids/random_generator_seed.hpp>
@@ -223,6 +228,40 @@ sgeroids::view::planar::object::rotation_entity(
 	e.rotation(
 		planar::rotation_to_screen_space(
 			_rotation));
+}
+
+void
+sgeroids::view::planar::object::change_thrust(
+	model::entity_id const &_id,
+	model::thrust const &_thrust)
+{
+	entity_map::iterator it =
+		entities_.find(
+			_id.get());
+
+	if(it == entities_.end())
+		throw
+			sgeroids::exception(
+				FCPPT_TEXT("view: change_thrust: unknown entity id ")+
+				fcppt::insert_to_fcppt_string(
+					_id.get()));
+
+	fcppt::optional<entity::spaceship &> maybe_a_ship(
+		fcppt::optional_dynamic_cast<entity::spaceship &>(
+			*(it->second)));
+
+	 if(!maybe_a_ship)
+			sgeroids::exception(
+				FCPPT_TEXT("view: change_thrust: The entity id ")+
+				fcppt::insert_to_fcppt_string(
+					_id.get())+
+				FCPPT_TEXT(" refers to an entity of (invalid) type ")+
+				fcppt::type_name(
+					typeid(
+						*(it->second))));
+
+	 maybe_a_ship->change_thrust(
+		 _thrust);
 }
 
 void

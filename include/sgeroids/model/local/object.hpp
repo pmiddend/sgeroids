@@ -3,9 +3,10 @@
 
 #include <sgeroids/model/base.hpp>
 #include <sgeroids/random_generator.hpp>
-#include <sgeroids/model/local/asteroid_generator/object.hpp>
+#include <sgeroids/model/velocity.hpp>
 #include <sgeroids/model/local/error_context.hpp>
 #include <sgeroids/model/local/entity/spaceship_fwd.hpp>
+#include <sgeroids/model/local/asteroid_generator/object.hpp>
 #include <sgeroids/model/local/entity/unique_base_ptr.hpp>
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/signal/auto_connection.hpp>
@@ -143,19 +144,19 @@ private:
 	sgeroids::random_generator rng_;
 	model::entity_id::value_type next_id_;
 	entity_map entities_;
-	//asteroid_generator::object asteroid_generator_;
-	fcppt::signal::object<callbacks::add_spaceship_function> add_spaceship_;
-	fcppt::signal::object<callbacks::add_asteroid_function> add_asteroid_;
-	fcppt::signal::object<callbacks::add_projectile_function> add_projectile_;
-	fcppt::signal::object<callbacks::collide_projectile_asteroid_function> collide_projectile_asteroid_;
-	fcppt::signal::object<callbacks::score_change_function> score_change_;
-	fcppt::signal::object<callbacks::destroy_asteroid_function> destroy_asteroid_;
-	fcppt::signal::object<callbacks::remove_entity_function> remove_entity_;
-	fcppt::signal::object<callbacks::position_entity_function> position_entity_;
-	fcppt::signal::object<callbacks::rotation_entity_function> rotation_entity_;
-	fcppt::signal::object<callbacks::gameover_function> gameover_;
-	fcppt::signal::object<callbacks::error_function> error_;
-	fcppt::signal::object<callbacks::change_thrust_function> change_thrust_;
+	asteroid_generator::object asteroid_generator_;
+	fcppt::signal::object<model::callbacks::add_spaceship_function> add_spaceship_;
+	fcppt::signal::object<model::callbacks::add_asteroid_function> add_asteroid_;
+	fcppt::signal::object<model::callbacks::add_projectile_function> add_projectile_;
+	fcppt::signal::object<model::callbacks::collide_projectile_asteroid_function> collide_projectile_asteroid_;
+	fcppt::signal::object<model::callbacks::score_change_function> score_change_;
+	fcppt::signal::object<model::callbacks::destroy_asteroid_function> destroy_asteroid_;
+	fcppt::signal::object<model::callbacks::remove_entity_function> remove_entity_;
+	fcppt::signal::object<model::callbacks::position_entity_function> position_entity_;
+	fcppt::signal::object<model::callbacks::rotation_entity_function> rotation_entity_;
+	fcppt::signal::object<model::callbacks::gameover_function> gameover_;
+	fcppt::signal::object<model::callbacks::error_function> error_;
+	fcppt::signal::object<model::callbacks::change_thrust_function> change_thrust_;
 
 	/**
 	\brief Updates all entities, deletes the dead ones
@@ -209,6 +210,17 @@ private:
 	void
 	insert_entity(
 		entity::unique_base_ptr);
+
+	/**
+	\brief Called by the asteroid generator whenever a new asteroid has been generated
+	*/
+	void
+	asteroid_generated(
+		model::position const &,
+		model::rotation const &,
+		model::rotation_direction const &,
+		model::radius const &,
+		model::velocity const &);
 };
 }
 }
