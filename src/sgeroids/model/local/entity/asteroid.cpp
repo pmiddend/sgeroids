@@ -96,7 +96,7 @@ sgeroids::model::local::entity::asteroid::radius() const
 {
 	return
 		model::radius(
-			math::unit_magnitude() * radius_);
+			radius_);
 }
 
 void

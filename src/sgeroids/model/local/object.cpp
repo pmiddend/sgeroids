@@ -460,7 +460,6 @@ sgeroids::model::local::object::collision_detection_narrow_phase(
 
 	if(maximum_norm <= sum_radii)
 	{
-		//std::cout << "maximum norm: " << maximum_norm << ", sum_radii: " << sum_radii << "\n";
 		_left.collides_with(
 			_right);
 
