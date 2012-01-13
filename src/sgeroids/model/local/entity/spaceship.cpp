@@ -9,6 +9,8 @@
 #include <fcppt/math/vector/arithmetic.hpp>
 #include <algorithm>
 
+#include <iostream>
+
 sgeroids::model::local::entity::spaceship::spaceship(
 	model::player_name const &_player_name,
 	model::position const &_position,
