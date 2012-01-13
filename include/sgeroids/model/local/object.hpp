@@ -3,6 +3,7 @@
 
 #include <sgeroids/model/base.hpp>
 #include <sgeroids/random_generator.hpp>
+#include <sgeroids/model/local/asteroid_generator/object.hpp>
 #include <sgeroids/model/local/error_context.hpp>
 #include <sgeroids/model/local/entity/spaceship_fwd.hpp>
 #include <sgeroids/model/local/entity/unique_base_ptr.hpp>
@@ -142,6 +143,7 @@ private:
 	sgeroids::random_generator rng_;
 	model::entity_id::value_type next_id_;
 	entity_map entities_;
+	//asteroid_generator::object asteroid_generator_;
 	fcppt::signal::object<callbacks::add_spaceship_function> add_spaceship_;
 	fcppt::signal::object<callbacks::add_asteroid_function> add_asteroid_;
 	fcppt::signal::object<callbacks::add_projectile_function> add_projectile_;

@@ -5,6 +5,8 @@
 #include <sgeroids/view/planar/object.hpp>
 #include <sgeroids/view/planar/radius_to_screen_space.hpp>
 #include <sgeroids/view/planar/rotation_to_screen_space.hpp>
+#include <sgeroids/view/planar/entity/asteroid.hpp>
+#include <sgeroids/view/planar/entity/bullet.hpp>
 #include <sgeroids/view/planar/entity/spaceship.hpp>
 #include <sge/audio/loader.hpp>
 #include <sge/audio/player.hpp>
@@ -106,15 +108,40 @@ sgeroids::view::planar::object::add_spaceship(
 
 void
 sgeroids::view::planar::object::add_asteroid(
-	model::entity_id const &,
-	model::radius const &)
+	model::entity_id const &_id,
+	model::radius const &_radius)
 {
+	FCPPT_LOG_DEBUG(
+		view::log(),
+		fcppt::log::_
+			<< FCPPT_TEXT("Adding asteroid with radius \"")
+			<< _radius.get()
+			<< FCPPT_TEXT("\""));
+
+	fcppt::container::ptr::insert_unique_ptr_map(
+		entities_,
+		_id.get(),
+		fcppt::make_unique_ptr<entity::spaceship>(
+			fcppt::ref(
+				sprite_system_),
+			fcppt::ref(
+				texture_tree_),
+			planar::radius_to_screen_space(
+				_radius)));
 }
 
 void
 sgeroids::view::planar::object::add_projectile(
-	model::entity_id const &)
+	model::entity_id const &_id)
 {
+	fcppt::container::ptr::insert_unique_ptr_map(
+		entities_,
+		_id.get(),
+		fcppt::make_unique_ptr<entity::bullet>(
+			fcppt::ref(
+				sprite_system_),
+			fcppt::ref(
+				texture_tree_)));
 }
 
 void

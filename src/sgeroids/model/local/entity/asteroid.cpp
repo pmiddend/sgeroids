@@ -8,6 +8,9 @@
 #include <fcppt/optional_dynamic_cast.hpp>
 #include <fcppt/math/vector/arithmetic.hpp>
 
+#include <iostream>
+#include <ostream>
+
 sgeroids::model::local::entity::asteroid::asteroid(
 	model::position const &_position,
 	model::rotation const &_rotation,
@@ -38,6 +41,7 @@ sgeroids::model::local::entity::asteroid::asteroid(
 	dead_(
 		false)
 {
+	std::cout << "asteroid added" << std::endl;
 }
 
 void

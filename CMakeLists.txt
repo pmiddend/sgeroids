@@ -161,6 +161,7 @@ SET(
 	src/sgeroids/view/log.cpp
 	src/sgeroids/view/planar/background/object.cpp
 	src/sgeroids/view/planar/entity/base.cpp
+	src/sgeroids/view/planar/entity/bullet.cpp
 	src/sgeroids/view/planar/entity/spaceship.cpp
 	src/sgeroids/view/planar/object.cpp
 	src/sgeroids/view/planar/radius_to_screen_space.cpp
