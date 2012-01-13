@@ -5,11 +5,11 @@
 #include <sgeroids/view/planar/sprite/dim.hpp>
 #include <sgeroids/view/planar/sprite/parameters.hpp>
 #include <sgeroids/view/planar/sprite/system_impl.hpp>
-#include <sge/audio/sound/repeat.hpp>
 #include <sge/audio/buffer.hpp>
 #include <sge/audio/buffer_ptr.hpp>
 #include <sge/audio/sound/base.hpp>
 #include <sge/audio/sound/nonpositional_parameters.hpp>
+#include <sge/audio/sound/repeat.hpp>
 #include <sge/image/colors.hpp>
 #include <sge/image/color/any/object.hpp>
 #include <sge/sprite/center.hpp>

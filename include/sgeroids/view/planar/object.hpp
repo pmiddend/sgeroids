@@ -14,6 +14,7 @@
 #include <sge/audio/buffer_ptr.hpp>
 #include <sge/audio/loader_fwd.hpp>
 #include <sge/audio/player_fwd.hpp>
+#include <sge/audio/sound/base_ptr.hpp>
 #include <sge/font/system_fwd.hpp>
 #include <sge/image2d/system_fwd.hpp>
 #include <sge/renderer/device_fwd.hpp>
@@ -125,6 +126,7 @@ private:
 	sge::texture::manager texture_manager_;
 	planar::texture_tree texture_tree_;
 	planar::audio_buffer_tree audio_buffer_tree_;
+	sge::audio::sound::base_ptr firing_sound_;
 	planar::sprite::system sprite_system_;
 	sge::renderer::matrix4 projection_matrix_;
 	entity_map entities_;

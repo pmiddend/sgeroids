@@ -8,8 +8,12 @@
 #include <sgeroids/view/planar/entity/asteroid.hpp>
 #include <sgeroids/view/planar/entity/bullet.hpp>
 #include <sgeroids/view/planar/entity/spaceship.hpp>
+#include <sge/audio/buffer.hpp>
 #include <sge/audio/loader.hpp>
 #include <sge/audio/player.hpp>
+#include <sge/audio/sound/base.hpp>
+#include <sge/audio/sound/nonpositional_parameters.hpp>
+#include <sge/audio/sound/repeat.hpp>
 #include <sge/image/colors.hpp>
 #include <sge/image/color/format.hpp>
 #include <sge/image2d/system.hpp>
@@ -80,6 +84,11 @@ sgeroids::view::planar::object::object(
 				_audio_loader),
 			std::tr1::placeholders::_1),
 		rng_),
+	firing_sound_(
+		audio_buffer_tree_.get(
+			sgeroids::resource_tree::path() / FCPPT_TEXT("lazor")
+		)->create_nonpositional(
+			sge::audio::sound::nonpositional_parameters())),
 	sprite_system_(
 		renderer_),
 	projection_matrix_(),
@@ -144,6 +153,8 @@ void
 sgeroids::view::planar::object::add_projectile(
 	model::entity_id const &_id)
 {
+	firing_sound_->play(
+		sge::audio::sound::repeat::once);
 	fcppt::container::ptr::insert_unique_ptr_map(
 		entities_,
 		_id.get(),
