@@ -1,6 +1,7 @@
 #ifndef SGEROIDS_VIEW_PLANAR_ENTITY_SPACESHIP_HPP_INCLUDED
 #define SGEROIDS_VIEW_PLANAR_ENTITY_SPACESHIP_HPP_INCLUDED
 
+#include <sge/texture/const_part_ptr.hpp>
 #include <sgeroids/model/thrust.hpp>
 #include <sgeroids/view/planar/radius.hpp>
 #include <sgeroids/view/planar/texture_tree.hpp>
@@ -47,6 +48,9 @@ public:
 
 	~spaceship();
 private:
+	sge::texture::const_part_ptr
+		texture_off_,
+		texture_on_;
 	planar::sprite::object sprite_;
 };
 }

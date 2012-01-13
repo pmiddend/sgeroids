@@ -17,18 +17,22 @@ sgeroids::view::planar::entity::spaceship::spaceship(
 	planar::texture_tree &_texture_tree,
 	planar::radius const &_radius)
 :
+	texture_off_(
+		_texture_tree.get(
+			sgeroids::resource_tree::path() / FCPPT_TEXT("spaceship") / FCPPT_TEXT("off"))),
+	texture_on_(
+		_texture_tree.get(
+			sgeroids::resource_tree::path() / FCPPT_TEXT("spaceship") / FCPPT_TEXT("on"))),
 	sprite_(
 		planar::sprite::parameters()
 			.system(
 				_sprite_system)
 			.size(
 				planar::sprite_size_from_texture_and_radius(
-					_texture_tree.get(
-						sgeroids::resource_tree::path() / FCPPT_TEXT("spaceship")),
+					texture_off_,
 					_radius))
 			.texture(
-				_texture_tree.get(
-						sgeroids::resource_tree::path() / FCPPT_TEXT("spaceship")))
+				texture_off_)
 			.order(
 				3)
 			.rotation(
@@ -65,6 +69,12 @@ sgeroids::view::planar::entity::spaceship::change_thrust(
 	model::thrust const &_thrust)
 {
 	std::cout << "ship changed thrust to " << _thrust.get() << "\n";
+	if (_thrust.get() > 0)
+		sprite_.texture(
+			texture_on_);
+	else
+		sprite_.texture(
+			texture_off_);
 }
 
 sgeroids::view::planar::entity::spaceship::~spaceship()

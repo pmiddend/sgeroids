@@ -17,7 +17,7 @@ sgeroids::view::planar::entity::asteroid::asteroid(
 :
 	texture_(
 		_texture_tree.get(
-			sgeroids::resource_tree::path() / FCPPT_TEXT("asteroids"))),
+			sgeroids::resource_tree::path() / FCPPT_TEXT("asteroid"))),
 	sprite_(
 		planar::sprite::parameters()
 			.system(
