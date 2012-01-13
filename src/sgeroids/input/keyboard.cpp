@@ -1,7 +1,7 @@
 #include <sgeroids/input/keyboard.hpp>
 #include <sgeroids/input/log.hpp>
-#include <sgeroids/model/base.hpp>
 #include <sgeroids/math/unit_magnitude.hpp>
+#include <sgeroids/model/base.hpp>
 #include <sge/input/keyboard/device.hpp>
 #include <sge/input/keyboard/key_event.hpp>
 #include <fcppt/text.hpp>
@@ -100,6 +100,15 @@ sgeroids::input::keyboard::key(
 		case sge::input::keyboard::key_code::d:
 			rotation_right_pressed_ =
 				e.pressed();
+			break;
+		case sge::input::keyboard::key_code::space:
+			model_.change_firing_mode(
+				*id_.get(),
+				e.pressed()
+				?
+					model::firing_mode::enabled
+				:
+					model::firing_mode::disabled);
 			break;
 		default:
 			break;

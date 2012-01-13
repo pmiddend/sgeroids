@@ -6,10 +6,11 @@
 #include <sgeroids/model/player_name.hpp>
 #include <sgeroids/model/rotation_direction.hpp>
 #include <sgeroids/model/thrust.hpp>
+#include <sgeroids/model/firing_mode.hpp>
 #include <sgeroids/model/callbacks/add_asteroid.hpp>
 #include <sgeroids/model/callbacks/add_projectile.hpp>
-#include <sgeroids/model/callbacks/change_thrust.hpp>
 #include <sgeroids/model/callbacks/add_spaceship.hpp>
+#include <sgeroids/model/callbacks/change_thrust.hpp>
 #include <sgeroids/model/callbacks/collide_projectile_asteroid.hpp>
 #include <sgeroids/model/callbacks/destroy_asteroid.hpp>
 #include <sgeroids/model/callbacks/error.hpp>
@@ -120,12 +121,9 @@ public:
 		model::thrust const &) = 0;
 
 	virtual void
-	start_firing(
-		model::entity_id const &) = 0;
-
-	virtual void
-	end_firing(
-		model::entity_id const &) = 0;
+	change_firing_mode(
+		model::entity_id const &,
+		firing_mode::type) = 0;
 
 	virtual model::play_area const
 	play_area() const = 0;

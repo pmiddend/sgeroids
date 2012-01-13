@@ -1,8 +1,3 @@
-#include <typeinfo>
-#include <fcppt/type_name.hpp>
-#include <fcppt/optional_impl.hpp>
-#include <fcppt/optional_dynamic_cast.hpp>
-#include <fcppt/insert_to_fcppt_string.hpp>
 #include <sgeroids/exception.hpp>
 #include <sgeroids/media_path.hpp>
 #include <sgeroids/random_generator_seed.hpp>
@@ -13,7 +8,6 @@
 #include <sgeroids/view/planar/entity/asteroid.hpp>
 #include <sgeroids/view/planar/entity/bullet.hpp>
 #include <sgeroids/view/planar/entity/spaceship.hpp>
-#include <sgeroids/view/planar/entity/asteroid.hpp>
 #include <sge/audio/loader.hpp>
 #include <sge/audio/player.hpp>
 #include <sge/image/colors.hpp>
@@ -33,16 +27,22 @@
 #include <sge/texture/no_fragmented.hpp>
 #include <fcppt/insert_to_fcppt_string.hpp>
 #include <fcppt/make_unique_ptr.hpp>
+#include <fcppt/optional_dynamic_cast.hpp>
+#include <fcppt/optional_impl.hpp>
 #include <fcppt/ref.hpp>
 #include <fcppt/text.hpp>
+#include <fcppt/type_name.hpp>
 #include <fcppt/container/bitfield/basic_impl.hpp>
 #include <fcppt/container/ptr/insert_unique_ptr_map.hpp>
 #include <fcppt/log/headers.hpp>
 #include <fcppt/math/box/structure_cast.hpp>
-#include <fcppt/math/matrix/scaling.hpp>
 #include <fcppt/math/matrix/output.hpp>
+#include <fcppt/math/matrix/scaling.hpp>
 #include <fcppt/math/vector/output.hpp>
 #include <fcppt/tr1/functional.hpp>
+#include <fcppt/config/external_begin.hpp>
+#include <typeinfo>
+#include <fcppt/config/external_end.hpp>
 
 
 sgeroids::view::planar::object::object(

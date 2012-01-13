@@ -1,13 +1,13 @@
 #ifndef SGEROIDS_VIEW_PLANAR_ENTITY_SPACESHIP_HPP_INCLUDED
 #define SGEROIDS_VIEW_PLANAR_ENTITY_SPACESHIP_HPP_INCLUDED
 
-#include <sge/texture/const_part_ptr.hpp>
 #include <sgeroids/model/thrust.hpp>
 #include <sgeroids/view/planar/radius.hpp>
 #include <sgeroids/view/planar/texture_tree.hpp>
 #include <sgeroids/view/planar/entity/base.hpp>
 #include <sgeroids/view/planar/sprite/object.hpp>
 #include <sgeroids/view/planar/sprite/system.hpp>
+#include <sge/texture/const_part_ptr.hpp>
 
 
 namespace sgeroids

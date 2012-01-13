@@ -1,12 +1,13 @@
-#include <fcppt/math/vector/arithmetic.hpp>
-#include <sgeroids/model/local/asteroid_generator/play_area_side.hpp>
-#include <sgeroids/math/discrete_sin.hpp>
 #include <sgeroids/math/discrete_cos.hpp>
-#include <fcppt/math/vector/basic_impl.hpp>
-#include <sgeroids/model/vector2.hpp>
+#include <sgeroids/math/discrete_sin.hpp>
 #include <sgeroids/math/unit_magnitude.hpp>
-#include <fcppt/random/make_inclusive_range.hpp>
+#include <sgeroids/model/vector2.hpp>
 #include <sgeroids/model/local/asteroid_generator/object.hpp>
+#include <sgeroids/model/local/asteroid_generator/play_area_side.hpp>
+#include <fcppt/math/vector/arithmetic.hpp>
+#include <fcppt/math/vector/basic_impl.hpp>
+#include <fcppt/random/make_inclusive_range.hpp>
+
 
 sgeroids::model::local::asteroid_generator::object::object(
 	sgeroids::random_generator &_rng,

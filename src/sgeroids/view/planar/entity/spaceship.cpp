@@ -9,8 +9,10 @@
 #include <sge/image/color/any/object.hpp>
 #include <sge/sprite/center.hpp>
 #include <fcppt/text.hpp>
-
+#include <fcppt/config/external_begin.hpp>
 #include <iostream>
+#include <fcppt/config/external_end.hpp>
+
 
 sgeroids::view::planar::entity::spaceship::spaceship(
 	planar::sprite::system &_sprite_system,
