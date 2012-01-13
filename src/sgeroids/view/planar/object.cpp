@@ -173,6 +173,11 @@ void
 sgeroids::view::planar::object::remove_entity(
 	model::entity_id const &_id)
 {
+	FCPPT_LOG_DEBUG(
+		view::log(),
+		fcppt::log::_
+			<< FCPPT_TEXT("Removing entity"));
+
 	entity_map::size_type const erased_elements =
 		entities_.erase(
 			_id.get());

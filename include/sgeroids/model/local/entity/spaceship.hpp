@@ -49,6 +49,9 @@ public:
 	bool
 	dead() const;
 
+	void
+	kill();
+
 	model::position const
 	position() const;
 

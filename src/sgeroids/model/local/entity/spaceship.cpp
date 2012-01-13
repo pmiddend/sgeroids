@@ -118,6 +118,12 @@ sgeroids::model::local::entity::spaceship::dead() const
 	return dead_;
 }
 
+void
+sgeroids::model::local::entity::spaceship::kill()
+{
+	dead_ = true;
+}
+
 sgeroids::model::position const
 sgeroids::model::local::entity::spaceship::position() const
 {

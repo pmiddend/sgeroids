@@ -305,8 +305,8 @@ sgeroids::model::local::object::remove_player(
 		it != entities_.end();
 		++it)
 	{
-		fcppt::optional<entity::spaceship const &> maybe_a_ship(
-			fcppt::optional_dynamic_cast<entity::spaceship const &>(
+		fcppt::optional<entity::spaceship &> maybe_a_ship(
+			fcppt::optional_dynamic_cast<entity::spaceship &>(
 				*(it->second)));
 
 		if(!maybe_a_ship)
@@ -319,11 +319,7 @@ sgeroids::model::local::object::remove_player(
 
 		if(maybe_a_ship->player_name().get() == _player_name.get())
 		{
-			remove_entity_(
-				model::entity_id(
-					it->first));
-			entities_.erase(
-				it);
+			maybe_a_ship->kill();
 			return;
 		}
 	}
@@ -406,6 +402,10 @@ sgeroids::model::local::object::entity_updates()
 		it->second->update();
 		if(it->second->dead())
 		{
+			remove_entity_(
+				model::entity_id(
+					it->first));
+
 			entity_map::iterator old_it = it;
 			++it;
 			entities_.erase(

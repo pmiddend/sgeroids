@@ -57,7 +57,7 @@ private:
 	local::callbacks::position_entity_no_id const position_entity_;
 	model::vector2 position_;
 	int rotation_;
-	bool dead_;
+	int lifetime_timer_;
 };
 }
 }
