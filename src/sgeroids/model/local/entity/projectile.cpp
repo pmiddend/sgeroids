@@ -29,7 +29,9 @@ sgeroids::model::local::entity::projectile::projectile(
 		_position.get()),
 	rotation_(
 		_rotation.get()),
-	lifetime_timer_(3*60)
+	lifetime_timer_(3*60),
+	was_hit_(
+		false)
 {
 }
 
@@ -64,7 +66,7 @@ sgeroids::model::local::entity::projectile::update()
 bool
 sgeroids::model::local::entity::projectile::dead() const
 {
-	return lifetime_timer_ <= 0;
+	return lifetime_timer_ <= 0 || was_hit_;
 }
 
 sgeroids::model::position const
@@ -95,12 +97,9 @@ void
 sgeroids::model::local::entity::projectile::collides_with(
 	entity::base &_other)
 {
-	//std::cout << "got a collision\n";
-	/*
 	if(fcppt::optional_dynamic_cast<entity::asteroid const &>(_other))
-		dead_ =
+		was_hit_ =
 			true;
-			*/
 }
 
 sgeroids::model::local::entity::projectile::~projectile()

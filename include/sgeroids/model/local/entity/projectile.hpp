@@ -58,6 +58,7 @@ private:
 	model::vector2 position_;
 	int rotation_;
 	int lifetime_timer_;
+	bool was_hit_;
 };
 }
 }
