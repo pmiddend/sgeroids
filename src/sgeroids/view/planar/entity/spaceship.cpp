@@ -48,12 +48,17 @@ sgeroids::view::planar::entity::spaceship::spaceship(
 				0)
 			.any_color(
 				sge::image::colors::white())),
-	sound_thrust_(
-		_audio_buffer_tree.get(
-			sgeroids::resource_tree::path() / FCPPT_TEXT("thrust"))),
 	audio_player_(
-		_audio_player)
+		_audio_player),
+	thrust_sound_(
+		_audio_buffer_tree.get(
+			sgeroids::resource_tree::path() / FCPPT_TEXT("thrust")
+		)->create_nonpositional(
+			sge::audio::sound::nonpositional_parameters()))
 {
+	thrust_sound_->play(
+		sge::audio::sound::repeat::loop);
+	thrust_sound_->toggle_pause();
 }
 
 void
@@ -83,15 +88,10 @@ sgeroids::view::planar::entity::spaceship::change_thrust(
 	model::thrust const &_thrust)
 {
 	std::cout << "ship changed thrust to " << _thrust.get() << "\n";
+	thrust_sound_->toggle_pause();
 	if (_thrust.get() > 0)
-	{
-		std::cout << "playing thrust sound" << "\n";
-		sound_thrust_->create_nonpositional(
-			sge::audio::sound::nonpositional_parameters())->play(
-				sge::audio::sound::repeat::once);
 		sprite_.texture(
 			texture_on_);
-	}
 	else
 		sprite_.texture(
 			texture_off_);

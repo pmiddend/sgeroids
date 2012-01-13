@@ -11,6 +11,7 @@
 #include <sgeroids/view/planar/sprite/object.hpp>
 #include <sgeroids/view/planar/sprite/system.hpp>
 #include <sge/texture/const_part_ptr.hpp>
+#include <sge/audio/sound/base_ptr.hpp>
 
 
 namespace sgeroids
@@ -57,8 +58,8 @@ private:
 		texture_off_,
 		texture_on_;
 	planar::sprite::object sprite_;
-	sge::audio::buffer_ptr sound_thrust_;
 	sge::audio::player &audio_player_;
+	sge::audio::sound::base_ptr thrust_sound_;
 };
 }
 }
