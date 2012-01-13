@@ -5,32 +5,31 @@
 #include <sgeroids/view/planar/sprite/dim.hpp>
 #include <sgeroids/view/planar/sprite/parameters.hpp>
 #include <sgeroids/view/planar/sprite/system_impl.hpp>
-#include <sgeroids/math/unit_magnitude.hpp>
 #include <sge/image/colors.hpp>
 #include <sge/image/color/any/object.hpp>
 #include <sge/sprite/center.hpp>
 #include <fcppt/text.hpp>
 
-
 sgeroids::view::planar::entity::asteroid::asteroid(
 	planar::sprite::system &_sprite_system,
 	planar::texture_tree &_texture_tree,
-	planar::radius &_radius)
+	planar::radius const &_radius)
 :
+	texture_(
+		_texture_tree.get(
+			sgeroids::resource_tree::path() / FCPPT_TEXT("asteroids"))),
 	sprite_(
 		planar::sprite::parameters()
 			.system(
 				_sprite_system)
 			.size(
 				planar::sprite_size_from_texture_and_radius(
-					_texture_tree.get(
-						sgeroids::resource_tree::path() / FCPPT_TEXT("asteroid")),
+					texture_,
 					_radius))
 			.texture(
-				_texture_tree.get(
-						sgeroids::resource_tree::path() / FCPPT_TEXT("asteroid")))
+				texture_)
 			.order(
-				4)
+				3)
 			.rotation(
 				0)
 			.any_color(

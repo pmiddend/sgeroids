@@ -13,6 +13,7 @@
 #include <sgeroids/view/planar/entity/asteroid.hpp>
 #include <sgeroids/view/planar/entity/bullet.hpp>
 #include <sgeroids/view/planar/entity/spaceship.hpp>
+#include <sgeroids/view/planar/entity/asteroid.hpp>
 #include <sge/audio/loader.hpp>
 #include <sge/audio/player.hpp>
 #include <sge/image/colors.hpp>
@@ -126,7 +127,7 @@ sgeroids::view::planar::object::add_asteroid(
 	fcppt::container::ptr::insert_unique_ptr_map(
 		entities_,
 		_id.get(),
-		fcppt::make_unique_ptr<entity::spaceship>(
+		fcppt::make_unique_ptr<entity::asteroid>(
 			fcppt::ref(
 				sprite_system_),
 			fcppt::ref(
@@ -399,8 +400,9 @@ sgeroids::view::planar::object::search_entity(
 	if(it == entities_.end())
 		throw
 			sgeroids::exception(
+				FCPPT_TEXT("view: ")+
 				_error_context.get()+
-				FCPPT_TEXT("The entity with id ")+
+				FCPPT_TEXT(": The entity with id ")+
 				fcppt::insert_to_fcppt_string(
 					_id.get())+
 				FCPPT_TEXT(" could not be found."));
