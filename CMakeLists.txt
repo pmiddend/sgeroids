@@ -81,6 +81,7 @@ ADD_DEFINITIONS(
 # sge begin
 FIND_PACKAGE(
 	SGE REQUIRED COMPONENTS
+	audio
 	image
 	image2d
 	input

@@ -1,8 +1,10 @@
 #ifndef SGEROIDS_VIEW_PLANAR_ENTITY_SPACESHIP_HPP_INCLUDED
 #define SGEROIDS_VIEW_PLANAR_ENTITY_SPACESHIP_HPP_INCLUDED
 
+#include <sge/audio/player_fwd.hpp>
 #include <sge/texture/const_part_ptr.hpp>
 #include <sgeroids/model/thrust.hpp>
+#include <sgeroids/view/planar/audio_buffer_tree.hpp>
 #include <sgeroids/view/planar/radius.hpp>
 #include <sgeroids/view/planar/texture_tree.hpp>
 #include <sgeroids/view/planar/entity/base.hpp>
@@ -29,6 +31,8 @@ public:
 	spaceship(
 		planar::sprite::system &,
 		planar::texture_tree &,
+		sge::audio::player &,
+		planar::audio_buffer_tree &,
 		planar::radius const &);
 
 	void
@@ -52,6 +56,8 @@ private:
 		texture_off_,
 		texture_on_;
 	planar::sprite::object sprite_;
+	sge::audio::buffer_ptr sound_thrust_;
+	sge::audio::player &audio_player_;
 };
 }
 }

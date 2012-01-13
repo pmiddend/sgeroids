@@ -4,6 +4,7 @@
 #include <sgeroids/random_generator.hpp>
 #include <sgeroids/resource_tree/object.hpp>
 #include <sgeroids/view/base.hpp>
+#include <sgeroids/view/planar/audio_buffer_tree.hpp>
 #include <sgeroids/view/planar/background/object.hpp>
 #include <sgeroids/view/planar/error_context.hpp>
 #include <sgeroids/view/planar/texture_tree.hpp>
@@ -123,7 +124,7 @@ private:
 	sgeroids::random_generator rng_;
 	sge::texture::manager texture_manager_;
 	planar::texture_tree texture_tree_;
-	sgeroids::resource_tree::object<sge::audio::buffer_ptr> audio_buffer_tree_;
+	planar::audio_buffer_tree audio_buffer_tree_;
 	planar::sprite::system sprite_system_;
 	sge::renderer::matrix4 projection_matrix_;
 	entity_map entities_;

@@ -108,6 +108,10 @@ sgeroids::view::planar::object::add_spaceship(
 				sprite_system_),
 			fcppt::ref(
 				texture_tree_),
+			fcppt::ref(
+				audio_player_),
+			fcppt::ref(
+				audio_buffer_tree_),
 			planar::radius_to_screen_space(
 				_radius)));
 }
