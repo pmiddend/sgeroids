@@ -9,6 +9,7 @@
 #include <sgeroids/view/planar/texture_tree.hpp>
 #include <sgeroids/view/planar/background/object.hpp>
 #include <sgeroids/view/planar/entity/base_fwd.hpp>
+#include <sgeroids/view/planar/particle/object.hpp>
 #include <sgeroids/view/planar/sprite/system.hpp>
 #include <sgeroids/view/planar/sprite/system_impl.hpp>
 #include <sge/audio/buffer_ptr.hpp>
@@ -27,6 +28,7 @@
 #include <fcppt/math/matrix/basic_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/ptr_container/ptr_map.hpp>
+#include <vector>
 #include <fcppt/config/external_end.hpp>
 
 
@@ -68,6 +70,12 @@ public:
 	void
 	add_projectile(
 		model::entity_id const &);
+
+	void
+	add_particle(
+		planar::position const &,
+		particle::velocity const &,
+		particle::lifespan const &);
 
 	void
 	collide_projectile_asteroid(
@@ -120,6 +128,10 @@ private:
 	boost::ptr_map<model::entity_id::value_type,entity::base>
 	entity_map;
 
+	typedef
+	boost::ptr_vector<particle::object>
+	particle_vector;
+
 	sge::renderer::device &renderer_;
 	sge::audio::player &audio_player_;
 	sgeroids::random_generator rng_;
@@ -131,6 +143,7 @@ private:
 	sge::renderer::matrix4 projection_matrix_;
 	entity_map entities_;
 	fcppt::unique_ptr<background::object> background_;
+	particle_vector particles_;
 
 	/**
 	\brief This function is called by the texture manager whenever it needs to allocate a new texture.

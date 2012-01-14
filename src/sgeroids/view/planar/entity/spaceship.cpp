@@ -1,5 +1,9 @@
+#include <sgeroids/math/unit_magnitude.hpp>
+#include <sgeroids/math/discrete_sin.hpp>
+#include <sgeroids/math/discrete_cos.hpp>
 #include <sgeroids/resource_tree/object_impl.hpp>
 #include <sgeroids/resource_tree/path.hpp>
+#include <sgeroids/view/planar/callbacks/add_particle.hpp>
 #include <sgeroids/view/planar/sprite_size_from_texture_and_radius.hpp>
 #include <sgeroids/view/planar/entity/spaceship.hpp>
 #include <sgeroids/view/planar/sprite/dim.hpp>
@@ -14,6 +18,7 @@
 #include <sge/image/color/any/object.hpp>
 #include <sge/sprite/center.hpp>
 #include <fcppt/text.hpp>
+#include <fcppt/random/make_inclusive_range.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <iostream>
 #include <fcppt/config/external_end.hpp>
@@ -24,6 +29,8 @@ sgeroids::view::planar::entity::spaceship::spaceship(
 	planar::texture_tree &_texture_tree,
 	sge::audio::player &_audio_player,
 	planar::audio_buffer_tree &_audio_buffer_tree,
+	planar::callbacks::add_particle const &_add_particle,
+	sgeroids::random_generator &_rng,
 	planar::radius const &_radius)
 :
 	texture_off_(
@@ -54,11 +61,22 @@ sgeroids::view::planar::entity::spaceship::spaceship(
 		_audio_buffer_tree.get(
 			sgeroids::resource_tree::path() / FCPPT_TEXT("thrust")
 		)->create_nonpositional(
-			sge::audio::sound::nonpositional_parameters()))
+			sge::audio::sound::nonpositional_parameters())),
+	add_particle_(
+		_add_particle),
+	rotation_rng_(
+				fcppt::random::make_inclusive_range(
+					0,
+					360),
+				_rng),
+	thrust_(
+		false)
 {
 	thrust_sound_->play(
 		sge::audio::sound::repeat::loop);
 	thrust_sound_->toggle_pause();
+
+
 }
 
 void
@@ -81,6 +99,16 @@ sgeroids::view::planar::entity::spaceship::rotation(
 void
 sgeroids::view::planar::entity::spaceship::update()
 {
+	if (thrust_)
+		add_particle_(
+			planar::position(sprite_.pos()),
+			planar::particle::velocity(
+					2000 * planar::vector2(
+						math::discrete_cos(
+							rotation_rng_()),
+						math::discrete_sin(
+							rotation_rng_()))),
+			planar::particle::lifespan(60));
 }
 
 void
@@ -90,11 +118,17 @@ sgeroids::view::planar::entity::spaceship::change_thrust(
 	std::cout << "ship changed thrust to " << _thrust.get() << "\n";
 	thrust_sound_->toggle_pause();
 	if (_thrust.get() > 0)
+	{
+		thrust_ = true;
 		sprite_.texture(
 			texture_on_);
+	}
 	else
+	{
+		thrust_ = false;
 		sprite_.texture(
 			texture_off_);
+	}
 }
 
 sgeroids::view::planar::entity::spaceship::~spaceship()

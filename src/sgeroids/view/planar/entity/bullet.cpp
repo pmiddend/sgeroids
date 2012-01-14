@@ -24,7 +24,7 @@ sgeroids::view::planar::entity::bullet::bullet(
 				planar::sprite_size_from_texture_and_radius(
 					_texture_tree.get(
 						sgeroids::resource_tree::path() / FCPPT_TEXT("bullet")),
-					planar::radius(sgeroids::math::unit_magnitude() * 1024 * 64)))
+					planar::radius(sgeroids::math::unit_magnitude() * 1024 * 32)))
 			.texture(
 				_texture_tree.get(
 						sgeroids::resource_tree::path() / FCPPT_TEXT("bullet")))

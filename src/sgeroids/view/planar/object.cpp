@@ -37,6 +37,7 @@
 #include <fcppt/text.hpp>
 #include <fcppt/type_name.hpp>
 #include <fcppt/container/bitfield/basic_impl.hpp>
+#include <fcppt/container/ptr/insert_unique_ptr.hpp>
 #include <fcppt/container/ptr/insert_unique_ptr_map.hpp>
 #include <fcppt/log/headers.hpp>
 #include <fcppt/math/box/structure_cast.hpp>
@@ -45,6 +46,7 @@
 #include <fcppt/math/vector/output.hpp>
 #include <fcppt/tr1/functional.hpp>
 #include <fcppt/config/external_begin.hpp>
+#include <algorithm>
 #include <typeinfo>
 #include <fcppt/config/external_end.hpp>
 
@@ -92,7 +94,8 @@ sgeroids::view::planar::object::object(
 	sprite_system_(
 		renderer_),
 	projection_matrix_(),
-	entities_()
+	entities_(),
+	particles_()
 {
 }
 
@@ -113,14 +116,18 @@ sgeroids::view::planar::object::add_spaceship(
 		entities_,
 		_id.get(),
 		fcppt::make_unique_ptr<entity::spaceship>(
-			fcppt::ref(
-				sprite_system_),
-			fcppt::ref(
-				texture_tree_),
-			fcppt::ref(
-				audio_player_),
-			fcppt::ref(
-				audio_buffer_tree_),
+			fcppt::ref(sprite_system_),
+			fcppt::ref(texture_tree_),
+			fcppt::ref(audio_player_),
+			fcppt::ref(audio_buffer_tree_),
+			planar::callbacks::add_particle(
+				std::tr1::bind(
+					&object::add_particle,
+					this,
+					std::tr1::placeholders::_1,
+					std::tr1::placeholders::_2,
+					std::tr1::placeholders::_3)),
+			fcppt::ref(rng_),
 			planar::radius_to_screen_space(
 				_radius)));
 }
@@ -163,6 +170,23 @@ sgeroids::view::planar::object::add_projectile(
 				sprite_system_),
 			fcppt::ref(
 				texture_tree_)));
+}
+
+void
+sgeroids::view::planar::object::add_particle(
+	planar::position const &_position,
+	particle::velocity const &_velocity,
+	particle::lifespan const &_lifespan)
+{
+	particles_.push_back(
+		new particle::object(
+			fcppt::ref(
+				sprite_system_),
+			fcppt::ref(
+				texture_tree_),
+			_position,
+			_velocity,
+			_lifespan));
 }
 
 void
@@ -318,6 +342,19 @@ sgeroids::view::planar::object::update()
 		it != entities_.end();
 		++it)
 		it->second->update();
+
+	for(
+		particle_vector::iterator it =
+			particles_.begin();
+		it !=
+			particles_.end();)
+	{
+		it->update();
+		if (it->dead())
+			it = particles_.erase(it);
+		else
+			++it;
+	}
 }
 
 void

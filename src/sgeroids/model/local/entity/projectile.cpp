@@ -90,7 +90,7 @@ sgeroids::model::local::entity::projectile::radius() const
 {
 	return
 		model::radius(
-			math::unit_magnitude() * 20000);
+			math::unit_magnitude() * 5000);
 }
 
 void
