@@ -47,6 +47,9 @@ public:
 	model::radius const
 	radius() const;
 
+	model::velocity const
+	velocity() const;
+
 	void
 	collides_with(
 		entity::base &);

@@ -8,6 +8,7 @@
 #include <sgeroids/model/local/asteroid_generator/object.hpp>
 #include <sgeroids/model/local/entity/spaceship_fwd.hpp>
 #include <sgeroids/model/local/entity/unique_base_ptr.hpp>
+#include <sgeroids/model/local/entity/asteroid_fwd.hpp>
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/signal/auto_connection.hpp>
 #include <fcppt/signal/object.hpp>
@@ -173,7 +174,9 @@ private:
 	void
 	collision_detection_narrow_phase(
 		entity::base &,
-		entity::base &);
+		model::entity_id const &,
+		entity::base &,
+		model::entity_id const &);
 
 	/**
 	\brief Locate a spaceship with the given id or throw an error
@@ -219,10 +222,21 @@ private:
 		model::radius const &,
 		model::velocity const &);
 
+	/**
+	\brief Called by the spaceship when a new projectile is spawned
+	*/
 	void
 	insert_projectile(
 		model::position const &,
 		model::rotation const &);
+
+	/**
+	\brief Called by the asteroid when it dies
+	*/
+	void
+	asteroid_died(
+		model::entity_id const &,
+		local::entity::asteroid &);
 };
 }
 }

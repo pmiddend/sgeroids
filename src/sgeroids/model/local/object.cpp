@@ -427,7 +427,11 @@ sgeroids::model::local::object::collision_detection_broadphase()
 		{
 			this->collision_detection_narrow_phase(
 				*(left->second),
-				*(right->second));
+				model::entity_id(
+					left->first),
+				*(right->second),
+				model::entity_id(
+					right->first));
 		}
 	}
 }
@@ -435,7 +439,9 @@ sgeroids::model::local::object::collision_detection_broadphase()
 void
 sgeroids::model::local::object::collision_detection_narrow_phase(
 	entity::base &_left,
-	entity::base &_right)
+	model::entity_id const &_left_id,
+	entity::base &_right,
+	model::entity_id const &_right_id)
 {
 	model::vector2 const
 		difference_vector =
@@ -458,6 +464,36 @@ sgeroids::model::local::object::collision_detection_narrow_phase(
 
 		_right.collides_with(
 			_left);
+
+		fcppt::optional<entity::asteroid const &>
+			left_is_asteroid(
+				fcppt::optional_dynamic_cast<entity::asteroid const &>(
+					_left)),
+			right_is_asteroid(
+				fcppt::optional_dynamic_cast<entity::asteroid const &>(
+					_right));
+
+		fcppt::optional<entity::projectile const &>
+			left_is_projectile(
+				fcppt::optional_dynamic_cast<entity::projectile const &>(
+					_left)),
+			right_is_projectile(
+				fcppt::optional_dynamic_cast<entity::projectile const &>(
+					_right));
+
+		if(left_is_asteroid && right_is_projectile)
+			collide_projectile_asteroid_(
+				model::projectile_id(
+					_right_id.get()),
+				model::asteroid_id(
+					_left_id.get()));
+		else if(right_is_asteroid && left_is_projectile)
+			collide_projectile_asteroid_(
+				model::projectile_id(
+					_left_id.get()),
+				model::asteroid_id(
+					_right_id.get()));
+
 	}
 }
 
@@ -560,6 +596,13 @@ sgeroids::model::local::object::asteroid_generated(
 					this,
 					model::entity_id(
 						next_id_),
+					std::tr1::placeholders::_1)),
+			local::callbacks::asteroid_died(
+				std::tr1::bind(
+					&object::asteroid_died,
+					this,
+					model::entity_id(
+						next_id_),
 					std::tr1::placeholders::_1))));
 
 	fcppt::container::ptr::insert_unique_ptr_map(
@@ -641,4 +684,111 @@ sgeroids::model::local::object::insert_projectile(
 		_rotation);
 
 	next_id_++;
+}
+
+void
+sgeroids::model::local::object::asteroid_died(
+	model::entity_id const &_entity_id,
+	local::entity::asteroid &_asteroid)
+{
+	FCPPT_LOG_DEBUG(
+		model::log(),
+		fcppt::log::_
+			<< FCPPT_TEXT("An asteroid died, checking if we need to create another one"));
+
+	destroy_asteroid_(
+		_entity_id);
+
+	model::vector2 const
+		original_velocity(
+			_asteroid.velocity().get());
+
+	typedef
+	fcppt::container::array<model::velocity,2>
+	velocity_array;
+
+	velocity_array const normals =
+		{{
+			model::velocity(
+				model::vector2(
+					-original_velocity.y(),
+					original_velocity.x())),
+			model::velocity(
+				model::vector2(
+					original_velocity.y(),
+					-original_velocity.x()))
+		}};
+
+	model::position const new_position(
+		_asteroid.position());
+
+	model::rotation const new_rotation(
+		_asteroid.rotation());
+
+	model::rotation_direction const new_rotation_direction(
+		_asteroid.rotation_direction());
+
+	model::radius const new_radius(
+		_asteroid.radius().get()/2);
+
+	for(
+		velocity_array::const_iterator new_velocity =
+			normals.begin();
+		new_velocity != normals.end();
+		++new_velocity)
+	{
+
+		fcppt::unique_ptr<entity::asteroid> to_add(
+			fcppt::make_unique_ptr<entity::asteroid>(
+				new_position,
+				new_rotation,
+				new_rotation_direction,
+				new_radius,
+				this->play_area(),
+				*new_velocity,
+				local::callbacks::position_entity_no_id(
+					std::tr1::bind(
+						&object::change_entity_position,
+						this,
+						model::entity_id(
+							next_id_),
+						std::tr1::placeholders::_1)),
+				local::callbacks::rotation_entity_no_id(
+					std::tr1::bind(
+						&object::change_entity_rotation,
+						this,
+						model::entity_id(
+							next_id_),
+						std::tr1::placeholders::_1)),
+				local::callbacks::asteroid_died(
+					std::tr1::bind(
+						&object::asteroid_died,
+						this,
+						model::entity_id(
+							next_id_),
+						std::tr1::placeholders::_1))));
+
+		fcppt::container::ptr::insert_unique_ptr_map(
+			entities_,
+			next_id_,
+			fcppt::move(
+				to_add));
+
+		add_asteroid_(
+			model::entity_id(
+				next_id_),
+			new_radius);
+
+		position_entity_(
+			model::entity_id(
+				next_id_),
+			new_position);
+
+		rotation_entity_(
+			model::entity_id(
+				next_id_),
+			new_rotation);
+
+		next_id_++;
+	}
 }

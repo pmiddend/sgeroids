@@ -39,12 +39,7 @@ void
 sgeroids::model::local::entity::projectile::update()
 {
 	position_ +=
-		14900 *
-			model::vector2(
-				math::discrete_cos(
-					rotation_ / math::unit_magnitude()),
-				math::discrete_sin(
-					rotation_ / math::unit_magnitude()));
+		this->velocity().get();
 
 	position_ =
 		sgeroids::math::wrap_point_in_torus(
@@ -91,6 +86,19 @@ sgeroids::model::local::entity::projectile::radius() const
 	return
 		model::radius(
 			math::unit_magnitude() * 5000);
+}
+
+sgeroids::model::velocity const
+sgeroids::model::local::entity::projectile::velocity() const
+{
+	return
+		model::velocity(
+			14900 *
+			model::vector2(
+				math::discrete_cos(
+					rotation_ / math::unit_magnitude()),
+				math::discrete_sin(
+					rotation_ / math::unit_magnitude())));
 }
 
 void
