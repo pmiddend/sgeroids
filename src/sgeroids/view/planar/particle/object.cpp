@@ -8,6 +8,7 @@
 #include <sgeroids/resource_tree/path.hpp>
 #include <sge/image/colors.hpp>
 #include <sge/image/color/any/object.hpp>
+#include <sge/sprite/center.hpp>
 
 sgeroids::view::planar::particle::object::object(
 	planar::sprite::system &_sprite_system,
@@ -32,7 +33,7 @@ sgeroids::view::planar::particle::object::object(
 				3)
 			.rotation(
 				0)
-			.pos(
+			.center(
 				_position.get())
 			.any_color(
 				sge::image::colors::white())),
@@ -58,7 +59,8 @@ sgeroids::view::planar::particle::object::update()
 {
 	if(lifespan_.get()-- <= 0) dead_ = true;
 	position_ += velocity_;
-	sprite_.pos(
+	sge::sprite::center(
+		sprite_,
 		position_);
 }
 

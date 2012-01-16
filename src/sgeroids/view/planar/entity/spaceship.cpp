@@ -101,7 +101,10 @@ sgeroids::view::planar::entity::spaceship::update()
 {
 	if (thrust_)
 		add_particle_(
-			planar::position(sprite_.pos()),
+			planar::position(
+				sge::sprite::center(
+					sprite_)
+			),
 			planar::particle::velocity(
 					2000 * planar::vector2(
 						math::discrete_cos(
