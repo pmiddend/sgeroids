@@ -2,12 +2,17 @@
 #define SGEROIDS_VIEW_PLANAR_SPRITE_CHOICES_HPP_INCLUDED
 
 #include <sgeroids/view/planar/sprite/type_choices.hpp>
-#include <sge/sprite/choices.hpp>
-#include <sge/sprite/with_color.hpp>
-#include <sge/sprite/with_dim.hpp>
-#include <sge/sprite/with_rotation.hpp>
-#include <sge/sprite/with_texture.hpp>
-#include <sge/sprite/intrusive/tag.hpp>
+#include <sgeroids/view/planar/sprite/color_format.hpp>
+#include <sge/sprite/config/normal_size.hpp>
+#include <sge/sprite/config/choices.hpp>
+#include <sge/sprite/config/with_texture.hpp>
+#include <sge/sprite/config/custom_center.hpp>
+#include <sge/sprite/config/with_color.hpp>
+#include <sge/sprite/config/normal_size.hpp>
+#include <sge/sprite/config/with_rotation.hpp>
+#include <sge/sprite/config/with_texture.hpp>
+#include <sge/sprite/config/intrusive.hpp>
+#include <sge/sprite/config/texture_level_count.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/mpl/vector/vector10.hpp>
 #include <fcppt/config/external_end.hpp>
@@ -22,16 +27,26 @@ namespace planar
 namespace sprite
 {
 typedef
-sge::sprite::choices
+sge::sprite::config::choices
 <
 	sprite::type_choices,
-	boost::mpl::vector5
+	sge::sprite::config::normal_size,
+	boost::mpl::vector4
 	<
-		sge::sprite::with_color,
-		sge::sprite::with_texture,
-		sge::sprite::with_dim,
-		sge::sprite::with_rotation,
-		sge::sprite::intrusive::tag
+		sge::sprite::config::with_texture
+		<
+			sge::sprite::config::texture_level_count<1u>,
+			sge::sprite::config::texture_coordinates::automatic
+		>,
+		sge::sprite::config::with_rotation
+		<
+			sge::sprite::config::custom_center<false>
+		>,
+		sge::sprite::config::with_color
+		<
+			planar::sprite::color_format
+		>,
+		sge::sprite::config::intrusive
 	>
 >
 choices;

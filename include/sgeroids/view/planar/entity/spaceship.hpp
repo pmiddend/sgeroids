@@ -12,7 +12,7 @@
 #include <sgeroids/view/planar/texture_tree.hpp>
 #include <sgeroids/view/planar/entity/base.hpp>
 #include <sgeroids/view/planar/sprite/object.hpp>
-#include <sgeroids/view/planar/sprite/system.hpp>
+#include <sgeroids/view/planar/sprite/ordered_collection.hpp>
 #include <sgeroids/random_generator.hpp>
 #include <fcppt/random/uniform.hpp>
 
@@ -34,7 +34,7 @@ FCPPT_NONCOPYABLE(
 public:
 	explicit
 	spaceship(
-		planar::sprite::system &,
+		planar::sprite::ordered_collection &,
 		planar::texture_tree &,
 		sge::audio::player &,
 		planar::audio_buffer_tree &,

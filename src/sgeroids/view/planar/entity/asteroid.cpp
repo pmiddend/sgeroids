@@ -4,14 +4,15 @@
 #include <sgeroids/view/planar/entity/asteroid.hpp>
 #include <sgeroids/view/planar/sprite/dim.hpp>
 #include <sgeroids/view/planar/sprite/parameters.hpp>
-#include <sgeroids/view/planar/sprite/system_impl.hpp>
 #include <sge/image/colors.hpp>
+#include <sge/sprite/parameters.hpp>
+#include <sge/sprite/intrusive/ordered_collection.hpp>
 #include <sge/image/color/any/object.hpp>
 #include <sge/sprite/center.hpp>
 #include <fcppt/text.hpp>
 
 sgeroids::view::planar::entity::asteroid::asteroid(
-	planar::sprite::system &_sprite_system,
+	planar::sprite::ordered_collection &_collection,
 	planar::texture_tree &_texture_tree,
 	planar::radius const &_radius)
 :
@@ -20,16 +21,15 @@ sgeroids::view::planar::entity::asteroid::asteroid(
 			sgeroids::resource_tree::path() / FCPPT_TEXT("asteroid"))),
 	sprite_(
 		planar::sprite::parameters()
-			.system(
-				_sprite_system)
+			.connection(
+				_collection.connection(
+					3))
 			.size(
 				planar::sprite_size_from_texture_and_radius(
 					texture_,
 					_radius))
 			.texture(
 				texture_)
-			.order(
-				3)
 			.rotation(
 				0)
 			.any_color(

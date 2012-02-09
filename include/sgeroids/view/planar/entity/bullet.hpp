@@ -5,8 +5,7 @@
 #include <sgeroids/view/planar/texture_tree.hpp>
 #include <sgeroids/view/planar/entity/base.hpp>
 #include <sgeroids/view/planar/sprite/object.hpp>
-#include <sgeroids/view/planar/sprite/system.hpp>
-
+#include <sgeroids/view/planar/sprite/ordered_collection.hpp>
 
 namespace sgeroids
 {
@@ -25,7 +24,7 @@ FCPPT_NONCOPYABLE(
 public:
 	explicit
 	bullet(
-		planar::sprite::system &,
+		planar::sprite::ordered_collection &,
 		planar::texture_tree &);
 
 	void

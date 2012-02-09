@@ -5,7 +5,7 @@
 #include <sgeroids/view/planar/particle/velocity.hpp>
 #include <sgeroids/view/planar/particle/lifespan.hpp>
 #include <sgeroids/view/planar/sprite/object.hpp>
-#include <sgeroids/view/planar/sprite/system.hpp>
+#include <sgeroids/view/planar/sprite/ordered_collection.hpp>
 #include <sgeroids/view/planar/texture_tree.hpp>
 
 namespace sgeroids
@@ -18,14 +18,12 @@ namespace particle
 {
 class object
 {
-/*
 FCPPT_NONCOPYABLE(
 	object);
-	*/
 public:
 	explicit
 	object(
-		planar::sprite::system &,
+		planar::sprite::ordered_collection &,
 		planar::texture_tree &,
 		planar::position const &,
 		particle::velocity const &,
@@ -39,11 +37,11 @@ public:
 
 	~object();
 private:
-		planar::sprite::object sprite_;
-		planar::vector2 position_;
-		planar::vector2 velocity_;
-		particle::lifespan lifespan_;
-		bool dead_;
+	planar::sprite::object sprite_;
+	planar::vector2 position_;
+	planar::vector2 velocity_;
+	particle::lifespan lifespan_;
+	bool dead_;
 };
 }
 }

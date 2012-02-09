@@ -1,3 +1,4 @@
+#include <fcppt/math/vector/arithmetic.hpp>
 #include <sgeroids/math/unit_magnitude.hpp>
 #include <sgeroids/math/discrete_sin.hpp>
 #include <sgeroids/math/discrete_cos.hpp>
@@ -8,7 +9,6 @@
 #include <sgeroids/view/planar/entity/spaceship.hpp>
 #include <sgeroids/view/planar/sprite/dim.hpp>
 #include <sgeroids/view/planar/sprite/parameters.hpp>
-#include <sgeroids/view/planar/sprite/system_impl.hpp>
 #include <sge/audio/buffer.hpp>
 #include <sge/audio/buffer_ptr.hpp>
 #include <sge/audio/sound/base.hpp>
@@ -17,6 +17,8 @@
 #include <sge/image/colors.hpp>
 #include <sge/image/color/any/object.hpp>
 #include <sge/sprite/center.hpp>
+#include <sge/sprite/parameters.hpp>
+#include <sge/sprite/intrusive/ordered_collection.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/random/make_inclusive_range.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -25,7 +27,7 @@
 
 
 sgeroids::view::planar::entity::spaceship::spaceship(
-	planar::sprite::system &_sprite_system,
+	planar::sprite::ordered_collection &_collection,
 	planar::texture_tree &_texture_tree,
 	sge::audio::player &_audio_player,
 	planar::audio_buffer_tree &_audio_buffer_tree,
@@ -41,16 +43,15 @@ sgeroids::view::planar::entity::spaceship::spaceship(
 			sgeroids::resource_tree::path() / FCPPT_TEXT("spaceship") / FCPPT_TEXT("on"))),
 	sprite_(
 		planar::sprite::parameters()
-			.system(
-				_sprite_system)
+			.connection(
+				_collection.connection(
+					3))
 			.size(
 				planar::sprite_size_from_texture_and_radius(
 					texture_off_,
 					_radius))
 			.texture(
 				texture_off_)
-			.order(
-				3)
 			.rotation(
 				0)
 			.any_color(

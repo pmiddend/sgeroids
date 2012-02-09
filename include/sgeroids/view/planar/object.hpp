@@ -10,8 +10,8 @@
 #include <sgeroids/view/planar/background/object.hpp>
 #include <sgeroids/view/planar/entity/base_fwd.hpp>
 #include <sgeroids/view/planar/particle/object.hpp>
-#include <sgeroids/view/planar/sprite/system.hpp>
-#include <sgeroids/view/planar/sprite/system_impl.hpp>
+#include <sgeroids/view/planar/sprite/ordered_collection.hpp>
+#include <sgeroids/view/planar/sprite/dynamic_buffers.hpp>
 #include <sge/audio/buffer_ptr.hpp>
 #include <sge/audio/loader_fwd.hpp>
 #include <sge/audio/player_fwd.hpp>
@@ -20,8 +20,10 @@
 #include <sge/image2d/system_fwd.hpp>
 #include <sge/renderer/device_fwd.hpp>
 #include <sge/renderer/matrix4.hpp>
+#include <sge/renderer/vertex_declaration_ptr.hpp>
 #include <sge/texture/fragmented_unique_ptr.hpp>
 #include <sge/texture/manager.hpp>
+#include <sge/sprite/intrusive/ordered_collection.hpp>
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/filesystem/path.hpp>
 #include <fcppt/math/box/basic_impl.hpp>
@@ -40,6 +42,31 @@ namespace planar
 {
 /**
 \brief Represents a 2D, sprite-oriented view
+
+This is the "main" view class and is instantiated when the game is started. It
+currently is <em>directly</em> responsible for:
+
+<ul>
+	<li>
+		Rendering the dynamic sprites. This encompasses everything that
+		might move/rotate each frame. The background, for example, is
+		managed separately (in
+		sgeroids::view::planar::background::object).
+	</li>
+	<li>
+		Owning a random number generator that's private to the view.
+		This is used for random effects such as explosions.
+	</li>
+	<li>
+		Loading and providing access to sounds and textures.
+	</li>
+	<li>
+		Maintaining the current projection matrix (which transfers from game coordinates to screen coordinates).
+	</li>
+	<li>
+		Owning the sprite vertex declaration (somebody's gotta do it).
+	</li>
+</ul>
 */
 class object
 :
@@ -139,7 +166,9 @@ private:
 	planar::texture_tree texture_tree_;
 	planar::audio_buffer_tree audio_buffer_tree_;
 	sge::audio::sound::base_ptr firing_sound_;
-	planar::sprite::system sprite_system_;
+	sge::renderer::vertex_declaration_ptr sprite_vertex_declaration_;
+	planar::sprite::dynamic_buffers dynamic_buffers_;
+	planar::sprite::ordered_collection dynamic_collection_;
 	sge::renderer::matrix4 projection_matrix_;
 	entity_map entities_;
 	fcppt::unique_ptr<background::object> background_;

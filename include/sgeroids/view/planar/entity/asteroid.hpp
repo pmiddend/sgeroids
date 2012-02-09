@@ -6,7 +6,7 @@
 #include <sgeroids/view/planar/texture_tree.hpp>
 #include <sgeroids/view/planar/entity/base.hpp>
 #include <sgeroids/view/planar/sprite/object.hpp>
-#include <sgeroids/view/planar/sprite/system.hpp>
+#include <sgeroids/view/planar/sprite/ordered_collection.hpp>
 #include <sge/texture/const_part_ptr.hpp>
 
 namespace sgeroids
@@ -26,7 +26,7 @@ FCPPT_NONCOPYABLE(
 public:
 	explicit
 	asteroid(
-		planar::sprite::system &,
+		planar::sprite::ordered_collection &,
 		planar::texture_tree &,
 		planar::radius const &);
 

@@ -2,16 +2,17 @@
 #include <sgeroids/view/planar/radius.hpp>
 #include <sgeroids/view/planar/sprite/dim.hpp>
 #include <sgeroids/view/planar/sprite/parameters.hpp>
-#include <sgeroids/view/planar/sprite/system_impl.hpp>
 #include <sgeroids/view/planar/sprite_size_from_texture_and_radius.hpp>
 #include <sgeroids/resource_tree/object_impl.hpp>
 #include <sgeroids/resource_tree/path.hpp>
 #include <sge/image/colors.hpp>
+#include <sge/sprite/parameters.hpp>
+#include <sge/sprite/intrusive/ordered_collection.hpp>
 #include <sge/image/color/any/object.hpp>
 #include <sge/sprite/center.hpp>
 
 sgeroids::view::planar::particle::object::object(
-	planar::sprite::system &_sprite_system,
+	planar::sprite::ordered_collection &_collection,
 	planar::texture_tree &_texture_tree,
 	planar::position const &_position,
 	particle::velocity const &_velocity,
@@ -19,8 +20,9 @@ sgeroids::view::planar::particle::object::object(
 :
 	sprite_(
 		planar::sprite::parameters()
-			.system(
-				_sprite_system)
+			.connection(
+				_collection.connection(
+					3))
 			.size(
 				planar::sprite_size_from_texture_and_radius(
 					_texture_tree.get(
@@ -29,8 +31,6 @@ sgeroids::view::planar::particle::object::object(
 			.texture(
 				_texture_tree.get(
 					sgeroids::resource_tree::path() / FCPPT_TEXT("exhaust")))
-			.order(
-				3)
 			.rotation(
 				0)
 			.center(

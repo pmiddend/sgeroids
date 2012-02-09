@@ -1,3 +1,11 @@
+#include <sge/sprite/process/options.hpp>
+#include <sge/sprite/process/options.hpp>
+#include <sge/sprite/intrusive/process/ordered_with_options.hpp>
+#include <sge/sprite/render/options.hpp>
+#include <sge/sprite/compare/default.hpp>
+#include <sge/sprite/buffers/option.hpp>
+#include <sge/sprite/buffers/parameters.hpp>
+#include <sge/sprite/make_vertex_format.hpp>
 #include <sgeroids/exception.hpp>
 #include <sgeroids/media_path.hpp>
 #include <sgeroids/random_generator_seed.hpp>
@@ -25,8 +33,7 @@
 #include <sge/renderer/state/list.hpp>
 #include <sge/renderer/state/scoped.hpp>
 #include <sge/renderer/texture/mipmap/off.hpp>
-#include <sge/sprite/default_equal.hpp>
-#include <sge/sprite/render_states.hpp>
+#include <sge/sprite/compare/default.hpp>
 #include <sge/texture/add_image.hpp>
 #include <sge/texture/no_fragmented.hpp>
 #include <fcppt/insert_to_fcppt_string.hpp>
@@ -91,8 +98,15 @@ sgeroids::view::planar::object::object(
 			sgeroids::resource_tree::path() / FCPPT_TEXT("lazor")
 		)->create_nonpositional(
 			sge::audio::sound::nonpositional_parameters())),
-	sprite_system_(
-		renderer_),
+	sprite_vertex_declaration_(
+		renderer_.create_vertex_declaration(
+			sge::sprite::make_vertex_format<planar::sprite::choices>())),
+	dynamic_buffers_(
+		sge::sprite::buffers::parameters(
+			renderer_,
+			*sprite_vertex_declaration_),
+		sge::sprite::buffers::option::dynamic),
+	dynamic_collection_(),
 	projection_matrix_(),
 	entities_(),
 	particles_()
@@ -116,7 +130,7 @@ sgeroids::view::planar::object::add_spaceship(
 		entities_,
 		_id.get(),
 		fcppt::make_unique_ptr<entity::spaceship>(
-			fcppt::ref(sprite_system_),
+			fcppt::ref(dynamic_collection_),
 			fcppt::ref(texture_tree_),
 			fcppt::ref(audio_player_),
 			fcppt::ref(audio_buffer_tree_),
@@ -149,7 +163,7 @@ sgeroids::view::planar::object::add_asteroid(
 		_id.get(),
 		fcppt::make_unique_ptr<entity::asteroid>(
 			fcppt::ref(
-				sprite_system_),
+				dynamic_collection_),
 			fcppt::ref(
 				texture_tree_),
 			planar::radius_to_screen_space(
@@ -167,7 +181,7 @@ sgeroids::view::planar::object::add_projectile(
 		_id.get(),
 		fcppt::make_unique_ptr<entity::bullet>(
 			fcppt::ref(
-				sprite_system_),
+				dynamic_collection_),
 			fcppt::ref(
 				texture_tree_)));
 }
@@ -181,7 +195,7 @@ sgeroids::view::planar::object::add_particle(
 	particles_.push_back(
 		new particle::object(
 			fcppt::ref(
-				sprite_system_),
+				dynamic_collection_),
 			fcppt::ref(
 				texture_tree_),
 			_position,
@@ -315,7 +329,8 @@ sgeroids::view::planar::object::play_area(
 {
 	background_.reset(
 		new background::object(
-			sprite_system_,
+			renderer_,
+			*sprite_vertex_declaration_,
 			texture_tree_,
 			_area,
 			rng_,
@@ -360,19 +375,12 @@ sgeroids::view::planar::object::update()
 void
 sgeroids::view::planar::object::render()
 {
-
-
-	sge::renderer::state::scoped scoped_sprite_states(
-		renderer_,
-		sge::sprite::render_states<planar::sprite::choices>());
-
 	sge::renderer::state::scoped scoped_states(
 		renderer_,
 		sge::renderer::state::list
 			(sge::renderer::state::color::back_buffer_clear_color = sge::image::colors::black())
 			(sge::renderer::state::cull_mode::off)
 			(sge::renderer::state::depth_func::off));
-
 
 	renderer_.clear(
 		sge::renderer::clear_flags_field(
@@ -388,8 +396,24 @@ sgeroids::view::planar::object::render()
 		sge::renderer::matrix_mode::projection,
 		projection_matrix_);
 
-	sprite_system_.render_all_advanced(
-		sge::sprite::default_equal());
+	background_->render();
+
+	sge::sprite::intrusive::process::ordered_with_options
+	<
+		sge::sprite::process::options
+		<
+			sge::sprite::process::geometry_options::sort_and_update,
+			sge::sprite::render::options
+			<
+				sge::sprite::render::matrix_options::nothing,
+				sge::sprite::render::state_options::set,
+				sge::sprite::render::vertex_options::declaration
+			>
+		>
+	>(
+		dynamic_collection_,
+		dynamic_buffers_,
+		sge::sprite::compare::default_());
 }
 
 void

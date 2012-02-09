@@ -2,7 +2,7 @@
 #define SGEROIDS_VIEW_PLANAR_SPRITE_PARAMETERS_HPP_INCLUDED
 
 #include <sgeroids/view/planar/sprite/choices.hpp>
-#include <sge/sprite/parameters.hpp>
+#include <sge/sprite/parameters_fwd.hpp>
 
 
 namespace sgeroids

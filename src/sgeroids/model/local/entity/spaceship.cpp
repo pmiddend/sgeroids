@@ -152,7 +152,6 @@ void
 sgeroids::model::local::entity::spaceship::collides_with(
 	entity::base &/*_other*/)
 {
-	std::cout << "got a collision\n";
 	/*
 	if(fcppt::optional_dynamic_cast<entity::asteroid const &>(_other))
 		dead_ =

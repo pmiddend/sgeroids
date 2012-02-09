@@ -1,3 +1,9 @@
+//#include <sge/sprite/geometry/sort_and_update.hpp>
+#include <sge/sprite/geometry/update.hpp>
+#include <sge/sprite/buffers/option.hpp>
+#include <sge/sprite/buffers/parameters.hpp>
+#include <sge/sprite/compare/default.hpp>
+#include <sge/sprite/parameters.hpp>
 #include <sgeroids/math/unit_magnitude.hpp>
 #include <sgeroids/resource_tree/object_impl.hpp>
 #include <sgeroids/resource_tree/path.hpp>
@@ -6,7 +12,6 @@
 #include <sgeroids/view/planar/background/object.hpp>
 #include <sgeroids/view/planar/sprite/dim.hpp>
 #include <sgeroids/view/planar/sprite/parameters.hpp>
-#include <sgeroids/view/planar/sprite/system_impl.hpp>
 #include <sge/image/colors.hpp>
 #include <sge/image/color/any/object.hpp>
 #include <sge/sprite/center.hpp>
@@ -17,15 +22,22 @@
 
 
 sgeroids::view::planar::background::object::object(
-	sgeroids::view::planar::sprite::system &_sprite_system,
+	sge::renderer::device &_renderer,
+	sge::renderer::vertex_declaration const &_vertex_declaration,
 	sgeroids::view::planar::texture_tree &_texture_tree,
 	sgeroids::model::play_area const &_play_area,
 	sgeroids::random_generator &_rng,
 	star_size _star_size,
 	star_count _star_count)
 :
-	sprite_system_(
-		_sprite_system),
+	sprites_(),
+	sprite_buffers_(
+		sge::sprite::buffers::parameters(
+			_renderer,
+			_vertex_declaration),
+		sge::sprite::buffers::option::dynamic),
+	sprite_collection_(),
+	sprite_render_range_(),
 	texture_tree_(
 		_texture_tree),
 	play_area_(
@@ -65,8 +77,9 @@ sgeroids::view::planar::background::object::object(
 		sprites_.push_back(
 			new planar::sprite::object(
 				planar::sprite::parameters()
-					.system(
-						sprite_system_)
+					.connection(
+						sprite_collection_.connection(
+							0))
 					.texture(
 						texture_tree_.get(
 								sgeroids::resource_tree::path() / FCPPT_TEXT("star")))
@@ -79,8 +92,6 @@ sgeroids::view::planar::background::object::object(
 						planar::sprite::object::vector(
 							random_x(),
 							random_y()))
-					.order(
-						0)
 					.rotation(
 						0)
 					.any_color(
@@ -89,8 +100,9 @@ sgeroids::view::planar::background::object::object(
 	sprites_.push_back(
 		new planar::sprite::object(
 			planar::sprite::parameters()
-				.system(
-					sprite_system_)
+				.connection(
+					sprite_collection_.connection(
+						2))
 				.texture(
 					texture_tree_.get(
 							sgeroids::resource_tree::path() / FCPPT_TEXT("planet")))
@@ -103,8 +115,6 @@ sgeroids::view::planar::background::object::object(
 					planar::sprite::object::vector(
 						random_x(),
 						random_y()))
-				.order(
-					2)
 				.rotation(
 					random_angle())
 				.any_color(
@@ -113,8 +123,9 @@ sgeroids::view::planar::background::object::object(
 	sprites_.push_back(
 		new planar::sprite::object(
 			planar::sprite::parameters()
-				.system(
-					sprite_system_)
+				.connection(
+					sprite_collection_.connection(
+						1))
 				.texture(
 					texture_tree_.get(
 							sgeroids::resource_tree::path() / FCPPT_TEXT("nebula")))
@@ -127,10 +138,48 @@ sgeroids::view::planar::background::object::object(
 					planar::sprite::object::vector(
 						random_x(),
 						random_y()))
-				.order(
-					1)
 				.rotation(
 					random_angle())
 				.any_color(
 					sge::image::colors::white())));
+
+
+	/*
+	sprite_render_range_ =
+		sge::sprite::geometry::update(
+			sprite_collection_,
+			sge::sprite::compare::default_(),
+			sprite_buffers_);
+			*/
+	/*
+	sge::sprite::geometry::sort_and_update(
+		sprite_collection_,
+		sprite_buffers_,
+		sge::sprite::compare::default_());
+		*/
+}
+
+void
+sgeroids::view::planar::background::object::render()
+{
+	/*
+	sge::sprite::intrusive::render::ordered_with_options
+	<
+		sge::sprite::render::options
+		<
+			sge::sprite::render::geometry_options::nothing,
+			sge::sprite::render::matrix_options::nothing,
+			sge::sprite::render::state_options::set,
+			sge::sprite::render::vertex_options::declaration
+
+		>
+	>(
+		sprite_collection_,
+		sprite_buffers_,
+		sge::sprite::compare::default_());
+		*/
+}
+
+sgeroids::view::planar::background::object::~object()
+{
 }
