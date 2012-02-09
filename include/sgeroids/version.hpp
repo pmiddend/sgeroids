@@ -5,6 +5,11 @@
 
 namespace sgeroids
 {
+/**
+\brief Return program version as a string
+
+This is, of course, not suited for comparisons.
+*/
 fcppt::string const
 version();
 }

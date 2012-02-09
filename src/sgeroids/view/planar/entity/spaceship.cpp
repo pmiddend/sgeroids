@@ -109,9 +109,11 @@ sgeroids::view::planar::entity::spaceship::update()
 			planar::particle::velocity(
 					2000 * planar::vector2(
 						math::discrete_cos(
-							rotation_rng_()),
+							math::degrees(
+								rotation_rng_())),
 						math::discrete_sin(
-							rotation_rng_()))),
+							math::degrees(
+								rotation_rng_())))),
 			planar::particle::lifespan(60));
 }
 

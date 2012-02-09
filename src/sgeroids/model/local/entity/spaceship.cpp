@@ -77,9 +77,11 @@ sgeroids::model::local::entity::spaceship::update()
 		thrust_ *
 		model::vector2(
 			math::discrete_cos(
-				rotation_ / sgeroids::math::unit_magnitude()),
+				math::degrees(
+					rotation_ / sgeroids::math::unit_magnitude())),
 			math::discrete_sin(
-				rotation_ / sgeroids::math::unit_magnitude()));
+				math::degrees(
+					rotation_ / sgeroids::math::unit_magnitude())));
 
 	velocity_ =
 		model::vector2(

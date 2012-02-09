@@ -96,9 +96,11 @@ sgeroids::model::local::entity::projectile::velocity() const
 			14900 *
 			model::vector2(
 				math::discrete_cos(
-					rotation_ / math::unit_magnitude()),
+					math::degrees(
+						rotation_ / math::unit_magnitude())),
 				math::discrete_sin(
-					rotation_ / math::unit_magnitude())));
+					math::degrees(
+						rotation_ / math::unit_magnitude()))));
 }
 
 void

@@ -10,7 +10,7 @@
 
 
 sgeroids::scoped_frame_limiter::scoped_frame_limiter(
-	fps_type const _desired_fps)
+	ticks_per_second const _desired_fps)
 :
 	before_frame_(
 		clock_type::now()),

@@ -144,9 +144,11 @@ sgeroids::model::local::asteroid_generator::object::update()
 			velocity_magnitude_rng_() *
 			model::vector2(
 				math::discrete_cos(
-					chosen_velocity_angle),
+					math::degrees(
+						chosen_velocity_angle)),
 				math::discrete_sin(
-					chosen_velocity_angle))));
+					math::degrees(
+						chosen_velocity_angle)))));
 }
 
 sgeroids::model::local::asteroid_generator::object::~object()

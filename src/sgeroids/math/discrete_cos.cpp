@@ -370,11 +370,11 @@ int const lookup_table[360] =
 
 int
 sgeroids::math::discrete_cos(
-	int const x)
+	math::degrees const &x)
 {
 	return
 		lookup_table[
 			sgeroids::math::positive_mod(
-					x,
+					x.get(),
 					360)];
 }
