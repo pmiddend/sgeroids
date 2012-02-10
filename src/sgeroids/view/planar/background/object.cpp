@@ -1,9 +1,13 @@
-//#include <sge/sprite/geometry/sort_and_update.hpp>
-#include <sge/sprite/geometry/update.hpp>
+#include <sge/sprite/parameters.hpp>
 #include <sge/sprite/buffers/option.hpp>
 #include <sge/sprite/buffers/parameters.hpp>
 #include <sge/sprite/compare/default.hpp>
-#include <sge/sprite/parameters.hpp>
+#include <sge/sprite/geometry/sort_and_update.hpp>
+#include <sge/sprite/render/matrix_options.hpp>
+#include <sge/sprite/render/options.hpp>
+#include <sge/sprite/render/range_with_options.hpp>
+#include <sge/sprite/render/state_options.hpp>
+#include <sge/sprite/render/vertex_options.hpp>
 #include <sgeroids/math/unit_magnitude.hpp>
 #include <sgeroids/resource_tree/object_impl.hpp>
 #include <sgeroids/resource_tree/path.hpp>
@@ -144,40 +148,28 @@ sgeroids::view::planar::background::object::object(
 					sge::image::colors::white())));
 
 
-	/*
 	sprite_render_range_ =
-		sge::sprite::geometry::update(
-			sprite_collection_,
+		sge::sprite::geometry::sort_and_update(
+			sprite_collection_.range(),
 			sge::sprite::compare::default_(),
 			sprite_buffers_);
-			*/
-	/*
-	sge::sprite::geometry::sort_and_update(
-		sprite_collection_,
-		sprite_buffers_,
-		sge::sprite::compare::default_());
-		*/
 }
 
 void
 sgeroids::view::planar::background::object::render()
 {
-	/*
-	sge::sprite::intrusive::render::ordered_with_options
+	sge::sprite::render::range_with_options
 	<
 		sge::sprite::render::options
 		<
-			sge::sprite::render::geometry_options::nothing,
 			sge::sprite::render::matrix_options::nothing,
 			sge::sprite::render::state_options::set,
 			sge::sprite::render::vertex_options::declaration
 
 		>
 	>(
-		sprite_collection_,
-		sprite_buffers_,
-		sge::sprite::compare::default_());
-		*/
+		sprite_buffers_.parameters(),
+		sprite_render_range_);
 }
 
 sgeroids::view::planar::background::object::~object()
