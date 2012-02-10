@@ -14,7 +14,7 @@
 #include <sgeroids/view/planar/sprite/static_range.hpp>
 #include <sgeroids/view/planar/sprite/static_buffers.hpp>
 #include <sgeroids/view/planar/sprite/ordered_collection.hpp>
-#include <sge/sprite/intrusive/ordered_collection.hpp>
+#include <sge/sprite/intrusive/ordered/collection.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 #include <fcppt/config/external_end.hpp>

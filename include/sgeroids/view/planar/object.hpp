@@ -23,7 +23,7 @@
 #include <sge/renderer/vertex_declaration_ptr.hpp>
 #include <sge/texture/fragmented_unique_ptr.hpp>
 #include <sge/texture/manager.hpp>
-#include <sge/sprite/intrusive/ordered_collection.hpp>
+#include <sge/sprite/intrusive/ordered/collection.hpp>
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/filesystem/path.hpp>
 #include <fcppt/math/box/basic_impl.hpp>

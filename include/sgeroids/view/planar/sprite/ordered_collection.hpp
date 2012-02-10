@@ -3,7 +3,7 @@
 
 #include <sgeroids/view/planar/sprite/choices.hpp>
 #include <sgeroids/view/planar/sprite/order.hpp>
-#include <sge/sprite/intrusive/ordered_collection_fwd.hpp>
+#include <sge/sprite/intrusive/ordered/collection_fwd.hpp>
 
 namespace sgeroids
 {
@@ -19,7 +19,7 @@ namespace sprite
 The sprite layers are called "orders".
 */
 typedef
-sge::sprite::intrusive::ordered_collection
+sge::sprite::intrusive::ordered::collection
 <
 	planar::sprite::choices,
 	planar::sprite::order

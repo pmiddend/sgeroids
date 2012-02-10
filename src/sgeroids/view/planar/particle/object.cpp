@@ -7,7 +7,7 @@
 #include <sgeroids/resource_tree/path.hpp>
 #include <sge/image/colors.hpp>
 #include <sge/sprite/parameters.hpp>
-#include <sge/sprite/intrusive/ordered_collection.hpp>
+#include <sge/sprite/intrusive/ordered/collection.hpp>
 #include <sge/image/color/any/object.hpp>
 #include <sge/sprite/center.hpp>
 

@@ -18,7 +18,7 @@
 #include <sge/image/color/any/object.hpp>
 #include <sge/sprite/center.hpp>
 #include <sge/sprite/parameters.hpp>
-#include <sge/sprite/intrusive/ordered_collection.hpp>
+#include <sge/sprite/intrusive/ordered/collection.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/random/make_inclusive_range.hpp>
 #include <fcppt/config/external_begin.hpp>
