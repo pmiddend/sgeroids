@@ -34,13 +34,13 @@ sgeroids::view::planar::background::object::object(
 	star_size const _star_size,
 	star_count const _star_count)
 :
-	sprites_(),
 	sprite_buffers_(
 		sge::sprite::buffers::parameters(
 			_renderer,
 			_vertex_declaration),
 		sge::sprite::buffers::option::dynamic),
 	sprite_collection_(),
+	sprites_(),
 	sprite_render_range_(),
 	texture_tree_(
 		_texture_tree),

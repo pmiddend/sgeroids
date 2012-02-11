@@ -66,9 +66,9 @@ private:
 	boost::ptr_vector<sgeroids::view::planar::sprite::object>
 	sprite_container;
 
-	sprite_container sprites_;
 	sgeroids::view::planar::sprite::dynamic_buffers sprite_buffers_;
 	sgeroids::view::planar::sprite::ordered_collection sprite_collection_;
+	sprite_container sprites_;
 	sgeroids::view::planar::sprite::static_range sprite_render_range_;
 	sgeroids::view::planar::texture_tree &texture_tree_;
 	sgeroids::model::play_area const play_area_;
