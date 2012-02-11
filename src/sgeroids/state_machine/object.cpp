@@ -25,7 +25,8 @@
 #include <sge/systems/list.hpp>
 #include <sge/systems/renderer.hpp>
 #include <sge/systems/window.hpp>
-#include <sge/viewport/fill_on_resize.hpp>
+#include <sge/viewport/fractional_aspect.hpp>
+#include <sge/viewport/maintain_aspect.hpp>
 #include <sge/window/parameters.hpp>
 #include <sge/window/system.hpp>
 #include <sge/window/title.hpp>
@@ -122,7 +123,10 @@ sgeroids::state_machine::object::object(
 			(sge::systems::renderer(
 				renderer_parameters_from_config_file(
 					this->config()),
-				sge::viewport::fill_on_resize()))
+				sge::viewport::maintain_aspect(
+					sge::viewport::fractional_aspect(
+						4u,
+						3u))))
 			(sge::systems::input(
 				sge::systems::input_helper_field(
 					sge::systems::input_helper::keyboard_collector),
