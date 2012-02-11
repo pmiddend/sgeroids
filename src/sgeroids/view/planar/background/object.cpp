@@ -31,8 +31,8 @@ sgeroids::view::planar::background::object::object(
 	sgeroids::view::planar::texture_tree &_texture_tree,
 	sgeroids::model::play_area const &_play_area,
 	sgeroids::random_generator &_rng,
-	star_size _star_size,
-	star_count _star_count)
+	star_size const _star_size,
+	star_count const _star_count)
 :
 	sprites_(),
 	sprite_buffers_(
@@ -164,7 +164,7 @@ sgeroids::view::planar::background::object::render()
 		<
 			sge::sprite::render::matrix_options::nothing,
 			sge::sprite::render::state_options::set,
-			sge::sprite::render::vertex_options::declaration
+			sge::sprite::render::vertex_options::declaration_and_buffer
 
 		>
 	>(

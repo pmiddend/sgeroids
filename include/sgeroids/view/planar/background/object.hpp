@@ -71,10 +71,10 @@ private:
 	sgeroids::view::planar::sprite::ordered_collection sprite_collection_;
 	sgeroids::view::planar::sprite::static_range sprite_render_range_;
 	sgeroids::view::planar::texture_tree &texture_tree_;
-	sgeroids::model::play_area play_area_;
+	sgeroids::model::play_area const play_area_;
 	sgeroids::random_generator rng_;
-	background::star_size star_size_;
-	background::star_size star_count_;
+	background::star_size const star_size_;
+	background::star_size const star_count_;
 
 };
 }
