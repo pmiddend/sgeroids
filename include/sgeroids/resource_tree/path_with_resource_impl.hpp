@@ -1,6 +1,10 @@
 #ifndef SGEROIDS_RESOURCE_TREE_PATH_WITH_RESOURCE_IMPL_HPP_INCLUDED
 #define SGEROIDS_RESOURCE_TREE_PATH_WITH_RESOURCE_IMPL_HPP_INCLUDED
 
+#include <sgeroids/resource_tree/path.hpp>
+#include <sgeroids/resource_tree/path_with_resource_decl.hpp>
+
+
 template<typename T>
 sgeroids::resource_tree::path_with_resource<T>::path_with_resource(
 	resource_tree::path const &_path,

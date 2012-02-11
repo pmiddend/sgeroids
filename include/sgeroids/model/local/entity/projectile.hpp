@@ -2,6 +2,7 @@
 #define SGEROIDS_MODEL_LOCAL_ENTITY_PROJECTILE_HPP_INCLUDED
 
 #include <sgeroids/model/play_area.hpp>
+#include <sgeroids/model/velocity.hpp>
 #include <sgeroids/model/local/callbacks/position_entity_no_id.hpp>
 #include <sgeroids/model/local/callbacks/rotation_entity_no_id.hpp>
 #include <sgeroids/model/local/entity/base.hpp>
