@@ -125,8 +125,8 @@ sgeroids::state_machine::object::object(
 					this->config()),
 				sge::viewport::maintain_aspect(
 					sge::viewport::fractional_aspect(
-						4u,
-						3u))))
+						1u,
+						1u))))
 			(sge::systems::input(
 				sge::systems::input_helper_field(
 					sge::systems::input_helper::keyboard_collector),
