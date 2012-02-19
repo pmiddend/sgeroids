@@ -1,6 +1,10 @@
+#include <sgeroids/main.hpp>
 #include <sgeroids/version.hpp>
 #include <sgeroids/state_machine/object.hpp>
 #include <sgeroids/state_machine/states/ingame/superstate.hpp>
+#include <awl/main/exit_code.hpp>
+#include <awl/main/exit_failure.hpp>
+#include <awl/main/function_context.hpp>
 #include <fcppt/scoped_state_machine.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/io/cerr.hpp>
@@ -12,20 +16,20 @@
 #include <fcppt/config/external_end.hpp>
 
 
-int
-main(
-	int const argc,
-	char *argv[])
+awl::main::exit_code const
+sgeroids::main(
+	awl::main::function_context const &_main_function_context)
 try
 {
-	sgeroids::state_machine::object m(
-		argc,
-		argv);
+	sgeroids::state_machine::object machine(
+		_main_function_context.argc(),
+		_main_function_context.argv());
 
-	fcppt::scoped_state_machine<sgeroids::state_machine::object> sm(
-		m);
+	fcppt::scoped_state_machine<sgeroids::state_machine::object> const scoped_machine(
+		machine);
 
-	m.run();
+	return
+		machine.run();
 }
 catch(
 	fcppt::exception const &e)
@@ -34,7 +38,7 @@ catch(
 		<< FCPPT_TEXT("fcppt::exception: ")
 		<< e.string()
 		<< FCPPT_TEXT("\n");
-	return EXIT_FAILURE;
+	return awl::main::exit_failure();
 }
 catch(
 	std::exception const &e)
@@ -44,5 +48,5 @@ catch(
 		<< e.what()
 		<< "\n";
 
-	return EXIT_FAILURE;
+	return awl::main::exit_failure();
 }

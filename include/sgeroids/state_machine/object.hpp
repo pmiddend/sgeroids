@@ -4,6 +4,7 @@
 #include <sgeroids/state_machine/states/ingame/superstate_fwd.hpp>
 #include <sge/parse/json/object.hpp>
 #include <sge/systems/instance.hpp>
+#include <awl/main/exit_code.hpp>
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/statechart/state_machine.hpp>
@@ -41,7 +42,7 @@ public:
 	sge::systems::instance const &
 	systems() const;
 
-	void
+	awl::main::exit_code const
 	run();
 
 	void
@@ -51,7 +52,6 @@ public:
 private:
 	sge::parse::json::object const config_;
 	sge::systems::instance systems_;
-	bool running_;
 };
 }
 }

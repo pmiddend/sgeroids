@@ -52,34 +52,34 @@ include_directories(
 # Versioning stuff end
 
 # Boost begin
-FIND_PACKAGE(
+find_package(
 	Boost 1.45.0 REQUIRED COMPONENTS
 	system)
 
-INCLUDE_DIRECTORIES(
+include_directories(
 	${Boost_INCLUDE_DIR})
-LINK_DIRECTORIES(
+link_directories(
 	${Boost_LIBRARY_DIRS})
 
 # boost-1.48 is broken with fusion, workaround
-IF(
+if(
 	MSVC AND ${Boost_VERSION} STREQUAL "104800")
-	ADD_DEFINITIONS(
+	add_definitions(
 		-D BOOST_FUSION_DONT_USE_PREPROCESSED_FILES)
-ENDIF()
+endif()
 # boost end
 
 # fcppt begin
-FIND_PACKAGE(
+find_package(
 	Fcppt REQUIRED)
-INCLUDE_DIRECTORIES(
+include_directories(
 	${Fcppt_INCLUDE_DIRS})
-ADD_DEFINITIONS(
+add_definitions(
 	${Fcppt_DEFINITIONS})
 # fcppt end
 
 # sge begin
-FIND_PACKAGE(
+find_package(
 	SGE REQUIRED COMPONENTS
 	audio
 	image
@@ -94,28 +94,28 @@ FIND_PACKAGE(
 	window
 	viewport)
 
-INCLUDE_DIRECTORIES(
+include_directories(
 	${SGE_INCLUDE_DIRS})
-ADD_DEFINITIONS(
+add_definitions(
 	${SGE_DEFINITIONS})
 # sge end
 
 # Get rid of a pretty useless warning
-IF(CMAKE_COMPILER_IS_GNUCXX OR FCPPT_UTILS_COMPILER_IS_CLANGPP)
-	ADD_DEFINITIONS(
+if(CMAKE_COMPILER_IS_GNUCXX OR FCPPT_UTILS_COMPILER_IS_CLANGPP)
+	add_definitions(
 		-Wno-old-style-cast)
-ENDIF()
+endif()
 
 # Begin media path stuff
 # TODO: How exactly does this path stuff work?
-SET(
+set(
 	INSTALL_MEDIA_DIR
 	${INSTALL_DATA_DIR}/media)
 
-INCLUDE(
+include(
 	SGECustomPath)
 
-SGE_CONFIG_ADD_CUSTOM_PATH(
+sge_config_add_custom_path(
 	${CMAKE_PROJECT_NAME}
 	media
 	${CMAKE_SOURCE_DIR}/media
@@ -125,11 +125,11 @@ SGE_CONFIG_ADD_CUSTOM_PATH(
 # We don't want relative includes a la: #include "../foo/bar", so we partition
 # the source into src/ and include/ and add include/ to the include
 # directories
-INCLUDE_DIRECTORIES(
+include_directories(
 	${CMAKE_SOURCE_DIR}/include)
 
 # Add ALL the source files here!
-SET(
+set(
 	SGEROIDS_FILES
 	src/sgeroids/exception.cpp
 	src/sgeroids/input/keyboard.cpp
@@ -174,41 +174,42 @@ SET(
 )
 
 # Source groups are a MSVC file
-FCPPT_UTILS_ADD_SOURCE_GROUPS(
+fcppt_utils_add_source_groups(
 	"${SGEROIDS_FILES}")
 
+include(
+	AwlMainGenerator)
+
 # Executable
-ADD_EXECUTABLE(
+awl_utils_add_portable_executable(
 	${CMAKE_PROJECT_NAME}
-	# Adding WIN32 is safe, it'll do nothing if we're on anything other
-	# than Windows. On Windows, it'll force the creation of a
-	# "non-console" application, which is what you want on Windows.
-	WIN32
+	"sgeroids::main"
 	${SGEROIDS_FILES})
 
 # Link to what?
-TARGET_LINK_LIBRARIES(
+target_link_libraries(
 	${CMAKE_PROJECT_NAME}
 	${Fcppt_core_LIBRARIES}
 	${Fcppt_filesystem_LIBRARIES}
+	${Awl_LIBRARIES}
 	${SGE_LIBRARIES}
 	${Boost_LIBRARIES})
 
-INSTALL(
+install(
 	TARGETS
 	${CMAKE_PROJECT_NAME}
 	DESTINATION
 	${INSTALL_BINARY_DIR})
 
 # doc begin
-OPTION(
+option(
 	ENABLE_DOC
 	"Build the documentation"
 	OFF)
 
-IF(
+if(
 	ENABLE_DOC)
-	ADD_SUBDIRECTORY(
+	add_subdirectory(
 		doc)
-ENDIF()
+endif()
 # doc end

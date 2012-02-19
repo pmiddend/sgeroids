@@ -30,6 +30,8 @@
 #include <sge/window/parameters.hpp>
 #include <sge/window/system.hpp>
 #include <sge/window/title.hpp>
+#include <awl/main/exit_code.hpp>
+#include <awl/main/exit_success.hpp>
 #include <fcppt/insert_to_fcppt_string.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/assign/make_container.hpp>
@@ -144,9 +146,7 @@ sgeroids::state_machine::object::object(
 				sge::media::optional_extension_set(
 					fcppt::assign::make_container<sge::media::extension_set>(
 						sge::media::extension(
-							FCPPT_TEXT("ogg"))))))),
-	running_(
-		true)
+							FCPPT_TEXT("ogg")))))))
 {
 }
 
@@ -162,15 +162,14 @@ sgeroids::state_machine::object::systems() const
 	return systems_;
 }
 
-void
+awl::main::exit_code const
 sgeroids::state_machine::object::run()
 {
-	while(running_)
+	while(
+		systems_.window_system().poll())
 	{
 		sgeroids::scoped_frame_limiter frame_limiter(
 			60);
-
-		systems_.window_system().poll();
 
 		this->process_event(
 			sgeroids::state_machine::events::tick());
@@ -181,12 +180,16 @@ sgeroids::state_machine::object::run()
 		this->process_event(
 			sgeroids::state_machine::events::render());
 	}
+
+	return
+		systems_.window_system().exit_code();
 }
 
 void
 sgeroids::state_machine::object::exit_mainloop()
 {
-	running_ = false;
+	systems_.window_system().quit(
+		awl::main::exit_success());
 }
 
 sgeroids::state_machine::object::~object()
