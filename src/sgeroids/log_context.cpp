@@ -1,9 +1,5 @@
 #include <sgeroids/log_context.hpp>
-#include <fcppt/log/context.hpp>
+#include <fcppt/log/define_context.hpp>
 
-fcppt::log::context &
-sgeroids::log_context()
-{
-	static fcppt::log::context result;
-	return result;
-}
+FCPPT_LOG_DEFINE_CONTEXT(
+	sgeroids::log_context)

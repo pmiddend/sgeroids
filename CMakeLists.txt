@@ -137,6 +137,8 @@ set(
 	src/sgeroids/input/manager.cpp
 	src/sgeroids/log.cpp
 	src/sgeroids/log_context.cpp
+	src/sgeroids/log_location.cpp
+	src/sgeroids/log_parameters.cpp
 	src/sgeroids/main.cpp
 	src/sgeroids/math/discrete_cos.cpp
 	src/sgeroids/math/discrete_sin.cpp
