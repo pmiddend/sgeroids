@@ -82,6 +82,7 @@ add_definitions(
 find_package(
 	SGE REQUIRED COMPONENTS
 	audio
+	charconv
 	image
 	image2d
 	input

@@ -2,6 +2,7 @@
 #define SGEROIDS_STATE_MACHINE_OBJECT_HPP_INCLUDED
 
 #include <sgeroids/state_machine/states/ingame/superstate_fwd.hpp>
+#include <sge/charconv/system_scoped_ptr.hpp>
 #include <sge/parse/json/object.hpp>
 #include <sge/systems/instance.hpp>
 #include <awl/main/exit_code.hpp>
@@ -50,6 +51,7 @@ public:
 
 	~object();
 private:
+	sge::charconv::system_scoped_ptr const charconv_system_;
 	sge::parse::json::object const config_;
 	sge::systems::instance systems_;
 };

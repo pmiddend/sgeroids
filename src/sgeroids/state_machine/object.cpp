@@ -6,6 +6,8 @@
 #include <sgeroids/state_machine/object.hpp>
 #include <sgeroids/state_machine/events/render.hpp>
 #include <sgeroids/state_machine/events/tick.hpp>
+#include <sge/charconv/create_system.hpp>
+#include <sge/charconv/system.hpp>
 #include <sge/media/extension.hpp>
 #include <sge/media/extension_set.hpp>
 #include <sge/parse/json/convert_from.hpp>
@@ -20,6 +22,7 @@
 #include <sge/renderer/scoped_block.hpp>
 #include <sge/systems/audio_loader.hpp>
 #include <sge/systems/audio_player_default.hpp>
+#include <sge/systems/charconv.hpp>
 #include <sge/systems/font.hpp>
 #include <sge/systems/image2d.hpp>
 #include <sge/systems/list.hpp>
@@ -104,10 +107,13 @@ sgeroids::state_machine::object::object(
 	int const _argc,
 	char * _argv[])
 :
+	charconv_system_(
+		sge::charconv::create_system()),
 	config_(
 		sge::parse::json::config::merge_command_line_parameters(
 			sge::parse::json::parse_string_exn(
 				sgeroids::utf8_file_to_fcppt_string(
+					*charconv_system_,
 					sgeroids::media_path()/FCPPT_TEXT("config.json"))),
 			sge::parse::json::config::create_command_line_parameters(
 				_argc,
@@ -134,6 +140,8 @@ sgeroids::state_machine::object::object(
 					sge::systems::input_helper::keyboard_collector),
 				sge::systems::cursor_option_field::null()))
 			(sge::systems::audio_player_default())
+			(sge::systems::charconv(
+				*charconv_system_))
 			(sge::systems::font())
 			(sge::systems::image2d(
 				sge::image::capabilities_field::null(),
