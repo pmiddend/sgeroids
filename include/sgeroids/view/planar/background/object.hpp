@@ -74,7 +74,7 @@ private:
 	sgeroids::model::play_area const play_area_;
 	sgeroids::random_generator rng_;
 	background::star_size const star_size_;
-	background::star_size const star_count_;
+	background::star_count const star_count_;
 
 };
 }

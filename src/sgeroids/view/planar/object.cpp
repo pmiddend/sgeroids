@@ -335,7 +335,7 @@ sgeroids::view::planar::object::play_area(
 			_area,
 			rng_,
 			background::star_size(3500),
-			background::star_count(500)));
+			background::star_count(500u)));
 
 	projection_matrix_ =
 		sge::renderer::projection::orthogonal(
@@ -343,9 +343,9 @@ sgeroids::view::planar::object::play_area(
 				_area.get()),
 			// 0 and 10 are just guesses
 			sge::renderer::projection::near(
-				-10),
+				-10.f),
 			sge::renderer::projection::far(
-				10));
+				10.f));
 }
 
 void

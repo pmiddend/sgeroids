@@ -4,6 +4,7 @@
 #include <sgeroids/model/base.hpp>
 #include <sge/input/keyboard/device.hpp>
 #include <sge/input/keyboard/key_event.hpp>
+#include <fcppt/optional_impl.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/log/headers.hpp>
 #include <fcppt/tr1/functional.hpp>
@@ -145,6 +146,8 @@ sgeroids::input::keyboard::add_spaceship(
 			fcppt::log::_
 				<< FCPPT_TEXT("We got an ID: ") << _entity_id.get());
 		id_ =
-			_entity_id;
+			input::optional_entity_id(
+				fcppt::optional<model::entity_id>(
+					_entity_id));
 	}
 }

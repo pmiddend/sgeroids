@@ -49,9 +49,9 @@ sgeroids::view::planar::background::object::object(
 	rng_(
 		_rng),
 	star_size_(
-		_star_size.get()),
+		_star_size),
 	star_count_(
-		_star_count.get())
+		_star_count)
 {
 	fcppt::random::uniform<int, sgeroids::random_generator &> random_x(
 			fcppt::random::make_inclusive_range(
@@ -77,7 +77,11 @@ sgeroids::view::planar::background::object::object(
 			math::unit_magnitude() * star_size_.get() * 4),
 		rng_);
 
-	for (int i = 0; i < star_count_.get(); ++i)
+	for (
+		star_count::value_type index = 0;
+		index < star_count_.get();
+		++index
+	)
 		sprites_.push_back(
 			new planar::sprite::object(
 				planar::sprite::parameters()
