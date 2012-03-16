@@ -57,7 +57,7 @@ sgeroids::view::planar::particle::object::dead()
 void
 sgeroids::view::planar::particle::object::update()
 {
-	if(lifespan_.get()-- <= 0) dead_ = true;
+	if((lifespan_--).get() <= 0) dead_ = true;
 	position_ += velocity_;
 	sge::sprite::center(
 		sprite_,
