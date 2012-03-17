@@ -2,7 +2,9 @@
 #define SGEROIDS_RESOURCE_TREE_SUB_PATH_HPP_INCLUDED
 
 #include <fcppt/strong_typedef.hpp>
-#include <fcppt/filesystem/path.hpp>
+#include <fcppt/config/external_begin.hpp>
+#include <boost/filesystem/path.hpp>
+#include <fcppt/config/external_end.hpp>
 
 
 namespace sgeroids
@@ -10,7 +12,7 @@ namespace sgeroids
 namespace resource_tree
 {
 FCPPT_MAKE_STRONG_TYPEDEF(
-	fcppt::filesystem::path,
+	boost::filesystem::path,
 	sub_path);
 }
 }

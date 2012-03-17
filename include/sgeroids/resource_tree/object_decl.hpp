@@ -8,8 +8,8 @@
 #include <sgeroids/resource_tree/path_to_resource_function.hpp>
 #include <sgeroids/resource_tree/sub_path.hpp>
 #include <fcppt/noncopyable.hpp>
-#include <fcppt/filesystem/path.hpp>
 #include <fcppt/config/external_begin.hpp>
+#include <boost/filesystem/path.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
@@ -102,7 +102,7 @@ This makes two things possible:
 	</li>
 </ol>
 
-Note that we're not using fcppt::filesystem::path to denote a path in the tree,
+Note that we're not using boost::filesystem::path to denote a path in the tree,
 but our own class, sgeroids::resource_tree::path.
 
 \section resource_tree_internals Internals
@@ -138,7 +138,7 @@ public:
 	*/
 	explicit
 	object(
-		fcppt::filesystem::path const &,
+		boost::filesystem::path const &,
 		path_to_resource_function const &,
 		sgeroids::random_generator &);
 

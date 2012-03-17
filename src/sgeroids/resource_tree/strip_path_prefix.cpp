@@ -2,6 +2,7 @@
 #include <fcppt/filesystem/path_to_string.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/next_prior.hpp>
+#include <boost/filesystem/path.hpp>
 #include <iterator>
 #include <fcppt/config/external_end.hpp>
 
@@ -13,7 +14,7 @@ sgeroids::resource_tree::strip_path_prefix(
 {
 	sgeroids::resource_tree::path result;
 	for(
-		fcppt::filesystem::path::const_iterator it =
+		boost::filesystem::path::const_iterator it =
 			boost::next(
 				_sub_path.get().begin(),
 				std::distance(

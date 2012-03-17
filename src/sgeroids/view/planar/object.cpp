@@ -53,6 +53,7 @@
 #include <fcppt/math/vector/output.hpp>
 #include <fcppt/tr1/functional.hpp>
 #include <fcppt/config/external_begin.hpp>
+#include <boost/filesystem/path.hpp>
 #include <algorithm>
 #include <typeinfo>
 #include <fcppt/config/external_end.hpp>
@@ -447,7 +448,7 @@ sgeroids::view::planar::object::create_new_texture_callback()
 sge::texture::const_part_ptr const
 sgeroids::view::planar::object::create_texture_from_path(
 	sge::image2d::system &_image_loader,
-	fcppt::filesystem::path const &_path)
+	boost::filesystem::path const &_path)
 {
 	return
 		sge::texture::add_image(
@@ -460,7 +461,7 @@ sgeroids::view::planar::object::create_texture_from_path(
 sge::audio::buffer_ptr const
 sgeroids::view::planar::object::create_audio_buffer_from_path(
 	sge::audio::loader &_audio_loader,
-	fcppt::filesystem::path const &_path)
+	boost::filesystem::path const &_path)
 {
 	return
 		audio_player_.create_buffer(

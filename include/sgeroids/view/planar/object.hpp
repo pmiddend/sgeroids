@@ -25,10 +25,10 @@
 #include <sge/texture/manager.hpp>
 #include <sge/sprite/intrusive/ordered/collection.hpp>
 #include <fcppt/noncopyable.hpp>
-#include <fcppt/filesystem/path.hpp>
 #include <fcppt/math/box/basic_impl.hpp>
 #include <fcppt/math/matrix/basic_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
+#include <boost/filesystem/path.hpp>
 #include <boost/ptr_container/ptr_map.hpp>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
@@ -186,7 +186,7 @@ private:
 	sge::texture::const_part_ptr const
 	create_texture_from_path(
 		sge::image2d::system &,
-		fcppt::filesystem::path const &);
+		boost::filesystem::path const &);
 
 	/**
 	\brief This function is called by the audio buffer tree to create an audio buffer out of a path
@@ -194,7 +194,7 @@ private:
 	sge::audio::buffer_ptr const
 	create_audio_buffer_from_path(
 		sge::audio::loader &,
-		fcppt::filesystem::path const &);
+		boost::filesystem::path const &);
 
 	/**
 	\brief Helper function to search and return an entity by the id

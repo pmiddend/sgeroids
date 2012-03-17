@@ -12,14 +12,10 @@
 #include <fcppt/algorithm/copy_if.hpp>
 #include <fcppt/assert/pre.hpp>
 #include <fcppt/container/ptr/push_back_unique_ptr.hpp>
-#include <fcppt/filesystem/directory_iterator.hpp>
-#include <fcppt/filesystem/exists.hpp>
-#include <fcppt/filesystem/is_directory.hpp>
-#include <fcppt/filesystem/is_regular.hpp>
-#include <fcppt/filesystem/path.hpp>
 #include <fcppt/filesystem/path_to_string.hpp>
-#include <fcppt/filesystem/recursive_directory_iterator.hpp>
 #include <fcppt/config/external_begin.hpp>
+#include <boost/filesystem/operations.hpp>
+#include <boost/filesystem/path.hpp>
 #include <iostream>
 #include <iterator>
 #include <vector>
@@ -28,19 +24,19 @@
 
 template<typename T>
 sgeroids::resource_tree::object<T>::object(
-	fcppt::filesystem::path const &_path,
+	boost::filesystem::path const &_path,
 	path_to_resource_function const &_path_to_resource,
 	sgeroids::random_generator &_random_generator)
 {
 	FCPPT_ASSERT_PRE(
-		fcppt::filesystem::exists(
+		boost::filesystem::exists(
 			_path));
 
 	FCPPT_ASSERT_PRE(
-		fcppt::filesystem::is_directory(
+		boost::filesystem::is_directory(
 			_path));
 	typedef
-	std::vector<fcppt::filesystem::path>
+	std::vector<boost::filesystem::path>
 	path_vector;
 
 	path_vector directories;
@@ -49,12 +45,15 @@ sgeroids::resource_tree::object<T>::object(
 		_path);
 
 	fcppt::algorithm::copy_if(
-		fcppt::filesystem::recursive_directory_iterator(
+		boost::filesystem::recursive_directory_iterator(
 			_path),
-		fcppt::filesystem::recursive_directory_iterator(),
+		boost::filesystem::recursive_directory_iterator(),
 		std::back_inserter<path_vector>(
 			directories),
-		&fcppt::filesystem::is_directory);
+		static_cast<
+			bool (*)(boost::filesystem::path const &)
+		>(
+			&boost::filesystem::is_directory));
 
 	for(
 		path_vector::const_iterator it = directories.begin();
@@ -87,12 +86,12 @@ sgeroids::resource_tree::object<T>::add_directory(
 
 	// First, collect ALL the files inside the given directory
 	for(
-		fcppt::filesystem::directory_iterator it(
+		boost::filesystem::directory_iterator it(
 			_sub_path.get());
-		it != fcppt::filesystem::directory_iterator();
+		it != boost::filesystem::directory_iterator();
 		++it)
 	{
-		if(!fcppt::filesystem::is_regular(*it))
+		if(!boost::filesystem::is_regular_file(*it))
 			continue;
 
 		resources.push_back(
