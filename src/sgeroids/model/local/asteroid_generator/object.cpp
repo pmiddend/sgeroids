@@ -1,3 +1,4 @@
+#include <sgeroids/random_generator.hpp>
 #include <sgeroids/math/discrete_cos.hpp>
 #include <sgeroids/math/discrete_sin.hpp>
 #include <sgeroids/math/unit_magnitude.hpp>
@@ -5,8 +6,9 @@
 #include <sgeroids/model/local/asteroid_generator/object.hpp>
 #include <sgeroids/model/local/asteroid_generator/play_area_side.hpp>
 #include <fcppt/math/vector/arithmetic.hpp>
-#include <fcppt/math/vector/basic_impl.hpp>
-#include <fcppt/random/make_inclusive_range.hpp>
+#include <fcppt/math/vector/object_impl.hpp>
+#include <fcppt/random/variate_impl.hpp>
+#include <fcppt/random/distribution/uniform_int_impl.hpp>
 
 
 sgeroids::model::local::asteroid_generator::object::object(
@@ -19,50 +21,68 @@ sgeroids::model::local::asteroid_generator::object::object(
 	asteroid_generation_(
 		_asteroid_generation),
 	next_asteroid_duration_rng_(
-		fcppt::random::make_inclusive_range<unsigned>(
-			2*60,
-			6*60),
-		_rng),
+		_rng,
+		uint_distribution(
+			uint_distribution::min(
+				2u*60u),
+			uint_distribution::max(
+				6u*60u))),
 	radius_rng_(
-		fcppt::random::make_inclusive_range<int>(
-			math::unit_magnitude() * 30000,
-			math::unit_magnitude() * 120000),
-		_rng),
+		_rng,
+		int_distribution(
+			int_distribution::min(
+				math::unit_magnitude() * 30000),
+			int_distribution::max(
+				math::unit_magnitude() * 120000))),
 	rotation_rng_(
-		fcppt::random::make_inclusive_range<int>(
-			0,
-			360 * sgeroids::math::unit_magnitude()),
-		_rng),
+		_rng,
+		int_distribution(
+			int_distribution::min(
+				0),
+			int_distribution::max(
+				360 * sgeroids::math::unit_magnitude()))),
 	rotation_direction_rng_(
-		fcppt::random::make_inclusive_range<int>(
-			-sgeroids::math::unit_magnitude(),
-			sgeroids::math::unit_magnitude()),
-		_rng),
+		_rng,
+		int_distribution(
+			int_distribution::min(
+				-sgeroids::math::unit_magnitude()),
+			int_distribution::max(
+				sgeroids::math::unit_magnitude()))),
 	velocity_angle_rng_(
-		fcppt::random::make_inclusive_range<int>(
-			0,
-			360),
-		_rng),
+		_rng,
+		int_distribution(
+			int_distribution::min(
+				0),
+			int_distribution::max(
+				360))),
 	velocity_magnitude_rng_(
-		fcppt::random::make_inclusive_range<int>(
-			0,
-			10 * sgeroids::math::unit_magnitude()),
-		_rng),
+		_rng,
+		int_distribution(
+			int_distribution::min(
+				0),
+			int_distribution::max(
+				10 * sgeroids::math::unit_magnitude()))),
 	play_area_side_rng_(
-		fcppt::random::make_inclusive_range<int>(
-			0,
-			3),
-		_rng),
+		_rng,
+		int_distribution(
+			int_distribution::min(
+				0),
+			int_distribution::max(
+				3))),
 	play_area_x_rng_(
-		fcppt::random::make_inclusive_range<int>(
-			play_area_.left(),
-			play_area_.right()),
-		_rng),
+		_rng,
+		int_distribution(
+			int_distribution::min(
+				play_area_.left()),
+			int_distribution::max(
+				play_area_.right()))),
 	play_area_y_rng_(
-		fcppt::random::make_inclusive_range<int>(
-			play_area_.top(),
-			play_area_.bottom()),
-		_rng),
+		_rng,
+		int_distribution(
+			int_distribution::min(
+				play_area_.top()),
+			int_distribution::max(
+				play_area_.bottom()))),
 	next_asteroid_countdown_(
 		next_asteroid_duration_rng_())
 {

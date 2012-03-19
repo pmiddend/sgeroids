@@ -1,10 +1,14 @@
 #ifndef SGEROIDS_RESOURCE_TREE_ELEMENT_IMPL_HPP_INCLUDED
 #define SGEROIDS_RESOURCE_TREE_ELEMENT_IMPL_HPP_INCLUDED
 
+#include <sgeroids/random_generator.hpp>
 #include <sgeroids/resource_tree/element_decl.hpp>
+#include <sgeroids/resource_tree/path.hpp>
+#include <sgeroids/resource_tree/path_with_resource.hpp>
 #include <fcppt/assert/pre.hpp>
 #include <fcppt/assert/unreachable.hpp>
-#include <fcppt/random/make_last_exclusive_range.hpp>
+#include <fcppt/random/variate_impl.hpp>
+#include <fcppt/random/distribution/uniform_int_impl.hpp>
 
 template<typename T>
 sgeroids::resource_tree::element<T>::element(
@@ -17,18 +21,18 @@ sgeroids::resource_tree::element<T>::element(
 	resources_(
 		_resources),
 	rng_(
-		fcppt::random::make_last_exclusive_range(
-			static_cast<typename resource_container::size_type>(
-				0),
-			// Empty elements are allowed, but last_exclusive_range
-			// must not be empty, so hack here
-			resources_.empty()
-			?
-				static_cast<typename resource_container::size_type>(
-					1)
-			:
-				resources_.size()),
-		_rng)
+		_rng,
+		container_distribution(
+			typename container_distribution::min(
+				0u),
+			// Empty resource containers are allowed.
+			// In this case, rng_ should not be used.
+			typename container_distribution::max(
+				resources_.empty()
+				?
+					0u
+				:
+					resources_.size() - 1u)))
 {
 }
 
@@ -79,6 +83,9 @@ template<typename T>
 T
 sgeroids::resource_tree::element<T>::get_random() const
 {
+	FCPPT_ASSERT_PRE(
+		!resources_.empty());
+
 	return
 		resources_[
 			rng_()].resource();

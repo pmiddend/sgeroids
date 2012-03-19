@@ -13,8 +13,9 @@
 #include <sgeroids/view/planar/entity/base.hpp>
 #include <sgeroids/view/planar/sprite/object.hpp>
 #include <sgeroids/view/planar/sprite/ordered_collection.hpp>
-#include <sgeroids/random_generator.hpp>
-#include <fcppt/random/uniform.hpp>
+#include <sgeroids/random_generator_fwd.hpp>
+#include <fcppt/random/variate_decl.hpp>
+#include <fcppt/random/distribution/uniform_int_decl.hpp>
 
 
 namespace sgeroids
@@ -66,7 +67,10 @@ private:
 	sge::audio::player &audio_player_;
 	sge::audio::sound::base_ptr thrust_sound_;
 	planar::callbacks::add_particle const add_particle_;
-	fcppt::random::uniform<int, sgeroids::random_generator &> rotation_rng_;
+	typedef fcppt::random::distribution::uniform_int<
+		int
+	> int_distribution;
+	fcppt::random::variate<sgeroids::random_generator &, int_distribution> rotation_rng_;
 	bool thrust_;
 };
 }

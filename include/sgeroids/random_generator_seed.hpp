@@ -14,7 +14,7 @@ Linux, you can read bytes from <code>/dev/random</code> or
 This function generates a seed using chrono's high resolution clock (but that
 might change in the future).
 */
-sgeroids::random_generator::result_type
+sgeroids::random_generator::seed const
 random_generator_seed();
 }
 

@@ -1,12 +1,13 @@
 #ifndef SGEROIDS_MODEL_LOCAL_ASTEROID_GENERATOR_OBJECT_HPP_INCLUDED
 #define SGEROIDS_MODEL_LOCAL_ASTEROID_GENERATOR_OBJECT_HPP_INCLUDED
 
-#include <sgeroids/random_generator.hpp>
+#include <sgeroids/random_generator_fwd.hpp>
 #include <sgeroids/model/play_area.hpp>
 #include <sgeroids/model/local/callbacks/asteroid_generation.hpp>
 #include <fcppt/noncopyable.hpp>
-#include <fcppt/math/box/basic_impl.hpp>
-#include <fcppt/random/uniform.hpp>
+#include <fcppt/math/box/object_impl.hpp>
+#include <fcppt/random/distribution/uniform_int_decl.hpp>
+#include <fcppt/random/variate_decl.hpp>
 
 
 namespace sgeroids
@@ -64,23 +65,32 @@ public:
 private:
 	model::rect const play_area_;
 	local::callbacks::asteroid_generation asteroid_generation_;
-	fcppt::random::uniform<unsigned,sgeroids::random_generator &> next_asteroid_duration_rng_;
-	fcppt::random::uniform<int,sgeroids::random_generator &> radius_rng_;
+
+	typedef fcppt::random::distribution::uniform_int<
+		int
+	> int_distribution;
+
+	typedef fcppt::random::distribution::uniform_int<
+		unsigned
+	> uint_distribution;
+
+	fcppt::random::variate<sgeroids::random_generator, uint_distribution> next_asteroid_duration_rng_;
+	fcppt::random::variate<sgeroids::random_generator, int_distribution> radius_rng_;
 	// Initial rotation
-	fcppt::random::uniform<int,sgeroids::random_generator &> rotation_rng_;
+	fcppt::random::variate<sgeroids::random_generator, int_distribution> rotation_rng_;
 	// Rotation velocity
-	fcppt::random::uniform<int,sgeroids::random_generator &> rotation_direction_rng_;
+	fcppt::random::variate<sgeroids::random_generator, int_distribution> rotation_direction_rng_;
 	// The velocity is generated using polar coordinates, so we need a
 	// magnitude and an angle. This is the angle...
-	fcppt::random::uniform<int,sgeroids::random_generator &> velocity_angle_rng_;
+	fcppt::random::variate<sgeroids::random_generator, int_distribution> velocity_angle_rng_;
 	// ...and this is the magnitude.
-	fcppt::random::uniform<int,sgeroids::random_generator &> velocity_magnitude_rng_;
+	fcppt::random::variate<sgeroids::random_generator, int_distribution> velocity_magnitude_rng_;
 	// Which side (left, right, top, bottom)
-	fcppt::random::uniform<int,sgeroids::random_generator &> play_area_side_rng_;
+	fcppt::random::variate<sgeroids::random_generator, int_distribution> play_area_side_rng_;
 	// The x coordinate (inside the play area)
-	fcppt::random::uniform<int,sgeroids::random_generator &> play_area_x_rng_;
+	fcppt::random::variate<sgeroids::random_generator, int_distribution> play_area_x_rng_;
 	// The y coordinate (inside the play area)
-	fcppt::random::uniform<int,sgeroids::random_generator &> play_area_y_rng_;
+	fcppt::random::variate<sgeroids::random_generator, int_distribution> play_area_y_rng_;
 	unsigned next_asteroid_countdown_;
 };
 }

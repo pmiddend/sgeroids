@@ -4,7 +4,7 @@
 #include <sgeroids/view/planar/radius.hpp>
 #include <sgeroids/view/planar/sprite/dim.hpp>
 #include <sge/texture/const_part_ptr.hpp>
-#include <fcppt/math/dim/basic_impl.hpp>
+#include <fcppt/math/dim/object_impl.hpp>
 
 
 namespace sgeroids

@@ -1,8 +1,8 @@
 #ifndef SGEROIDS_MATH_WRAP_POINT_IN_TORUS_HPP_INCLUDED
 #define SGEROIDS_MATH_WRAP_POINT_IN_TORUS_HPP_INCLUDED
 
-#include <fcppt/math/box/basic_impl.hpp>
-#include <fcppt/math/vector/basic_impl.hpp>
+#include <fcppt/math/box/object_impl.hpp>
+#include <fcppt/math/vector/object_impl.hpp>
 
 
 namespace sgeroids
@@ -10,13 +10,13 @@ namespace sgeroids
 namespace math
 {
 template<typename T,fcppt::math::size_type N,typename VN,typename S>
-fcppt::math::vector::basic<T,VN,S> const
+fcppt::math::vector::object<T,VN,S> const
 wrap_point_in_torus(
-	fcppt::math::vector::basic<T,VN,S> p,
-	fcppt::math::box::basic<T,N> const &b)
+	fcppt::math::vector::object<T,VN,S> p,
+	fcppt::math::box::object<T,N> const &b)
 {
 	typedef
-	fcppt::math::vector::basic<T,VN,S>
+	fcppt::math::vector::object<T,VN,S>
 	vector;
 
 	typedef typename

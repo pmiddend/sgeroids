@@ -1,4 +1,5 @@
 #include <fcppt/math/vector/arithmetic.hpp>
+#include <sgeroids/random_generator.hpp>
 #include <sgeroids/math/unit_magnitude.hpp>
 #include <sgeroids/math/discrete_sin.hpp>
 #include <sgeroids/math/discrete_cos.hpp>
@@ -20,7 +21,8 @@
 #include <sge/sprite/parameters.hpp>
 #include <sge/sprite/intrusive/ordered/collection.hpp>
 #include <fcppt/text.hpp>
-#include <fcppt/random/make_inclusive_range.hpp>
+#include <fcppt/random/variate_impl.hpp>
+#include <fcppt/random/distribution/uniform_int_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <iostream>
 #include <fcppt/config/external_end.hpp>
@@ -66,10 +68,12 @@ sgeroids::view::planar::entity::spaceship::spaceship(
 	add_particle_(
 		_add_particle),
 	rotation_rng_(
-				fcppt::random::make_inclusive_range(
-					0,
-					360),
-				_rng),
+		_rng,
+		int_distribution(
+			int_distribution::min(
+				0),
+			int_distribution::max(
+				360))),
 	thrust_(
 		false)
 {

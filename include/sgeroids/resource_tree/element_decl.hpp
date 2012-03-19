@@ -1,11 +1,13 @@
 #ifndef SGEROIDS_RESOURCE_TREE_ELEMENT_DECL_HPP_INCLUDED
 #define SGEROIDS_RESOURCE_TREE_ELEMENT_DECL_HPP_INCLUDED
 
-#include <sgeroids/random_generator.hpp>
+#include <sgeroids/random_generator_fwd.hpp>
 #include <sgeroids/resource_tree/element_fwd.hpp>
+#include <sgeroids/resource_tree/path.hpp>
 #include <sgeroids/resource_tree/path_with_resource.hpp>
 #include <fcppt/noncopyable.hpp>
-#include <fcppt/random/uniform.hpp>
+#include <fcppt/random/variate_decl.hpp>
+#include <fcppt/random/distribution/uniform_int_decl.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
@@ -77,7 +79,10 @@ public:
 private:
 	resource_tree::path const base_path_;
 	resource_container resources_;
-	mutable fcppt::random::uniform<typename resource_container::size_type> rng_;
+	typedef fcppt::random::distribution::uniform_int<
+		typename resource_container::size_type
+	> container_distribution;
+	mutable fcppt::random::variate<sgeroids::random_generator, container_distribution> rng_;
 };
 }
 }

@@ -1,18 +1,8 @@
 #ifndef SGEROIDS_RANDOM_GENERATOR_HPP_INCLUDED
 #define SGEROIDS_RANDOM_GENERATOR_HPP_INCLUDED
 
-#include <fcppt/random/default_generator.hpp>
+#include <sgeroids/random_generator_fwd.hpp>
+#include <fcppt/random/generator/minstd_rand.hpp>
 
-namespace sgeroids
-{
-/**
-\brief Define the random number generate type to use.
-
-Better random generators give better randomness (srsly!).
-*/
-typedef
-fcppt::random::default_generator
-random_generator;
-}
 
 #endif

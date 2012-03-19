@@ -4,7 +4,7 @@
 #include <sge/renderer/vertex_declaration_fwd.hpp>
 #include <sge/renderer/device_fwd.hpp>
 #include <sge/sprite/render/range_impl.hpp>
-#include <sgeroids/random_generator.hpp>
+#include <sgeroids/random_generator_fwd.hpp>
 #include <sgeroids/model/play_area.hpp>
 #include <sgeroids/resource_tree/object.hpp>
 #include <sgeroids/view/planar/texture_tree.hpp>
@@ -72,7 +72,6 @@ private:
 	sgeroids::view::planar::sprite::static_range sprite_render_range_;
 	sgeroids::view::planar::texture_tree &texture_tree_;
 	sgeroids::model::play_area const play_area_;
-	sgeroids::random_generator rng_;
 	background::star_size const star_size_;
 	background::star_count const star_count_;
 

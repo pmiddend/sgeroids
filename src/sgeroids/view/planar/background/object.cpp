@@ -8,6 +8,7 @@
 #include <sge/sprite/render/range_with_options.hpp>
 #include <sge/sprite/render/state_options.hpp>
 #include <sge/sprite/render/vertex_options.hpp>
+#include <sgeroids/random_generator.hpp>
 #include <sgeroids/math/unit_magnitude.hpp>
 #include <sgeroids/resource_tree/object_impl.hpp>
 #include <sgeroids/resource_tree/path.hpp>
@@ -21,8 +22,9 @@
 #include <sge/sprite/center.hpp>
 #include <sge/texture/part.hpp>
 #include <fcppt/text.hpp>
-#include <fcppt/random/make_inclusive_range.hpp>
-#include <fcppt/random/uniform.hpp>
+#include <fcppt/random/variate.hpp>
+#include <fcppt/random/distribution/uniform_int.hpp>
+#include <fcppt/random/distribution/uniform_real.hpp>
 
 
 sgeroids::view::planar::background::object::object(
@@ -46,36 +48,60 @@ sgeroids::view::planar::background::object::object(
 		_texture_tree),
 	play_area_(
 		_play_area),
-	rng_(
-		_rng),
 	star_size_(
 		_star_size),
 	star_count_(
 		_star_count)
 {
-	fcppt::random::uniform<int, sgeroids::random_generator &> random_x(
-			fcppt::random::make_inclusive_range(
-				0,
-				play_area_.get().w()),
-			rng_);
+	typedef fcppt::random::distribution::uniform_int<
+		int
+	> int_distribution;
 
-	fcppt::random::uniform<int, sgeroids::random_generator &> random_y(
-			fcppt::random::make_inclusive_range(
-				0,
-				play_area_.get().h()),
-			rng_);
+	typedef fcppt::random::distribution::uniform_real<
+		float
+	> float_distribution;
 
-	fcppt::random::uniform<float, sgeroids::random_generator &> random_angle(
-			fcppt::random::make_inclusive_range(
-				0.f,
-				6.f),
-			rng_);
+	typedef fcppt::random::variate<
+		sgeroids::random_generator,
+		int_distribution
+	> int_rng;
 
-	fcppt::random::uniform<int, sgeroids::random_generator &> random_radius(
-		fcppt::random::make_inclusive_range(
-			math::unit_magnitude() * star_size_.get(),
-			math::unit_magnitude() * star_size_.get() * 4),
-		rng_);
+	typedef fcppt::random::variate<
+		sgeroids::random_generator,
+		float_distribution
+	> float_rng;
+
+	int_rng random_x(
+		_rng,
+		int_distribution(
+			int_distribution::min(
+				0),
+			int_distribution::max(
+				play_area_.get().w())));
+
+	int_rng random_y(
+		_rng,
+		int_distribution(
+			int_distribution::min(
+				0),
+			int_distribution::max(
+				play_area_.get().h())));
+
+	float_rng random_angle(
+		_rng,
+		float_distribution(
+			float_distribution::min(
+				0.f),
+			float_distribution::sup(
+				6.f)));
+
+	int_rng random_radius(
+		_rng,
+		int_distribution(
+			int_distribution::min(
+				math::unit_magnitude() * star_size_.get()),
+			int_distribution::max(
+				math::unit_magnitude() * star_size_.get() * 4)));
 
 	for (
 		star_count::value_type index = 0;

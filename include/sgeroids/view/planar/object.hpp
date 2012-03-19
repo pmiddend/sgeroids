@@ -25,8 +25,8 @@
 #include <sge/texture/manager.hpp>
 #include <sge/sprite/intrusive/ordered/collection.hpp>
 #include <fcppt/noncopyable.hpp>
-#include <fcppt/math/box/basic_impl.hpp>
-#include <fcppt/math/matrix/basic_impl.hpp>
+#include <fcppt/math/box/object_impl.hpp>
+#include <fcppt/math/matrix/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/ptr_container/ptr_map.hpp>
