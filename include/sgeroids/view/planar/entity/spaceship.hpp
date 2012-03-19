@@ -70,7 +70,7 @@ private:
 	typedef fcppt::random::distribution::uniform_int<
 		int
 	> int_distribution;
-	fcppt::random::variate<sgeroids::random_generator &, int_distribution> rotation_rng_;
+	fcppt::random::variate<sgeroids::random_generator, int_distribution> rotation_rng_;
 	bool thrust_;
 };
 }
