@@ -53,7 +53,8 @@ include_directories(
 
 # Boost begin
 find_package(
-	Boost 1.45.0 REQUIRED COMPONENTS
+	Boost 1.47.0 REQUIRED COMPONENTS
+	chrono
 	system)
 
 include_directories(
@@ -196,7 +197,8 @@ target_link_libraries(
 	${Fcppt_filesystem_LIBRARIES}
 	${Awl_LIBRARIES}
 	${SGE_LIBRARIES}
-	${Boost_LIBRARIES})
+	${Boost_CHRONO_LIBRARY}
+	${Boost_SYSTEMS_LIBRARY})
 
 install(
 	TARGETS
