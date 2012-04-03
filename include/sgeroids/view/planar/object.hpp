@@ -25,6 +25,7 @@
 #include <sge/texture/manager.hpp>
 #include <sge/sprite/intrusive/ordered/collection.hpp>
 #include <fcppt/noncopyable.hpp>
+#include <fcppt/scoped_ptr_impl.hpp>
 #include <fcppt/math/box/object_impl.hpp>
 #include <fcppt/math/matrix/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -171,7 +172,7 @@ private:
 	planar::sprite::ordered_collection dynamic_collection_;
 	sge::renderer::matrix4 projection_matrix_;
 	entity_map entities_;
-	fcppt::unique_ptr<background::object> background_;
+	fcppt::scoped_ptr<background::object> background_;
 	particle_vector particles_;
 
 	/**

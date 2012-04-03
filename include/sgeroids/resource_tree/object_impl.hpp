@@ -27,6 +27,8 @@ sgeroids::resource_tree::object<T>::object(
 	boost::filesystem::path const &_path,
 	path_to_resource_function const &_path_to_resource,
 	sgeroids::random_generator &_random_generator)
+:
+	elements_()
 {
 	FCPPT_ASSERT_PRE(
 		boost::filesystem::exists(

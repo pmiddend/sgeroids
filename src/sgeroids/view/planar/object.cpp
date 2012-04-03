@@ -110,6 +110,7 @@ sgeroids::view::planar::object::object(
 	dynamic_collection_(),
 	projection_matrix_(),
 	entities_(),
+	background_(),
 	particles_()
 {
 }
