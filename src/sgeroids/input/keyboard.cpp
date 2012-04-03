@@ -35,7 +35,8 @@ sgeroids::input::keyboard::keyboard(
 				std::tr1::placeholders::_3))),
 	name_(
 		_name),
-	id_(),
+	id_(
+		sgeroids::input::optional_entity_id::value_type()),
 	rotation_left_pressed_(
 		false),
 	rotation_right_pressed_(
