@@ -11,7 +11,6 @@
 #include <sgeroids/view/planar/sprite/dim.hpp>
 #include <sgeroids/view/planar/sprite/parameters.hpp>
 #include <sge/audio/buffer.hpp>
-#include <sge/audio/buffer_ptr.hpp>
 #include <sge/audio/sound/base.hpp>
 #include <sge/audio/sound/nonpositional_parameters.hpp>
 #include <sge/audio/sound/repeat.hpp>
@@ -50,7 +49,7 @@ sgeroids::view::planar::entity::spaceship::spaceship(
 					3))
 			.size(
 				planar::sprite_size_from_texture_and_radius(
-					texture_off_,
+					*texture_off_,
 					_radius))
 			.texture(
 				texture_off_)

@@ -2,9 +2,8 @@
 #define SGEROIDS_VIEW_PLANAR_ENTITY_SPACESHIP_HPP_INCLUDED
 
 #include <sge/audio/player_fwd.hpp>
-#include <sge/audio/sound/base_ptr.hpp>
-#include <sge/texture/const_part_ptr.hpp>
-#include <sge/texture/const_part_ptr.hpp>
+#include <sge/audio/sound/base_scoped_ptr.hpp>
+#include <sge/texture/const_part_shared_ptr.hpp>
 #include <sgeroids/model/thrust.hpp>
 #include <sgeroids/view/planar/audio_buffer_tree.hpp>
 #include <sgeroids/view/planar/callbacks/add_particle.hpp>
@@ -33,7 +32,6 @@ class spaceship
 FCPPT_NONCOPYABLE(
 	spaceship);
 public:
-	explicit
 	spaceship(
 		planar::sprite::ordered_collection &,
 		planar::texture_tree &,
@@ -60,12 +58,12 @@ public:
 
 	~spaceship();
 private:
-	sge::texture::const_part_ptr
+	sge::texture::const_part_shared_ptr const
 		texture_off_,
 		texture_on_;
 	planar::sprite::object sprite_;
 	sge::audio::player &audio_player_;
-	sge::audio::sound::base_ptr thrust_sound_;
+	sge::audio::sound::base_scoped_ptr const thrust_sound_;
 	planar::callbacks::add_particle const add_particle_;
 	typedef fcppt::random::distribution::uniform_int<
 		int

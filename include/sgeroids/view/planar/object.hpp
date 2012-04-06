@@ -12,15 +12,16 @@
 #include <sgeroids/view/planar/particle/object.hpp>
 #include <sgeroids/view/planar/sprite/ordered_collection.hpp>
 #include <sgeroids/view/planar/sprite/dynamic_buffers.hpp>
-#include <sge/audio/buffer_ptr.hpp>
+#include <sge/audio/buffer_shared_ptr.hpp>
 #include <sge/audio/loader_fwd.hpp>
 #include <sge/audio/player_fwd.hpp>
-#include <sge/audio/sound/base_ptr.hpp>
+#include <sge/audio/sound/base_scoped_ptr.hpp>
 #include <sge/font/system_fwd.hpp>
 #include <sge/image2d/system_fwd.hpp>
 #include <sge/renderer/device_fwd.hpp>
 #include <sge/renderer/matrix4.hpp>
-#include <sge/renderer/vertex_declaration_ptr.hpp>
+#include <sge/renderer/vertex_declaration_scoped_ptr.hpp>
+#include <sge/texture/const_part_shared_ptr.hpp>
 #include <sge/texture/fragmented_unique_ptr.hpp>
 #include <sge/texture/manager.hpp>
 #include <sge/sprite/intrusive/ordered/collection.hpp>
@@ -166,8 +167,8 @@ private:
 	sge::texture::manager texture_manager_;
 	planar::texture_tree texture_tree_;
 	planar::audio_buffer_tree audio_buffer_tree_;
-	sge::audio::sound::base_ptr firing_sound_;
-	sge::renderer::vertex_declaration_ptr sprite_vertex_declaration_;
+	sge::audio::sound::base_scoped_ptr const firing_sound_;
+	sge::renderer::vertex_declaration_scoped_ptr const sprite_vertex_declaration_;
 	planar::sprite::dynamic_buffers dynamic_buffers_;
 	planar::sprite::ordered_collection dynamic_collection_;
 	sge::renderer::matrix4 projection_matrix_;
@@ -184,7 +185,7 @@ private:
 	/**
 	\brief This function is called by the texture tree to create a texture resource out of a path
 	*/
-	sge::texture::const_part_ptr const
+	sge::texture::const_part_shared_ptr const
 	create_texture_from_path(
 		sge::image2d::system &,
 		boost::filesystem::path const &);
@@ -192,7 +193,7 @@ private:
 	/**
 	\brief This function is called by the audio buffer tree to create an audio buffer out of a path
 	*/
-	sge::audio::buffer_ptr const
+	sge::audio::buffer_shared_ptr const
 	create_audio_buffer_from_path(
 		sge::audio::loader &,
 		boost::filesystem::path const &);

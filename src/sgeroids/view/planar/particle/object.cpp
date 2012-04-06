@@ -25,7 +25,7 @@ sgeroids::view::planar::particle::object::object(
 					3))
 			.size(
 				planar::sprite_size_from_texture_and_radius(
-					_texture_tree.get(
+					*_texture_tree.get(
 						sgeroids::resource_tree::path() / FCPPT_TEXT("exhaust")),
 					planar::radius(1000 * 1000 * 32)))
 			.texture(

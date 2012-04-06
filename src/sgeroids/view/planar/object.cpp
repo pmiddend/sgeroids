@@ -17,6 +17,7 @@
 #include <sgeroids/view/planar/entity/bullet.hpp>
 #include <sgeroids/view/planar/entity/spaceship.hpp>
 #include <sge/audio/buffer.hpp>
+#include <sge/audio/file.hpp>
 #include <sge/audio/loader.hpp>
 #include <sge/audio/player.hpp>
 #include <sge/audio/sound/base.hpp>
@@ -24,8 +25,10 @@
 #include <sge/audio/sound/repeat.hpp>
 #include <sge/image/colors.hpp>
 #include <sge/image/color/format.hpp>
+#include <sge/image2d/file.hpp>
 #include <sge/image2d/system.hpp>
 #include <sge/renderer/scoped_transform.hpp>
+#include <sge/renderer/vertex_declaration.hpp>
 #include <sge/renderer/projection/orthogonal.hpp>
 #include <sge/renderer/state/color.hpp>
 #include <sge/renderer/state/cull_mode.hpp>
@@ -446,28 +449,30 @@ sgeroids::view::planar::object::create_new_texture_callback()
 				sge::renderer::texture::mipmap::off()));
 }
 
-sge::texture::const_part_ptr const
+sge::texture::const_part_shared_ptr const
 sgeroids::view::planar::object::create_texture_from_path(
 	sge::image2d::system &_image_loader,
 	boost::filesystem::path const &_path)
 {
 	return
-		sge::texture::add_image(
-			texture_manager_,
-			*_image_loader.load(
-				_path));
+		sge::texture::const_part_shared_ptr(
+			sge::texture::add_image(
+				texture_manager_,
+				*_image_loader.load(
+					_path)));
 
 }
 
-sge::audio::buffer_ptr const
+sge::audio::buffer_shared_ptr const
 sgeroids::view::planar::object::create_audio_buffer_from_path(
 	sge::audio::loader &_audio_loader,
 	boost::filesystem::path const &_path)
 {
 	return
-		audio_player_.create_buffer(
-			*_audio_loader.load(
-				_path));
+		sge::audio::buffer_shared_ptr(
+			audio_player_.create_buffer(
+				*_audio_loader.load(
+					_path)));
 
 }
 

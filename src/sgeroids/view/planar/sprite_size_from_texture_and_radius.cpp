@@ -2,13 +2,12 @@
 #include <sge/texture/part.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <algorithm>
-#include <iostream>
 #include <fcppt/config/external_end.hpp>
 
 
 sgeroids::view::planar::sprite::dim const
 sgeroids::view::planar::sprite_size_from_texture_and_radius(
-	sge::texture::const_part_ptr const _texture,
+	sge::texture::part const &_texture,
 	planar::radius const &_radius)
 {
 	// Idea: Fix the width to be 2*radius
@@ -17,10 +16,10 @@ sgeroids::view::planar::sprite_size_from_texture_and_radius(
 	int const
 		texture_width =
 			static_cast<int>(
-				_texture->size().w()),
+				_texture.size().w()),
 		texture_height =
 			static_cast<int>(
-				_texture->size().h()),
+				_texture.size().h()),
 		width =
 			2 * _radius.get(),
 		height =

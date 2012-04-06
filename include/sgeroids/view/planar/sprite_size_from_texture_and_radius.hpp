@@ -3,7 +3,7 @@
 
 #include <sgeroids/view/planar/radius.hpp>
 #include <sgeroids/view/planar/sprite/dim.hpp>
-#include <sge/texture/const_part_ptr.hpp>
+#include <sge/texture/part_fwd.hpp>
 #include <fcppt/math/dim/object_impl.hpp>
 
 
@@ -23,7 +23,7 @@ just the texture size, it gets the whole texture. And it gets the texture by
 */
 planar::sprite::dim const
 sprite_size_from_texture_and_radius(
-	sge::texture::const_part_ptr,
+	sge::texture::part const &,
 	planar::radius const &);
 }
 }

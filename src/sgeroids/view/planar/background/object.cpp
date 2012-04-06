@@ -116,10 +116,10 @@ sgeroids::view::planar::background::object::object(
 							0))
 					.texture(
 						texture_tree_.get(
-								sgeroids::resource_tree::path() / FCPPT_TEXT("star")))
+							sgeroids::resource_tree::path() / FCPPT_TEXT("star")))
 					.size(
 						planar::sprite_size_from_texture_and_radius(
-							texture_tree_.get(
+							*texture_tree_.get(
 								sgeroids::resource_tree::path() / FCPPT_TEXT("star")),
 							planar::radius(random_radius())))
 					.center(
@@ -142,7 +142,7 @@ sgeroids::view::planar::background::object::object(
 							sgeroids::resource_tree::path() / FCPPT_TEXT("planet")))
 				.size(
 					planar::sprite_size_from_texture_and_radius(
-						texture_tree_.get(
+						*texture_tree_.get(
 							sgeroids::resource_tree::path() / FCPPT_TEXT("planet")),
 						planar::radius(30 * random_radius())))
 				.center(
@@ -165,7 +165,7 @@ sgeroids::view::planar::background::object::object(
 							sgeroids::resource_tree::path() / FCPPT_TEXT("nebula")))
 				.size(
 					planar::sprite_size_from_texture_and_radius(
-						texture_tree_.get(
+						*texture_tree_.get(
 							sgeroids::resource_tree::path() / FCPPT_TEXT("nebula")),
 						planar::radius(math::unit_magnitude() * 1024 * 1024)))
 				.center(

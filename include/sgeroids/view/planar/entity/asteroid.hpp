@@ -7,7 +7,6 @@
 #include <sgeroids/view/planar/entity/base.hpp>
 #include <sgeroids/view/planar/sprite/object.hpp>
 #include <sgeroids/view/planar/sprite/ordered_collection.hpp>
-#include <sge/texture/const_part_ptr.hpp>
 
 namespace sgeroids
 {
@@ -24,7 +23,6 @@ class asteroid
 FCPPT_NONCOPYABLE(
 	asteroid);
 public:
-	explicit
 	asteroid(
 		planar::sprite::ordered_collection &,
 		planar::texture_tree &,
@@ -43,9 +41,6 @@ public:
 
 	~asteroid();
 private:
-	// We store the texture because in the sprite's constructor, we need it twice:
-	// Once to calculate the sprite's size and once to actually assign it.
-	sge::texture::const_part_ptr texture_;
 	planar::sprite::object sprite_;
 };
 }

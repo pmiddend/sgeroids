@@ -11,29 +11,49 @@
 #include <sge/sprite/center.hpp>
 #include <fcppt/text.hpp>
 
+namespace
+{
+
+sgeroids::view::planar::sprite::parameters const
+sprite_init(
+	sgeroids::view::planar::sprite::ordered_collection &_collection,
+	sgeroids::view::planar::texture_tree &_texture_tree,
+	sgeroids::view::planar::radius const &_radius)
+{
+	sge::texture::const_part_shared_ptr const texture(
+		_texture_tree.get(
+			sgeroids::resource_tree::path() / FCPPT_TEXT("asteroid")));
+
+	return
+		sgeroids::view::planar::sprite::parameters()
+		.connection(
+			_collection.connection(
+				3))
+		.size(
+			sgeroids::view::planar::sprite_size_from_texture_and_radius(
+				*texture,
+				_radius))
+		.texture(
+			texture)
+		.rotation(
+			0)
+		.any_color(
+			sge::image::colors::white());
+}
+
+}
+
+
 sgeroids::view::planar::entity::asteroid::asteroid(
 	planar::sprite::ordered_collection &_collection,
 	planar::texture_tree &_texture_tree,
 	planar::radius const &_radius)
 :
-	texture_(
-		_texture_tree.get(
-			sgeroids::resource_tree::path() / FCPPT_TEXT("asteroid"))),
 	sprite_(
-		planar::sprite::parameters()
-			.connection(
-				_collection.connection(
-					3))
-			.size(
-				planar::sprite_size_from_texture_and_radius(
-					texture_,
-					_radius))
-			.texture(
-				texture_)
-			.rotation(
-				0)
-			.any_color(
-				sge::image::colors::white()))
+		sprite_init(
+			_collection,
+			_texture_tree,
+			_radius))
 {
 }
 
