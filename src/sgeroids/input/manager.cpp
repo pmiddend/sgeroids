@@ -10,6 +10,7 @@
 #include <fcppt/text.hpp>
 #include <fcppt/container/ptr/push_back_unique_ptr.hpp>
 #include <fcppt/log/headers.hpp>
+#include <fcppt/signal/connection.hpp>
 #include <fcppt/tr1/functional.hpp>
 
 
