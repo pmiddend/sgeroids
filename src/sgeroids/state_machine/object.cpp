@@ -17,9 +17,11 @@
 #include <sge/parse/json/config/create_command_line_parameters.hpp>
 #include <sge/parse/json/config/merge_command_line_parameters.hpp>
 #include <sge/parse/json/config/merge_trees.hpp>
+#include <sge/renderer/bit_depth.hpp>
 #include <sge/renderer/no_multi_sampling.hpp>
 #include <sge/renderer/parameters.hpp>
 #include <sge/renderer/scoped_block.hpp>
+#include <sge/renderer/windowed.hpp>
 #include <sge/systems/audio_loader.hpp>
 #include <sge/systems/audio_player_default.hpp>
 #include <sge/systems/charconv.hpp>
@@ -73,30 +75,31 @@ renderer_parameters_from_config_file(
 				sge::parse::json::convert_from<sge::renderer::multi_sample_type::value_type>(
 					multi_sampling_json));
 
-	unsigned const visual_depth_value =
+	unsigned const bit_depth_value =
 		sge::parse::json::find_and_convert_member<unsigned>(
 			_config,
 			sge::parse::json::path(FCPPT_TEXT("renderer")) / FCPPT_TEXT("visual-depth"));
 
-	sge::renderer::visual_depth::type const
-		visual_depth_sge =
-			visual_depth_value == 16
+	sge::renderer::bit_depth::type const
+		bit_depth_sge =
+			bit_depth_value == 16
 			?
-				sge::renderer::visual_depth::depth16
+				sge::renderer::bit_depth::depth16
 			:
-				(visual_depth_value == 32
+				(bit_depth_value == 32
 				?
-					sge::renderer::visual_depth::depth32
+					sge::renderer::bit_depth::depth32
 				:
 					throw
 						sgeroids::exception(
 							FCPPT_TEXT("Unknown visual depth value encountered: ")+
 							fcppt::insert_to_fcppt_string(
-								visual_depth_value)));
+								bit_depth_value)));
 
 	return
 		sge::renderer::parameters(
-				visual_depth_sge,
+				sge::renderer::windowed(
+					bit_depth_sge),
 				sge::renderer::depth_stencil_buffer::off,
 				vsync_enabled,
 				multi_sampling_sge);
