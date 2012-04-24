@@ -27,10 +27,12 @@
 #include <sge/image/color/format.hpp>
 #include <sge/image2d/file.hpp>
 #include <sge/image2d/system.hpp>
+#include <sge/renderer/device.hpp>
+#include <sge/renderer/onscreen_target.hpp>
 #include <sge/renderer/scoped_transform.hpp>
 #include <sge/renderer/vertex_declaration.hpp>
 #include <sge/renderer/projection/orthogonal.hpp>
-#include <sge/renderer/state/color.hpp>
+#include <sge/renderer/clear/parameters.hpp>
 #include <sge/renderer/state/cull_mode.hpp>
 #include <sge/renderer/state/depth_func.hpp>
 #include <sge/renderer/state/list.hpp>
@@ -383,13 +385,13 @@ sgeroids::view::planar::object::render()
 	sge::renderer::state::scoped scoped_states(
 		renderer_,
 		sge::renderer::state::list
-			(sge::renderer::state::color::back_buffer_clear_color = sge::image::colors::black())
 			(sge::renderer::state::cull_mode::off)
 			(sge::renderer::state::depth_func::off));
 
-	renderer_.clear(
-		sge::renderer::clear_flags_field(
-			sge::renderer::clear_flags::back_buffer));
+	renderer_.onscreen_target().clear(
+		sge::renderer::clear::parameters()
+		.back_buffer(
+			sge::image::colors::black()));
 
 	sge::renderer::scoped_transform world_transform(
 		renderer_,
