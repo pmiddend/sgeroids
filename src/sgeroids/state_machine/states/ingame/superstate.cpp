@@ -126,9 +126,10 @@ sgeroids::state_machine::states::ingame::superstate::react(
 
 boost::statechart::result
 sgeroids::state_machine::states::ingame::superstate::react(
-	state_machine::events::render const &)
+	state_machine::events::render const &_event)
 {
-	view_->render();
+	view_->render(
+		_event.context());
 	return discard_event();
 }
 

@@ -1,8 +1,9 @@
 #ifndef SGEROIDS_VIEW_PLANAR_BACKGROUND_OBJECT_HPP_INCLUDED
 #define SGEROIDS_VIEW_PLANAR_BACKGROUND_OBJECT_HPP_INCLUDED
 
-#include <sge/renderer/vertex_declaration_fwd.hpp>
 #include <sge/renderer/device_fwd.hpp>
+#include <sge/renderer/vertex_declaration_fwd.hpp>
+#include <sge/renderer/context/object_fwd.hpp>
 #include <sge/sprite/render/range_impl.hpp>
 #include <sgeroids/random_generator_fwd.hpp>
 #include <sgeroids/model/play_area.hpp>
@@ -58,7 +59,8 @@ public:
 	the _outside_ (by sgeroids::view::planar::object::render currently).
 	*/
 	void
-	render();
+	render(
+		sge::renderer::context::object &);
 
 	~object();
 private:

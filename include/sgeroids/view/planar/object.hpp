@@ -21,6 +21,7 @@
 #include <sge/renderer/device_fwd.hpp>
 #include <sge/renderer/matrix4.hpp>
 #include <sge/renderer/vertex_declaration_scoped_ptr.hpp>
+#include <sge/renderer/context/object_fwd.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>
 #include <sge/texture/fragmented_unique_ptr.hpp>
 #include <sge/texture/manager.hpp>
@@ -149,7 +150,8 @@ public:
 	update();
 
 	void
-	render();
+	render(
+		sge::renderer::context::object &);
 
 	~object();
 private:

@@ -11,6 +11,7 @@
 #include <sgeroids/model/rotation.hpp>
 #include <sgeroids/model/score.hpp>
 #include <sgeroids/model/thrust.hpp>
+#include <sge/renderer/context/object_fwd.hpp>
 #include <fcppt/noncopyable.hpp>
 
 
@@ -153,7 +154,8 @@ public:
 	\brief Render the stuff!
 	*/
 	virtual void
-	render() = 0;
+	render(
+		sge::renderer::context::object &) = 0;
 
 	virtual
 	~base() = 0;

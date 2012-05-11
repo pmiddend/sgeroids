@@ -18,10 +18,13 @@
 #include <sge/parse/json/config/merge_command_line_parameters.hpp>
 #include <sge/parse/json/config/merge_trees.hpp>
 #include <sge/renderer/bit_depth.hpp>
+#include <sge/renderer/device.hpp>
 #include <sge/renderer/no_multi_sampling.hpp>
 #include <sge/renderer/parameters.hpp>
-#include <sge/renderer/scoped_block.hpp>
 #include <sge/renderer/windowed.hpp>
+#include <sge/renderer/context/object.hpp>
+#include <sge/renderer/context/scoped.hpp>
+#include <sge/renderer/target/onscreen.hpp>
 #include <sge/systems/audio_loader.hpp>
 #include <sge/systems/audio_player_default.hpp>
 #include <sge/systems/charconv.hpp>
@@ -185,11 +188,13 @@ sgeroids::state_machine::object::run()
 		this->process_event(
 			sgeroids::state_machine::events::tick());
 
-		sge::renderer::scoped_block const block_(
-			systems_.renderer());
+		sge::renderer::context::scoped const scoped_block(
+			systems_.renderer(),
+			systems_.renderer().onscreen_target());
 
 		this->process_event(
-			sgeroids::state_machine::events::render());
+			sgeroids::state_machine::events::render(
+				scoped_block.get()));
 	}
 
 	return

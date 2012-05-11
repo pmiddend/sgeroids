@@ -28,11 +28,11 @@
 #include <sge/image2d/file.hpp>
 #include <sge/image2d/system.hpp>
 #include <sge/renderer/device.hpp>
-#include <sge/renderer/onscreen_target.hpp>
 #include <sge/renderer/scoped_transform.hpp>
 #include <sge/renderer/vertex_declaration.hpp>
 #include <sge/renderer/projection/orthogonal.hpp>
 #include <sge/renderer/clear/parameters.hpp>
+#include <sge/renderer/context/object.hpp>
 #include <sge/renderer/state/cull_mode.hpp>
 #include <sge/renderer/state/depth_func.hpp>
 #include <sge/renderer/state/list.hpp>
@@ -380,30 +380,32 @@ sgeroids::view::planar::object::update()
 }
 
 void
-sgeroids::view::planar::object::render()
+sgeroids::view::planar::object::render(
+	sge::renderer::context::object &_render_context)
 {
-	sge::renderer::state::scoped scoped_states(
-		renderer_,
+	sge::renderer::state::scoped const scoped_states(
+		_render_context,
 		sge::renderer::state::list
 			(sge::renderer::state::cull_mode::off)
 			(sge::renderer::state::depth_func::off));
 
-	renderer_.onscreen_target().clear(
+	_render_context.clear(
 		sge::renderer::clear::parameters()
 		.back_buffer(
 			sge::image::colors::black()));
 
-	sge::renderer::scoped_transform world_transform(
-		renderer_,
+	sge::renderer::scoped_transform const world_transform(
+		_render_context,
 		sge::renderer::matrix_mode::world,
 		sge::renderer::matrix4::identity());
 
-	sge::renderer::scoped_transform projection_transform(
-		renderer_,
+	sge::renderer::scoped_transform const projection_transform(
+		_render_context,
 		sge::renderer::matrix_mode::projection,
 		projection_matrix_);
 
-	background_->render();
+	background_->render(
+		_render_context);
 
 	sge::sprite::intrusive::process::ordered_with_options
 	<
@@ -418,6 +420,7 @@ sgeroids::view::planar::object::render()
 			>
 		>
 	>(
+		_render_context,
 		dynamic_collection_,
 		dynamic_buffers_,
 		sge::sprite::compare::default_());

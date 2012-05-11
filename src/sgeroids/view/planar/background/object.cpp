@@ -1,3 +1,4 @@
+#include <sge/renderer/context/object_fwd.hpp>
 #include <sge/sprite/parameters.hpp>
 #include <sge/sprite/buffers/option.hpp>
 #include <sge/sprite/buffers/parameters.hpp>
@@ -5,6 +6,7 @@
 #include <sge/sprite/geometry/sort_and_update.hpp>
 #include <sge/sprite/render/matrix_options.hpp>
 #include <sge/sprite/render/options.hpp>
+#include <sge/sprite/render/parameters.hpp>
 #include <sge/sprite/render/range_with_options.hpp>
 #include <sge/sprite/render/state_options.hpp>
 #include <sge/sprite/render/vertex_options.hpp>
@@ -186,7 +188,8 @@ sgeroids::view::planar::background::object::object(
 }
 
 void
-sgeroids::view::planar::background::object::render()
+sgeroids::view::planar::background::object::render(
+	sge::renderer::context::object &_render_context)
 {
 	sge::sprite::render::range_with_options
 	<
@@ -198,7 +201,9 @@ sgeroids::view::planar::background::object::render()
 
 		>
 	>(
-		sprite_buffers_.parameters(),
+		sge::sprite::render::parameters(
+			_render_context,
+			sprite_buffers_.parameters().vertex_declaration()),
 		sprite_render_range_);
 }
 
