@@ -19,6 +19,8 @@
 #include <sge/parse/json/config/merge_trees.hpp>
 #include <sge/renderer/bit_depth.hpp>
 #include <sge/renderer/device.hpp>
+#include <sge/renderer/multi_samples.hpp>
+#include <sge/renderer/multi_samples_value.hpp>
 #include <sge/renderer/no_multi_sampling.hpp>
 #include <sge/renderer/parameters.hpp>
 #include <sge/renderer/windowed.hpp>
@@ -69,13 +71,13 @@ renderer_parameters_from_config_file(
 			_config,
 			sge::parse::json::path(FCPPT_TEXT("renderer")) / FCPPT_TEXT("multi-sample-type"));
 
-	sge::renderer::multi_sample_type multi_sampling_sge =
+	sge::renderer::multi_samples multi_sampling_sge =
 		sge::renderer::no_multi_sampling;
 
 	if(!fcppt::variant::holds_type<sge::parse::json::null>(multi_sampling_json))
 		multi_sampling_sge =
-			sge::renderer::multi_sample_type(
-				sge::parse::json::convert_from<sge::renderer::multi_sample_type::value_type>(
+			sge::renderer::multi_samples(
+				sge::parse::json::convert_from<sge::renderer::multi_samples_value>(
 					multi_sampling_json));
 
 	unsigned const bit_depth_value =
