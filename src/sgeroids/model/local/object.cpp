@@ -174,8 +174,9 @@ sgeroids::model::local::object::process_message(
 {
 	rng_.take(
 		fcppt::make_unique_ptr<sgeroids::random_generator>(
-			fcppt::cref(
-				_seed.get<sgeroids::model::serialization::message::roles::seed>())));
+			sgeroids::random_generator::seed(
+				fcppt::cref(
+					_seed.get<sgeroids::model::serialization::message::roles::seed>()))));
 
 	asteroid_generator_.take(
 		fcppt::make_unique_ptr<sgeroids::model::local::asteroid_generator::object>(
@@ -199,7 +200,7 @@ sgeroids::model::local::object::process_message(
 {
 	alda::serialization::serialize(
 		serialization_output_,
-		*alda::message::make_concrete_ptr<sgeroids::model::serialization::message::type_enum_wrapper>(
+		*alda::message::make_concrete_ptr<sgeroids::model::serialization::message::adapted_types::message>(
 			sgeroids::model::serialization::message::update()));
 
 	this->entity_updates();
@@ -379,7 +380,7 @@ sgeroids::model::local::object::process_message(
 				FCPPT_TEXT("rotation_direction")));
 
 	 ship.rotation_direction(
-		 rotation);
+		 rotation_direction);
 }
 
 void
@@ -424,7 +425,7 @@ sgeroids::model::local::object::process_message(
 				FCPPT_TEXT("change_firing_mode")));
 
 	 ship.change_firing_mode(
-		 mode);
+		 firing_mode);
 }
 
 sgeroids::model::play_area const

@@ -18,7 +18,7 @@ typedef
 sge::charconv::char_type
 <
 	sge::charconv::encoding::utf8
->
+>::type
 char_type;
 }
 }

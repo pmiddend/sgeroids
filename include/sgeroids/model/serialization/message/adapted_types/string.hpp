@@ -20,7 +20,7 @@ alda::bindings::dynamic_len
 <
 	sgeroids::model::serialization::message::types::string,
 	sgeroids::model::serialization::message::adapted_types::char_type
->::type
+>
 string;
 }
 }
