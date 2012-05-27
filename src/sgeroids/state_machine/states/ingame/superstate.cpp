@@ -1,3 +1,5 @@
+#include <sge/parse/json/find_and_convert_member.hpp>
+#include <fcppt/random/generator/seed_from_chrono.hpp>
 #include <sgeroids/model/local/object.hpp>
 #include <sgeroids/state_machine/states/ingame/superstate.hpp>
 #include <sgeroids/view/planar/object.hpp>
@@ -6,16 +8,23 @@
 #include <fcppt/ref.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/tr1/functional.hpp>
-#include <fcppt/tr1/functional.hpp>
-
 
 sgeroids::state_machine::states::ingame::superstate::superstate(
 	my_context _my_context)
 :
 	my_base(
 		_my_context),
+	model_serialization_output_(
+		boost::filesystem::path(
+			sge::parse::json::find_and_convert_member<fcppt::string>(
+				this->context<state_machine::object>().config(),
+				sge::parse::json::path(
+					FCPPT_TEXT("serialization")) /
+					FCPPT_TEXT("output-file")))),
 	model_(
-		fcppt::make_unique_ptr<sgeroids::model::local::object>()),
+		fcppt::make_unique_ptr<sgeroids::model::local::object>(
+			fcppt::ref(
+				model_serialization_output_))),
 	view_(
 		fcppt::make_unique_ptr<sgeroids::view::planar::object>(
 			fcppt::ref(
@@ -113,6 +122,9 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 {
 	view_->play_area(
 		model_->play_area());
+
+	model_->rng_seed(
+		fcppt::random::generator::seed_from_chrono<sgeroids::random_generator::seed>());
 }
 
 boost::statechart::result

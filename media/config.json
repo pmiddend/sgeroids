@@ -5,5 +5,9 @@
 		"vsync-enabled" : true,
 		"multi-sample-type" : null,
 		"visual-depth" : 32
+	},
+	"serialization" :
+	{
+		"output-file" : null
 	}
 }

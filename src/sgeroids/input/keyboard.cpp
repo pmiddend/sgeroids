@@ -1,4 +1,5 @@
 #include <sgeroids/input/keyboard.hpp>
+#include <sgeroids/model/serialization/message/change_thrust.hpp>
 #include <sgeroids/input/log.hpp>
 #include <sgeroids/math/unit_magnitude.hpp>
 #include <sgeroids/model/base.hpp>
@@ -46,8 +47,9 @@ sgeroids::input::keyboard::keyboard(
 		input::log(),
 		fcppt::log::_ << FCPPT_TEXT("Sending the model the add_player message"));
 
-	model_.add_player(
-		_name);
+	model_.process_message(
+		sgeroids::model::serialization::message::add_player(
+			_name.get()));
 }
 
 sge::input::keyboard::device &
@@ -71,8 +73,9 @@ sgeroids::input::keyboard::id() const
 sgeroids::input::keyboard::~keyboard()
 {
 	if(id_.get())
-		model_.remove_player(
-			name_);
+		model_.process_message(
+			sgeroids::model::serialization::message::remove_player(
+				name_.get()));
 }
 
 void
@@ -86,14 +89,15 @@ sgeroids::input::keyboard::key(
 	switch(e.key_code())
 	{
 		case sge::input::keyboard::key_code::w:
-			model_.change_thrust(
-				*id_.get(),
-				model::thrust(
-					e.pressed()
-					?
-						100
-					:
-						0));
+			model_.process_message(
+				sgeroids::model::serialization::message::change_thrust(
+					*id_.get(),
+					static_cast<sgeroids::model::serialization::message::types::int_>(
+						e.pressed()
+						?
+							100
+						:
+							0)));
 			break;
 		case sge::input::keyboard::key_code::a:
 			rotation_left_pressed_ =
@@ -104,13 +108,15 @@ sgeroids::input::keyboard::key(
 				e.pressed();
 			break;
 		case sge::input::keyboard::key_code::space:
-			model_.change_firing_mode(
-				*id_.get(),
-				e.pressed()
-				?
-					model::firing_mode::enabled
-				:
-					model::firing_mode::disabled);
+			model_.process_message(
+				sgeroids::model::serialization::message::change_firing_mode(
+					*id_.get(),
+					static_cast<sgeroids::model::serialization::message::types::enum_>(
+						e.pressed()
+						?
+							model::firing_mode::enabled
+						:
+							model::firing_mode::disabled)));
 			break;
 		default:
 			break;
@@ -118,19 +124,20 @@ sgeroids::input::keyboard::key(
 
 	int const rotation_speed = 3;
 
-	model_.rotation_direction(
-		*id_.get(),
-		model::rotation_direction(
-			(rotation_left_pressed_ == rotation_right_pressed_
-			?
-				0
-			:
-				rotation_right_pressed_
+	model_.process_message(
+		sgeroids::model::serialization::message::rotation_direction(
+			*id_.get(),
+			static_cast<sgeroids::model::serialization::message::types::int_>(
+				(rotation_left_pressed_ == rotation_right_pressed_
 				?
-					1
+					0
 				:
-					-1)
-			* rotation_speed * sgeroids::math::unit_magnitude()));
+					rotation_right_pressed_
+					?
+						1
+					:
+						-1)
+				* rotation_speed * sgeroids::math::unit_magnitude())));
 }
 
 void

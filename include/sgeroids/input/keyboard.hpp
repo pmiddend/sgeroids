@@ -22,7 +22,6 @@ class keyboard
 FCPPT_NONCOPYABLE(
 	keyboard);
 public:
-	explicit
 	keyboard(
 		sgeroids::model::base &,
 		sge::input::keyboard::device &,

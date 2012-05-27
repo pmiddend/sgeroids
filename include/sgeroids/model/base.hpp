@@ -1,12 +1,20 @@
 #ifndef SGEROIDS_MODEL_BASE_HPP_INCLUDED
 #define SGEROIDS_MODEL_BASE_HPP_INCLUDED
 
+#include <sgeroids/random_generator.hpp>
 #include <sgeroids/model/entity_id.hpp>
 #include <sgeroids/model/play_area.hpp>
 #include <sgeroids/model/player_name.hpp>
 #include <sgeroids/model/rotation_direction.hpp>
 #include <sgeroids/model/thrust.hpp>
 #include <sgeroids/model/firing_mode.hpp>
+#include <sgeroids/model/serialization/message/add_player.hpp>
+#include <sgeroids/model/serialization/message/remove_player.hpp>
+#include <sgeroids/model/serialization/message/change_firing_mode.hpp>
+#include <sgeroids/model/serialization/message/change_thrust.hpp>
+#include <sgeroids/model/serialization/message/rng_seed.hpp>
+#include <sgeroids/model/serialization/message/rotation_direction.hpp>
+#include <sgeroids/model/serialization/message/update.hpp>
 #include <sgeroids/model/callbacks/add_asteroid.hpp>
 #include <sgeroids/model/callbacks/add_projectile.hpp>
 #include <sgeroids/model/callbacks/add_spaceship.hpp>
@@ -39,9 +47,6 @@ class base
 FCPPT_NONCOPYABLE(
 	base);
 public:
-	virtual void
-	update() = 0;
-
 	virtual fcppt::signal::auto_connection
 	add_spaceship_callback(
 		callbacks::add_spaceship const &) = 0;
@@ -90,6 +95,14 @@ public:
 	change_thrust_callback(
 		callbacks::change_thrust const &) = 0;
 
+	virtual void
+	process_message(
+		sgeroids::model::serialization::message::rng_seed const &) = 0;
+
+	virtual void
+	process_message(
+		sgeroids::model::serialization::message::update const &) = 0;
+
 	/**
 	\brief Try to add the player with the given name.
 
@@ -97,33 +110,30 @@ public:
 	error message. That's because a name must be unique.
 	*/
 	virtual void
-	add_player(
-		model::player_name const &) = 0;
+	process_message(
+		sgeroids::model::serialization::message::add_player const &) = 0;
 
 	/**
 	\brief Remove a player with the given name
 	*/
 	virtual void
-	remove_player(
-		model::player_name const &) = 0;
+	process_message(
+		sgeroids::model::serialization::message::remove_player const &) = 0;
 
 	/**
 	\brief Set the rotation direction (and speed) of the entity
 	*/
 	virtual void
-	rotation_direction(
-		model::entity_id const &,
-		model::rotation_direction const &) = 0;
+	process_message(
+		sgeroids::model::serialization::message::rotation_direction const &) = 0;
 
 	virtual void
-	change_thrust(
-		model::entity_id const &,
-		model::thrust const &) = 0;
+	process_message(
+		sgeroids::model::serialization::message::change_thrust const &) = 0;
 
 	virtual void
-	change_firing_mode(
-		model::entity_id const &,
-		firing_mode::type) = 0;
+	process_message(
+		sgeroids::model::serialization::message::change_firing_mode const &) = 0;
 
 	virtual model::play_area const
 	play_area() const = 0;

@@ -84,6 +84,7 @@ find_package(
 	SGE REQUIRED COMPONENTS
 	audio
 	charconv
+	config
 	image
 	image2d
 	input
@@ -101,6 +102,15 @@ include_directories(
 add_definitions(
 	${SGE_DEFINITIONS})
 # sge end
+
+# alda begin
+find_package(
+	Alda REQUIRED)
+include_directories(
+	${Alda_INCLUDE_DIRS})
+add_definitions(
+	${Alda_DEFINITIONS})
+# alda end
 
 # Get rid of a pretty useless warning
 if(CMAKE_COMPILER_IS_GNUCXX OR FCPPT_UTILS_COMPILER_IS_CLANGPP)
@@ -133,6 +143,7 @@ include_directories(
 # Add ALL the source files here!
 set(
 	SGEROIDS_FILES
+	src/sgeroids/app_name.cpp
 	src/sgeroids/exception.cpp
 	src/sgeroids/input/keyboard.cpp
 	src/sgeroids/input/log.cpp
@@ -154,6 +165,16 @@ set(
 	src/sgeroids/model/local/entity/spaceship.cpp
 	src/sgeroids/model/local/object.cpp
 	src/sgeroids/model/log.cpp
+	src/sgeroids/model/serialization/global_context.cpp
+	src/sgeroids/model/serialization/message/add_player.cpp
+	src/sgeroids/model/serialization/message/base.cpp
+	src/sgeroids/model/serialization/message/change_firing_mode.cpp
+	src/sgeroids/model/serialization/message/change_thrust.cpp
+	src/sgeroids/model/serialization/message/remove_player.cpp
+	src/sgeroids/model/serialization/message/rng_seed.cpp
+	src/sgeroids/model/serialization/message/rotation_direction.cpp
+	src/sgeroids/model/serialization/message/type_enum_wrapper.cpp
+	src/sgeroids/model/serialization/message/update.cpp
 	src/sgeroids/random_generator_seed.cpp
 	src/sgeroids/resource_tree/path.cpp
 	src/sgeroids/resource_tree/strip_file_extension.cpp

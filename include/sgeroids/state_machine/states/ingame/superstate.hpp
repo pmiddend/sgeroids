@@ -8,10 +8,12 @@
 #include <sgeroids/state_machine/events/tick.hpp>
 #include <sgeroids/view/unique_base_ptr.hpp>
 #include <fcppt/noncopyable.hpp>
+#include <fcppt/scoped_ptr.hpp>
 #include <fcppt/signal/scoped_connection.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/mpl/vector/vector10.hpp>
 #include <boost/statechart/custom_reaction.hpp>
+#include <boost/filesystem/fstream.hpp>
 #include <boost/statechart/state.hpp>
 #include <fcppt/config/external_end.hpp>
 
@@ -54,9 +56,10 @@ public:
 
 	~superstate();
 private:
+	boost::filesystem::ofstream model_serialization_output_;
 	sgeroids::model::unique_base_ptr model_;
 	sgeroids::view::unique_base_ptr view_;
-	sgeroids::input::manager input_manager_;
+	fcppt::scoped_ptr<sgeroids::input::manager> input_manager_;
 	fcppt::signal::scoped_connection escape_exit_connection_;
 
 	// Connections from the model to the view

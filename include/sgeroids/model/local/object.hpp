@@ -5,15 +5,17 @@
 #include <sgeroids/model/base.hpp>
 #include <sgeroids/model/velocity.hpp>
 #include <sgeroids/model/local/error_context.hpp>
-#include <sgeroids/model/local/asteroid_generator/object.hpp>
+#include <sgeroids/model/local/asteroid_generator/object_fwd.hpp>
 #include <sgeroids/model/local/entity/spaceship_fwd.hpp>
 #include <sgeroids/model/local/entity/unique_base_ptr.hpp>
 #include <sgeroids/model/local/entity/asteroid_fwd.hpp>
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/signal/auto_connection.hpp>
+#include <fcppt/scoped_ptr.hpp>
 #include <fcppt/signal/object.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/ptr_container/ptr_map.hpp>
+#include <iosfwd>
 #include <fcppt/config/external_end.hpp>
 
 
@@ -33,11 +35,8 @@ class object
 FCPPT_NONCOPYABLE(
 	object);
 public:
-	explicit
-	object();
-
-	void
-	update();
+	object(
+		std::ostream &);
 
 	fcppt::signal::auto_connection
 	add_spaceship_callback(
@@ -87,6 +86,14 @@ public:
 	change_thrust_callback(
 		model::callbacks::change_thrust const &);
 
+	void
+	process_message(
+		sgeroids::model::serialization::message::rng_seed const &);
+
+	void
+	process_message(
+		sgeroids::model::serialization::message::update const &);
+
 	/**
 	\brief Try to add a player with the given name
 
@@ -96,14 +103,14 @@ public:
 	sgeroids::model::error_code::name_not_available.
 	*/
 	void
-	add_player(
-		model::player_name const &);
+	process_message(
+		sgeroids::model::serialization::message::add_player const &);
 	/**
 	\brief Remove a player
 	*/
 	void
-	remove_player(
-		model::player_name const &);
+	process_message(
+		sgeroids::model::serialization::message::remove_player const &);
 
 	/**
 	\brief Set rotation (turning) of a spaceship
@@ -116,19 +123,16 @@ public:
 	The entity id has to refer to a spaceship, else you'll get an exception.
 	*/
 	void
-	rotation_direction(
-		model::entity_id const &,
-		model::rotation_direction const &);
+	process_message(
+		sgeroids::model::serialization::message::rotation_direction const &);
 
 	void
-	change_thrust(
-		model::entity_id const &,
-		model::thrust const &);
+	process_message(
+		sgeroids::model::serialization::message::change_thrust const &);
 
 	void
-	change_firing_mode(
-		model::entity_id const &,
-		model::firing_mode::type);
+	process_message(
+		sgeroids::model::serialization::message::change_firing_mode const &);
 
 	model::play_area const
 	play_area() const;
@@ -139,10 +143,11 @@ private:
 	boost::ptr_map<model::entity_id::value_type,entity::base>
 	entity_map;
 
-	sgeroids::random_generator rng_;
+	std::ostream &serialization_output_;
+	fcppt::scoped_ptr<sgeroids::random_generator> rng_;
 	model::entity_id::value_type next_id_;
 	entity_map entities_;
-	asteroid_generator::object asteroid_generator_;
+	fcppt::scoped_ptr<asteroid_generator::object> asteroid_generator_;
 	fcppt::signal::object<model::callbacks::add_spaceship_function> add_spaceship_;
 	fcppt::signal::object<model::callbacks::add_asteroid_function> add_asteroid_;
 	fcppt::signal::object<model::callbacks::add_projectile_function> add_projectile_;
