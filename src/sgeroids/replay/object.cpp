@@ -45,6 +45,14 @@ sgeroids::replay::object::deserialize_single_message()
 			sgeroids::model::serialization::global_context(),
 			input_stream_));
 
+	sgeroids::replay::object::was_update_message const was_update(
+		message->type() == sgeroids::model::serialization::message::types::message::update);
+
+	if(
+		was_update.get())
+		return
+			was_update;
+
 	call_object_(
 		*message,
 		dispatcher_,
@@ -53,8 +61,6 @@ sgeroids::replay::object::deserialize_single_message()
 				&sgeroids::replay::dispatcher::default_callback,
 				&dispatcher_,
 				std::tr1::placeholders::_1)));
-
 	return
-		sgeroids::replay::object::was_update_message(
-			message->type() == sgeroids::model::serialization::message::types::message::update);
+		was_update;
 }
