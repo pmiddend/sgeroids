@@ -1,12 +1,12 @@
 #ifndef SGEROIDS_VIEW_PLANAR_SPRITE_CHOICES_HPP_INCLUDED
 #define SGEROIDS_VIEW_PLANAR_SPRITE_CHOICES_HPP_INCLUDED
 
-#include <sgeroids/view/planar/sprite/type_choices.hpp>
 #include <sgeroids/view/planar/sprite/color_format.hpp>
+#include <sgeroids/view/planar/sprite/type_choices.hpp>
 #include <sge/sprite/config/choices.hpp>
 #include <sge/sprite/config/custom_center.hpp>
-#include <sge/sprite/config/normal_size.hpp>
 #include <sge/sprite/config/intrusive.hpp>
+#include <sge/sprite/config/normal_size.hpp>
 #include <sge/sprite/config/texture_coordinates.hpp>
 #include <sge/sprite/config/texture_level_count.hpp>
 #include <sge/sprite/config/texture_ownership.hpp>

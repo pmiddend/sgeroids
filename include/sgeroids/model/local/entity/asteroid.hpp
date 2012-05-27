@@ -6,9 +6,9 @@
 #include <sgeroids/model/thrust.hpp>
 #include <sgeroids/model/vector2.hpp>
 #include <sgeroids/model/velocity.hpp>
+#include <sgeroids/model/local/callbacks/asteroid_died.hpp>
 #include <sgeroids/model/local/callbacks/position_entity_no_id.hpp>
 #include <sgeroids/model/local/callbacks/rotation_entity_no_id.hpp>
-#include <sgeroids/model/local/callbacks/asteroid_died.hpp>
 #include <sgeroids/model/local/entity/base.hpp>
 #include <fcppt/math/box/object_impl.hpp>
 #include <fcppt/math/dim/object_impl.hpp>

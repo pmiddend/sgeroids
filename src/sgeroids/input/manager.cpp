@@ -1,7 +1,7 @@
 #include <sgeroids/input/keyboard.hpp>
-#include <sge/charconv/fcppt_string_to_utf8.hpp>
 #include <sgeroids/input/log.hpp>
 #include <sgeroids/input/manager.hpp>
+#include <sge/charconv/fcppt_string_to_utf8.hpp>
 #include <sge/input/processor.hpp>
 #include <sge/input/keyboard/discover_event.hpp>
 #include <sge/input/keyboard/remove_event.hpp>

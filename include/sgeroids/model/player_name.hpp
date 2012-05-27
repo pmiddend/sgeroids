@@ -1,8 +1,8 @@
 #ifndef SGEROIDS_MODEL_PLAYER_NAME_HPP_INCLUDED
 #define SGEROIDS_MODEL_PLAYER_NAME_HPP_INCLUDED
 
-#include <fcppt/string.hpp>
 #include <sgeroids/model/serialization/message/types/string.hpp>
+#include <fcppt/string.hpp>
 
 
 namespace sgeroids

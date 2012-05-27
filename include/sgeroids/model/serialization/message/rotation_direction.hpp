@@ -1,16 +1,19 @@
 #ifndef SGEROIDS_MODEL_SERIALIZATION_MESSAGE_ROTATION_DIRECTION_HPP_INCLUDED
 #define SGEROIDS_MODEL_SERIALIZATION_MESSAGE_ROTATION_DIRECTION_HPP_INCLUDED
 
+#include <sgeroids/model/serialization/message/adapted_types/entity_id.hpp>
+#include <sgeroids/model/serialization/message/adapted_types/int.hpp>
+#include <sgeroids/model/serialization/message/adapted_types/message.hpp>
+#include <sgeroids/model/serialization/message/roles/entity_id.hpp>
+#include <sgeroids/model/serialization/message/roles/rotation_direction.hpp>
 #include <alda/message/make_class.hpp>
 #include <alda/message/make_id.hpp>
 #include <majutsu/composite.hpp>
 #include <majutsu/role.hpp>
-#include <sgeroids/model/serialization/message/adapted_types/message.hpp>
-#include <sgeroids/model/serialization/message/adapted_types/entity_id.hpp>
-#include <sgeroids/model/serialization/message/adapted_types/int.hpp>
-#include <sgeroids/model/serialization/message/roles/entity_id.hpp>
-#include <sgeroids/model/serialization/message/roles/rotation_direction.hpp>
+#include <fcppt/config/external_begin.hpp>
 #include <boost/mpl/vector/vector10.hpp>
+#include <fcppt/config/external_end.hpp>
+
 
 namespace sgeroids
 {

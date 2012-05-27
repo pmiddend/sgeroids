@@ -2,11 +2,12 @@
 #define SGEROIDS_VIEW_PLANAR_PARTICLE_OBJECT_HPP_INCLUDED
 
 #include <sgeroids/view/planar/position.hpp>
-#include <sgeroids/view/planar/particle/velocity.hpp>
+#include <sgeroids/view/planar/texture_tree.hpp>
 #include <sgeroids/view/planar/particle/lifespan.hpp>
+#include <sgeroids/view/planar/particle/velocity.hpp>
 #include <sgeroids/view/planar/sprite/object.hpp>
 #include <sgeroids/view/planar/sprite/ordered_collection.hpp>
-#include <sgeroids/view/planar/texture_tree.hpp>
+
 
 namespace sgeroids
 {

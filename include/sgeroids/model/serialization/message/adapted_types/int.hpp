@@ -1,8 +1,9 @@
 #ifndef SGEROIDS_MODEL_SERIALIZATION_MESSAGE_ADAPTED_TYPES_INT_HPP_INCLUDED
 #define SGEROIDS_MODEL_SERIALIZATION_MESSAGE_ADAPTED_TYPES_INT_HPP_INCLUDED
 
-#include <alda/bindings/fundamental.hpp>
 #include <sgeroids/model/serialization/message/types/int.hpp>
+#include <alda/bindings/fundamental.hpp>
+
 
 namespace sgeroids
 {

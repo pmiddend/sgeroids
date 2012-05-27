@@ -6,12 +6,12 @@
 #include <sgeroids/model/velocity.hpp>
 #include <sgeroids/model/local/error_context.hpp>
 #include <sgeroids/model/local/asteroid_generator/object_fwd.hpp>
+#include <sgeroids/model/local/entity/asteroid_fwd.hpp>
 #include <sgeroids/model/local/entity/spaceship_fwd.hpp>
 #include <sgeroids/model/local/entity/unique_base_ptr.hpp>
-#include <sgeroids/model/local/entity/asteroid_fwd.hpp>
 #include <fcppt/noncopyable.hpp>
-#include <fcppt/signal/auto_connection.hpp>
 #include <fcppt/scoped_ptr.hpp>
+#include <fcppt/signal/auto_connection.hpp>
 #include <fcppt/signal/object.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/ptr_container/ptr_map.hpp>

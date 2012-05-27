@@ -1,8 +1,9 @@
 #ifndef SGEROIDS_MODEL_SERIALIZATION_MESSAGE_BASE_UNIQUE_PTR_HPP_INCLUDED
 #define SGEROIDS_MODEL_SERIALIZATION_MESSAGE_BASE_UNIQUE_PTR_HPP_INCLUDED
 
-#include <alda/message/base_unique_ptr.hpp>
 #include <sgeroids/model/serialization/message/adapted_types/message.hpp>
+#include <alda/message/base_unique_ptr.hpp>
+
 
 namespace sgeroids
 {

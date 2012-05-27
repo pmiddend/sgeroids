@@ -1,18 +1,18 @@
 #ifndef SGEROIDS_VIEW_PLANAR_ENTITY_SPACESHIP_HPP_INCLUDED
 #define SGEROIDS_VIEW_PLANAR_ENTITY_SPACESHIP_HPP_INCLUDED
 
-#include <sge/audio/player_fwd.hpp>
-#include <sge/audio/sound/base_scoped_ptr.hpp>
-#include <sge/texture/const_part_shared_ptr.hpp>
+#include <sgeroids/random_generator_fwd.hpp>
 #include <sgeroids/model/thrust.hpp>
 #include <sgeroids/view/planar/audio_buffer_tree.hpp>
-#include <sgeroids/view/planar/callbacks/add_particle.hpp>
 #include <sgeroids/view/planar/radius.hpp>
 #include <sgeroids/view/planar/texture_tree.hpp>
+#include <sgeroids/view/planar/callbacks/add_particle.hpp>
 #include <sgeroids/view/planar/entity/base.hpp>
 #include <sgeroids/view/planar/sprite/object.hpp>
 #include <sgeroids/view/planar/sprite/ordered_collection.hpp>
-#include <sgeroids/random_generator_fwd.hpp>
+#include <sge/audio/player_fwd.hpp>
+#include <sge/audio/sound/base_scoped_ptr.hpp>
+#include <sge/texture/const_part_shared_ptr.hpp>
 #include <fcppt/random/variate_decl.hpp>
 #include <fcppt/random/distribution/uniform_int_decl.hpp>
 

@@ -1,10 +1,6 @@
 #ifndef SGEROIDS_VIEW_PLANAR_BACKGROUND_OBJECT_HPP_INCLUDED
 #define SGEROIDS_VIEW_PLANAR_BACKGROUND_OBJECT_HPP_INCLUDED
 
-#include <sge/renderer/device_fwd.hpp>
-#include <sge/renderer/vertex_declaration_fwd.hpp>
-#include <sge/renderer/context/object_fwd.hpp>
-#include <sge/sprite/render/range_impl.hpp>
 #include <sgeroids/random_generator_fwd.hpp>
 #include <sgeroids/model/play_area.hpp>
 #include <sgeroids/resource_tree/object.hpp>
@@ -13,9 +9,13 @@
 #include <sgeroids/view/planar/background/star_size.hpp>
 #include <sgeroids/view/planar/sprite/dynamic_buffers.hpp>
 #include <sgeroids/view/planar/sprite/object.hpp>
-#include <sgeroids/view/planar/sprite/static_range.hpp>
 #include <sgeroids/view/planar/sprite/ordered_collection.hpp>
+#include <sgeroids/view/planar/sprite/static_range.hpp>
+#include <sge/renderer/device_fwd.hpp>
+#include <sge/renderer/vertex_declaration_fwd.hpp>
+#include <sge/renderer/context/object_fwd.hpp>
 #include <sge/sprite/intrusive/ordered/collection.hpp>
+#include <sge/sprite/render/range_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 #include <fcppt/config/external_end.hpp>

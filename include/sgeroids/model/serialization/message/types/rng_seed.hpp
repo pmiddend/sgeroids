@@ -1,8 +1,9 @@
 #ifndef SGEROIDS_MODEL_SERIALIZATION_TYPES_RNG_SEED_HPP_INCLUDED
 #define SGEROIDS_MODEL_SERIALIZATION_TYPES_RNG_SEED_HPP_INCLUDED
 
-#include <alda/bindings/fundamental.hpp>
 #include <sgeroids/random_generator.hpp>
+#include <alda/bindings/fundamental.hpp>
+
 
 namespace sgeroids
 {

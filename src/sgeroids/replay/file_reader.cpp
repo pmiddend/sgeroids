@@ -1,8 +1,9 @@
-#include <sgeroids/replay/object.hpp>
-#include <fcppt/ref.hpp>
-#include <fcppt/make_unique_ptr.hpp>
 #include <sgeroids/replay/file_reader.hpp>
+#include <sgeroids/replay/object.hpp>
+#include <fcppt/make_unique_ptr.hpp>
+#include <fcppt/ref.hpp>
 #include <fcppt/assert/pre.hpp>
+
 
 sgeroids::replay::file_reader::file_reader(
 	sgeroids::model::base &_model,

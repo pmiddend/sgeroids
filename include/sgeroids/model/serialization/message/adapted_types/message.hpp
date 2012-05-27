@@ -4,6 +4,7 @@
 #include <sgeroids/model/serialization/message/types/message.hpp>
 #include <alda/type_enum.hpp>
 
+
 namespace sgeroids
 {
 namespace model

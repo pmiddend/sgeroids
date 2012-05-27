@@ -3,18 +3,11 @@
 
 #include <sgeroids/random_generator.hpp>
 #include <sgeroids/model/entity_id.hpp>
+#include <sgeroids/model/firing_mode.hpp>
 #include <sgeroids/model/play_area.hpp>
 #include <sgeroids/model/player_name.hpp>
 #include <sgeroids/model/rotation_direction.hpp>
 #include <sgeroids/model/thrust.hpp>
-#include <sgeroids/model/firing_mode.hpp>
-#include <sgeroids/model/serialization/message/add_player.hpp>
-#include <sgeroids/model/serialization/message/remove_player.hpp>
-#include <sgeroids/model/serialization/message/change_firing_mode.hpp>
-#include <sgeroids/model/serialization/message/change_thrust.hpp>
-#include <sgeroids/model/serialization/message/rng_seed.hpp>
-#include <sgeroids/model/serialization/message/rotation_direction.hpp>
-#include <sgeroids/model/serialization/message/update.hpp>
 #include <sgeroids/model/callbacks/add_asteroid.hpp>
 #include <sgeroids/model/callbacks/add_projectile.hpp>
 #include <sgeroids/model/callbacks/add_spaceship.hpp>
@@ -27,6 +20,13 @@
 #include <sgeroids/model/callbacks/remove_entity.hpp>
 #include <sgeroids/model/callbacks/rotation_entity.hpp>
 #include <sgeroids/model/callbacks/score_change.hpp>
+#include <sgeroids/model/serialization/message/add_player.hpp>
+#include <sgeroids/model/serialization/message/change_firing_mode.hpp>
+#include <sgeroids/model/serialization/message/change_thrust.hpp>
+#include <sgeroids/model/serialization/message/remove_player.hpp>
+#include <sgeroids/model/serialization/message/rng_seed.hpp>
+#include <sgeroids/model/serialization/message/rotation_direction.hpp>
+#include <sgeroids/model/serialization/message/update.hpp>
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/signal/auto_connection.hpp>
 

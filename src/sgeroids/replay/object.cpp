@@ -1,9 +1,10 @@
+#include <sgeroids/model/serialization/global_context.hpp>
+#include <sgeroids/model/serialization/message/base_unique_ptr.hpp>
+#include <sgeroids/replay/object.hpp>
+#include <alda/serialization/deserialize.hpp>
 #include <fcppt/function/object.hpp>
 #include <fcppt/tr1/functional.hpp>
-#include <alda/serialization/deserialize.hpp>
-#include <sgeroids/replay/object.hpp>
-#include <sgeroids/model/serialization/message/base_unique_ptr.hpp>
-#include <sgeroids/model/serialization/global_context.hpp>
+
 
 sgeroids::replay::object::object(
 	sgeroids::model::base &_model,

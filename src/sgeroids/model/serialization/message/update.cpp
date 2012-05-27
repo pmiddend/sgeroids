@@ -1,8 +1,9 @@
-#include <sgeroids/model/serialization/message/update.hpp>
 #include <sgeroids/model/serialization/global_context.hpp>
+#include <sgeroids/model/serialization/message/update.hpp>
 #include <alda/message/instantiate_concrete.hpp>
 #include <alda/serialization/instantiate_message.hpp>
 #include <alda/serialization/register_message.hpp>
+
 
 ALDA_MESSAGE_INSTANTIATE_CONCRETE(
 	sgeroids::model::serialization::message::adapted_types::message,

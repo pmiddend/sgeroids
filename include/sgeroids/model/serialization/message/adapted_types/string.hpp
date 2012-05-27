@@ -1,9 +1,10 @@
 #ifndef SGEROIDS_MODEL_SERIALIZATION_MESSAGE_ADAPTED_TYPES_STRING_HPP_INCLUDED
 #define SGEROIDS_MODEL_SERIALIZATION_MESSAGE_ADAPTED_TYPES_STRING_HPP_INCLUDED
 
-#include <sgeroids/model/serialization/message/types/string.hpp>
 #include <sgeroids/model/serialization/message/adapted_types/char_type.hpp>
+#include <sgeroids/model/serialization/message/types/string.hpp>
 #include <alda/bindings/dynamic_len.hpp>
+
 
 namespace sgeroids
 {

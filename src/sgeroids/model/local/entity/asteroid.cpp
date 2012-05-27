@@ -1,5 +1,3 @@
-#include <fcppt/math/vector/arithmetic.hpp>
-#include <fcppt/ref.hpp>
 #include <sgeroids/math/discrete_cos.hpp>
 #include <sgeroids/math/discrete_sin.hpp>
 #include <sgeroids/math/unit_magnitude.hpp>
@@ -8,7 +6,9 @@
 #include <sgeroids/model/local/entity/asteroid.hpp>
 #include <sgeroids/model/local/entity/projectile.hpp>
 #include <fcppt/optional_dynamic_cast.hpp>
+#include <fcppt/ref.hpp>
 #include <fcppt/log/headers.hpp>
+#include <fcppt/math/vector/arithmetic.hpp>
 #include <fcppt/math/vector/arithmetic.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <iostream>

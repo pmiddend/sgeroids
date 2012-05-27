@@ -1,9 +1,9 @@
 #ifndef SGEROIDS_VIEW_PLANAR_SPRITE_TYPE_CHOICES_HPP_INCLUDED
 #define SGEROIDS_VIEW_PLANAR_SPRITE_TYPE_CHOICES_HPP_INCLUDED
 
+#include <sge/sprite/config/float_type.hpp>
 #include <sge/sprite/config/type_choices.hpp>
 #include <sge/sprite/config/unit_type.hpp>
-#include <sge/sprite/config/float_type.hpp>
 
 
 namespace sgeroids

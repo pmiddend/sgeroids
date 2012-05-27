@@ -1,6 +1,7 @@
+#include <sgeroids/model/base.hpp>
 #include <sgeroids/replay/dispatcher.hpp>
 #include <fcppt/assert/unreachable.hpp>
-#include <sgeroids/model/base.hpp>
+
 
 sgeroids::replay::dispatcher::dispatcher(
 	sgeroids::model::base &_model)

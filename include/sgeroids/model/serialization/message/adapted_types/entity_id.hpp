@@ -4,6 +4,7 @@
 #include <sgeroids/model/serialization/message/types/entity_id.hpp>
 #include <alda/bindings/fundamental.hpp>
 
+
 namespace sgeroids
 {
 namespace model

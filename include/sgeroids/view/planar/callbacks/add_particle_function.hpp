@@ -2,8 +2,9 @@
 #define SGEROIDS_VIEW_PLANAR_CALLBACKS_ADD_PARTICLE_FUNCTION_HPP_INCLUDED
 
 #include <sgeroids/view/planar/position.hpp>
-#include <sgeroids/view/planar/particle/velocity.hpp>
 #include <sgeroids/view/planar/particle/lifespan.hpp>
+#include <sgeroids/view/planar/particle/velocity.hpp>
+
 
 namespace sgeroids
 {

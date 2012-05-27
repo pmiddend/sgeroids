@@ -6,8 +6,8 @@
 #include <sgeroids/model/local/callbacks/asteroid_generation.hpp>
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/math/box/object_impl.hpp>
-#include <fcppt/random/distribution/uniform_int_decl.hpp>
 #include <fcppt/random/variate_decl.hpp>
+#include <fcppt/random/distribution/uniform_int_decl.hpp>
 
 
 namespace sgeroids

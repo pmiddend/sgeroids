@@ -1,8 +1,8 @@
 #include <sgeroids/input/keyboard.hpp>
-#include <sgeroids/model/serialization/message/change_thrust.hpp>
 #include <sgeroids/input/log.hpp>
 #include <sgeroids/math/unit_magnitude.hpp>
 #include <sgeroids/model/base.hpp>
+#include <sgeroids/model/serialization/message/change_thrust.hpp>
 #include <sge/input/keyboard/device.hpp>
 #include <sge/input/keyboard/key_event.hpp>
 #include <fcppt/optional_impl.hpp>

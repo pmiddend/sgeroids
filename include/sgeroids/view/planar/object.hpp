@@ -10,8 +10,8 @@
 #include <sgeroids/view/planar/background/object.hpp>
 #include <sgeroids/view/planar/entity/base_fwd.hpp>
 #include <sgeroids/view/planar/particle/object.hpp>
-#include <sgeroids/view/planar/sprite/ordered_collection.hpp>
 #include <sgeroids/view/planar/sprite/dynamic_buffers.hpp>
+#include <sgeroids/view/planar/sprite/ordered_collection.hpp>
 #include <sge/audio/buffer_shared_ptr.hpp>
 #include <sge/audio/loader_fwd.hpp>
 #include <sge/audio/player_fwd.hpp>
@@ -22,10 +22,10 @@
 #include <sge/renderer/matrix4.hpp>
 #include <sge/renderer/vertex_declaration_scoped_ptr.hpp>
 #include <sge/renderer/context/object_fwd.hpp>
+#include <sge/sprite/intrusive/ordered/collection.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>
 #include <sge/texture/fragmented_unique_ptr.hpp>
 #include <sge/texture/manager.hpp>
-#include <sge/sprite/intrusive/ordered/collection.hpp>
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/scoped_ptr_impl.hpp>
 #include <fcppt/math/box/object_impl.hpp>

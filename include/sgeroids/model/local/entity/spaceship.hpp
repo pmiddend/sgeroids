@@ -1,14 +1,14 @@
 #ifndef SGEROIDS_MODEL_LOCAL_ENTITY_SPACESHIP_HPP_INCLUDED
 #define SGEROIDS_MODEL_LOCAL_ENTITY_SPACESHIP_HPP_INCLUDED
 
+#include <sgeroids/model/firing_mode.hpp>
 #include <sgeroids/model/play_area.hpp>
 #include <sgeroids/model/player_name.hpp>
 #include <sgeroids/model/rotation_direction.hpp>
-#include <sgeroids/model/firing_mode.hpp>
 #include <sgeroids/model/thrust.hpp>
+#include <sgeroids/model/local/callbacks/insert_projectile.hpp>
 #include <sgeroids/model/local/callbacks/position_entity_no_id.hpp>
 #include <sgeroids/model/local/callbacks/rotation_entity_no_id.hpp>
-#include <sgeroids/model/local/callbacks/insert_projectile.hpp>
 #include <sgeroids/model/local/entity/base.hpp>
 #include <fcppt/math/box/object_impl.hpp>
 #include <fcppt/math/dim/object_impl.hpp>

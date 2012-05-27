@@ -4,6 +4,7 @@
 #include <sgeroids/model/serialization/message/types/char_type.hpp>
 #include <alda/bindings/fundamental.hpp>
 
+
 namespace sgeroids
 {
 namespace model

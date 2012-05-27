@@ -7,9 +7,9 @@
 #include <sgeroids/view/planar/sprite/parameters.hpp>
 #include <sge/image/colors.hpp>
 #include <sge/image/color/any/object.hpp>
-#include <sge/sprite/intrusive/ordered/collection.hpp>
 #include <sge/sprite/center.hpp>
 #include <sge/sprite/parameters.hpp>
+#include <sge/sprite/intrusive/ordered/collection.hpp>
 #include <fcppt/text.hpp>
 
 

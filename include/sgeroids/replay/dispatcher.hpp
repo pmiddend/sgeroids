@@ -2,15 +2,16 @@
 #define SGEROIDS_REPLAY_DISPATCHER_HPP_INCLUDED
 
 #include <sgeroids/model/base_fwd.hpp>
-#include <sgeroids/model/serialization/message/base.hpp>
 #include <sgeroids/model/serialization/message/add_player.hpp>
+#include <sgeroids/model/serialization/message/base.hpp>
 #include <sgeroids/model/serialization/message/change_firing_mode.hpp>
 #include <sgeroids/model/serialization/message/change_thrust.hpp>
-#include <sgeroids/model/serialization/message/rotation_direction.hpp>
-#include <sgeroids/model/serialization/message/rng_seed.hpp>
-#include <sgeroids/model/serialization/message/update.hpp>
 #include <sgeroids/model/serialization/message/remove_player.hpp>
+#include <sgeroids/model/serialization/message/rng_seed.hpp>
+#include <sgeroids/model/serialization/message/rotation_direction.hpp>
+#include <sgeroids/model/serialization/message/update.hpp>
 #include <fcppt/noncopyable.hpp>
+
 
 namespace sgeroids
 {

@@ -1,13 +1,16 @@
 #ifndef SGEROIDS_REPLAY_OBJECT_HPP_INCLUDED
 #define SGEROIDS_REPLAY_OBJECT_HPP_INCLUDED
 
-#include <fcppt/noncopyable.hpp>
 #include <sgeroids/model/base_fwd.hpp>
-#include <fcppt/strong_typedef.hpp>
-#include <alda/call/object.hpp>
 #include <sgeroids/replay/call_object.hpp>
 #include <sgeroids/replay/dispatcher.hpp>
+#include <alda/call/object.hpp>
+#include <fcppt/noncopyable.hpp>
+#include <fcppt/strong_typedef.hpp>
+#include <fcppt/config/external_begin.hpp>
 #include <iosfwd>
+#include <fcppt/config/external_end.hpp>
+
 
 namespace sgeroids
 {

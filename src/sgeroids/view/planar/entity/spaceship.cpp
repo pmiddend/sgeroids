@@ -1,12 +1,11 @@
-#include <fcppt/math/vector/arithmetic.hpp>
 #include <sgeroids/random_generator.hpp>
-#include <sgeroids/math/unit_magnitude.hpp>
-#include <sgeroids/math/discrete_sin.hpp>
 #include <sgeroids/math/discrete_cos.hpp>
+#include <sgeroids/math/discrete_sin.hpp>
+#include <sgeroids/math/unit_magnitude.hpp>
 #include <sgeroids/resource_tree/object_impl.hpp>
 #include <sgeroids/resource_tree/path.hpp>
-#include <sgeroids/view/planar/callbacks/add_particle.hpp>
 #include <sgeroids/view/planar/sprite_size_from_texture_and_radius.hpp>
+#include <sgeroids/view/planar/callbacks/add_particle.hpp>
 #include <sgeroids/view/planar/entity/spaceship.hpp>
 #include <sgeroids/view/planar/sprite/dim.hpp>
 #include <sgeroids/view/planar/sprite/parameters.hpp>
@@ -20,6 +19,7 @@
 #include <sge/sprite/parameters.hpp>
 #include <sge/sprite/intrusive/ordered/collection.hpp>
 #include <fcppt/text.hpp>
+#include <fcppt/math/vector/arithmetic.hpp>
 #include <fcppt/random/variate_impl.hpp>
 #include <fcppt/random/distribution/uniform_int_impl.hpp>
 #include <fcppt/config/external_begin.hpp>

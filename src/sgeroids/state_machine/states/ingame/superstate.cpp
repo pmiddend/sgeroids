@@ -1,14 +1,15 @@
-#include <sge/parse/json/find_and_convert_member.hpp>
-#include <sgeroids/replay/file_reader.hpp>
-#include <fcppt/random/generator/seed_from_chrono.hpp>
 #include <sgeroids/model/local/object.hpp>
+#include <sgeroids/replay/file_reader.hpp>
 #include <sgeroids/state_machine/states/ingame/superstate.hpp>
 #include <sgeroids/view/planar/object.hpp>
 #include <sge/input/keyboard/action.hpp>
 #include <sge/input/keyboard/device.hpp>
+#include <sge/parse/json/find_and_convert_member.hpp>
 #include <fcppt/ref.hpp>
 #include <fcppt/text.hpp>
+#include <fcppt/random/generator/seed_from_chrono.hpp>
 #include <fcppt/tr1/functional.hpp>
+
 
 sgeroids::state_machine::states::ingame::superstate::superstate(
 	my_context _my_context)

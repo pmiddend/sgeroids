@@ -1,12 +1,15 @@
 #ifndef SGEROIDS_REPLAY_FILE_READER_HPP_INCLUDED
 #define SGEROIDS_REPLAY_FILE_READER_HPP_INCLUDED
 
-#include <fcppt/noncopyable.hpp>
 #include <sgeroids/model/base_fwd.hpp>
-#include <fcppt/scoped_ptr.hpp>
 #include <sgeroids/replay/object_fwd.hpp>
-#include <boost/filesystem/path.hpp>
+#include <fcppt/noncopyable.hpp>
+#include <fcppt/scoped_ptr.hpp>
+#include <fcppt/config/external_begin.hpp>
 #include <boost/filesystem/fstream.hpp>
+#include <boost/filesystem/path.hpp>
+#include <fcppt/config/external_end.hpp>
+
 
 namespace sgeroids
 {
