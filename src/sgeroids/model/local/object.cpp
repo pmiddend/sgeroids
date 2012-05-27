@@ -170,13 +170,18 @@ sgeroids::model::local::object::change_thrust_callback(
 
 void
 sgeroids::model::local::object::process_message(
-	sgeroids::model::serialization::message::rng_seed const &_seed)
+	sgeroids::model::serialization::message::rng_seed const &_message)
 {
+	alda::serialization::serialize(
+		serialization_output_,
+		*alda::message::make_concrete_ptr<sgeroids::model::serialization::message::adapted_types::message>(
+			_message));
+
 	rng_.take(
 		fcppt::make_unique_ptr<sgeroids::random_generator>(
 			sgeroids::random_generator::seed(
 				fcppt::cref(
-					_seed.get<sgeroids::model::serialization::message::roles::seed>()))));
+					_message.get<sgeroids::model::serialization::message::roles::seed>()))));
 
 	asteroid_generator_.take(
 		fcppt::make_unique_ptr<sgeroids::model::local::asteroid_generator::object>(
@@ -196,12 +201,12 @@ sgeroids::model::local::object::process_message(
 
 void
 sgeroids::model::local::object::process_message(
-	sgeroids::model::serialization::message::update const &)
+	sgeroids::model::serialization::message::update const &_message)
 {
 	alda::serialization::serialize(
 		serialization_output_,
 		*alda::message::make_concrete_ptr<sgeroids::model::serialization::message::adapted_types::message>(
-			sgeroids::model::serialization::message::update()));
+			_message));
 
 	this->entity_updates();
 	this->collision_detection_broadphase();
@@ -210,15 +215,20 @@ sgeroids::model::local::object::process_message(
 
 void
 sgeroids::model::local::object::process_message(
-	sgeroids::model::serialization::message::add_player const &_add_player)
+	sgeroids::model::serialization::message::add_player const &_message)
 {
+	alda::serialization::serialize(
+		serialization_output_,
+		*alda::message::make_concrete_ptr<sgeroids::model::serialization::message::adapted_types::message>(
+			_message));
+
 	sgeroids::model::player_name const player_name(
-		_add_player.get<sgeroids::model::serialization::message::roles::player_name>());
+		_message.get<sgeroids::model::serialization::message::roles::player_name>());
 
 	FCPPT_LOG_DEBUG(
 		model::log(),
 		fcppt::log::_
-			<< FCPPT_TEXT("Adding new player "));
+			<< FCPPT_TEXT("Adding new player"));
 
 	// First, search for a player with the given name. If one already
 	// exists, we have to signal an error.
@@ -323,10 +333,15 @@ sgeroids::model::local::object::process_message(
 
 void
 sgeroids::model::local::object::process_message(
-	sgeroids::model::serialization::message::remove_player const &_remove_player)
+	sgeroids::model::serialization::message::remove_player const &_message)
 {
+	alda::serialization::serialize(
+		serialization_output_,
+		*alda::message::make_concrete_ptr<sgeroids::model::serialization::message::adapted_types::message>(
+			_message));
+
 	sgeroids::model::player_name const player_name(
-		_remove_player.get<sgeroids::model::serialization::message::roles::player_name>());
+		_message.get<sgeroids::model::serialization::message::roles::player_name>());
 
 	FCPPT_LOG_DEBUG(
 		model::log(),
@@ -365,13 +380,18 @@ sgeroids::model::local::object::process_message(
 
 void
 sgeroids::model::local::object::process_message(
-	sgeroids::model::serialization::message::rotation_direction const &_rotation_direction)
+	sgeroids::model::serialization::message::rotation_direction const &_message)
 {
+	alda::serialization::serialize(
+		serialization_output_,
+		*alda::message::make_concrete_ptr<sgeroids::model::serialization::message::adapted_types::message>(
+			_message));
+
 	model::entity_id const id(
-		_rotation_direction.get<sgeroids::model::serialization::message::roles::entity_id>());
+		_message.get<sgeroids::model::serialization::message::roles::entity_id>());
 
 	model::rotation_direction const rotation_direction(
-		_rotation_direction.get<sgeroids::model::serialization::message::roles::rotation_direction>());
+		_message.get<sgeroids::model::serialization::message::roles::rotation_direction>());
 
 	entity::spaceship &ship =
 		this->search_spaceship_with_id(
@@ -385,13 +405,18 @@ sgeroids::model::local::object::process_message(
 
 void
 sgeroids::model::local::object::process_message(
-	sgeroids::model::serialization::message::change_thrust const &_change_thrust)
+	sgeroids::model::serialization::message::change_thrust const &_message)
 {
+	alda::serialization::serialize(
+		serialization_output_,
+		*alda::message::make_concrete_ptr<sgeroids::model::serialization::message::adapted_types::message>(
+			_message));
+
 	model::entity_id const id(
-		_change_thrust.get<sgeroids::model::serialization::message::roles::entity_id>());
+		_message.get<sgeroids::model::serialization::message::roles::entity_id>());
 
 	model::thrust const thrust(
-		_change_thrust.get<sgeroids::model::serialization::message::roles::thrust>());
+		_message.get<sgeroids::model::serialization::message::roles::thrust>());
 
 	entity::spaceship &ship =
 		this->search_spaceship_with_id(
@@ -409,14 +434,19 @@ sgeroids::model::local::object::process_message(
 
 void
 sgeroids::model::local::object::process_message(
-	sgeroids::model::serialization::message::change_firing_mode const &_change_firing_mode)
+	sgeroids::model::serialization::message::change_firing_mode const &_message)
 {
+	alda::serialization::serialize(
+		serialization_output_,
+		*alda::message::make_concrete_ptr<sgeroids::model::serialization::message::adapted_types::message>(
+			_message));
+
 	model::entity_id const id(
-		_change_firing_mode.get<sgeroids::model::serialization::message::roles::entity_id>());
+		_message.get<sgeroids::model::serialization::message::roles::entity_id>());
 
 	model::firing_mode::type const firing_mode(
 		static_cast<model::firing_mode::type>(
-			_change_firing_mode.get<sgeroids::model::serialization::message::roles::firing_mode>()));
+			_message.get<sgeroids::model::serialization::message::roles::firing_mode>()));
 
 	entity::spaceship &ship =
 		this->search_spaceship_with_id(

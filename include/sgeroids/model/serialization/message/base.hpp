@@ -1,7 +1,7 @@
 #ifndef SGEROIDS_MODEL_SERIALIZATION_MESSAGE_BASE_HPP_INCLUDED
 #define SGEROIDS_MODEL_SERIALIZATION_MESSAGE_BASE_HPP_INCLUDED
 
-#include <alda/message/base_fwd.hpp>
+#include <alda/message/base_decl.hpp>
 #include <sgeroids/model/serialization/message/adapted_types/message.hpp>
 
 namespace sgeroids

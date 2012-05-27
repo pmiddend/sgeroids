@@ -16,7 +16,7 @@ typedef
 alda::message::base_unique_ptr
 <
 	sgeroids::model::serialization::message::adapted_types::message
->
+>::type
 base_unique_ptr;
 }
 }

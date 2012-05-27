@@ -8,6 +8,7 @@
 	},
 	"serialization" :
 	{
-		"output-file" : null
+		"output-file" : null,
+		"input-file" : ""
 	}
 }

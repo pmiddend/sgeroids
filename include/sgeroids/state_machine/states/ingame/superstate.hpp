@@ -7,6 +7,7 @@
 #include <sgeroids/state_machine/events/render.hpp>
 #include <sgeroids/state_machine/events/tick.hpp>
 #include <sgeroids/view/unique_base_ptr.hpp>
+#include <sgeroids/replay/file_reader_fwd.hpp>
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/scoped_ptr.hpp>
 #include <fcppt/signal/scoped_connection.hpp>
@@ -59,7 +60,8 @@ private:
 	boost::filesystem::ofstream model_serialization_output_;
 	sgeroids::model::unique_base_ptr model_;
 	sgeroids::view::unique_base_ptr view_;
-	sgeroids::input::manager input_manager_;
+	fcppt::scoped_ptr<sgeroids::input::manager> input_manager_;
+	fcppt::scoped_ptr<sgeroids::replay::file_reader> replay_file_reader_;
 	fcppt::signal::scoped_connection escape_exit_connection_;
 
 	// Connections from the model to the view

@@ -1,4 +1,5 @@
 #include <sge/parse/json/find_and_convert_member.hpp>
+#include <sgeroids/replay/file_reader.hpp>
 #include <fcppt/random/generator/seed_from_chrono.hpp>
 #include <sgeroids/model/local/object.hpp>
 #include <sgeroids/state_machine/states/ingame/superstate.hpp>
@@ -38,9 +39,39 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 			fcppt::ref(
 				this->context<state_machine::object>().systems().audio_player()))),
 	input_manager_(
-		this->context<state_machine::object>().systems().input_processor(),
-		*model_,
-		this->context<state_machine::object>().charconv_system()),
+		sge::parse::json::find_and_convert_member<fcppt::string>(
+			this->context<state_machine::object>().config(),
+			sge::parse::json::path(
+				FCPPT_TEXT("serialization")) /
+				FCPPT_TEXT("input-file")).empty()
+		?
+			fcppt::make_unique_ptr<sgeroids::input::manager>(
+				fcppt::ref(
+					this->context<state_machine::object>().systems().input_processor()),
+				fcppt::ref(
+					*model_),
+				fcppt::ref(
+					this->context<state_machine::object>().charconv_system()))
+		:
+			fcppt::unique_ptr<sgeroids::input::manager>()),
+	replay_file_reader_(
+		sge::parse::json::find_and_convert_member<fcppt::string>(
+			this->context<state_machine::object>().config(),
+			sge::parse::json::path(
+				FCPPT_TEXT("serialization")) /
+				FCPPT_TEXT("input-file")).empty()
+		?
+			fcppt::unique_ptr<sgeroids::replay::file_reader>()
+		:
+			fcppt::make_unique_ptr<sgeroids::replay::file_reader>(
+				fcppt::ref(
+					*model_),
+				boost::filesystem::path(
+					sge::parse::json::find_and_convert_member<fcppt::string>(
+						this->context<state_machine::object>().config(),
+						sge::parse::json::path(
+							FCPPT_TEXT("serialization")) /
+							FCPPT_TEXT("input-file"))))),
 	escape_exit_connection_(
 		this->context<state_machine::object>().systems().keyboard_collector().key_callback(
 			sge::input::keyboard::action(
@@ -124,19 +155,26 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 	view_->play_area(
 		model_->play_area());
 
-	model_->process_message(
-		sgeroids::model::serialization::message::rng_seed(
-			fcppt::random::generator::seed_from_chrono<sgeroids::random_generator::seed>().get()));
+	if(!replay_file_reader_)
+		model_->process_message(
+			sgeroids::model::serialization::message::rng_seed(
+				fcppt::random::generator::seed_from_chrono<sgeroids::random_generator::seed>().get()));
 }
 
 boost::statechart::result
 sgeroids::state_machine::states::ingame::superstate::react(
 	state_machine::events::tick const &)
 {
+	if(replay_file_reader_)
+		replay_file_reader_->update();
+
 	model_->process_message(
 		sgeroids::model::serialization::message::update());
+
 	view_->update();
-	return discard_event();
+
+	return
+		discard_event();
 }
 
 boost::statechart::result

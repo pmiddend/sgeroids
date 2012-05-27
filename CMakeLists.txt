@@ -176,6 +176,9 @@ set(
 	src/sgeroids/model/serialization/message/type_enum_wrapper.cpp
 	src/sgeroids/model/serialization/message/update.cpp
 	src/sgeroids/random_generator_seed.cpp
+	src/sgeroids/replay/dispatcher.cpp
+	src/sgeroids/replay/file_reader.cpp
+	src/sgeroids/replay/object.cpp
 	src/sgeroids/resource_tree/path.cpp
 	src/sgeroids/resource_tree/strip_file_extension.cpp
 	src/sgeroids/resource_tree/strip_path_prefix.cpp
