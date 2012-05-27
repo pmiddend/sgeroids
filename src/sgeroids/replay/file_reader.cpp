@@ -10,7 +10,8 @@ sgeroids::replay::file_reader::file_reader(
 	boost::filesystem::path const &_path)
 :
 	input_stream_(
-		_path)
+		_path),
+	replay_()
 {
 	FCPPT_ASSERT_PRE(
 		input_stream_.is_open());
