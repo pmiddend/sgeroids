@@ -43,6 +43,9 @@ public:
 	sge::systems::instance const &
 	systems() const;
 
+	sge::charconv::system &
+	charconv_system();
+
 	awl::main::exit_code const
 	run();
 

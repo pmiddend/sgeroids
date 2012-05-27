@@ -178,6 +178,13 @@ sgeroids::state_machine::object::systems() const
 	return systems_;
 }
 
+sge::charconv::system &
+sgeroids::state_machine::object::charconv_system()
+{
+	return
+		*charconv_system_;
+}
+
 awl::main::exit_code const
 sgeroids::state_machine::object::run()
 {

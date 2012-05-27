@@ -124,14 +124,12 @@ void
 sgeroids::view::planar::object::add_spaceship(
 	model::entity_id const &_id,
 	model::radius const &_radius,
-	model::player_name const &_name)
+	model::player_name const &)
 {
 	FCPPT_LOG_DEBUG(
 		view::log(),
 		fcppt::log::_
-			<< FCPPT_TEXT("Adding spaceship with player name \"")
-			<< _name.get()
-			<< FCPPT_TEXT("\""));
+			<< FCPPT_TEXT("Adding spaceship"));
 
 	fcppt::container::ptr::insert_unique_ptr_map(
 		entities_,

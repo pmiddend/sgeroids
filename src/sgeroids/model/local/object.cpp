@@ -218,8 +218,7 @@ sgeroids::model::local::object::process_message(
 	FCPPT_LOG_DEBUG(
 		model::log(),
 		fcppt::log::_
-			<< FCPPT_TEXT("Adding player ")
-			<< player_name);
+			<< FCPPT_TEXT("Adding new player "));
 
 	// First, search for a player with the given name. If one already
 	// exists, we have to signal an error.
@@ -241,8 +240,7 @@ sgeroids::model::local::object::process_message(
 			FCPPT_LOG_DEBUG(
 				model::log(),
 				fcppt::log::_
-					<< FCPPT_TEXT("Got add_player with existing player name ")
-					<< player_name.get());
+					<< FCPPT_TEXT("Got add_player with existing player name"));
 
 			error_(
 				error_code::name_not_available);
@@ -333,7 +331,7 @@ sgeroids::model::local::object::process_message(
 	FCPPT_LOG_DEBUG(
 		model::log(),
 		fcppt::log::_
-			<< FCPPT_TEXT("Removing the player: ") << player_name.get());
+			<< FCPPT_TEXT("Removing a player"));
 
 	for(
 		entity_map::iterator it =
@@ -348,10 +346,12 @@ sgeroids::model::local::object::process_message(
 		if(!maybe_a_ship)
 			continue;
 
+		/*
 		FCPPT_LOG_DEBUG(
 			model::log(),
 			fcppt::log::_
 				<< FCPPT_TEXT("Testing the ship ") << maybe_a_ship->player_name().get());
+				*/
 
 		if(maybe_a_ship->player_name().get() == player_name.get())
 		{

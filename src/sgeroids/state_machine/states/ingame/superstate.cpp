@@ -39,7 +39,8 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 				this->context<state_machine::object>().systems().audio_player()))),
 	input_manager_(
 		this->context<state_machine::object>().systems().input_processor(),
-		*model_),
+		*model_,
+		this->context<state_machine::object>().charconv_system()),
 	escape_exit_connection_(
 		this->context<state_machine::object>().systems().keyboard_collector().key_callback(
 			sge::input::keyboard::action(
@@ -123,15 +124,17 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 	view_->play_area(
 		model_->play_area());
 
-	model_->rng_seed(
-		fcppt::random::generator::seed_from_chrono<sgeroids::random_generator::seed>());
+	model_->process_message(
+		sgeroids::model::serialization::message::rng_seed(
+			fcppt::random::generator::seed_from_chrono<sgeroids::random_generator::seed>().get()));
 }
 
 boost::statechart::result
 sgeroids::state_machine::states::ingame::superstate::react(
 	state_machine::events::tick const &)
 {
-	model_->update();
+	model_->process_message(
+		sgeroids::model::serialization::message::update());
 	view_->update();
 	return discard_event();
 }

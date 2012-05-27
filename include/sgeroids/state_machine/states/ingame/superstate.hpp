@@ -59,7 +59,7 @@ private:
 	boost::filesystem::ofstream model_serialization_output_;
 	sgeroids::model::unique_base_ptr model_;
 	sgeroids::view::unique_base_ptr view_;
-	fcppt::scoped_ptr<sgeroids::input::manager> input_manager_;
+	sgeroids::input::manager input_manager_;
 	fcppt::signal::scoped_connection escape_exit_connection_;
 
 	// Connections from the model to the view

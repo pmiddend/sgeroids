@@ -91,7 +91,7 @@ sgeroids::input::keyboard::key(
 		case sge::input::keyboard::key_code::w:
 			model_.process_message(
 				sgeroids::model::serialization::message::change_thrust(
-					*id_.get(),
+					id_.get()->get(),
 					static_cast<sgeroids::model::serialization::message::types::int_>(
 						e.pressed()
 						?
@@ -110,7 +110,7 @@ sgeroids::input::keyboard::key(
 		case sge::input::keyboard::key_code::space:
 			model_.process_message(
 				sgeroids::model::serialization::message::change_firing_mode(
-					*id_.get(),
+					id_.get()->get(),
 					static_cast<sgeroids::model::serialization::message::types::enum_>(
 						e.pressed()
 						?
@@ -126,7 +126,7 @@ sgeroids::input::keyboard::key(
 
 	model_.process_message(
 		sgeroids::model::serialization::message::rotation_direction(
-			*id_.get(),
+			id_.get()->get(),
 			static_cast<sgeroids::model::serialization::message::types::int_>(
 				(rotation_left_pressed_ == rotation_right_pressed_
 				?
