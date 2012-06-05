@@ -600,6 +600,7 @@ sgeroids::model::local::object::search_spaceship_with_id(
 			*(it->second)));
 
 	 if(!maybe_a_ship)
+	 	throw
 			sgeroids::exception(
 				_context.get()+FCPPT_TEXT(": The entity id ")+
 				fcppt::insert_to_fcppt_string(

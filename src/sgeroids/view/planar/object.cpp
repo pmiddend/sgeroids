@@ -313,6 +313,7 @@ sgeroids::view::planar::object::change_thrust(
 			*(it->second)));
 
 	 if(!maybe_a_ship)
+	 	throw
 			sgeroids::exception(
 				FCPPT_TEXT("view: change_thrust: The entity id ")+
 				fcppt::insert_to_fcppt_string(
