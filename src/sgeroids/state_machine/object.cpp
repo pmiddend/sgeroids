@@ -1,6 +1,5 @@
 #include <sgeroids/exception.hpp>
 #include <sgeroids/media_path.hpp>
-#include <sgeroids/scoped_frame_limiter.hpp>
 #include <sgeroids/utf8_file_to_fcppt_string.hpp>
 #include <sgeroids/version.hpp>
 #include <sgeroids/state_machine/object.hpp>
@@ -35,6 +34,7 @@
 #include <sge/systems/list.hpp>
 #include <sge/systems/renderer.hpp>
 #include <sge/systems/window.hpp>
+#include <sge/timer/scoped_frame_limiter.hpp>
 #include <sge/viewport/fractional_aspect.hpp>
 #include <sge/viewport/maintain_aspect.hpp>
 #include <sge/window/parameters.hpp>
@@ -191,7 +191,7 @@ sgeroids::state_machine::object::run()
 	while(
 		systems_.window_system().poll())
 	{
-		sgeroids::scoped_frame_limiter frame_limiter(
+		sge::timer::scoped_frame_limiter frame_limiter(
 			60);
 
 		this->process_event(

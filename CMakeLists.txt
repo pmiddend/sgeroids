@@ -94,6 +94,7 @@ find_package(
 	texture
 	parse
 	systems
+	timer
 	window
 	viewport)
 
@@ -182,7 +183,6 @@ set(
 	src/sgeroids/resource_tree/path.cpp
 	src/sgeroids/resource_tree/strip_file_extension.cpp
 	src/sgeroids/resource_tree/strip_path_prefix.cpp
-	src/sgeroids/scoped_frame_limiter.cpp
 	src/sgeroids/state_machine/events/render.cpp
 	src/sgeroids/state_machine/object.cpp
 	src/sgeroids/state_machine/states/ingame/superstate.cpp
