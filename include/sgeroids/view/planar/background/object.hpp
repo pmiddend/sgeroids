@@ -3,8 +3,7 @@
 
 #include <sgeroids/random_generator_fwd.hpp>
 #include <sgeroids/model/play_area.hpp>
-#include <sgeroids/resource_tree/object.hpp>
-#include <sgeroids/view/planar/texture_tree.hpp>
+#include <sgeroids/view/planar/texture_tree_fwd.hpp>
 #include <sgeroids/view/planar/background/star_count.hpp>
 #include <sgeroids/view/planar/background/star_size.hpp>
 #include <sgeroids/view/planar/sprite/dynamic_buffers.hpp>

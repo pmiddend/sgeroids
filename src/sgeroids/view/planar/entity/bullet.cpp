@@ -1,12 +1,12 @@
 #include <sgeroids/math/unit_magnitude.hpp>
-#include <sgeroids/resource_tree/object_impl.hpp>
-#include <sgeroids/resource_tree/path.hpp>
 #include <sgeroids/view/planar/sprite_size_from_texture_and_radius.hpp>
+#include <sgeroids/view/planar/texture_tree.hpp>
 #include <sgeroids/view/planar/entity/bullet.hpp>
 #include <sgeroids/view/planar/sprite/dim.hpp>
 #include <sgeroids/view/planar/sprite/parameters.hpp>
 #include <sge/image/colors.hpp>
 #include <sge/image/color/any/object.hpp>
+#include <sge/resource_tree/path.hpp>
 #include <sge/sprite/center.hpp>
 #include <sge/sprite/parameters.hpp>
 #include <sge/sprite/intrusive/ordered/collection.hpp>
@@ -25,11 +25,11 @@ sgeroids::view::planar::entity::bullet::bullet(
 			.size(
 				planar::sprite_size_from_texture_and_radius(
 					*_texture_tree.get(
-						sgeroids::resource_tree::path() / FCPPT_TEXT("bullet")),
+						sge::resource_tree::path() / FCPPT_TEXT("bullet")),
 					planar::radius(sgeroids::math::unit_magnitude() * 1024 * 32)))
 			.texture(
 				_texture_tree.get(
-						sgeroids::resource_tree::path() / FCPPT_TEXT("bullet")))
+						sge::resource_tree::path() / FCPPT_TEXT("bullet")))
 			.rotation(
 				0)
 			.any_color(

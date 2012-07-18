@@ -2,7 +2,6 @@
 #define SGEROIDS_VIEW_PLANAR_OBJECT_HPP_INCLUDED
 
 #include <sgeroids/random_generator.hpp>
-#include <sgeroids/resource_tree/object.hpp>
 #include <sgeroids/view/base.hpp>
 #include <sgeroids/view/planar/audio_buffer_tree.hpp>
 #include <sgeroids/view/planar/error_context.hpp>

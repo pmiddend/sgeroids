@@ -2,7 +2,7 @@
 #define SGEROIDS_VIEW_PLANAR_PARTICLE_OBJECT_HPP_INCLUDED
 
 #include <sgeroids/view/planar/position.hpp>
-#include <sgeroids/view/planar/texture_tree.hpp>
+#include <sgeroids/view/planar/texture_tree_fwd.hpp>
 #include <sgeroids/view/planar/particle/lifespan.hpp>
 #include <sgeroids/view/planar/particle/velocity.hpp>
 #include <sgeroids/view/planar/sprite/object.hpp>
@@ -22,7 +22,6 @@ class object
 FCPPT_NONCOPYABLE(
 	object);
 public:
-	explicit
 	object(
 		planar::sprite::ordered_collection &,
 		planar::texture_tree &,

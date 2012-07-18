@@ -1,11 +1,11 @@
-#include <sgeroids/resource_tree/object_impl.hpp>
-#include <sgeroids/resource_tree/path.hpp>
 #include <sgeroids/view/planar/sprite_size_from_texture_and_radius.hpp>
+#include <sgeroids/view/planar/texture_tree.hpp>
 #include <sgeroids/view/planar/entity/asteroid.hpp>
 #include <sgeroids/view/planar/sprite/dim.hpp>
 #include <sgeroids/view/planar/sprite/parameters.hpp>
 #include <sge/image/colors.hpp>
 #include <sge/image/color/any/object.hpp>
+#include <sge/resource_tree/path.hpp>
 #include <sge/sprite/center.hpp>
 #include <sge/sprite/parameters.hpp>
 #include <sge/sprite/intrusive/ordered/collection.hpp>
@@ -23,7 +23,7 @@ sprite_init(
 {
 	sge::texture::const_part_shared_ptr const texture(
 		_texture_tree.get(
-			sgeroids::resource_tree::path() / FCPPT_TEXT("asteroid")));
+			sge::resource_tree::path() / FCPPT_TEXT("asteroid")));
 
 	return
 		sgeroids::view::planar::sprite::parameters()

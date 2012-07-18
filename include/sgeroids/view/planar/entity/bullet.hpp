@@ -2,7 +2,7 @@
 #define SGEROIDS_VIEW_PLANAR_ENTITY_BULLET_HPP_INCLUDED
 
 #include <sgeroids/view/planar/radius.hpp>
-#include <sgeroids/view/planar/texture_tree.hpp>
+#include <sgeroids/view/planar/texture_tree_fwd.hpp>
 #include <sgeroids/view/planar/entity/base.hpp>
 #include <sgeroids/view/planar/sprite/object.hpp>
 #include <sgeroids/view/planar/sprite/ordered_collection.hpp>
@@ -22,7 +22,6 @@ class bullet
 FCPPT_NONCOPYABLE(
 	bullet);
 public:
-	explicit
 	bullet(
 		planar::sprite::ordered_collection &,
 		planar::texture_tree &);

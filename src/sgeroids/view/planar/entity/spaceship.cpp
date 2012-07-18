@@ -2,9 +2,9 @@
 #include <sgeroids/math/discrete_cos.hpp>
 #include <sgeroids/math/discrete_sin.hpp>
 #include <sgeroids/math/unit_magnitude.hpp>
-#include <sgeroids/resource_tree/object_impl.hpp>
-#include <sgeroids/resource_tree/path.hpp>
+#include <sgeroids/view/planar/audio_buffer_tree.hpp>
 #include <sgeroids/view/planar/sprite_size_from_texture_and_radius.hpp>
+#include <sgeroids/view/planar/texture_tree.hpp>
 #include <sgeroids/view/planar/callbacks/add_particle.hpp>
 #include <sgeroids/view/planar/entity/spaceship.hpp>
 #include <sgeroids/view/planar/sprite/dim.hpp>
@@ -15,6 +15,7 @@
 #include <sge/audio/sound/repeat.hpp>
 #include <sge/image/colors.hpp>
 #include <sge/image/color/any/object.hpp>
+#include <sge/resource_tree/path.hpp>
 #include <sge/sprite/center.hpp>
 #include <sge/sprite/parameters.hpp>
 #include <sge/sprite/intrusive/ordered/collection.hpp>
@@ -38,10 +39,10 @@ sgeroids::view::planar::entity::spaceship::spaceship(
 :
 	texture_off_(
 		_texture_tree.get(
-			sgeroids::resource_tree::path() / FCPPT_TEXT("spaceship") / FCPPT_TEXT("off"))),
+			sge::resource_tree::path() / FCPPT_TEXT("spaceship") / FCPPT_TEXT("off"))),
 	texture_on_(
 		_texture_tree.get(
-			sgeroids::resource_tree::path() / FCPPT_TEXT("spaceship") / FCPPT_TEXT("on"))),
+			sge::resource_tree::path() / FCPPT_TEXT("spaceship") / FCPPT_TEXT("on"))),
 	sprite_(
 		planar::sprite::parameters()
 			.connection(
@@ -61,7 +62,7 @@ sgeroids::view::planar::entity::spaceship::spaceship(
 		_audio_player),
 	thrust_sound_(
 		_audio_buffer_tree.get(
-			sgeroids::resource_tree::path() / FCPPT_TEXT("thrust")
+			sge::resource_tree::path() / FCPPT_TEXT("thrust")
 		)->create_nonpositional(
 			sge::audio::sound::nonpositional_parameters())),
 	add_particle_(

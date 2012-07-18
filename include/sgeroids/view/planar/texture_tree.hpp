@@ -1,20 +1,8 @@
 #ifndef SGEROIDS_VIEW_PLANAR_TEXTURE_TREE_HPP_INCLUDED
 #define SGEROIDS_VIEW_PLANAR_TEXTURE_TREE_HPP_INCLUDED
 
-#include <sgeroids/resource_tree/object_fwd.hpp>
-#include <sge/texture/const_part_shared_ptr.hpp>
+#include <sgeroids/view/planar/texture_tree_fwd.hpp>
+#include <sgeroids/resource_tree/object_decl.hpp>
 
-namespace sgeroids
-{
-namespace view
-{
-namespace planar
-{
-typedef
-sgeroids::resource_tree::object<sge::texture::const_part_shared_ptr>
-texture_tree;
-}
-}
-}
 
 #endif

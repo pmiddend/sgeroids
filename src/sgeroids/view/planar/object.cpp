@@ -30,6 +30,7 @@
 #include <sge/renderer/state/list.hpp>
 #include <sge/renderer/state/scoped.hpp>
 #include <sge/renderer/texture/mipmap/off.hpp>
+#include <sge/resource_tree/path.hpp>
 #include <sge/sprite/make_vertex_format.hpp>
 #include <sge/sprite/buffers/option.hpp>
 #include <sge/sprite/buffers/parameters.hpp>
@@ -99,7 +100,7 @@ sgeroids::view::planar::object::object(
 		rng_),
 	firing_sound_(
 		audio_buffer_tree_.get(
-			sgeroids::resource_tree::path() / FCPPT_TEXT("lazor")
+			sge::resource_tree::path() / FCPPT_TEXT("lazor")
 		)->create_nonpositional(
 			sge::audio::sound::nonpositional_parameters())),
 	sprite_vertex_declaration_(

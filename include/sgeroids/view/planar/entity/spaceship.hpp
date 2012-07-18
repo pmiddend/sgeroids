@@ -3,9 +3,9 @@
 
 #include <sgeroids/random_generator_fwd.hpp>
 #include <sgeroids/model/thrust.hpp>
-#include <sgeroids/view/planar/audio_buffer_tree.hpp>
+#include <sgeroids/view/planar/audio_buffer_tree_fwd.hpp>
 #include <sgeroids/view/planar/radius.hpp>
-#include <sgeroids/view/planar/texture_tree.hpp>
+#include <sgeroids/view/planar/texture_tree_fwd.hpp>
 #include <sgeroids/view/planar/callbacks/add_particle.hpp>
 #include <sgeroids/view/planar/entity/base.hpp>
 #include <sgeroids/view/planar/sprite/object.hpp>

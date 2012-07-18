@@ -93,6 +93,7 @@ find_package(
 	sprite
 	texture
 	parse
+	resource_tree
 	systems
 	timer
 	window
@@ -180,9 +181,6 @@ set(
 	src/sgeroids/replay/dispatcher.cpp
 	src/sgeroids/replay/file_reader.cpp
 	src/sgeroids/replay/object.cpp
-	src/sgeroids/resource_tree/path.cpp
-	src/sgeroids/resource_tree/strip_file_extension.cpp
-	src/sgeroids/resource_tree/strip_path_prefix.cpp
 	src/sgeroids/state_machine/events/render.cpp
 	src/sgeroids/state_machine/object.cpp
 	src/sgeroids/state_machine/states/ingame/superstate.cpp
@@ -190,6 +188,7 @@ set(
 	src/sgeroids/version.cpp
 	src/sgeroids/view/base.cpp
 	src/sgeroids/view/log.cpp
+	src/sgeroids/view/planar/audio_buffer_tree.cpp
 	src/sgeroids/view/planar/background/object.cpp
 	src/sgeroids/view/planar/entity/asteroid.cpp
 	src/sgeroids/view/planar/entity/base.cpp
@@ -200,6 +199,7 @@ set(
 	src/sgeroids/view/planar/radius_to_screen_space.cpp
 	src/sgeroids/view/planar/rotation_to_screen_space.cpp
 	src/sgeroids/view/planar/sprite_size_from_texture_and_radius.cpp
+	src/sgeroids/view/planar/texture_tree.cpp
 )
 
 # Source groups are a MSVC file

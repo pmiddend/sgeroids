@@ -3,7 +3,7 @@
 
 #include <sgeroids/model/thrust.hpp>
 #include <sgeroids/view/planar/radius.hpp>
-#include <sgeroids/view/planar/texture_tree.hpp>
+#include <sgeroids/view/planar/texture_tree_fwd.hpp>
 #include <sgeroids/view/planar/entity/base.hpp>
 #include <sgeroids/view/planar/sprite/object.hpp>
 #include <sgeroids/view/planar/sprite/ordered_collection.hpp>
