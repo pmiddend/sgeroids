@@ -16,15 +16,18 @@
 #include <sge/parse/json/config/create_command_line_parameters.hpp>
 #include <sge/parse/json/config/merge_command_line_parameters.hpp>
 #include <sge/parse/json/config/merge_trees.hpp>
-#include <sge/renderer/bit_depth.hpp>
 #include <sge/renderer/device.hpp>
-#include <sge/renderer/multi_samples.hpp>
-#include <sge/renderer/multi_samples_value.hpp>
-#include <sge/renderer/no_multi_sampling.hpp>
-#include <sge/renderer/parameters.hpp>
-#include <sge/renderer/windowed.hpp>
 #include <sge/renderer/context/object.hpp>
 #include <sge/renderer/context/scoped.hpp>
+#include <sge/renderer/display_mode/optional_object.hpp>
+#include <sge/renderer/parameters/object.hpp>
+#include <sge/renderer/parameters/vsync.hpp>
+#include <sge/renderer/pixel_format/color.hpp>
+#include <sge/renderer/pixel_format/depth_stencil.hpp>
+#include <sge/renderer/pixel_format/multi_samples.hpp>
+#include <sge/renderer/pixel_format/multi_samples_value.hpp>
+#include <sge/renderer/pixel_format/optional_multi_samples.hpp>
+#include <sge/renderer/pixel_format/srgb.hpp>
 #include <sge/renderer/target/onscreen.hpp>
 #include <sge/systems/audio_loader.hpp>
 #include <sge/systems/audio_player_default.hpp>
@@ -53,47 +56,47 @@ namespace
 {
 // This helper function takes config file parameters and creates renderer
 // parameters from it.
-sge::renderer::parameters const
+sge::renderer::parameters::object const
 renderer_parameters_from_config_file(
 	sge::parse::json::object const &_config)
 {
-	sge::renderer::vsync::type const vsync_enabled =
+	sge::renderer::parameters::vsync::type const vsync_enabled =
 		sge::parse::json::find_and_convert_member<bool>(
 			_config,
 			sge::parse::json::path(FCPPT_TEXT("renderer")) / FCPPT_TEXT("vsync-enabled"))
 		?
-			sge::renderer::vsync::on
+			sge::renderer::parameters::vsync::on
 		:
-			sge::renderer::vsync::off;
+			sge::renderer::parameters::vsync::off;
 
 	sge::parse::json::value const &multi_sampling_json =
 		sge::parse::json::find_and_convert_member<sge::parse::json::value>(
 			_config,
 			sge::parse::json::path(FCPPT_TEXT("renderer")) / FCPPT_TEXT("multi-sample-type"));
 
-	sge::renderer::multi_samples multi_sampling_sge =
-		sge::renderer::no_multi_sampling;
+	sge::renderer::pixel_format::optional_multi_samples multi_sampling_sge;
 
 	if(!fcppt::variant::holds_type<sge::parse::json::null>(multi_sampling_json))
 		multi_sampling_sge =
-			sge::renderer::multi_samples(
-				sge::parse::json::convert_from<sge::renderer::multi_samples_value>(
-					multi_sampling_json));
+			sge::renderer::pixel_format::optional_multi_samples(
+				sge::renderer::pixel_format::multi_samples(
+					sge::parse::json::convert_from<sge::renderer::pixel_format::multi_samples_value>(
+						multi_sampling_json)));
 
 	unsigned const bit_depth_value =
 		sge::parse::json::find_and_convert_member<unsigned>(
 			_config,
 			sge::parse::json::path(FCPPT_TEXT("renderer")) / FCPPT_TEXT("visual-depth"));
 
-	sge::renderer::bit_depth::type const
+	sge::renderer::pixel_format::color::type const
 		bit_depth_sge =
 			bit_depth_value == 16
 			?
-				sge::renderer::bit_depth::depth16
+				sge::renderer::pixel_format::color::depth16
 			:
 				(bit_depth_value == 32
 				?
-					sge::renderer::bit_depth::depth32
+					sge::renderer::pixel_format::color::depth32
 				:
 					throw
 						sgeroids::exception(
@@ -102,12 +105,14 @@ renderer_parameters_from_config_file(
 								bit_depth_value)));
 
 	return
-		sge::renderer::parameters(
-				sge::renderer::windowed(
-					bit_depth_sge),
-				sge::renderer::depth_stencil_buffer::off,
-				vsync_enabled,
-				multi_sampling_sge);
+		sge::renderer::parameters::object(
+			sge::renderer::pixel_format::object(
+				bit_depth_sge,
+				sge::renderer::pixel_format::depth_stencil::off,
+				multi_sampling_sge,
+				sge::renderer::pixel_format::srgb::no),
+			vsync_enabled,
+			sge::renderer::display_mode::optional_object());
 }
 }
 
