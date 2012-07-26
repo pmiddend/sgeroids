@@ -20,6 +20,7 @@
 #include <sge/image2d/file.hpp>
 #include <sge/image2d/system.hpp>
 #include <sge/renderer/device.hpp>
+#include <sge/renderer/resource_flags_field.hpp>
 #include <sge/renderer/scoped_transform.hpp>
 #include <sge/renderer/vertex_declaration.hpp>
 #include <sge/renderer/clear/parameters.hpp>
@@ -29,6 +30,8 @@
 #include <sge/renderer/state/depth_func.hpp>
 #include <sge/renderer/state/list.hpp>
 #include <sge/renderer/state/scoped.hpp>
+#include <sge/renderer/texture/create_planar_from_path.hpp>
+#include <sge/renderer/texture/planar.hpp>
 #include <sge/renderer/texture/mipmap/off.hpp>
 #include <sge/resource_tree/path.hpp>
 #include <sge/sprite/make_vertex_format.hpp>
@@ -38,8 +41,8 @@
 #include <sge/sprite/intrusive/process/ordered_with_options.hpp>
 #include <sge/sprite/process/options.hpp>
 #include <sge/sprite/render/options.hpp>
-#include <sge/texture/add_image.hpp>
-#include <sge/texture/no_fragmented.hpp>
+#include <sge/texture/const_part_shared_ptr.hpp>
+#include <sge/texture/part_raw_ptr.hpp>
 #include <fcppt/insert_to_fcppt_string.hpp>
 #include <fcppt/make_unique_ptr.hpp>
 #include <fcppt/optional_dynamic_cast.hpp>
@@ -47,7 +50,6 @@
 #include <fcppt/ref.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/type_name.hpp>
-#include <fcppt/container/bitfield/object_impl.hpp>
 #include <fcppt/container/ptr/insert_unique_ptr.hpp>
 #include <fcppt/container/ptr/insert_unique_ptr_map.hpp>
 #include <fcppt/log/headers.hpp>
@@ -76,10 +78,6 @@ sgeroids::view::planar::object::object(
 		_audio_player),
 	rng_(
 		sgeroids::random_generator_seed()),
-	texture_manager_(
-		std::tr1::bind(
-			&object::create_new_texture_callback,
-			this)),
 	texture_tree_(
 		sgeroids::media_path() / FCPPT_TEXT("images"),
 		std::tr1::bind(
@@ -433,25 +431,6 @@ sgeroids::view::planar::object::~object()
 {
 }
 
-sge::texture::fragmented_unique_ptr
-sgeroids::view::planar::object::create_new_texture_callback()
-{
-	return
-		sge::texture::fragmented_unique_ptr(
-			fcppt::make_unique_ptr<sge::texture::no_fragmented>(
-				fcppt::ref(
-					renderer_),
-				// Using this color format for the textures is pure
-				// convention. We need an r,g,b and an alpha channel,
-				// but maybe argb8 or something would be better.
-				sge::image::color::format::rgba8,
-				// This is just guesswork. Maybe mipmaps would be
-				// better (especially since we're using no_fragmented
-				// here, which doesn't suffer from "bleeding" artefacts
-				// like the atlased texture).
-				sge::renderer::texture::mipmap::off()));
-}
-
 sge::texture::const_part_shared_ptr const
 sgeroids::view::planar::object::create_texture_from_path(
 	sge::image2d::system &_image_loader,
@@ -459,10 +438,16 @@ sgeroids::view::planar::object::create_texture_from_path(
 {
 	return
 		sge::texture::const_part_shared_ptr(
-			sge::texture::add_image(
-				texture_manager_,
-				*_image_loader.load(
-					_path)));
+			// make_unique_ptr for now because make_shared_ptr
+			// can't take unique_ptrs as arguments
+			fcppt::make_unique_ptr<
+				sge::texture::part_raw_ptr>(
+				sge::renderer::texture::create_planar_from_path(
+					_path,
+					renderer_,
+					_image_loader,
+					sge::renderer::texture::mipmap::off(),
+					sge::renderer::resource_flags_field::null())));
 
 }
 

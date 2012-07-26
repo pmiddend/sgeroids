@@ -23,8 +23,6 @@
 #include <sge/renderer/context/object_fwd.hpp>
 #include <sge/sprite/intrusive/ordered/collection.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>
-#include <sge/texture/fragmented_unique_ptr.hpp>
-#include <sge/texture/manager.hpp>
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/scoped_ptr_impl.hpp>
 #include <fcppt/math/box/object_impl.hpp>
@@ -165,7 +163,6 @@ private:
 	sge::renderer::device &renderer_;
 	sge::audio::player &audio_player_;
 	sgeroids::random_generator rng_;
-	sge::texture::manager texture_manager_;
 	planar::texture_tree texture_tree_;
 	planar::audio_buffer_tree audio_buffer_tree_;
 	sge::audio::sound::base_scoped_ptr const firing_sound_;
@@ -176,12 +173,6 @@ private:
 	entity_map entities_;
 	fcppt::scoped_ptr<background::object> background_;
 	particle_vector particles_;
-
-	/**
-	\brief This function is called by the texture manager whenever it needs to allocate a new texture.
-	*/
-	sge::texture::fragmented_unique_ptr
-	create_new_texture_callback();
 
 	/**
 	\brief This function is called by the texture tree to create a texture resource out of a path
