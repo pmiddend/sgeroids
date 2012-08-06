@@ -407,19 +407,18 @@ sgeroids::view::planar::object::render(
 	<
 		sge::sprite::process::options
 		<
-			sge::sprite::process::geometry_options::sort_and_update,
-			sge::sprite::render::options
-			<
-				sge::sprite::render::matrix_options::nothing,
-				sge::sprite::render::state_options::set,
-				sge::sprite::render::vertex_options::declaration
-			>
+			sge::sprite::process::geometry_options::sort_and_update
 		>
 	>(
 		_render_context,
 		dynamic_collection_,
 		dynamic_buffers_,
-		sge::sprite::compare::default_());
+		sge::sprite::compare::default_(),
+		sge::sprite::render::options(
+			sge::sprite::render::matrix_options::nothing,
+			sge::sprite::render::state_options::set,
+			sge::sprite::render::vertex_options::declaration));
+
 }
 
 void

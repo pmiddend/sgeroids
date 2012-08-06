@@ -191,20 +191,15 @@ void
 sgeroids::view::planar::background::object::render(
 	sge::renderer::context::object &_render_context)
 {
-	sge::sprite::render::range_with_options
-	<
-		sge::sprite::render::options
-		<
-			sge::sprite::render::matrix_options::nothing,
-			sge::sprite::render::state_options::set,
-			sge::sprite::render::vertex_options::declaration_and_buffer
-
-		>
-	>(
+	sge::sprite::render::range_with_options(
 		sge::sprite::render::parameters(
 			_render_context,
 			sprite_buffers_.parameters().vertex_declaration()),
-		sprite_render_range_);
+		sprite_render_range_,
+		sge::sprite::render::options(
+			sge::sprite::render::matrix_options::nothing,
+			sge::sprite::render::state_options::set,
+			sge::sprite::render::vertex_options::declaration_and_buffer));
 }
 
 sgeroids::view::planar::background::object::~object()
