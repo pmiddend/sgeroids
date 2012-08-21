@@ -3,6 +3,7 @@
 #include <sgeroids/math/unit_magnitude.hpp>
 #include <sgeroids/math/wrap_point_in_torus.hpp>
 #include <sgeroids/model/log.hpp>
+#include <sgeroids/model/spaceship_id.hpp>
 #include <sgeroids/model/local/entity/asteroid.hpp>
 #include <sgeroids/model/local/entity/projectile.hpp>
 #include <fcppt/optional_dynamic_cast.hpp>
@@ -17,6 +18,7 @@ sgeroids::model::local::entity::projectile::projectile(
 	model::position const &_position,
 	model::rotation const &_rotation,
 	model::play_area const &_play_area,
+	model::spaceship_id const &_owner_id,
 	local::callbacks::position_entity_no_id const &_position_entity,
 	local::callbacks::rotation_entity_no_id const &)
 :
@@ -31,7 +33,9 @@ sgeroids::model::local::entity::projectile::projectile(
 		_rotation.get()),
 	lifetime_timer_(3*60),
 	was_hit_(
-		false)
+		false),
+	owner_id_(
+		_owner_id)
 {
 }
 
@@ -110,6 +114,12 @@ sgeroids::model::local::entity::projectile::collides_with(
 	if(fcppt::optional_dynamic_cast<entity::asteroid const &>(_other))
 		was_hit_ =
 			true;
+}
+
+sgeroids::model::spaceship_id const
+sgeroids::model::local::entity::projectile::owner_id() const
+{
+	return owner_id_;
 }
 
 sgeroids::model::local::entity::projectile::~projectile()

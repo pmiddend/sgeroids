@@ -36,6 +36,8 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 			fcppt::ref(
 				this->context<state_machine::object>().systems().image_system()),
 			fcppt::ref(
+				this->context<state_machine::object>().systems().charconv_system()),
+			fcppt::ref(
 				this->context<state_machine::object>().systems().audio_loader()),
 			fcppt::ref(
 				this->context<state_machine::object>().systems().audio_player()))),
@@ -113,7 +115,8 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 			std::tr1::bind(
 				&view::base::score_change,
 				view_.get(),
-				std::tr1::placeholders::_1))),
+				std::tr1::placeholders::_1,
+				std::tr1::placeholders::_2))),
 	destroy_asteroid_connection_(
 		model_->destroy_asteroid_callback(
 			std::tr1::bind(

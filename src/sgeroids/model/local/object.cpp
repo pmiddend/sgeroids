@@ -4,6 +4,8 @@
 #include <sgeroids/model/log.hpp>
 #include <sgeroids/model/vector2.hpp>
 #include <sgeroids/model/local/object.hpp>
+#include <sgeroids/model/score.hpp>
+#include <sgeroids/model/spaceship_id.hpp>
 #include <sgeroids/model/local/asteroid_generator/object.hpp>
 #include <sgeroids/model/local/entity/asteroid.hpp>
 #include <sgeroids/model/local/entity/projectile.hpp>
@@ -294,6 +296,8 @@ sgeroids::model::local::object::process_message(
 				std::tr1::bind(
 					&object::insert_projectile,
 					this,
+					model::spaceship_id(
+						next_id_),
 					std::tr1::placeholders::_1,
 					std::tr1::placeholders::_2))));
 
@@ -393,7 +397,7 @@ sgeroids::model::local::object::process_message(
 		_message.get<sgeroids::model::serialization::message::roles::rotation_direction>());
 
 	entity::spaceship &ship =
-		this->search_spaceship_with_id(
+		this->find_spaceship_by_id_exn(
 			id,
 			local::error_context(
 				FCPPT_TEXT("rotation_direction")));
@@ -418,7 +422,7 @@ sgeroids::model::local::object::process_message(
 		_message.get<sgeroids::model::serialization::message::roles::thrust>());
 
 	entity::spaceship &ship =
-		this->search_spaceship_with_id(
+		this->find_spaceship_by_id_exn(
 			id,
 			local::error_context(
 				FCPPT_TEXT("change_thrust")));
@@ -448,7 +452,7 @@ sgeroids::model::local::object::process_message(
 			_message.get<sgeroids::model::serialization::message::roles::firing_mode>()));
 
 	entity::spaceship &ship =
-		this->search_spaceship_with_id(
+		this->find_spaceship_by_id_exn(
 			id,
 			local::error_context(
 				FCPPT_TEXT("change_firing_mode")));
@@ -578,10 +582,33 @@ sgeroids::model::local::object::collision_detection_narrow_phase(
 	}
 }
 
+fcppt::optional<
+	sgeroids::model::local::entity::spaceship &
+>
+sgeroids::model::local::object::find_spaceship_by_id(
+	sgeroids::model::spaceship_id const &_id)
+{
+	entity_map::iterator it =
+		entities_.find(
+			_id.get());
+
+	if(it == entities_.end())
+		return
+			fcppt::optional<
+				sgeroids::model::local::entity::spaceship &
+			>();
+
+	fcppt::optional<entity::spaceship &> maybe_a_ship(
+		fcppt::optional_dynamic_cast<entity::spaceship &>(
+			*(it->second)));
+
+	 return maybe_a_ship;
+}
+
 sgeroids::model::local::entity::spaceship &
-sgeroids::model::local::object::search_spaceship_with_id(
-	model::entity_id const &_id,
-	local::error_context const &_context)
+sgeroids::model::local::object::find_spaceship_by_id_exn(
+	sgeroids::model::entity_id const &_id,
+	sgeroids::model::local::error_context const &_context)
 {
 	entity_map::iterator it =
 		entities_.find(
@@ -685,7 +712,8 @@ sgeroids::model::local::object::asteroid_generated(
 					this,
 					model::entity_id(
 						next_id_),
-					std::tr1::placeholders::_1))));
+					std::tr1::placeholders::_1,
+					std::tr1::placeholders::_2))));
 
 	fcppt::container::ptr::insert_unique_ptr_map(
 		entities_,
@@ -713,6 +741,7 @@ sgeroids::model::local::object::asteroid_generated(
 
 void
 sgeroids::model::local::object::insert_projectile(
+	model::spaceship_id const &_owner_id,
 	model::position const &_position,
 	model::rotation const &_rotation)
 {
@@ -726,6 +755,7 @@ sgeroids::model::local::object::insert_projectile(
 			_position,
 			_rotation,
 			this->play_area(),
+			_owner_id,
 			local::callbacks::position_entity_no_id(
 				std::tr1::bind(
 					&object::change_entity_position,
@@ -771,12 +801,31 @@ sgeroids::model::local::object::insert_projectile(
 void
 sgeroids::model::local::object::asteroid_died(
 	model::entity_id const &_entity_id,
-	local::entity::asteroid &_asteroid)
+	local::entity::asteroid &_asteroid,
+	model::spaceship_id const &_killer_id)
 {
 	FCPPT_LOG_DEBUG(
 		model::log(),
 		fcppt::log::_
 			<< FCPPT_TEXT("An asteroid died, checking if we need to create another one"));
+
+	fcppt::optional<
+		sgeroids::model::local::entity::spaceship &
+	>
+	killer(
+		this->find_spaceship_by_id(
+			_killer_id));
+
+	if (killer) // only if it's an existing spaceship entity
+	{
+		killer->increase_score(
+			model::score(
+				100));
+
+		score_change_(
+			_killer_id,
+			killer->score());
+	}
 
 	destroy_asteroid_(
 		_entity_id);
@@ -848,7 +897,9 @@ sgeroids::model::local::object::asteroid_died(
 						this,
 						model::entity_id(
 							next_id_),
-						std::tr1::placeholders::_1))));
+						std::tr1::placeholders::_1,
+						std::tr1::placeholders::_2
+						))));
 
 		fcppt::container::ptr::insert_unique_ptr_map(
 			entities_,

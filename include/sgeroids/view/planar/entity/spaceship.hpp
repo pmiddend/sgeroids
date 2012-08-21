@@ -10,6 +10,7 @@
 #include <sgeroids/view/planar/entity/base.hpp>
 #include <sgeroids/view/planar/sprite/object.hpp>
 #include <sgeroids/view/planar/sprite/ordered_collection.hpp>
+#include <sgeroids/view/planar/player_name.hpp>
 #include <sge/audio/player_fwd.hpp>
 #include <sge/audio/sound/base_scoped_ptr.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>
@@ -33,13 +34,14 @@ FCPPT_NONCOPYABLE(
 	spaceship);
 public:
 	spaceship(
-		planar::sprite::ordered_collection &,
-		planar::texture_tree &,
+		sgeroids::view::planar::sprite::ordered_collection &,
+		sgeroids::view::planar::texture_tree &,
 		sge::audio::player &,
-		planar::audio_buffer_tree &,
-		planar::callbacks::add_particle const &,
+		sgeroids::view::planar::audio_buffer_tree &,
+		sgeroids::view::planar::callbacks::add_particle const &,
 		sgeroids::random_generator &,
-		planar::radius const &);
+		sgeroids::view::planar::radius const &,
+		sgeroids::view::planar::player_name const &);
 
 	void
 	position(
@@ -56,6 +58,9 @@ public:
 	change_thrust(
 		model::thrust const &);
 
+	sgeroids::view::planar::player_name const &
+	player_name() const;
+
 	~spaceship();
 private:
 	sge::texture::const_part_shared_ptr const
@@ -70,6 +75,7 @@ private:
 	> int_distribution;
 	fcppt::random::variate<sgeroids::random_generator, int_distribution> rotation_rng_;
 	bool thrust_;
+	sgeroids::view::planar::player_name const player_name_;
 };
 }
 }

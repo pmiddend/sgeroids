@@ -8,6 +8,11 @@
 #include <sgeroids/view/planar/entity/asteroid.hpp>
 #include <sgeroids/view/planar/entity/bullet.hpp>
 #include <sgeroids/view/planar/entity/spaceship.hpp>
+#include <sgeroids/view/planar/player_name.hpp>
+#include <sgeroids/model/asteroid_id.hpp>
+#include <sgeroids/model/spaceship_id.hpp>
+#include <sgeroids/model/projectile_id.hpp>
+#include <sgeroids/model/entity_id.hpp>
 #include <sge/audio/buffer.hpp>
 #include <sge/audio/file.hpp>
 #include <sge/audio/loader.hpp>
@@ -63,12 +68,32 @@
 #include <algorithm>
 #include <typeinfo>
 #include <fcppt/config/external_end.hpp>
-
+#include <sge/audio/buffer_shared_ptr.hpp>
+#include <sge/font/align_h.hpp>
+#include <sge/font/parameters.hpp>
+#include <sge/font/system.hpp>
+#include <sge/font/text_parameters.hpp>
+#include <sge/font/ttf_size.hpp>
+#include <sge/font/vector.hpp>
+#include <sge/font/lit.hpp>
+#include <sge/font/object.hpp>
+#include <sge/renderer/matrix4.hpp>
+#include <sge/renderer/matrix_mode.hpp>
+#include <sge/renderer/projection/far.hpp>
+#include <sge/renderer/projection/near.hpp>
+#include <sge/renderer/projection/rect.hpp>
+#include <sge/sprite/process/geometry_options.hpp>
+#include <sge/sprite/render/matrix_options.hpp>
+#include <sge/sprite/render/state_options.hpp>
+#include <sge/sprite/render/vertex_options.hpp>
+#include <sge/font/from_fcppt_string.hpp>
+#include <sge/charconv/utf8_string_to_fcppt.hpp>
 
 sgeroids::view::planar::object::object(
 	sge::renderer::device &_renderer,
-	sge::font::system &,
+	sge::font::system &_font_system,
 	sge::image2d::system &_image_system,
+	sge::charconv::system &_charconv_system,
 	sge::audio::loader &_audio_loader,
 	sge::audio::player &_audio_player)
 :
@@ -113,7 +138,30 @@ sgeroids::view::planar::object::object(
 	projection_matrix_(),
 	entities_(),
 	background_(),
-	particles_()
+	particles_(),
+	charconv_system_(
+		_charconv_system),
+	score_font_(
+		_font_system.create_font(
+			sge::font::parameters()
+			.family(
+				FCPPT_TEXT(
+					"cursive"))
+			.ttf_size(
+				sge::font::ttf_size(
+					40)))),
+	score_text_(
+		renderer_,
+		*score_font_,
+		SGE_FONT_LIT(
+			"score: "),
+		sge::font::text_parameters(
+			sge::font::align_h::left),
+		sge::font::vector(
+			0,
+			0
+		),
+		sge::image::colors::white())
 {
 }
 
@@ -121,7 +169,7 @@ void
 sgeroids::view::planar::object::add_spaceship(
 	model::entity_id const &_id,
 	model::radius const &_radius,
-	model::player_name const &)
+	model::player_name const &_player_name)
 {
 	FCPPT_LOG_DEBUG(
 		view::log(),
@@ -145,7 +193,11 @@ sgeroids::view::planar::object::add_spaceship(
 					std::tr1::placeholders::_3)),
 			fcppt::ref(rng_),
 			planar::radius_to_screen_space(
-				_radius)));
+				_radius),
+			sgeroids::view::planar::player_name(
+				sge::charconv::utf8_string_to_fcppt(
+					charconv_system_,
+					_player_name.get()))));
 }
 
 void
@@ -214,8 +266,48 @@ sgeroids::view::planar::object::collide_projectile_asteroid(
 
 void
 sgeroids::view::planar::object::score_change(
-	model::score const &)
+	model::spaceship_id const &_id,
+	model::score const &_score)
 {
+	entity_map::iterator it =
+		entities_.find(
+			_id.get());
+
+	if(it == entities_.end())
+	{
+		FCPPT_LOG_DEBUG(
+			view::log(),
+			fcppt::log::_ <<
+				FCPPT_TEXT("view: score_change: unknown entity id ")+
+					fcppt::insert_to_fcppt_string(
+						_id.get()));
+		return;
+	}
+
+	fcppt::optional<entity::spaceship &> maybe_a_ship(
+		fcppt::optional_dynamic_cast<entity::spaceship &>(
+			*(it->second)));
+
+	if(!maybe_a_ship)
+	{
+		FCPPT_LOG_DEBUG(
+			view::log(),
+			fcppt::log::_ <<
+				FCPPT_TEXT("view: score_change: not a spaceship: id ")+
+					fcppt::insert_to_fcppt_string(
+						_id.get()));
+		return;
+	}
+
+	score_text_.string(
+		sge::font::from_fcppt_string(
+			fcppt::insert_to_fcppt_string(
+				maybe_a_ship->player_name())) +
+		SGE_FONT_LIT(": ") +
+		sge::font::from_fcppt_string(
+			fcppt::insert_to_fcppt_string(
+				_score.get()))
+	);
 }
 
 void
@@ -419,6 +511,8 @@ sgeroids::view::planar::object::render(
 			sge::sprite::render::state_options::set,
 			sge::sprite::render::vertex_options::declaration));
 
+	score_text_.draw(
+		_render_context);
 }
 
 void

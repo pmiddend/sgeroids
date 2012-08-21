@@ -3,6 +3,7 @@
 
 #include <sgeroids/model/play_area.hpp>
 #include <sgeroids/model/velocity.hpp>
+#include <sgeroids/model/spaceship_id.hpp>
 #include <sgeroids/model/local/callbacks/position_entity_no_id.hpp>
 #include <sgeroids/model/local/callbacks/rotation_entity_no_id.hpp>
 #include <sgeroids/model/local/entity/base.hpp>
@@ -27,11 +28,12 @@ FCPPT_NONCOPYABLE(
 public:
 	explicit
 	projectile(
-		model::position const &,
-		model::rotation const &,
-		model::play_area const &,
-		local::callbacks::position_entity_no_id const &,
-		local::callbacks::rotation_entity_no_id const &);
+		sgeroids::model::position const &,
+		sgeroids::model::rotation const &,
+		sgeroids::model::play_area const &,
+		sgeroids::model::spaceship_id const &,
+		sgeroids::model::local::callbacks::position_entity_no_id const &,
+		sgeroids::model::local::callbacks::rotation_entity_no_id const &);
 
 	void
 	update();
@@ -39,17 +41,20 @@ public:
 	bool
 	dead() const;
 
-	model::position const
+	sgeroids::model::position const
 	position() const;
 
-	model::rotation const
+	sgeroids::model::rotation const
 	rotation() const;
 
-	model::radius const
+	sgeroids::model::radius const
 	radius() const;
 
-	model::velocity const
+	sgeroids::model::velocity const
 	velocity() const;
+
+	sgeroids::model::spaceship_id const
+	owner_id() const;
 
 	void
 	collides_with(
@@ -57,12 +62,13 @@ public:
 
 	~projectile();
 private:
-	model::rect const play_area_;
-	local::callbacks::position_entity_no_id const position_entity_;
-	model::vector2 position_;
+	sgeroids::model::rect const play_area_;
+	sgeroids::model::local::callbacks::position_entity_no_id const position_entity_;
+	sgeroids::model::vector2 position_;
 	int rotation_;
 	int lifetime_timer_;
 	bool was_hit_;
+	sgeroids::model::spaceship_id owner_id_;
 };
 }
 }

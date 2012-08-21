@@ -4,12 +4,14 @@
 #include <sgeroids/random_generator.hpp>
 #include <sgeroids/model/base.hpp>
 #include <sgeroids/model/velocity.hpp>
+#include <sgeroids/model/spaceship_id.hpp>
 #include <sgeroids/model/local/error_context.hpp>
 #include <sgeroids/model/local/asteroid_generator/object_fwd.hpp>
 #include <sgeroids/model/local/entity/asteroid_fwd.hpp>
 #include <sgeroids/model/local/entity/spaceship_fwd.hpp>
 #include <sgeroids/model/local/entity/unique_base_ptr.hpp>
 #include <fcppt/noncopyable.hpp>
+#include <fcppt/optional.hpp>
 #include <fcppt/scoped_ptr.hpp>
 #include <fcppt/signal/auto_connection.hpp>
 #include <fcppt/signal/object.hpp>
@@ -191,10 +193,23 @@ private:
 	thing: Look for an entity with the given ID, then check if it is really
 	a spaceship. This function wraps just that code.
 	*/
-	entity::spaceship &
-	search_spaceship_with_id(
-		model::entity_id const &,
-		local::error_context const &);
+	sgeroids::model::local::entity::spaceship &
+	find_spaceship_by_id_exn(
+		sgeroids::model::entity_id const &,
+		sgeroids::model::local::error_context const &);
+
+	/**
+	\brief Locate a spaceship with the given i
+
+	This function is essentially the same as
+	find_spaceship_by_id_exn, except it returns an optional spaceship
+	instead of throwing errors when it doesn't find one.
+	*/
+	fcppt::optional<
+		sgeroids::model::local::entity::spaceship &
+	>
+	find_spaceship_by_id(
+		sgeroids::model::spaceship_id const &);
 
 	void
 	change_entity_position(
@@ -232,8 +247,9 @@ private:
 	*/
 	void
 	insert_projectile(
-		model::position const &,
-		model::rotation const &);
+		sgeroids::model::spaceship_id const &,
+		sgeroids::model::position const &,
+		sgeroids::model::rotation const &);
 
 	/**
 	\brief Called by the asteroid when it dies
@@ -241,7 +257,8 @@ private:
 	void
 	asteroid_died(
 		model::entity_id const &,
-		local::entity::asteroid &);
+		local::entity::asteroid &,
+		model::spaceship_id const &);
 };
 }
 }

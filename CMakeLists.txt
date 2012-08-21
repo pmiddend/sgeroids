@@ -85,6 +85,8 @@ find_package(
 	audio
 	charconv
 	config
+	font
+	fontdraw
 	image
 	image2d
 	input

@@ -10,6 +10,7 @@
 #include <sgeroids/model/radius.hpp>
 #include <sgeroids/model/rotation.hpp>
 #include <sgeroids/model/score.hpp>
+#include <sgeroids/model/spaceship_id.hpp>
 #include <sgeroids/model/thrust.hpp>
 #include <sge/renderer/context/object_fwd.hpp>
 #include <fcppt/noncopyable.hpp>
@@ -79,6 +80,7 @@ public:
 	*/
 	virtual void
 	score_change(
+		model::spaceship_id const &,
 		model::score const &) = 0;
 
 	/**

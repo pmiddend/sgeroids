@@ -9,6 +9,7 @@
 #include <sgeroids/view/planar/entity/spaceship.hpp>
 #include <sgeroids/view/planar/sprite/dim.hpp>
 #include <sgeroids/view/planar/sprite/parameters.hpp>
+#include <sgeroids/view/planar/player_name.hpp>
 #include <sge/audio/buffer.hpp>
 #include <sge/audio/sound/base.hpp>
 #include <sge/audio/sound/nonpositional_parameters.hpp>
@@ -29,13 +30,14 @@
 
 
 sgeroids::view::planar::entity::spaceship::spaceship(
-	planar::sprite::ordered_collection &_collection,
-	planar::texture_tree &_texture_tree,
+	sgeroids::view::planar::sprite::ordered_collection &_collection,
+	sgeroids::view::planar::texture_tree &_texture_tree,
 	sge::audio::player &_audio_player,
-	planar::audio_buffer_tree &_audio_buffer_tree,
-	planar::callbacks::add_particle const &_add_particle,
+	sgeroids::view::planar::audio_buffer_tree &_audio_buffer_tree,
+	sgeroids::view::planar::callbacks::add_particle const &_add_particle,
 	sgeroids::random_generator &_rng,
-	planar::radius const &_radius)
+	sgeroids::view::planar::radius const &_radius,
+	sgeroids::view::planar::player_name const &_player_name)
 :
 	texture_off_(
 		_texture_tree.get(
@@ -75,13 +77,13 @@ sgeroids::view::planar::entity::spaceship::spaceship(
 			int_distribution::max(
 				360))),
 	thrust_(
-		false)
+		false),
+	player_name_(
+		_player_name)
 {
 	thrust_sound_->play(
 		sge::audio::sound::repeat::loop);
 	thrust_sound_->toggle_pause();
-
-
 }
 
 void
@@ -139,6 +141,13 @@ sgeroids::view::planar::entity::spaceship::change_thrust(
 		sprite_.texture(
 			texture_off_);
 	}
+}
+
+sgeroids::view::planar::player_name const &
+sgeroids::view::planar::entity::spaceship::player_name() const
+{
+	return
+		player_name_;
 }
 
 sgeroids::view::planar::entity::spaceship::~spaceship()

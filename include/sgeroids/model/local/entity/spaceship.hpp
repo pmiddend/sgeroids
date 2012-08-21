@@ -5,6 +5,7 @@
 #include <sgeroids/model/play_area.hpp>
 #include <sgeroids/model/player_name.hpp>
 #include <sgeroids/model/rotation_direction.hpp>
+#include <sgeroids/model/score.hpp>
 #include <sgeroids/model/thrust.hpp>
 #include <sgeroids/model/local/callbacks/insert_projectile.hpp>
 #include <sgeroids/model/local/callbacks/position_entity_no_id.hpp>
@@ -25,20 +26,19 @@ namespace entity
 {
 class spaceship
 :
-	public entity::base
+	public sgeroids::model::local::entity::base
 {
 FCPPT_NONCOPYABLE(
 	spaceship);
 public:
-	explicit
 	spaceship(
-		model::player_name const &,
-		model::position const &,
-		model::rotation const &,
-		model::play_area const &,
-		local::callbacks::position_entity_no_id const &,
-		local::callbacks::rotation_entity_no_id const &,
-		local::callbacks::insert_projectile const &);
+		sgeroids::model::player_name const &,
+		sgeroids::model::position const &,
+		sgeroids::model::rotation const &,
+		sgeroids::model::play_area const &,
+		sgeroids::model::local::callbacks::position_entity_no_id const &,
+		sgeroids::model::local::callbacks::rotation_entity_no_id const &,
+		sgeroids::model::local::callbacks::insert_projectile const &);
 
 	model::player_name const &
 	player_name() const;
@@ -60,6 +60,13 @@ public:
 
 	model::radius const
 	radius() const;
+
+	model::score const
+	score() const;
+
+	void
+	increase_score(
+		model::score const &);
 
 	void
 	collides_with(
@@ -92,6 +99,7 @@ private:
 	bool dead_;
 	firing_mode::type firing_mode_;
 	int fire_cooldown_timer_;
+	model::score score_;
 };
 }
 }

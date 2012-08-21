@@ -156,7 +156,8 @@ sgeroids::model::local::entity::asteroid::collides_with(
 
 		asteroid_died_(
 			fcppt::ref(
-				*this));
+				*this),
+			p->owner_id());
 	}
 	// If we didn't die, our trajectory changes
 	else

@@ -14,13 +14,13 @@
 
 
 sgeroids::model::local::entity::spaceship::spaceship(
-	model::player_name const &_player_name,
-	model::position const &_position,
-	model::rotation const &_rotation,
-	model::play_area const &_play_area,
-	local::callbacks::position_entity_no_id const &_position_entity,
-	local::callbacks::rotation_entity_no_id const &_rotation_entity,
-	local::callbacks::insert_projectile const &_insert_projectile)
+	sgeroids::model::player_name const &_player_name,
+	sgeroids::model::position const &_position,
+	sgeroids::model::rotation const &_rotation,
+	sgeroids::model::play_area const &_play_area,
+	sgeroids::model::local::callbacks::position_entity_no_id const &_position_entity,
+	sgeroids::model::local::callbacks::rotation_entity_no_id const &_rotation_entity,
+	sgeroids::model::local::callbacks::insert_projectile const &_insert_projectile)
 :
 	entity::base(),
 	player_name_(
@@ -47,7 +47,10 @@ sgeroids::model::local::entity::spaceship::spaceship(
 		false),
 	firing_mode_(
 		firing_mode::disabled),
-	fire_cooldown_timer_()
+	fire_cooldown_timer_(),
+	score_(
+		model::score(
+			0))
 {
 }
 
@@ -150,14 +153,28 @@ sgeroids::model::local::entity::spaceship::radius() const
 			math::unit_magnitude() * 60000);
 }
 
+sgeroids::model::score const
+sgeroids::model::local::entity::spaceship::score() const
+{
+	return
+		score_;
+}
+
+void
+sgeroids::model::local::entity::spaceship::increase_score(
+	sgeroids::model::score const &_inc)
+{
+	score_ +=
+		_inc;
+}
+
 void
 sgeroids::model::local::entity::spaceship::collides_with(
 	entity::base &/*_other*/)
 {
 	/*
 	if(fcppt::optional_dynamic_cast<entity::asteroid const &>(_other))
-		dead_ =
-			true;
+		this->kill();
 			*/
 }
 
