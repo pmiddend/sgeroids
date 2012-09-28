@@ -30,7 +30,7 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 	view_(
 		fcppt::make_unique_ptr<sgeroids::view::planar::object>(
 			fcppt::ref(
-				this->context<state_machine::object>().systems().renderer()),
+				this->context<state_machine::object>().systems().renderer_ffp()),
 			fcppt::ref(
 				this->context<state_machine::object>().systems().font_system()),
 			fcppt::ref(

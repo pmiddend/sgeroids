@@ -14,27 +14,42 @@
 #include <sgeroids/model/projectile_id.hpp>
 #include <sgeroids/model/entity_id.hpp>
 #include <sge/audio/buffer.hpp>
+#include <sge/audio/buffer_shared_ptr.hpp>
 #include <sge/audio/file.hpp>
 #include <sge/audio/loader.hpp>
 #include <sge/audio/player.hpp>
 #include <sge/audio/sound/base.hpp>
 #include <sge/audio/sound/nonpositional_parameters.hpp>
 #include <sge/audio/sound/repeat.hpp>
+#include <sge/charconv/utf8_string_to_fcppt.hpp>
+#include <sge/font/align_h.hpp>
+#include <sge/font/from_fcppt_string.hpp>
+#include <sge/font/lit.hpp>
+#include <sge/font/object.hpp>
+#include <sge/font/parameters.hpp>
+#include <sge/font/system.hpp>
+#include <sge/font/text_parameters.hpp>
+#include <sge/font/ttf_size.hpp>
+#include <sge/font/vector.hpp>
 #include <sge/image/colors.hpp>
 #include <sge/image/color/format.hpp>
 #include <sge/image2d/file.hpp>
 #include <sge/image2d/system.hpp>
-#include <sge/renderer/device.hpp>
+#include <sge/renderer/matrix4.hpp>
 #include <sge/renderer/resource_flags_field.hpp>
-#include <sge/renderer/scoped_transform.hpp>
 #include <sge/renderer/vertex_declaration.hpp>
 #include <sge/renderer/clear/parameters.hpp>
-#include <sge/renderer/context/object.hpp>
+#include <sge/renderer/context/ffp.hpp>
+#include <sge/renderer/device/ffp.hpp>
+#include <sge/renderer/projection/far.hpp>
+#include <sge/renderer/projection/near.hpp>
 #include <sge/renderer/projection/orthogonal.hpp>
-#include <sge/renderer/state/cull_mode.hpp>
-#include <sge/renderer/state/depth_func.hpp>
-#include <sge/renderer/state/list.hpp>
-#include <sge/renderer/state/scoped.hpp>
+#include <sge/renderer/projection/rect.hpp>
+#include <sge/renderer/state/ffp/transform/mode.hpp>
+#include <sge/renderer/state/ffp/transform/object.hpp>
+#include <sge/renderer/state/ffp/transform/object_scoped_ptr.hpp>
+#include <sge/renderer/state/ffp/transform/parameters.hpp>
+#include <sge/renderer/state/ffp/transform/scoped.hpp>
 #include <sge/renderer/texture/create_planar_from_path.hpp>
 #include <sge/renderer/texture/planar.hpp>
 #include <sge/renderer/texture/mipmap/off.hpp>
@@ -44,10 +59,15 @@
 #include <sge/sprite/buffers/parameters.hpp>
 #include <sge/sprite/compare/default.hpp>
 #include <sge/sprite/intrusive/process/ordered_with_options.hpp>
+#include <sge/sprite/process/geometry_options.hpp>
 #include <sge/sprite/process/options.hpp>
-#include <sge/sprite/render/options.hpp>
+#include <sge/sprite/state/object_impl.hpp>
+#include <sge/sprite/state/options_impl.hpp>
+#include <sge/sprite/state/parameters_impl.hpp>
+#include <sge/sprite/state/vertex_options.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>
 #include <sge/texture/part_raw_ptr.hpp>
+#include <fcppt/cref.hpp>
 #include <fcppt/insert_to_fcppt_string.hpp>
 #include <fcppt/make_unique_ptr.hpp>
 #include <fcppt/optional_dynamic_cast.hpp>
@@ -55,8 +75,8 @@
 #include <fcppt/ref.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/type_name.hpp>
-#include <fcppt/container/ptr/insert_unique_ptr.hpp>
 #include <fcppt/container/ptr/insert_unique_ptr_map.hpp>
+#include <fcppt/container/ptr/push_back_unique_ptr.hpp>
 #include <fcppt/log/headers.hpp>
 #include <fcppt/math/box/structure_cast.hpp>
 #include <fcppt/math/matrix/output.hpp>
@@ -68,29 +88,9 @@
 #include <algorithm>
 #include <typeinfo>
 #include <fcppt/config/external_end.hpp>
-#include <sge/audio/buffer_shared_ptr.hpp>
-#include <sge/font/align_h.hpp>
-#include <sge/font/parameters.hpp>
-#include <sge/font/system.hpp>
-#include <sge/font/text_parameters.hpp>
-#include <sge/font/ttf_size.hpp>
-#include <sge/font/vector.hpp>
-#include <sge/font/lit.hpp>
-#include <sge/font/object.hpp>
-#include <sge/renderer/matrix4.hpp>
-#include <sge/renderer/matrix_mode.hpp>
-#include <sge/renderer/projection/far.hpp>
-#include <sge/renderer/projection/near.hpp>
-#include <sge/renderer/projection/rect.hpp>
-#include <sge/sprite/process/geometry_options.hpp>
-#include <sge/sprite/render/matrix_options.hpp>
-#include <sge/sprite/render/state_options.hpp>
-#include <sge/sprite/render/vertex_options.hpp>
-#include <sge/font/from_fcppt_string.hpp>
-#include <sge/charconv/utf8_string_to_fcppt.hpp>
 
 sgeroids::view::planar::object::object(
-	sge::renderer::device &_renderer,
+	sge::renderer::device::ffp &_renderer,
 	sge::font::system &_font_system,
 	sge::image2d::system &_image_system,
 	sge::charconv::system &_charconv_system,
@@ -135,6 +135,11 @@ sgeroids::view::planar::object::object(
 			*sprite_vertex_declaration_),
 		sge::sprite::buffers::option::dynamic),
 	dynamic_collection_(),
+	sprite_state_(
+		renderer_,
+		sge::sprite::state::parameters<
+			sprite_state_choices
+		>()),
 	projection_matrix_(),
 	entities_(),
 	background_(),
@@ -246,8 +251,11 @@ sgeroids::view::planar::object::add_particle(
 	particle::velocity const &_velocity,
 	particle::lifespan const &_lifespan)
 {
-	particles_.push_back(
-		new particle::object(
+	fcppt::container::ptr::push_back_unique_ptr(
+		particles_,
+		fcppt::make_unique_ptr<
+			particle::object
+		>(
 			fcppt::ref(
 				dynamic_collection_),
 			fcppt::ref(
@@ -422,13 +430,20 @@ void
 sgeroids::view::planar::object::play_area(
 	sgeroids::model::play_area const &_area)
 {
-	background_.reset(
-		new background::object(
-			renderer_,
-			*sprite_vertex_declaration_,
-			texture_tree_,
-			_area,
-			rng_,
+	background_.take(
+		fcppt::make_unique_ptr<
+			background::object
+		>(
+			fcppt::ref(
+				renderer_),
+			fcppt::cref(
+				*sprite_vertex_declaration_),
+			fcppt::ref(
+				texture_tree_),
+			fcppt::cref(
+				_area),
+			fcppt::ref(
+				rng_),
 			background::star_size(3500),
 			background::star_count(500u)));
 
@@ -469,28 +484,22 @@ sgeroids::view::planar::object::update()
 
 void
 sgeroids::view::planar::object::render(
-	sge::renderer::context::object &_render_context)
+	sge::renderer::context::ffp &_render_context)
 {
-	sge::renderer::state::scoped const scoped_states(
-		_render_context,
-		sge::renderer::state::list
-			(sge::renderer::state::cull_mode::off)
-			(sge::renderer::state::depth_func::off));
-
 	_render_context.clear(
 		sge::renderer::clear::parameters()
 		.back_buffer(
 			sge::image::colors::black()));
 
-	sge::renderer::scoped_transform const world_transform(
-		_render_context,
-		sge::renderer::matrix_mode::world,
-		sge::renderer::matrix4::identity());
+	sge::renderer::state::ffp::transform::object_scoped_ptr const transform_state(
+		renderer_.create_transform_state(
+			sge::renderer::state::ffp::transform::parameters(
+				projection_matrix_)));
 
-	sge::renderer::scoped_transform const projection_transform(
+	sge::renderer::state::ffp::transform::scoped const projection_transform(
 		_render_context,
-		sge::renderer::matrix_mode::projection,
-		projection_matrix_);
+		sge::renderer::state::ffp::transform::mode::projection,
+		*transform_state);
 
 	background_->render(
 		_render_context);
@@ -505,11 +514,12 @@ sgeroids::view::planar::object::render(
 		_render_context,
 		dynamic_collection_,
 		dynamic_buffers_,
+		sprite_state_,
 		sge::sprite::compare::default_(),
-		sge::sprite::render::options(
-			sge::sprite::render::matrix_options::nothing,
-			sge::sprite::render::state_options::set,
-			sge::sprite::render::vertex_options::declaration));
+		sge::sprite::state::options<
+			sprite_state_choices
+		>(
+			sge::sprite::state::vertex_options::declaration));
 
 	score_text_.draw(
 		_render_context);

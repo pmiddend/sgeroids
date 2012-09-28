@@ -10,13 +10,18 @@
 #include <sgeroids/view/planar/sprite/object.hpp>
 #include <sgeroids/view/planar/sprite/ordered_collection.hpp>
 #include <sgeroids/view/planar/sprite/static_range.hpp>
-#include <sge/renderer/device_fwd.hpp>
 #include <sge/renderer/vertex_declaration_fwd.hpp>
-#include <sge/renderer/context/object_fwd.hpp>
-#include <sge/sprite/intrusive/ordered/collection.hpp>
-#include <sge/sprite/render/range_impl.hpp>
+#include <sge/renderer/context/core_fwd.hpp>
+#include <sge/renderer/device/core_fwd.hpp>
+#include <sge/sprite/intrusive/ordered/collection_decl.hpp>
+#include <sge/sprite/render/range_decl.hpp>
+#include <sge/sprite/state/choices.hpp>
+#include <sge/sprite/state/object_decl.hpp>
+#include <sge/sprite/state/with_blend.hpp>
+#include <sge/sprite/state/with_rasterizer.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <boost/ptr_container/ptr_vector.hpp>
+#include <boost/mpl/vector/vector10.hpp>
+#include <vector>
 #include <fcppt/config/external_end.hpp>
 
 
@@ -40,9 +45,8 @@ public:
 	config file. Instead, all relevant parameters are passed directly, such
 	as the star size and count.
 	*/
-	explicit
 	object(
-		sge::renderer::device &,
+		sge::renderer::device::core &,
 		sge::renderer::vertex_declaration const &,
 		sgeroids::view::planar::texture_tree &,
 		sgeroids::model::play_area const &,
@@ -59,21 +63,51 @@ public:
 	*/
 	void
 	render(
-		sge::renderer::context::object &);
+		sge::renderer::context::core &);
 
 	~object();
 private:
 	typedef
-	boost::ptr_vector<sgeroids::view::planar::sprite::object>
+	std::vector
+	<
+		sgeroids::view::planar::sprite::object
+	>
 	sprite_container;
 
 	sgeroids::view::planar::sprite::dynamic_buffers sprite_buffers_;
+
 	sgeroids::view::planar::sprite::ordered_collection sprite_collection_;
+
+	typedef
+	sge::sprite::state::choices
+	<
+		boost::mpl::vector2
+		<
+			sge::sprite::state::with_blend,
+			sge::sprite::state::with_rasterizer
+		>
+	>
+	sprite_state_choices;
+
+	typedef
+	sge::sprite::state::object
+	<
+		sprite_state_choices
+	>
+	sprite_state;
+
+	sprite_state sprite_state_;
+
 	sprite_container sprites_;
+
 	sgeroids::view::planar::sprite::static_range sprite_render_range_;
+
 	sgeroids::view::planar::texture_tree &texture_tree_;
+
 	sgeroids::model::play_area const play_area_;
+
 	background::star_size const star_size_;
+
 	background::star_count const star_count_;
 
 };

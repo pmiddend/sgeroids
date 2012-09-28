@@ -20,11 +20,14 @@
 #include <sge/font/object_scoped_ptr.hpp>
 #include <sge/image2d/system_fwd.hpp>
 #include <sge/charconv/system_fwd.hpp>
-#include <sge/renderer/device_fwd.hpp>
 #include <sge/renderer/matrix4.hpp>
 #include <sge/renderer/vertex_declaration_scoped_ptr.hpp>
-#include <sge/renderer/context/object_fwd.hpp>
-#include <sge/sprite/intrusive/ordered/collection.hpp>
+#include <sge/renderer/context/ffp_fwd.hpp>
+#include <sge/renderer/device/ffp_fwd.hpp>
+#include <sge/sprite/state/choices.hpp>
+#include <sge/sprite/state/object_decl.hpp>
+#include <sge/sprite/state/with_blend.hpp>
+#include <sge/sprite/state/with_rasterizer.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/scoped_ptr_impl.hpp>
@@ -32,8 +35,8 @@
 #include <fcppt/math/matrix/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/filesystem/path.hpp>
+#include <boost/mpl/vector/vector10.hpp>
 #include <boost/ptr_container/ptr_map.hpp>
-#include <vector>
 #include <fcppt/config/external_end.hpp>
 
 
@@ -78,9 +81,8 @@ class object
 FCPPT_NONCOPYABLE(
 	object);
 public:
-	explicit
 	object(
-		sge::renderer::device &,
+		sge::renderer::device::ffp &,
 		sge::font::system &,
 		sge::image2d::system &,
 		sge::charconv::system &,
@@ -153,7 +155,7 @@ public:
 
 	void
 	render(
-		sge::renderer::context::object &);
+		sge::renderer::context::ffp &);
 
 	~object();
 private:
@@ -165,7 +167,25 @@ private:
 	boost::ptr_vector<particle::object>
 	particle_vector;
 
-	sge::renderer::device &renderer_;
+	typedef
+	sge::sprite::state::choices
+	<
+		boost::mpl::vector2
+		<
+			sge::sprite::state::with_blend,
+			sge::sprite::state::with_rasterizer
+		>
+	>
+	sprite_state_choices;
+
+	typedef
+	sge::sprite::state::object
+	<
+		sprite_state_choices
+	>
+	sprite_state;
+
+	sge::renderer::device::ffp &renderer_;
 	sge::audio::player &audio_player_;
 	sgeroids::random_generator rng_;
 	planar::texture_tree texture_tree_;
@@ -174,6 +194,7 @@ private:
 	sge::renderer::vertex_declaration_scoped_ptr const sprite_vertex_declaration_;
 	planar::sprite::dynamic_buffers dynamic_buffers_;
 	planar::sprite::ordered_collection dynamic_collection_;
+	sprite_state sprite_state_;
 	sge::renderer::matrix4 projection_matrix_;
 	entity_map entities_;
 	fcppt::scoped_ptr<background::object> background_;

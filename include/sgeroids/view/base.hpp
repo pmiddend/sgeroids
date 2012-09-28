@@ -12,7 +12,7 @@
 #include <sgeroids/model/score.hpp>
 #include <sgeroids/model/spaceship_id.hpp>
 #include <sgeroids/model/thrust.hpp>
-#include <sge/renderer/context/object_fwd.hpp>
+#include <sge/renderer/context/ffp_fwd.hpp>
 #include <fcppt/noncopyable.hpp>
 
 
@@ -157,7 +157,7 @@ public:
 	*/
 	virtual void
 	render(
-		sge::renderer::context::object &) = 0;
+		sge::renderer::context::ffp &) = 0;
 
 	virtual
 	~base() = 0;

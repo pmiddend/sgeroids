@@ -16,9 +16,8 @@
 #include <sge/parse/json/config/create_command_line_parameters.hpp>
 #include <sge/parse/json/config/merge_command_line_parameters.hpp>
 #include <sge/parse/json/config/merge_trees.hpp>
-#include <sge/renderer/device.hpp>
-#include <sge/renderer/context/object.hpp>
-#include <sge/renderer/context/scoped.hpp>
+#include <sge/renderer/context/scoped_ffp.hpp>
+#include <sge/renderer/device/ffp.hpp>
 #include <sge/renderer/display_mode/optional_object.hpp>
 #include <sge/renderer/parameters/object.hpp>
 #include <sge/renderer/parameters/vsync.hpp>
@@ -202,9 +201,9 @@ sgeroids::state_machine::object::run()
 		this->process_event(
 			sgeroids::state_machine::events::tick());
 
-		sge::renderer::context::scoped const scoped_block(
-			systems_.renderer(),
-			systems_.renderer().onscreen_target());
+		sge::renderer::context::scoped_ffp const scoped_block(
+			systems_.renderer_ffp(),
+			systems_.renderer_ffp().onscreen_target());
 
 		this->process_event(
 			sgeroids::state_machine::events::render(

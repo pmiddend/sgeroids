@@ -8,7 +8,7 @@
 #include <sgeroids/view/planar/sprite/parameters.hpp>
 #include <sge/image/colors.hpp>
 #include <sge/image/color/any/object.hpp>
-#include <sge/renderer/context/object_fwd.hpp>
+#include <sge/renderer/context/core_fwd.hpp>
 #include <sge/resource_tree/path.hpp>
 #include <sge/sprite/center.hpp>
 #include <sge/sprite/parameters.hpp>
@@ -16,12 +16,13 @@
 #include <sge/sprite/buffers/parameters.hpp>
 #include <sge/sprite/compare/default.hpp>
 #include <sge/sprite/geometry/sort_and_update.hpp>
-#include <sge/sprite/render/matrix_options.hpp>
-#include <sge/sprite/render/options.hpp>
+#include <sge/sprite/intrusive/ordered/collection_impl.hpp>
 #include <sge/sprite/render/parameters.hpp>
+#include <sge/sprite/render/range_impl.hpp>
 #include <sge/sprite/render/range_with_options.hpp>
-#include <sge/sprite/render/state_options.hpp>
-#include <sge/sprite/render/vertex_options.hpp>
+#include <sge/sprite/state/default_options.hpp>
+#include <sge/sprite/state/object_impl.hpp>
+#include <sge/sprite/state/parameters_impl.hpp>
 #include <sge/texture/part.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/random/variate.hpp>
@@ -30,7 +31,7 @@
 
 
 sgeroids::view::planar::background::object::object(
-	sge::renderer::device &_renderer,
+	sge::renderer::device::core &_renderer,
 	sge::renderer::vertex_declaration const &_vertex_declaration,
 	sgeroids::view::planar::texture_tree &_texture_tree,
 	sgeroids::model::play_area const &_play_area,
@@ -44,6 +45,11 @@ sgeroids::view::planar::background::object::object(
 			_vertex_declaration),
 		sge::sprite::buffers::option::dynamic),
 	sprite_collection_(),
+	sprite_state_(
+		_renderer,
+		sge::sprite::state::parameters<
+			sprite_state_choices
+		>()),
 	sprites_(),
 	sprite_render_range_(),
 	texture_tree_(
@@ -111,7 +117,7 @@ sgeroids::view::planar::background::object::object(
 		++index
 	)
 		sprites_.push_back(
-			new planar::sprite::object(
+			planar::sprite::object(
 				planar::sprite::parameters()
 					.connection(
 						sprite_collection_.connection(
@@ -134,7 +140,7 @@ sgeroids::view::planar::background::object::object(
 						sge::image::colors::white())));
 
 	sprites_.push_back(
-		new planar::sprite::object(
+		planar::sprite::object(
 			planar::sprite::parameters()
 				.connection(
 					sprite_collection_.connection(
@@ -157,7 +163,7 @@ sgeroids::view::planar::background::object::object(
 					sge::image::colors::white())));
 
 	sprites_.push_back(
-		new planar::sprite::object(
+		planar::sprite::object(
 			planar::sprite::parameters()
 				.connection(
 					sprite_collection_.connection(
@@ -189,17 +195,20 @@ sgeroids::view::planar::background::object::object(
 
 void
 sgeroids::view::planar::background::object::render(
-	sge::renderer::context::object &_render_context)
+	sge::renderer::context::core &_render_context)
 {
 	sge::sprite::render::range_with_options(
-		sge::sprite::render::parameters(
+		sge::sprite::render::parameters<
+			sprite_state_choices
+		>(
 			_render_context,
 			sprite_buffers_.parameters().vertex_declaration()),
 		sprite_render_range_,
-		sge::sprite::render::options(
-			sge::sprite::render::matrix_options::nothing,
-			sge::sprite::render::state_options::set,
-			sge::sprite::render::vertex_options::declaration_and_buffer));
+		sprite_state_,
+		sge::sprite::state::default_options<
+			sprite_state_choices
+		>()
+	);
 }
 
 sgeroids::view::planar::background::object::~object()
