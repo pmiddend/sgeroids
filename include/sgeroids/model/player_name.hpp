@@ -2,7 +2,7 @@
 #define SGEROIDS_MODEL_PLAYER_NAME_HPP_INCLUDED
 
 #include <sgeroids/model/serialization/message/types/string.hpp>
-#include <fcppt/string.hpp>
+#include <fcppt/strong_typedef.hpp>
 
 
 namespace sgeroids

@@ -20,4 +20,5 @@ function update_cmake_file()
 update_cmake_file \
 	CMakeLists.txt \
 	SGEROIDS_FILES \
+	include \
 	src/sgeroids \
