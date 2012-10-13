@@ -1,5 +1,6 @@
 #include <sgeroids/exception.hpp>
 #include <sgeroids/media_path.hpp>
+#include <sgeroids/systems.hpp>
 #include <sgeroids/utf8_file_to_fcppt_string.hpp>
 #include <sgeroids/version.hpp>
 #include <sgeroids/state_machine/object.hpp>
@@ -31,9 +32,11 @@
 #include <sge/systems/audio_loader.hpp>
 #include <sge/systems/audio_player_default.hpp>
 #include <sge/systems/charconv.hpp>
+#include <sge/systems/cursor_option_field.hpp>
 #include <sge/systems/font.hpp>
 #include <sge/systems/image2d.hpp>
 #include <sge/systems/list.hpp>
+#include <sge/systems/make_list.hpp>
 #include <sge/systems/renderer.hpp>
 #include <sge/systems/window.hpp>
 #include <sge/timer/scoped_frame_limiter.hpp>
@@ -126,12 +129,12 @@ sgeroids::state_machine::object::object(
 			sge::parse::json::parse_string_exn(
 				sgeroids::utf8_file_to_fcppt_string(
 					*charconv_system_,
-					sgeroids::media_path()/FCPPT_TEXT("config.json"))),
+					sgeroids::media_path()/FCPPT_TEXT("config.json"))).object(),
 			sge::parse::json::config::create_command_line_parameters(
 				_argc,
 				_argv))),
 	systems_(
-		sge::systems::list()
+		sge::systems::make_list
 			(sge::systems::window(
 				sge::window::parameters(
 					sge::window::title(
@@ -148,8 +151,6 @@ sgeroids::state_machine::object::object(
 						1u,
 						1u))))
 			(sge::systems::input(
-				sge::systems::input_helper_field(
-					sge::systems::input_helper::keyboard_collector),
 				sge::systems::cursor_option_field::null()))
 			(sge::systems::audio_player_default())
 			(sge::systems::charconv(
@@ -176,7 +177,7 @@ sgeroids::state_machine::object::config() const
 	return config_;
 }
 
-sge::systems::instance const &
+sgeroids::systems const &
 sgeroids::state_machine::object::systems() const
 {
 	return systems_;
