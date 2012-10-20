@@ -31,6 +31,7 @@
 #include <sge/font/text_parameters.hpp>
 #include <sge/font/ttf_size.hpp>
 #include <sge/font/vector.hpp>
+#include <sge/font/draw/static_text.hpp>
 #include <sge/image/colors.hpp>
 #include <sge/image/color/format.hpp>
 #include <sge/image2d/file.hpp>
@@ -155,18 +156,7 @@ sgeroids::view::planar::object::object(
 			.ttf_size(
 				sge::font::ttf_size(
 					40)))),
-	score_text_(
-		renderer_,
-		*score_font_,
-		SGE_FONT_LIT(
-			"score: "),
-		sge::font::text_parameters(
-			sge::font::align_h::left),
-		sge::font::vector(
-			0,
-			0
-		),
-		sge::image::colors::white())
+	score_text_()
 {
 }
 
@@ -307,15 +297,28 @@ sgeroids::view::planar::object::score_change(
 		return;
 	}
 
-	score_text_.string(
-		sge::font::from_fcppt_string(
-			fcppt::insert_to_fcppt_string(
-				maybe_a_ship->player_name())) +
-		SGE_FONT_LIT(": ") +
-		sge::font::from_fcppt_string(
-			fcppt::insert_to_fcppt_string(
-				_score.get()))
-	);
+	score_text_.take(
+		fcppt::make_unique_ptr<
+			sge::font::draw::static_text
+		>(
+			fcppt::ref(
+				renderer_),
+			fcppt::ref(
+				*score_font_),
+			sge::font::from_fcppt_string(
+				fcppt::insert_to_fcppt_string(
+					maybe_a_ship->player_name())) +
+			SGE_FONT_LIT(": ") +
+			sge::font::from_fcppt_string(
+				fcppt::insert_to_fcppt_string(
+					_score.get())),
+			sge::font::text_parameters(
+				sge::font::align_h::left),
+			sge::font::vector(
+				0,
+				0
+			),
+			sge::image::colors::white()));
 }
 
 void
@@ -521,8 +524,11 @@ sgeroids::view::planar::object::render(
 		>(
 			sge::sprite::state::vertex_options::declaration));
 
-	score_text_.draw(
-		_render_context);
+	if(
+		score_text_
+	)
+		score_text_->draw(
+			_render_context);
 }
 
 void

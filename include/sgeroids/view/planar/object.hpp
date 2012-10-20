@@ -16,7 +16,7 @@
 #include <sge/audio/player_fwd.hpp>
 #include <sge/audio/sound/base_scoped_ptr.hpp>
 #include <sge/font/system_fwd.hpp>
-#include <sge/font/draw/static_text.hpp>
+#include <sge/font/draw/static_text_fwd.hpp>
 #include <sge/font/object_scoped_ptr.hpp>
 #include <sge/image2d/system_fwd.hpp>
 #include <sge/charconv/system_fwd.hpp>
@@ -201,7 +201,15 @@ private:
 	particle_vector particles_;
 	sge::charconv::system &charconv_system_;
 	sge::font::object_scoped_ptr score_font_;
-	sge::font::draw::static_text score_text_;
+
+	typedef
+	fcppt::scoped_ptr
+	<
+		sge::font::draw::static_text
+	>
+	static_text_scoped_ptr;
+
+	static_text_scoped_ptr score_text_;
 
 	/**
 	\brief This function is called by the texture tree to create a texture resource out of a path
