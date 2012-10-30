@@ -52,7 +52,7 @@
 #include <sge/renderer/state/ffp/transform/parameters.hpp>
 #include <sge/renderer/state/ffp/transform/scoped.hpp>
 #include <sge/renderer/texture/create_planar_from_path.hpp>
-#include <sge/renderer/texture/emulate_srgb_from_caps.hpp>
+#include <sge/renderer/texture/emulate_srgb.hpp>
 #include <sge/renderer/texture/planar.hpp>
 #include <sge/renderer/texture/mipmap/off.hpp>
 #include <sge/resource_tree/path.hpp>
@@ -558,8 +558,7 @@ sgeroids::view::planar::object::create_texture_from_path(
 					_image_loader,
 					sge::renderer::texture::mipmap::off(),
 					sge::renderer::resource_flags_field::null(),
-					sge::renderer::texture::emulate_srgb_from_caps(
-						renderer_.caps()))));
+					sge::renderer::texture::emulate_srgb::yes)));
 
 }
 
