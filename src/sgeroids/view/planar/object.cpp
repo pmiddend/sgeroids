@@ -319,7 +319,8 @@ sgeroids::view::planar::object::score_change(
 				0,
 				0
 			),
-			sge::image::colors::white()));
+			sge::image::colors::white(),
+			sge::renderer::texture::emulate_srgb::no));
 }
 
 void
