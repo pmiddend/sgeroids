@@ -72,39 +72,31 @@ endif()
 
 # fcppt begin
 find_package(
-	Fcppt REQUIRED)
+	fcppt REQUIRED)
 include_directories(
-	${Fcppt_INCLUDE_DIRS})
+	${fcppt_INCLUDE_DIRS})
 add_definitions(
-	${Fcppt_DEFINITIONS})
+	${fcppt_DEFINITIONS})
 # fcppt end
+
+# awl begin
+find_package(
+	awl REQUIRED)
+include_directories(
+	${awl_INCLUDE_DIRS})
+add_definitions(
+	${awl_DEFINITIONS})
+# awl end
 
 # sge begin
 find_package(
-	SGE REQUIRED COMPONENTS
-	audio
-	charconv
-	config
-	font
-	fontdraw
-	image
-	image2d
-	input
-	core
-	renderer
-	sprite
-	texture
-	parse
-	resource_tree
-	systems
-	timer
-	window
-	viewport)
+	sge REQUIRED
+)
 
 include_directories(
-	${SGE_INCLUDE_DIRS})
+	${sge_INCLUDE_DIRS})
 add_definitions(
-	${SGE_DEFINITIONS})
+	${sge_DEFINITIONS})
 # sge end
 
 # alda begin
@@ -409,13 +401,31 @@ awl_utils_add_portable_executable(
 # Link to what?
 target_link_libraries(
 	${CMAKE_PROJECT_NAME}
-	${Fcppt_core_LIBRARIES}
-	${Fcppt_filesystem_LIBRARIES}
-	${Awl_LIBRARIES}
-	${SGE_LIBRARIES}
+	${fcppt_core_TARGET}
+	${fcppt_filesystem_TARGET}
+	${awl_TARGET}
+	${sgeaudio_TARGET}
+	${sgecharconv_TARGET}
+	${sgeconfig_TARGET}
+	${sgefont_TARGET}
+	${sgefontdraw_TARGET}
+	${sgeimage_TARGET}
+	${sgeimage2d_TARGET}
+	${sgeinput_TARGET}
+	${sgecore_TARGET}
+	${sgerenderer_TARGET}
+	${sgesprite_TARGET}
+	${sgetexture_TARGET}
+	${sgeparse_TARGET}
+	${sgeresource_tree_TARGET}
+	${sgesystems_TARGET}
+	${sgetimer_TARGET}
+	${sgewindow_TARGET}
+	${sgeviewport_TARGET}
 	${Alda_LIBRARIES}
 	${Boost_CHRONO_LIBRARY}
-	${Boost_SYSTEMS_LIBRARY})
+	${Boost_SYSTEMS_LIBRARY}
+)
 
 install(
 	TARGETS
