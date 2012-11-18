@@ -120,11 +120,11 @@ add_definitions(
 
 # alda begin
 find_package(
-	Alda REQUIRED)
+	alda REQUIRED)
 include_directories(
-	${Alda_INCLUDE_DIRS})
+	${alda_INCLUDE_DIRS})
 add_definitions(
-	${Alda_DEFINITIONS})
+	${alda_DEFINITIONS})
 # alda end
 
 # Get rid of a pretty useless warning
@@ -424,7 +424,7 @@ target_link_libraries(
 	${fcppt_filesystem_TARGET}
 	${awl_TARGET}
 	${sge_TARGETS}
-	${Alda_LIBRARIES}
+	${alda_TARGET}
 	${Boost_CHRONO_LIBRARY}
 	${Boost_SYSTEMS_LIBRARY}
 )
