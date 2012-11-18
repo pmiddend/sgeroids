@@ -91,6 +91,25 @@ add_definitions(
 # sge begin
 find_package(
 	sge REQUIRED
+	COMPONENTS
+	audio
+	charconv
+	config
+	font
+	fontdraw
+	image
+	image2d
+	input
+	core
+	renderer
+	sprite
+	texture
+	parse
+	resource_tree
+	systems
+	timer
+	window
+	viewport
 )
 
 include_directories(
@@ -404,24 +423,7 @@ target_link_libraries(
 	${fcppt_core_TARGET}
 	${fcppt_filesystem_TARGET}
 	${awl_TARGET}
-	${sgeaudio_TARGET}
-	${sgecharconv_TARGET}
-	${sgeconfig_TARGET}
-	${sgefont_TARGET}
-	${sgefontdraw_TARGET}
-	${sgeimage_TARGET}
-	${sgeimage2d_TARGET}
-	${sgeinput_TARGET}
-	${sgecore_TARGET}
-	${sgerenderer_TARGET}
-	${sgesprite_TARGET}
-	${sgetexture_TARGET}
-	${sgeparse_TARGET}
-	${sgeresource_tree_TARGET}
-	${sgesystems_TARGET}
-	${sgetimer_TARGET}
-	${sgewindow_TARGET}
-	${sgeviewport_TARGET}
+	${sge_TARGETS}
 	${Alda_LIBRARIES}
 	${Boost_CHRONO_LIBRARY}
 	${Boost_SYSTEMS_LIBRARY}
