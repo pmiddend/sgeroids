@@ -6,7 +6,7 @@
 #include <sgeroids/view/planar/background/object.hpp>
 #include <sgeroids/view/planar/sprite/dim.hpp>
 #include <sgeroids/view/planar/sprite/parameters.hpp>
-#include <sge/image/colors.hpp>
+#include <sge/image/color/predef.hpp>
 #include <sge/image/color/any/object.hpp>
 #include <sge/renderer/context/core_fwd.hpp>
 #include <sge/resource_tree/path.hpp>
@@ -137,7 +137,7 @@ sgeroids::view::planar::background::object::object(
 					.rotation(
 						0)
 					.any_color(
-						sge::image::colors::white())));
+						sge::image::color::predef::white())));
 
 	sprites_.push_back(
 		planar::sprite::object(
@@ -160,7 +160,7 @@ sgeroids::view::planar::background::object::object(
 				.rotation(
 					random_angle())
 				.any_color(
-					sge::image::colors::white())));
+					sge::image::color::predef::white())));
 
 	sprites_.push_back(
 		planar::sprite::object(
@@ -183,7 +183,7 @@ sgeroids::view::planar::background::object::object(
 				.rotation(
 					random_angle())
 				.any_color(
-					sge::image::colors::white())));
+					sge::image::color::predef::white())));
 
 
 	sprite_render_range_ =

@@ -97,7 +97,7 @@ find_package(
 	config
 	font
 	fontdraw
-	image
+	imagecolor
 	image2d
 	input
 	core

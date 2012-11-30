@@ -4,7 +4,7 @@
 #include <sgeroids/view/planar/particle/object.hpp>
 #include <sgeroids/view/planar/sprite/dim.hpp>
 #include <sgeroids/view/planar/sprite/parameters.hpp>
-#include <sge/image/colors.hpp>
+#include <sge/image/color/predef.hpp>
 #include <sge/image/color/any/object.hpp>
 #include <sge/resource_tree/path.hpp>
 #include <sge/sprite/center.hpp>
@@ -37,7 +37,7 @@ sgeroids::view::planar::particle::object::object(
 			.center(
 				_position.get())
 			.any_color(
-				sge::image::colors::white())),
+				sge::image::color::predef::white())),
 	position_(
 		_position.get()),
 	velocity_(

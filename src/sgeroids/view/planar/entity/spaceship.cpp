@@ -14,7 +14,7 @@
 #include <sge/audio/sound/base.hpp>
 #include <sge/audio/sound/nonpositional_parameters.hpp>
 #include <sge/audio/sound/repeat.hpp>
-#include <sge/image/colors.hpp>
+#include <sge/image/color/predef.hpp>
 #include <sge/image/color/any/object.hpp>
 #include <sge/resource_tree/path.hpp>
 #include <sge/sprite/center.hpp>
@@ -59,7 +59,7 @@ sgeroids::view::planar::entity::spaceship::spaceship(
 			.rotation(
 				0)
 			.any_color(
-				sge::image::colors::white())),
+				sge::image::color::predef::white())),
 	audio_player_(
 		_audio_player),
 	thrust_sound_(

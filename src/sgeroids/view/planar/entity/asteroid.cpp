@@ -3,7 +3,7 @@
 #include <sgeroids/view/planar/entity/asteroid.hpp>
 #include <sgeroids/view/planar/sprite/dim.hpp>
 #include <sgeroids/view/planar/sprite/parameters.hpp>
-#include <sge/image/colors.hpp>
+#include <sge/image/color/predef.hpp>
 #include <sge/image/color/any/object.hpp>
 #include <sge/resource_tree/path.hpp>
 #include <sge/sprite/center.hpp>
@@ -39,7 +39,7 @@ sprite_init(
 		.rotation(
 			0)
 		.any_color(
-			sge::image::colors::white());
+			sge::image::color::predef::white());
 }
 
 }

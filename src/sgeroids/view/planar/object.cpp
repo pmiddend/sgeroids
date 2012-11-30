@@ -32,7 +32,7 @@
 #include <sge/font/ttf_size.hpp>
 #include <sge/font/vector.hpp>
 #include <sge/font/draw/static_text.hpp>
-#include <sge/image/colors.hpp>
+#include <sge/image/color/predef.hpp>
 #include <sge/image/color/format.hpp>
 #include <sge/image2d/file.hpp>
 #include <sge/image2d/system.hpp>
@@ -319,7 +319,7 @@ sgeroids::view::planar::object::score_change(
 				0,
 				0
 			),
-			sge::image::colors::white(),
+			sge::image::color::predef::white(),
 			sge::renderer::texture::emulate_srgb::no));
 }
 
@@ -494,7 +494,7 @@ sgeroids::view::planar::object::render(
 	_render_context.clear(
 		sge::renderer::clear::parameters()
 		.back_buffer(
-			sge::image::colors::black()));
+			sge::image::color::predef::black()));
 
 	sge::renderer::state::ffp::transform::object_scoped_ptr const transform_state(
 		renderer_.create_transform_state(
