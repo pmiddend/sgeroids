@@ -1,6 +1,7 @@
 #include <sgeroids/exception.hpp>
 #include <sgeroids/math/unit_magnitude.hpp>
 #include <sgeroids/model/dim2.hpp>
+#include <sgeroids/model/error_code.hpp>
 #include <sgeroids/model/log.hpp>
 #include <sgeroids/model/vector2.hpp>
 #include <sgeroids/model/local/object.hpp>
@@ -251,7 +252,7 @@ sgeroids::model::local::object::process_message(
 					<< FCPPT_TEXT("Got add_player with existing player name"));
 
 			error_(
-				error_code::name_not_available);
+				sgeroids::model::error_code::name_not_available);
 
 			return;
 		}
@@ -444,8 +445,8 @@ sgeroids::model::local::object::process_message(
 	model::entity_id const id(
 		_message.get<sgeroids::model::serialization::message::roles::entity_id>());
 
-	model::firing_mode::type const firing_mode(
-		static_cast<model::firing_mode::type>(
+	model::firing_mode const firing_mode(
+		static_cast<model::firing_mode>(
 			_message.get<sgeroids::model::serialization::message::roles::firing_mode>()));
 
 	entity::spaceship &ship =

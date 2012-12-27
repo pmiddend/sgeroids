@@ -188,7 +188,7 @@ sgeroids::model::local::entity::spaceship::rotation_direction(
 
 void
 sgeroids::model::local::entity::spaceship::change_firing_mode(
-	model::firing_mode::type const _firing_mode)
+	model::firing_mode const _firing_mode)
 {
 	if(firing_mode_ == _firing_mode)
 		return;

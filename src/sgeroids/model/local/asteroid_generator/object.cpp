@@ -67,6 +67,7 @@ sgeroids::model::local::asteroid_generator::object::object(
 		int_distribution(
 			int_distribution::min(
 				0),
+			// TODO: magic constant?
 			int_distribution::max(
 				3))),
 	play_area_x_rng_(
@@ -107,8 +108,8 @@ sgeroids::model::local::asteroid_generator::object::update()
 	//   top, bottom)
 	// - Then, generate the according x/y coordinate (x for top and bottom,
 	//   y for left and right)
-	play_area_side::type const chosen_side =
-		static_cast<play_area_side::type>(
+	play_area_side const chosen_side =
+		static_cast<play_area_side>(
 			play_area_side_rng_());
 
 	int const chosen_radius =

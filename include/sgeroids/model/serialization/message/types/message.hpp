@@ -1,6 +1,9 @@
 #ifndef SGEROIDS_MODEL_SERIALIZATION_MESSAGE_TYPES_MESSAGE_HPP_INCLUDED
 #define SGEROIDS_MODEL_SERIALIZATION_MESSAGE_TYPES_MESSAGE_HPP_INCLUDED
 
+#include <sgeroids/model/serialization/message/types/message_fwd.hpp>
+
+
 namespace sgeroids
 {
 namespace model
@@ -11,9 +14,8 @@ namespace message
 {
 namespace types
 {
-namespace message
-{
-enum type
+
+enum class message
 {
 	update,
 	rng_seed,
@@ -24,7 +26,7 @@ enum type
 	change_firing_mode,
 	size
 };
-}
+
 }
 }
 }
@@ -32,4 +34,3 @@ enum type
 }
 
 #endif
-

@@ -18,7 +18,7 @@ namespace adapted_types
 typedef
 alda::type_enum
 <
-	sgeroids::model::serialization::message::types::message::type,
+	sgeroids::model::serialization::message::types::message,
 	sgeroids::model::serialization::message::types::message::size
 >
 message;

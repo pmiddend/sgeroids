@@ -207,11 +207,14 @@ set(
 	include/sgeroids/model/dim2.hpp
 	include/sgeroids/model/entity_id.hpp
 	include/sgeroids/model/error_code.hpp
+	include/sgeroids/model/error_code_fwd.hpp
 	include/sgeroids/model/error_function.hpp
 	include/sgeroids/model/firing_mode.hpp
+	include/sgeroids/model/firing_mode_fwd.hpp
 	include/sgeroids/model/local/asteroid_generator/object.hpp
 	include/sgeroids/model/local/asteroid_generator/object_fwd.hpp
 	include/sgeroids/model/local/asteroid_generator/play_area_side.hpp
+	include/sgeroids/model/local/asteroid_generator/play_area_side_fwd.hpp
 	include/sgeroids/model/local/callbacks/asteroid_died.hpp
 	include/sgeroids/model/local/callbacks/asteroid_died_function.hpp
 	include/sgeroids/model/local/callbacks/asteroid_generation.hpp
@@ -275,6 +278,7 @@ set(
 	include/sgeroids/model/serialization/message/types/enum.hpp
 	include/sgeroids/model/serialization/message/types/int.hpp
 	include/sgeroids/model/serialization/message/types/message.hpp
+	include/sgeroids/model/serialization/message/types/message_fwd.hpp
 	include/sgeroids/model/serialization/message/types/rng_seed.hpp
 	include/sgeroids/model/serialization/message/types/string.hpp
 	include/sgeroids/model/serialization/message/update.hpp

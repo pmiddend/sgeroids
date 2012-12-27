@@ -78,7 +78,7 @@ public:
 
 	void
 	change_firing_mode(
-		model::firing_mode::type);
+		model::firing_mode);
 
 	void
 	thrust(
@@ -97,7 +97,7 @@ private:
 	int rotation_direction_;
 	int thrust_;
 	bool dead_;
-	firing_mode::type firing_mode_;
+	model::firing_mode firing_mode_;
 	int fire_cooldown_timer_;
 	model::score score_;
 };

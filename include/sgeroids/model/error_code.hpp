@@ -1,18 +1,19 @@
 #ifndef SGEROIDS_MODEL_ERROR_CODE_HPP_INCLUDED
 #define SGEROIDS_MODEL_ERROR_CODE_HPP_INCLUDED
 
+#include <sgeroids/model/error_code_fwd.hpp>
+
+
 namespace sgeroids
 {
 namespace model
 {
-namespace error_code
+
+enum class error_code
 {
-enum type
-{
-name_not_available,
-size
+	name_not_available
 };
-}
+
 }
 }
 
