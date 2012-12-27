@@ -8,7 +8,9 @@
 #include <fcppt/optional_impl.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/log/headers.hpp>
-#include <fcppt/tr1/functional.hpp>
+#include <fcppt/config/external_begin.hpp>
+#include <functional>
+#include <fcppt/config/external_end.hpp>
 
 
 sgeroids::input::keyboard::keyboard(
@@ -22,18 +24,18 @@ sgeroids::input::keyboard::keyboard(
 		_device),
 	key_connection_(
 		_device.key_callback(
-			std::tr1::bind(
+			std::bind(
 				&keyboard::key,
 				this,
-				std::tr1::placeholders::_1))),
+				std::placeholders::_1))),
 	add_spaceship_connection_(
 		model_.add_spaceship_callback(
-			std::tr1::bind(
+			std::bind(
 				&keyboard::add_spaceship,
 				this,
-				std::tr1::placeholders::_1,
-				std::tr1::placeholders::_2,
-				std::tr1::placeholders::_3))),
+				std::placeholders::_1,
+				std::placeholders::_2,
+				std::placeholders::_3))),
 	name_(
 		_name),
 	id_(

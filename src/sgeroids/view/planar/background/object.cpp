@@ -9,6 +9,8 @@
 #include <sge/image/color/predef.hpp>
 #include <sge/image/color/any/object.hpp>
 #include <sge/renderer/context/core_fwd.hpp>
+#include <sge/renderer/device/core_fwd.hpp>
+#include <sge/renderer/vertex/declaration_fwd.hpp>
 #include <sge/resource_tree/path.hpp>
 #include <sge/sprite/center.hpp>
 #include <sge/sprite/parameters.hpp>
@@ -32,7 +34,7 @@
 
 sgeroids::view::planar::background::object::object(
 	sge::renderer::device::core &_renderer,
-	sge::renderer::vertex_declaration const &_vertex_declaration,
+	sge::renderer::vertex::declaration const &_vertex_declaration,
 	sgeroids::view::planar::texture_tree &_texture_tree,
 	sgeroids::model::play_area const &_play_area,
 	sgeroids::random_generator &_rng,

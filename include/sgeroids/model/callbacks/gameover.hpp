@@ -2,7 +2,9 @@
 #define SGEROIDS_MODEL_CALLBACKS_GAMEOVER_HPP_INCLUDED
 
 #include <sgeroids/model/callbacks/gameover_function.hpp>
-#include <fcppt/function/object.hpp>
+#include <fcppt/config/external_begin.hpp>
+#include <functional>
+#include <fcppt/config/external_end.hpp>
 
 namespace sgeroids
 {
@@ -11,7 +13,7 @@ namespace model
 namespace callbacks
 {
 typedef
-fcppt::function::object<callbacks::gameover_function>
+std::function<callbacks::gameover_function>
 gameover;
 }
 }

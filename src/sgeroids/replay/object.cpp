@@ -2,8 +2,9 @@
 #include <sgeroids/model/serialization/message/base_unique_ptr.hpp>
 #include <sgeroids/replay/object.hpp>
 #include <alda/serialization/deserialize.hpp>
-#include <fcppt/function/object.hpp>
-#include <fcppt/tr1/functional.hpp>
+#include <fcppt/config/external_begin.hpp>
+#include <functional>
+#include <fcppt/config/external_end.hpp>
 
 
 sgeroids::replay::object::object(
@@ -56,11 +57,11 @@ sgeroids::replay::object::deserialize_single_message()
 	call_object_(
 		*message,
 		dispatcher_,
-		sgeroids::replay::call_object::default_function(
-			std::tr1::bind(
+		sgeroids::replay::call_object::default_callback(
+			std::bind(
 				&sgeroids::replay::dispatcher::default_callback,
 				&dispatcher_,
-				std::tr1::placeholders::_1)));
+				std::placeholders::_1)));
 	return
 		was_update;
 }

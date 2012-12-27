@@ -12,12 +12,9 @@
 #include <sgeroids/model/local/entity/spaceship.hpp>
 #include <alda/message/make_concrete_ptr.hpp>
 #include <alda/serialization/serialize.hpp>
-#include <fcppt/cref.hpp>
 #include <fcppt/insert_to_fcppt_string.hpp>
 #include <fcppt/make_unique_ptr.hpp>
-#include <fcppt/move.hpp>
 #include <fcppt/optional_dynamic_cast.hpp>
-#include <fcppt/ref.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/type_name.hpp>
 #include <fcppt/assert/unreachable.hpp>
@@ -27,10 +24,13 @@
 #include <fcppt/math/box/object_impl.hpp>
 #include <fcppt/math/dim/object_impl.hpp>
 #include <fcppt/math/vector/object_impl.hpp>
-#include <fcppt/tr1/functional.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <algorithm>
+#include <array>
 #include <cstdlib>
+#include <functional>
+#include <memory>
+#include <utility>
 #include <typeinfo>
 #include <fcppt/config/external_end.hpp>
 
@@ -181,23 +181,20 @@ sgeroids::model::local::object::process_message(
 	rng_.take(
 		fcppt::make_unique_ptr<sgeroids::random_generator>(
 			sgeroids::random_generator::seed(
-				fcppt::cref(
-					_message.get<sgeroids::model::serialization::message::roles::seed>()))));
+				_message.get<sgeroids::model::serialization::message::roles::seed>())));
 
 	asteroid_generator_.take(
 		fcppt::make_unique_ptr<sgeroids::model::local::asteroid_generator::object>(
-			fcppt::ref(
-				*rng_),
-			fcppt::cref(
-				this->play_area()),
-			std::tr1::bind(
+			*rng_,
+			this->play_area(),
+			std::bind(
 				&object::asteroid_generated,
 				this,
-				std::tr1::placeholders::_1,
-				std::tr1::placeholders::_2,
-				std::tr1::placeholders::_3,
-				std::tr1::placeholders::_4,
-				std::tr1::placeholders::_5)));
+				std::placeholders::_1,
+				std::placeholders::_2,
+				std::placeholders::_3,
+				std::placeholders::_4,
+				std::placeholders::_5)));
 }
 
 void
@@ -272,34 +269,34 @@ sgeroids::model::local::object::process_message(
 	model::rotation const ship_rotation(
 		0);
 
-	fcppt::unique_ptr<entity::spaceship> to_add(
+	std::unique_ptr<entity::spaceship> to_add(
 		fcppt::make_unique_ptr<entity::spaceship>(
 			player_name,
 			ship_position,
 			ship_rotation,
 			this->play_area(),
 			local::callbacks::position_entity_no_id(
-				std::tr1::bind(
+				std::bind(
 					&object::change_entity_position,
 					this,
 					model::entity_id(
 						next_id_),
-					std::tr1::placeholders::_1)),
+					std::placeholders::_1)),
 			local::callbacks::rotation_entity_no_id(
-				std::tr1::bind(
+				std::bind(
 					&object::change_entity_rotation,
 					this,
 					model::entity_id(
 						next_id_),
-					std::tr1::placeholders::_1)),
+					std::placeholders::_1)),
 			local::callbacks::insert_projectile(
-				std::tr1::bind(
+				std::bind(
 					&object::insert_projectile,
 					this,
 					model::spaceship_id(
 						next_id_),
-					std::tr1::placeholders::_1,
-					std::tr1::placeholders::_2))));
+					std::placeholders::_1,
+					std::placeholders::_2))));
 
 	model::radius const ship_radius =
 		to_add->radius();
@@ -307,7 +304,7 @@ sgeroids::model::local::object::process_message(
 	fcppt::container::ptr::insert_unique_ptr_map(
 		entities_,
 		next_id_,
-		fcppt::move(
+		std::move(
 			to_add));
 
 	FCPPT_LOG_DEBUG(
@@ -667,7 +664,7 @@ sgeroids::model::local::object::insert_entity(
 	fcppt::container::ptr::insert_unique_ptr_map(
 		entities_,
 		next_id_++,
-		fcppt::move(
+		std::move(
 			new_entity));
 }
 
@@ -684,7 +681,7 @@ sgeroids::model::local::object::asteroid_generated(
 		fcppt::log::_
 			<< FCPPT_TEXT("Got an asteroid generation, creating entity"));
 
-	fcppt::unique_ptr<entity::asteroid> to_add(
+	std::unique_ptr<entity::asteroid> to_add(
 		fcppt::make_unique_ptr<entity::asteroid>(
 			_position,
 			_rotation,
@@ -693,32 +690,32 @@ sgeroids::model::local::object::asteroid_generated(
 			this->play_area(),
 			_velocity,
 			local::callbacks::position_entity_no_id(
-				std::tr1::bind(
+				std::bind(
 					&object::change_entity_position,
 					this,
 					model::entity_id(
 						next_id_),
-					std::tr1::placeholders::_1)),
+					std::placeholders::_1)),
 			local::callbacks::rotation_entity_no_id(
-				std::tr1::bind(
+				std::bind(
 					&object::change_entity_rotation,
 					this,
 					model::entity_id(
 						next_id_),
-					std::tr1::placeholders::_1)),
+					std::placeholders::_1)),
 			local::callbacks::asteroid_died(
-				std::tr1::bind(
+				std::bind(
 					&object::asteroid_died,
 					this,
 					model::entity_id(
 						next_id_),
-					std::tr1::placeholders::_1,
-					std::tr1::placeholders::_2))));
+					std::placeholders::_1,
+					std::placeholders::_2))));
 
 	fcppt::container::ptr::insert_unique_ptr_map(
 		entities_,
 		next_id_,
-		fcppt::move(
+		std::move(
 			to_add));
 
 	add_asteroid_(
@@ -750,26 +747,26 @@ sgeroids::model::local::object::insert_projectile(
 		fcppt::log::_
 			<< FCPPT_TEXT("Inserting projectile"));
 
-	fcppt::unique_ptr<entity::projectile> to_add(
+	std::unique_ptr<entity::projectile> to_add(
 		fcppt::make_unique_ptr<entity::projectile>(
 			_position,
 			_rotation,
 			this->play_area(),
 			_owner_id,
 			local::callbacks::position_entity_no_id(
-				std::tr1::bind(
+				std::bind(
 					&object::change_entity_position,
 					this,
 					model::entity_id(
 						next_id_),
-					std::tr1::placeholders::_1)),
+					std::placeholders::_1)),
 			local::callbacks::rotation_entity_no_id(
-				std::tr1::bind(
+				std::bind(
 					&object::change_entity_rotation,
 					this,
 					model::entity_id(
 						next_id_),
-					std::tr1::placeholders::_1))));
+					std::placeholders::_1))));
 
 	model::radius const radius =
 		to_add->radius();
@@ -777,7 +774,7 @@ sgeroids::model::local::object::insert_projectile(
 	fcppt::container::ptr::insert_unique_ptr_map(
 		entities_,
 		next_id_,
-		fcppt::move(
+		std::move(
 			to_add));
 
 	add_projectile_(
@@ -835,20 +832,19 @@ sgeroids::model::local::object::asteroid_died(
 			_asteroid.velocity().get());
 
 	typedef
-	fcppt::container::array<model::velocity,2>
+	std::array<model::velocity,2>
 	velocity_array;
 
-	velocity_array const normals =
-		{{
-			model::velocity(
-				model::vector2(
-					-original_velocity.y(),
-					original_velocity.x())),
-			model::velocity(
-				model::vector2(
-					original_velocity.y(),
-					-original_velocity.x()))
-		}};
+	velocity_array const normals{{
+		model::velocity(
+			model::vector2(
+				-original_velocity.y(),
+				original_velocity.x())),
+		model::velocity(
+			model::vector2(
+				original_velocity.y(),
+				-original_velocity.x()))
+	}};
 
 	model::position const new_position(
 		_asteroid.position());
@@ -869,7 +865,7 @@ sgeroids::model::local::object::asteroid_died(
 		++new_velocity)
 	{
 
-		fcppt::unique_ptr<entity::asteroid> to_add(
+		std::unique_ptr<entity::asteroid> to_add(
 			fcppt::make_unique_ptr<entity::asteroid>(
 				new_position,
 				new_rotation,
@@ -878,33 +874,33 @@ sgeroids::model::local::object::asteroid_died(
 				this->play_area(),
 				*new_velocity,
 				local::callbacks::position_entity_no_id(
-					std::tr1::bind(
+					std::bind(
 						&object::change_entity_position,
 						this,
 						model::entity_id(
 							next_id_),
-						std::tr1::placeholders::_1)),
+						std::placeholders::_1)),
 				local::callbacks::rotation_entity_no_id(
-					std::tr1::bind(
+					std::bind(
 						&object::change_entity_rotation,
 						this,
 						model::entity_id(
 							next_id_),
-						std::tr1::placeholders::_1)),
+						std::placeholders::_1)),
 				local::callbacks::asteroid_died(
-					std::tr1::bind(
+					std::bind(
 						&object::asteroid_died,
 						this,
 						model::entity_id(
 							next_id_),
-						std::tr1::placeholders::_1,
-						std::tr1::placeholders::_2
+						std::placeholders::_1,
+						std::placeholders::_2
 						))));
 
 		fcppt::container::ptr::insert_unique_ptr_map(
 			entities_,
 			next_id_,
-			fcppt::move(
+			std::move(
 				to_add));
 
 		add_asteroid_(

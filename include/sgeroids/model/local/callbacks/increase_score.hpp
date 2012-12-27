@@ -2,7 +2,9 @@
 #define SGEROIDS_MODEL_LOCAL_CALLBACKS_INCREASE_SCORE_HPP_INCLUDED
 
 #include <sgeroids/model/local/callbacks/increase_score_function.hpp>
-#include <fcppt/function/object.hpp>
+#include <fcppt/config/external_begin.hpp>
+#include <functional>
+#include <fcppt/config/external_end.hpp>
 
 namespace sgeroids
 {
@@ -13,7 +15,7 @@ namespace local
 namespace callbacks
 {
 typedef
-fcppt::function::object<local::callbacks::increase_score_function>
+std::function<local::callbacks::increase_score_function>
 increase_score;
 }
 }

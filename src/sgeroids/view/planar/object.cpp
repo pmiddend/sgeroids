@@ -38,7 +38,6 @@
 #include <sge/image2d/system.hpp>
 #include <sge/renderer/matrix4.hpp>
 #include <sge/renderer/resource_flags_field.hpp>
-#include <sge/renderer/vertex_declaration.hpp>
 #include <sge/renderer/clear/parameters.hpp>
 #include <sge/renderer/context/ffp.hpp>
 #include <sge/renderer/device/ffp.hpp>
@@ -55,6 +54,8 @@
 #include <sge/renderer/texture/emulate_srgb.hpp>
 #include <sge/renderer/texture/planar.hpp>
 #include <sge/renderer/texture/mipmap/off.hpp>
+#include <sge/renderer/vertex/declaration.hpp>
+#include <sge/renderer/vertex/declaration_parameters.hpp>
 #include <sge/resource_tree/path.hpp>
 #include <sge/sprite/make_vertex_format.hpp>
 #include <sge/sprite/buffers/option.hpp>
@@ -69,12 +70,11 @@
 #include <sge/sprite/state/vertex_options.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>
 #include <sge/texture/part_raw_ptr.hpp>
-#include <fcppt/cref.hpp>
 #include <fcppt/insert_to_fcppt_string.hpp>
+#include <fcppt/make_shared_ptr.hpp>
 #include <fcppt/make_unique_ptr.hpp>
 #include <fcppt/optional_dynamic_cast.hpp>
 #include <fcppt/optional_impl.hpp>
-#include <fcppt/ref.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/type_name.hpp>
 #include <fcppt/container/ptr/insert_unique_ptr_map.hpp>
@@ -84,10 +84,10 @@
 #include <fcppt/math/matrix/output.hpp>
 #include <fcppt/math/matrix/scaling.hpp>
 #include <fcppt/math/vector/output.hpp>
-#include <fcppt/tr1/functional.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/filesystem/path.hpp>
 #include <algorithm>
+#include <functional>
 #include <typeinfo>
 #include <fcppt/config/external_end.hpp>
 
@@ -107,21 +107,21 @@ sgeroids::view::planar::object::object(
 		sgeroids::random_generator_seed()),
 	texture_tree_(
 		sgeroids::media_path() / FCPPT_TEXT("images"),
-		std::tr1::bind(
+		std::bind(
 			&object::create_texture_from_path,
 			this,
-			fcppt::ref(
+			std::ref(
 				_image_system),
-			std::tr1::placeholders::_1),
+			std::placeholders::_1),
 		rng_),
 	audio_buffer_tree_(
 		sgeroids::media_path() / FCPPT_TEXT("sounds"),
-		std::tr1::bind(
+		std::bind(
 			&object::create_audio_buffer_from_path,
 			this,
-			fcppt::ref(
+			std::ref(
 				_audio_loader),
-			std::tr1::placeholders::_1),
+			std::placeholders::_1),
 		rng_),
 	firing_sound_(
 		audio_buffer_tree_.get(
@@ -130,7 +130,8 @@ sgeroids::view::planar::object::object(
 			sge::audio::sound::nonpositional_parameters())),
 	sprite_vertex_declaration_(
 		renderer_.create_vertex_declaration(
-			sge::sprite::make_vertex_format<planar::sprite::choices>())),
+			sge::renderer::vertex::declaration_parameters(
+				sge::sprite::make_vertex_format<planar::sprite::choices>()))),
 	dynamic_buffers_(
 		sge::sprite::buffers::parameters(
 			renderer_,
@@ -176,18 +177,18 @@ sgeroids::view::planar::object::add_spaceship(
 		entities_,
 		_id.get(),
 		fcppt::make_unique_ptr<entity::spaceship>(
-			fcppt::ref(dynamic_collection_),
-			fcppt::ref(texture_tree_),
-			fcppt::ref(audio_player_),
-			fcppt::ref(audio_buffer_tree_),
+			dynamic_collection_,
+			texture_tree_,
+			audio_player_,
+			audio_buffer_tree_,
 			planar::callbacks::add_particle(
-				std::tr1::bind(
+				std::bind(
 					&object::add_particle,
 					this,
-					std::tr1::placeholders::_1,
-					std::tr1::placeholders::_2,
-					std::tr1::placeholders::_3)),
-			fcppt::ref(rng_),
+					std::placeholders::_1,
+					std::placeholders::_2,
+					std::placeholders::_3)),
+			rng_,
 			planar::radius_to_screen_space(
 				_radius),
 			sgeroids::view::planar::player_name(
@@ -212,10 +213,8 @@ sgeroids::view::planar::object::add_asteroid(
 		entities_,
 		_id.get(),
 		fcppt::make_unique_ptr<entity::asteroid>(
-			fcppt::ref(
-				dynamic_collection_),
-			fcppt::ref(
-				texture_tree_),
+			dynamic_collection_,
+			texture_tree_,
 			planar::radius_to_screen_space(
 				_radius)));
 }
@@ -230,10 +229,8 @@ sgeroids::view::planar::object::add_projectile(
 		entities_,
 		_id.get(),
 		fcppt::make_unique_ptr<entity::bullet>(
-			fcppt::ref(
-				dynamic_collection_),
-			fcppt::ref(
-				texture_tree_)));
+			dynamic_collection_,
+			texture_tree_));
 }
 
 void
@@ -247,10 +244,8 @@ sgeroids::view::planar::object::add_particle(
 		fcppt::make_unique_ptr<
 			particle::object
 		>(
-			fcppt::ref(
-				dynamic_collection_),
-			fcppt::ref(
-				texture_tree_),
+			dynamic_collection_,
+			texture_tree_,
 			_position,
 			_velocity,
 			_lifespan));
@@ -302,10 +297,8 @@ sgeroids::view::planar::object::score_change(
 		fcppt::make_unique_ptr<
 			sge::font::draw::static_text
 		>(
-			fcppt::ref(
-				renderer_),
-			fcppt::ref(
-				*score_font_),
+			renderer_,
+			*score_font_,
 			sge::font::from_fcppt_string(
 				fcppt::insert_to_fcppt_string(
 					maybe_a_ship->player_name())) +
@@ -439,16 +432,11 @@ sgeroids::view::planar::object::play_area(
 		fcppt::make_unique_ptr<
 			background::object
 		>(
-			fcppt::ref(
-				renderer_),
-			fcppt::cref(
-				*sprite_vertex_declaration_),
-			fcppt::ref(
-				texture_tree_),
-			fcppt::cref(
-				_area),
-			fcppt::ref(
-				rng_),
+			renderer_,
+			*sprite_vertex_declaration_,
+			texture_tree_,
+			_area,
+			rng_,
 			background::star_size(3500),
 			background::star_count(500u)));
 
@@ -549,9 +537,7 @@ sgeroids::view::planar::object::create_texture_from_path(
 {
 	return
 		sge::texture::const_part_shared_ptr(
-			// make_unique_ptr for now because make_shared_ptr
-			// can't take unique_ptrs as arguments
-			fcppt::make_unique_ptr<
+			fcppt::make_shared_ptr<
 				sge::texture::part_raw_ptr>(
 				sge::renderer::texture::create_planar_from_path(
 					_path,

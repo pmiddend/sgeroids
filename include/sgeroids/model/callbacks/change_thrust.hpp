@@ -2,7 +2,9 @@
 #define SGEROIDS_MODEL_CALLBACKS_CHANGE_THRUST_HPP_INCLUDED
 
 #include <sgeroids/model/callbacks/change_thrust_function.hpp>
-#include <fcppt/function/object.hpp>
+#include <fcppt/config/external_begin.hpp>
+#include <functional>
+#include <fcppt/config/external_end.hpp>
 
 namespace sgeroids
 {
@@ -11,7 +13,7 @@ namespace model
 namespace callbacks
 {
 typedef
-fcppt::function::object<callbacks::change_thrust_function>
+std::function<callbacks::change_thrust_function>
 change_thrust;
 }
 }

@@ -7,12 +7,13 @@
 #include <sge/input/keyboard/remove_event.hpp>
 #include <fcppt/insert_to_fcppt_string.hpp>
 #include <fcppt/make_unique_ptr.hpp>
-#include <fcppt/ref.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/container/ptr/push_back_unique_ptr.hpp>
 #include <fcppt/log/headers.hpp>
 #include <fcppt/signal/connection.hpp>
-#include <fcppt/tr1/functional.hpp>
+#include <fcppt/config/external_begin.hpp>
+#include <functional>
+#include <fcppt/config/external_end.hpp>
 
 
 sgeroids::input::manager::manager(
@@ -27,16 +28,16 @@ sgeroids::input::manager::manager(
 	keyboards_(),
 	keyboard_discover_connection_(
 		_input_processor.keyboard_discover_callback(
-			std::tr1::bind(
+			std::bind(
 				&manager::keyboard_discover,
 				this,
-				std::tr1::placeholders::_1))),
+				std::placeholders::_1))),
 	keyboard_remove_connection_(
 		_input_processor.keyboard_remove_callback(
-			std::tr1::bind(
+			std::bind(
 				&manager::keyboard_remove,
 				this,
-				std::tr1::placeholders::_1))),
+				std::placeholders::_1))),
 	last_keyboard_id_(
 		0)
 {
@@ -66,10 +67,8 @@ sgeroids::input::manager::keyboard_discover(
 	fcppt::container::ptr::push_back_unique_ptr(
 		keyboards_,
 		fcppt::make_unique_ptr<input::keyboard>(
-			fcppt::ref(
-				model_),
-			fcppt::ref(
-				e.get()),
+			model_,
+			e.get(),
 			player_name_id));
 }
 

@@ -2,7 +2,9 @@
 #define SGEROIDS_MODEL_LOCAL_ENTITY_UNIQUE_BASE_PTR_HPP_INCLUDED
 
 #include <sgeroids/model/local/entity/base_fwd.hpp>
-#include <fcppt/unique_ptr.hpp>
+#include <fcppt/config/external_begin.hpp>
+#include <memory>
+#include <fcppt/config/external_end.hpp>
 
 namespace sgeroids
 {
@@ -13,7 +15,7 @@ namespace local
 namespace entity
 {
 typedef
-fcppt::unique_ptr<entity::base>
+std::unique_ptr<entity::base>
 unique_base_ptr;
 }
 }

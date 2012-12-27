@@ -10,9 +10,9 @@
 #include <sgeroids/view/planar/sprite/object.hpp>
 #include <sgeroids/view/planar/sprite/ordered_collection.hpp>
 #include <sgeroids/view/planar/sprite/static_range.hpp>
-#include <sge/renderer/vertex_declaration_fwd.hpp>
 #include <sge/renderer/context/core_fwd.hpp>
 #include <sge/renderer/device/core_fwd.hpp>
+#include <sge/renderer/vertex/declaration_fwd.hpp>
 #include <sge/sprite/intrusive/ordered/collection_decl.hpp>
 #include <sge/sprite/render/range_decl.hpp>
 #include <sge/sprite/state/choices.hpp>
@@ -47,7 +47,7 @@ public:
 	*/
 	object(
 		sge::renderer::device::core &,
-		sge::renderer::vertex_declaration const &,
+		sge::renderer::vertex::declaration const &,
 		sgeroids::view::planar::texture_tree &,
 		sgeroids::model::play_area const &,
 		sgeroids::random_generator &,

@@ -14,7 +14,7 @@ namespace math
 */
 int
 discrete_sin(
-	math::degrees const &);
+	math::degrees const &d);
 }
 }
 

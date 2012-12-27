@@ -62,7 +62,7 @@ sge::renderer::parameters::object const
 renderer_parameters_from_config_file(
 	sge::parse::json::object const &_config)
 {
-	sge::renderer::parameters::vsync::type const vsync_enabled =
+	sge::renderer::parameters::vsync const vsync_enabled =
 		sge::parse::json::find_and_convert_member<bool>(
 			_config,
 			sge::parse::json::path(FCPPT_TEXT("renderer")) / FCPPT_TEXT("vsync-enabled"))
@@ -90,7 +90,7 @@ renderer_parameters_from_config_file(
 			_config,
 			sge::parse::json::path(FCPPT_TEXT("renderer")) / FCPPT_TEXT("visual-depth"));
 
-	sge::renderer::pixel_format::color::type const
+	sge::renderer::pixel_format::color const
 		bit_depth_sge =
 			bit_depth_value == 16
 			?

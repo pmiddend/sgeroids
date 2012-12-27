@@ -21,9 +21,9 @@
 #include <sge/image2d/system_fwd.hpp>
 #include <sge/charconv/system_fwd.hpp>
 #include <sge/renderer/matrix4.hpp>
-#include <sge/renderer/vertex_declaration_scoped_ptr.hpp>
 #include <sge/renderer/context/ffp_fwd.hpp>
 #include <sge/renderer/device/ffp_fwd.hpp>
+#include <sge/renderer/vertex/declaration_scoped_ptr.hpp>
 #include <sge/sprite/state/choices.hpp>
 #include <sge/sprite/state/object_decl.hpp>
 #include <sge/sprite/state/with_blend.hpp>
@@ -191,7 +191,7 @@ private:
 	planar::texture_tree texture_tree_;
 	planar::audio_buffer_tree audio_buffer_tree_;
 	sge::audio::sound::base_scoped_ptr const firing_sound_;
-	sge::renderer::vertex_declaration_scoped_ptr const sprite_vertex_declaration_;
+	sge::renderer::vertex::declaration_scoped_ptr const sprite_vertex_declaration_;
 	planar::sprite::dynamic_buffers dynamic_buffers_;
 	planar::sprite::ordered_collection dynamic_collection_;
 	sprite_state sprite_state_;

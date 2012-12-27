@@ -6,7 +6,6 @@
 #include <sgeroids/model/local/entity/asteroid.hpp>
 #include <sgeroids/model/local/entity/projectile.hpp>
 #include <fcppt/optional_dynamic_cast.hpp>
-#include <fcppt/ref.hpp>
 #include <fcppt/log/headers.hpp>
 #include <fcppt/math/vector/arithmetic.hpp>
 #include <fcppt/math/vector/arithmetic.hpp>
@@ -155,8 +154,7 @@ sgeroids::model::local::entity::asteroid::collides_with(
 			true;
 
 		asteroid_died_(
-			fcppt::ref(
-				*this),
+			*this,
 			p->owner_id());
 	}
 	// If we didn't die, our trajectory changes
