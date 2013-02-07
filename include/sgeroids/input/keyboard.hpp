@@ -42,6 +42,7 @@ private:
 	sge::input::keyboard::device &device_;
 	fcppt::signal::scoped_connection key_connection_;
 	fcppt::signal::scoped_connection add_spaceship_connection_;
+	fcppt::signal::scoped_connection remove_spaceship_connection_;
 	sgeroids::model::player_name const name_;
 	input::optional_entity_id id_;
 	bool rotation_left_pressed_,rotation_right_pressed_;
@@ -54,6 +55,10 @@ private:
 	add_spaceship(
 		model::entity_id const &,
 		model::radius const &,
+		model::player_name const &);
+
+	void
+	remove_spaceship(
 		model::player_name const &);
 };
 }

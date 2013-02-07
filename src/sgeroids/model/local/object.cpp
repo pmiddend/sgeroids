@@ -47,6 +47,7 @@ sgeroids::model::local::object::object(
 	entities_(),
 	asteroid_generator_(),
 	add_spaceship_(),
+	remove_spaceship_(),
 	add_asteroid_(),
 	add_projectile_(),
 	collide_projectile_asteroid_(),
@@ -68,6 +69,15 @@ sgeroids::model::local::object::add_spaceship_callback(
 {
 	return
 		add_spaceship_.connect(
+			_f);
+}
+
+fcppt::signal::auto_connection
+sgeroids::model::local::object::remove_spaceship_callback(
+	model::callbacks::remove_spaceship const &_f)
+{
+	return
+		remove_spaceship_.connect(
 			_f);
 }
 
@@ -106,7 +116,6 @@ sgeroids::model::local::object::score_change_callback(
 		score_change_.connect(
 			_f);
 }
-
 fcppt::signal::auto_connection
 sgeroids::model::local::object::destroy_asteroid_callback(
 	model::callbacks::destroy_asteroid const &_f)
@@ -375,8 +384,6 @@ sgeroids::model::local::object::process_message(
 			return;
 		}
 	}
-
-	FCPPT_ASSERT_UNREACHABLE;
 }
 
 void
@@ -485,6 +492,14 @@ sgeroids::model::local::object::entity_updates()
 		it->second->update();
 		if(it->second->dead())
 		{
+			
+			fcppt::optional<entity::spaceship &> maybe_ship =
+				fcppt::optional_dynamic_cast<entity::spaceship &>(
+					*(it->second)
+				);
+			if (maybe_ship)
+				remove_spaceship_(
+					maybe_ship->player_name());
 			remove_entity_(
 				model::entity_id(
 					it->first));

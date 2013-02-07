@@ -11,6 +11,7 @@
 #include <sgeroids/model/callbacks/add_asteroid.hpp>
 #include <sgeroids/model/callbacks/add_projectile.hpp>
 #include <sgeroids/model/callbacks/add_spaceship.hpp>
+#include <sgeroids/model/callbacks/remove_spaceship.hpp>
 #include <sgeroids/model/callbacks/change_thrust.hpp>
 #include <sgeroids/model/callbacks/collide_projectile_asteroid.hpp>
 #include <sgeroids/model/callbacks/destroy_asteroid.hpp>
@@ -50,6 +51,10 @@ public:
 	virtual fcppt::signal::auto_connection
 	add_spaceship_callback(
 		callbacks::add_spaceship const &) = 0;
+	
+	virtual fcppt::signal::auto_connection
+	remove_spaceship_callback(
+		callbacks::remove_spaceship const &) = 0;
 
 	virtual fcppt::signal::auto_connection
 	add_asteroid_callback(

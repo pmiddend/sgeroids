@@ -3,6 +3,7 @@
 #include <sgeroids/math/unit_magnitude.hpp>
 #include <sgeroids/math/wrap_point_in_torus.hpp>
 #include <sgeroids/model/log.hpp>
+#include <sgeroids/model/local/entity/asteroid.hpp>
 #include <sgeroids/model/local/entity/spaceship.hpp>
 #include <fcppt/optional_dynamic_cast.hpp>
 #include <fcppt/log/headers.hpp>
@@ -170,12 +171,10 @@ sgeroids::model::local::entity::spaceship::increase_score(
 
 void
 sgeroids::model::local::entity::spaceship::collides_with(
-	entity::base &/*_other*/)
+	entity::base &_other)
 {
-	/*
 	if(fcppt::optional_dynamic_cast<entity::asteroid const &>(_other))
 		this->kill();
-			*/
 }
 
 void

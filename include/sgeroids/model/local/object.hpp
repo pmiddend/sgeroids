@@ -42,51 +42,55 @@ public:
 
 	fcppt::signal::auto_connection
 	add_spaceship_callback(
-		model::callbacks::add_spaceship const &);
+		sgeroids::model::callbacks::add_spaceship const &);
+
+	fcppt::signal::auto_connection
+	remove_spaceship_callback(
+		sgeroids::model::callbacks::remove_spaceship const &);
 
 	fcppt::signal::auto_connection
 	add_asteroid_callback(
-		model::callbacks::add_asteroid const &);
+		sgeroids::model::callbacks::add_asteroid const &);
 
 	fcppt::signal::auto_connection
 	add_projectile_callback(
-		model::callbacks::add_projectile const &);
+		sgeroids::model::callbacks::add_projectile const &);
 
 	fcppt::signal::auto_connection
 	collide_projectile_asteroid_callback(
-		model::callbacks::collide_projectile_asteroid const &);
+		sgeroids::model::callbacks::collide_projectile_asteroid const &);
 
 	fcppt::signal::auto_connection
 	score_change_callback(
-		model::callbacks::score_change const &);
+		sgeroids::model::callbacks::score_change const &);
 
 	fcppt::signal::auto_connection
 	destroy_asteroid_callback(
-		model::callbacks::destroy_asteroid const &);
+		sgeroids::model::callbacks::destroy_asteroid const &);
 
 	fcppt::signal::auto_connection
 	remove_entity_callback(
-		model::callbacks::remove_entity const &);
+		sgeroids::model::callbacks::remove_entity const &);
 
 	fcppt::signal::auto_connection
 	position_entity_callback(
-		model::callbacks::position_entity const &);
+		sgeroids::model::callbacks::position_entity const &);
 
 	fcppt::signal::auto_connection
 	rotation_entity_callback(
-		model::callbacks::rotation_entity const &);
+		sgeroids::model::callbacks::rotation_entity const &);
 
 	fcppt::signal::auto_connection
 	gameover_callback(
-		model::callbacks::gameover const &);
+		sgeroids::model::callbacks::gameover const &);
 
 	fcppt::signal::auto_connection
 	error_callback(
-		model::callbacks::error const &);
+		sgeroids::model::callbacks::error const &);
 
 	fcppt::signal::auto_connection
 	change_thrust_callback(
-		model::callbacks::change_thrust const &);
+		sgeroids::model::callbacks::change_thrust const &);
 
 	void
 	process_message(
@@ -151,6 +155,7 @@ private:
 	entity_map entities_;
 	fcppt::scoped_ptr<asteroid_generator::object> asteroid_generator_;
 	fcppt::signal::object<model::callbacks::add_spaceship_function> add_spaceship_;
+	fcppt::signal::object<model::callbacks::remove_spaceship_function> remove_spaceship_;
 	fcppt::signal::object<model::callbacks::add_asteroid_function> add_asteroid_;
 	fcppt::signal::object<model::callbacks::add_projectile_function> add_projectile_;
 	fcppt::signal::object<model::callbacks::collide_projectile_asteroid_function> collide_projectile_asteroid_;

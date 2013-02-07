@@ -36,6 +36,12 @@ sgeroids::input::keyboard::keyboard(
 				std::placeholders::_1,
 				std::placeholders::_2,
 				std::placeholders::_3))),
+	remove_spaceship_connection_(
+		model_.remove_spaceship_callback(
+			std::bind(
+				&keyboard::remove_spaceship,
+				this,
+				std::placeholders::_1))),
 	name_(
 		_name),
 	id_(
@@ -44,8 +50,7 @@ sgeroids::input::keyboard::keyboard(
 		false),
 	rotation_right_pressed_(
 		false)
-{
-	FCPPT_LOG_DEBUG(
+{ FCPPT_LOG_DEBUG(
 		input::log(),
 		fcppt::log::_ << FCPPT_TEXT("Sending the model the add_player message"));
 
@@ -85,8 +90,10 @@ sgeroids::input::keyboard::key(
 	sge::input::keyboard::key_event const &e)
 {
 	if(
-		!id_.get().has_value())
+		!id_.get())
+	{
 		return;
+	}
 
 	switch(e.key_code())
 	{
@@ -159,5 +166,20 @@ sgeroids::input::keyboard::add_spaceship(
 			input::optional_entity_id(
 				fcppt::optional<model::entity_id>(
 					_entity_id));
+	}
+}
+
+void
+sgeroids::input::keyboard::remove_spaceship(
+	model::player_name const &_name)
+{
+	if(name_ == _name)
+	{
+		FCPPT_LOG_DEBUG(
+			input::log(),
+			fcppt::log::_
+				<< FCPPT_TEXT("In function ")
+				<< __FUNCTION__);
+		id_ = fcppt::optional<sgeroids::model::entity_id>();
 	}
 }
