@@ -200,6 +200,8 @@ set(
 	include/sgeroids/model/callbacks/position_entity_function.hpp
 	include/sgeroids/model/callbacks/remove_entity.hpp
 	include/sgeroids/model/callbacks/remove_entity_function.hpp
+	include/sgeroids/model/callbacks/remove_spaceship.hpp
+	include/sgeroids/model/callbacks/remove_spaceship_function.hpp
 	include/sgeroids/model/callbacks/rotation_entity.hpp
 	include/sgeroids/model/callbacks/rotation_entity_function.hpp
 	include/sgeroids/model/callbacks/score_change.hpp
