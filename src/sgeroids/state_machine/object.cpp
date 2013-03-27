@@ -5,7 +5,7 @@
 #include <sgeroids/state_machine/object.hpp>
 #include <sgeroids/state_machine/events/render.hpp>
 #include <sgeroids/state_machine/events/tick.hpp>
-#include <sge/charconv/utf8_file_to_fcppt_string.hpp>
+#include <sge/charconv/utf8_file_to_fcppt_string_exn.hpp>
 #include <sge/media/extension.hpp>
 #include <sge/media/extension_set.hpp>
 #include <sge/parse/json/convert_from.hpp>
@@ -122,7 +122,7 @@ sgeroids::state_machine::object::object(
 	config_(
 		sge::parse::json::config::merge_command_line_parameters(
 			sge::parse::json::parse_string_exn(
-				sge::charconv::utf8_file_to_fcppt_string(
+				sge::charconv::utf8_file_to_fcppt_string_exn(
 					sgeroids::media_path()/FCPPT_TEXT("config.json"))).object(),
 			sge::parse::json::config::create_command_line_parameters(
 				_argc,
