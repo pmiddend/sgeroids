@@ -309,7 +309,6 @@ set(
 	include/sgeroids/state_machine/states/ingame/superstate_fwd.hpp
 	include/sgeroids/systems.hpp
 	include/sgeroids/systems_fwd.hpp
-	include/sgeroids/utf8_file_to_fcppt_string.hpp
 	include/sgeroids/version.hpp
 	include/sgeroids/view/base.hpp
 	include/sgeroids/view/base_fwd.hpp
@@ -392,7 +391,6 @@ set(
 	src/sgeroids/state_machine/events/render.cpp
 	src/sgeroids/state_machine/object.cpp
 	src/sgeroids/state_machine/states/ingame/superstate.cpp
-	src/sgeroids/utf8_file_to_fcppt_string.cpp
 	src/sgeroids/version.cpp
 	src/sgeroids/view/base.cpp
 	src/sgeroids/view/log.cpp

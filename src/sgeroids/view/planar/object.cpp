@@ -95,7 +95,6 @@ sgeroids::view::planar::object::object(
 	sge::renderer::device::ffp &_renderer,
 	sge::font::system &_font_system,
 	sge::image2d::system &_image_system,
-	sge::charconv::system &_charconv_system,
 	sge::audio::loader &_audio_loader,
 	sge::audio::player &_audio_player)
 :
@@ -147,8 +146,6 @@ sgeroids::view::planar::object::object(
 	entities_(),
 	background_(),
 	particles_(),
-	charconv_system_(
-		_charconv_system),
 	score_font_(
 		_font_system.create_font(
 			sge::font::parameters()
@@ -193,7 +190,6 @@ sgeroids::view::planar::object::add_spaceship(
 				_radius),
 			sgeroids::view::planar::player_name(
 				sge::charconv::utf8_string_to_fcppt(
-					charconv_system_,
 					_player_name.get()))));
 }
 

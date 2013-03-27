@@ -3,7 +3,6 @@
 
 #include <sgeroids/systems.hpp>
 #include <sgeroids/state_machine/states/ingame/superstate_fwd.hpp>
-#include <sge/charconv/system_scoped_ptr.hpp>
 #include <sge/parse/json/object.hpp>
 #include <awl/main/exit_code.hpp>
 #include <fcppt/noncopyable.hpp>
@@ -43,9 +42,6 @@ public:
 	sgeroids::systems const &
 	systems() const;
 
-	sge::charconv::system &
-	charconv_system();
-
 	awl::main::exit_code const
 	run();
 
@@ -54,7 +50,6 @@ public:
 
 	~object();
 private:
-	sge::charconv::system_scoped_ptr const charconv_system_;
 	sge::parse::json::object const config_;
 	sgeroids::systems systems_;
 };

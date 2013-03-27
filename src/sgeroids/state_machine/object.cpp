@@ -1,13 +1,11 @@
 #include <sgeroids/exception.hpp>
 #include <sgeroids/media_path.hpp>
 #include <sgeroids/systems.hpp>
-#include <sgeroids/utf8_file_to_fcppt_string.hpp>
 #include <sgeroids/version.hpp>
 #include <sgeroids/state_machine/object.hpp>
 #include <sgeroids/state_machine/events/render.hpp>
 #include <sgeroids/state_machine/events/tick.hpp>
-#include <sge/charconv/create_system.hpp>
-#include <sge/charconv/system.hpp>
+#include <sge/charconv/utf8_file_to_fcppt_string.hpp>
 #include <sge/media/extension.hpp>
 #include <sge/media/extension_set.hpp>
 #include <sge/parse/json/convert_from.hpp>
@@ -31,7 +29,6 @@
 #include <sge/renderer/target/onscreen.hpp>
 #include <sge/systems/audio_loader.hpp>
 #include <sge/systems/audio_player_default.hpp>
-#include <sge/systems/charconv.hpp>
 #include <sge/systems/cursor_option_field.hpp>
 #include <sge/systems/font.hpp>
 #include <sge/systems/image2d.hpp>
@@ -122,13 +119,10 @@ sgeroids::state_machine::object::object(
 	int const _argc,
 	char * _argv[])
 :
-	charconv_system_(
-		sge::charconv::create_system()),
 	config_(
 		sge::parse::json::config::merge_command_line_parameters(
 			sge::parse::json::parse_string_exn(
-				sgeroids::utf8_file_to_fcppt_string(
-					*charconv_system_,
+				sge::charconv::utf8_file_to_fcppt_string(
 					sgeroids::media_path()/FCPPT_TEXT("config.json"))).object(),
 			sge::parse::json::config::create_command_line_parameters(
 				_argc,
@@ -153,8 +147,6 @@ sgeroids::state_machine::object::object(
 			(sge::systems::input(
 				sge::systems::cursor_option_field::null()))
 			(sge::systems::audio_player_default())
-			(sge::systems::charconv(
-				*charconv_system_))
 			(sge::systems::font())
 			(sge::systems::image2d(
 				sge::image::capabilities_field::null(),
@@ -181,13 +173,6 @@ sgeroids::systems const &
 sgeroids::state_machine::object::systems() const
 {
 	return systems_;
-}
-
-sge::charconv::system &
-sgeroids::state_machine::object::charconv_system()
-{
-	return
-		*charconv_system_;
 }
 
 awl::main::exit_code const

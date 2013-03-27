@@ -18,13 +18,10 @@
 
 sgeroids::input::manager::manager(
 	sge::input::processor &_input_processor,
-	sgeroids::model::base &_model,
-	sge::charconv::system &_charconv_system)
+	sgeroids::model::base &_model)
 :
 	model_(
 		_model),
-	charconv_system_(
-		_charconv_system),
 	keyboards_(),
 	keyboard_discover_connection_(
 		_input_processor.keyboard_discover_callback(
@@ -53,7 +50,6 @@ sgeroids::input::manager::keyboard_discover(
 {
 	sgeroids::model::player_name player_name_id(
 		sge::charconv::fcppt_string_to_utf8(
-			charconv_system_,
 			FCPPT_TEXT("keyboard")+
 			fcppt::insert_to_fcppt_string(
 				++last_keyboard_id_)));

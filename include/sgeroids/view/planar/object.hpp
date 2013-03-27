@@ -19,7 +19,6 @@
 #include <sge/font/draw/static_text_fwd.hpp>
 #include <sge/font/object_scoped_ptr.hpp>
 #include <sge/image2d/system_fwd.hpp>
-#include <sge/charconv/system_fwd.hpp>
 #include <sge/renderer/matrix4.hpp>
 #include <sge/renderer/context/ffp_fwd.hpp>
 #include <sge/renderer/device/ffp_fwd.hpp>
@@ -85,7 +84,6 @@ public:
 		sge::renderer::device::ffp &,
 		sge::font::system &,
 		sge::image2d::system &,
-		sge::charconv::system &,
 		sge::audio::loader &,
 		sge::audio::player &);
 
@@ -199,7 +197,6 @@ private:
 	entity_map entities_;
 	fcppt::scoped_ptr<background::object> background_;
 	particle_vector particles_;
-	sge::charconv::system &charconv_system_;
 	sge::font::object_scoped_ptr score_font_;
 
 	typedef

@@ -34,7 +34,6 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 			this->context<state_machine::object>().systems().renderer_ffp(),
 			this->context<state_machine::object>().systems().font_system(),
 			this->context<state_machine::object>().systems().image_system(),
-			this->context<state_machine::object>().systems().charconv_system(),
 			this->context<state_machine::object>().systems().audio_loader(),
 			this->context<state_machine::object>().systems().audio_player())),
 	input_manager_(
@@ -46,8 +45,7 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 		?
 			fcppt::make_unique_ptr<sgeroids::input::manager>(
 				this->context<state_machine::object>().systems().input_processor(),
-				*model_,
-				this->context<state_machine::object>().charconv_system())
+				*model_)
 		:
 			std::unique_ptr<sgeroids::input::manager>()),
 	replay_file_reader_(
