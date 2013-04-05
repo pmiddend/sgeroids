@@ -8,7 +8,8 @@
 #include <fcppt/math/vector/arithmetic.hpp>
 #include <fcppt/math/vector/object_impl.hpp>
 #include <fcppt/random/variate_impl.hpp>
-#include <fcppt/random/distribution/uniform_int_impl.hpp>
+#include <fcppt/random/distribution/basic_impl.hpp>
+#include <fcppt/random/distribution/parameters/uniform_int_impl.hpp>
 
 
 sgeroids::model::local::asteroid_generator::object::object(
@@ -23,66 +24,66 @@ sgeroids::model::local::asteroid_generator::object::object(
 	next_asteroid_duration_rng_(
 		_rng,
 		uint_distribution(
-			uint_distribution::min(
+			uint_distribution::param_type::min(
 				2u*60u),
-			uint_distribution::max(
+			uint_distribution::param_type::max(
 				6u*60u))),
 	radius_rng_(
 		_rng,
 		int_distribution(
-			int_distribution::min(
+			int_distribution::param_type::min(
 				math::unit_magnitude() * 30000),
-			int_distribution::max(
+			int_distribution::param_type::max(
 				math::unit_magnitude() * 120000))),
 	rotation_rng_(
 		_rng,
 		int_distribution(
-			int_distribution::min(
+			int_distribution::param_type::min(
 				0),
-			int_distribution::max(
+			int_distribution::param_type::max(
 				360 * sgeroids::math::unit_magnitude()))),
 	rotation_direction_rng_(
 		_rng,
 		int_distribution(
-			int_distribution::min(
+			int_distribution::param_type::min(
 				-sgeroids::math::unit_magnitude()),
-			int_distribution::max(
+			int_distribution::param_type::max(
 				sgeroids::math::unit_magnitude()))),
 	velocity_angle_rng_(
 		_rng,
 		int_distribution(
-			int_distribution::min(
+			int_distribution::param_type::min(
 				0),
-			int_distribution::max(
+			int_distribution::param_type::max(
 				360))),
 	velocity_magnitude_rng_(
 		_rng,
 		int_distribution(
-			int_distribution::min(
+			int_distribution::param_type::min(
 				0),
-			int_distribution::max(
+			int_distribution::param_type::max(
 				10 * sgeroids::math::unit_magnitude()))),
 	play_area_side_rng_(
 		_rng,
 		int_distribution(
-			int_distribution::min(
+			int_distribution::param_type::min(
 				0),
 			// TODO: magic constant?
-			int_distribution::max(
+			int_distribution::param_type::max(
 				3))),
 	play_area_x_rng_(
 		_rng,
 		int_distribution(
-			int_distribution::min(
+			int_distribution::param_type::min(
 				play_area_.left()),
-			int_distribution::max(
+			int_distribution::param_type::max(
 				play_area_.right()))),
 	play_area_y_rng_(
 		_rng,
 		int_distribution(
-			int_distribution::min(
+			int_distribution::param_type::min(
 				play_area_.top()),
-			int_distribution::max(
+			int_distribution::param_type::max(
 				play_area_.bottom()))),
 	next_asteroid_countdown_(
 		next_asteroid_duration_rng_())

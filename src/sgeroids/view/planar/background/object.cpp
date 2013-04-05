@@ -28,8 +28,9 @@
 #include <sge/texture/part.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/random/variate.hpp>
-#include <fcppt/random/distribution/uniform_int.hpp>
-#include <fcppt/random/distribution/uniform_real.hpp>
+#include <fcppt/random/distribution/basic.hpp>
+#include <fcppt/random/distribution/parameters/uniform_int.hpp>
+#include <fcppt/random/distribution/parameters/uniform_real.hpp>
 
 
 sgeroids::view::planar::background::object::object(
@@ -63,12 +64,16 @@ sgeroids::view::planar::background::object::object(
 	star_count_(
 		_star_count)
 {
-	typedef fcppt::random::distribution::uniform_int<
-		int
+	typedef fcppt::random::distribution::basic<
+		fcppt::random::distribution::parameters::uniform_int<
+			int
+		>
 	> int_distribution;
 
-	typedef fcppt::random::distribution::uniform_real<
-		float
+	typedef fcppt::random::distribution::basic<
+		fcppt::random::distribution::parameters::uniform_real<
+			float
+		>
 	> float_distribution;
 
 	typedef fcppt::random::variate<
@@ -84,33 +89,33 @@ sgeroids::view::planar::background::object::object(
 	int_rng random_x(
 		_rng,
 		int_distribution(
-			int_distribution::min(
+			int_distribution::param_type::min(
 				0),
-			int_distribution::max(
+			int_distribution::param_type::max(
 				play_area_.get().w())));
 
 	int_rng random_y(
 		_rng,
 		int_distribution(
-			int_distribution::min(
+			int_distribution::param_type::min(
 				0),
-			int_distribution::max(
+			int_distribution::param_type::max(
 				play_area_.get().h())));
 
 	float_rng random_angle(
 		_rng,
 		float_distribution(
-			float_distribution::min(
+			float_distribution::param_type::min(
 				0.f),
-			float_distribution::sup(
+			float_distribution::param_type::sup(
 				6.f)));
 
 	int_rng random_radius(
 		_rng,
 		int_distribution(
-			int_distribution::min(
+			int_distribution::param_type::min(
 				math::unit_magnitude() * star_size_.get()),
-			int_distribution::max(
+			int_distribution::param_type::max(
 				math::unit_magnitude() * star_size_.get() * 4)));
 
 	for (

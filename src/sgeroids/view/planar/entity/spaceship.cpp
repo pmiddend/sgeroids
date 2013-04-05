@@ -23,7 +23,8 @@
 #include <fcppt/text.hpp>
 #include <fcppt/math/vector/arithmetic.hpp>
 #include <fcppt/random/variate_impl.hpp>
-#include <fcppt/random/distribution/uniform_int_impl.hpp>
+#include <fcppt/random/distribution/basic_impl.hpp>
+#include <fcppt/random/distribution/parameters/uniform_int_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <iostream>
 #include <fcppt/config/external_end.hpp>
@@ -72,9 +73,9 @@ sgeroids::view::planar::entity::spaceship::spaceship(
 	rotation_rng_(
 		_rng,
 		int_distribution(
-			int_distribution::min(
+			int_distribution::param_type::min(
 				0),
-			int_distribution::max(
+			int_distribution::param_type::max(
 				360))),
 	thrust_(
 		false),

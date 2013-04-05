@@ -15,7 +15,8 @@
 #include <sge/audio/sound/base_scoped_ptr.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>
 #include <fcppt/random/variate_decl.hpp>
-#include <fcppt/random/distribution/uniform_int_decl.hpp>
+#include <fcppt/random/distribution/basic_decl.hpp>
+#include <fcppt/random/distribution/parameters/uniform_int_decl.hpp>
 
 
 namespace sgeroids
@@ -70,8 +71,10 @@ private:
 	sge::audio::player &audio_player_;
 	sge::audio::sound::base_scoped_ptr const thrust_sound_;
 	planar::callbacks::add_particle const add_particle_;
-	typedef fcppt::random::distribution::uniform_int<
-		int
+	typedef fcppt::random::distribution::basic<
+		fcppt::random::distribution::parameters::uniform_int<
+			int
+		>
 	> int_distribution;
 	fcppt::random::variate<sgeroids::random_generator, int_distribution> rotation_rng_;
 	bool thrust_;

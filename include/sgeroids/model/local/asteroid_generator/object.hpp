@@ -7,7 +7,8 @@
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/math/box/object_impl.hpp>
 #include <fcppt/random/variate_decl.hpp>
-#include <fcppt/random/distribution/uniform_int_decl.hpp>
+#include <fcppt/random/distribution/basic_decl.hpp>
+#include <fcppt/random/distribution/parameters/uniform_int_decl.hpp>
 
 
 namespace sgeroids
@@ -66,12 +67,16 @@ private:
 	model::rect const play_area_;
 	local::callbacks::asteroid_generation asteroid_generation_;
 
-	typedef fcppt::random::distribution::uniform_int<
-		int
+	typedef fcppt::random::distribution::basic<
+		fcppt::random::distribution::parameters::uniform_int<
+			int
+		>
 	> int_distribution;
 
-	typedef fcppt::random::distribution::uniform_int<
-		unsigned
+	typedef fcppt::random::distribution::basic<
+		fcppt::random::distribution::parameters::uniform_int<
+			unsigned
+		>
 	> uint_distribution;
 
 	fcppt::random::variate<sgeroids::random_generator, uint_distribution> next_asteroid_duration_rng_;
