@@ -10,7 +10,7 @@ namespace view
 namespace planar
 {
 typedef
-fcppt::math::vector::static_<int,2>::type
+fcppt::math::vector::static_<int,2>
 vector2;
 }
 }

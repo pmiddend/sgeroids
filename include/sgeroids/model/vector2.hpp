@@ -18,7 +18,7 @@ fcppt::math::vector::static_
 <
 	int,
 	2
->::type
+>
 vector2;
 }
 }

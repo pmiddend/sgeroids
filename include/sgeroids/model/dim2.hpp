@@ -18,7 +18,7 @@ fcppt::math::dim::static_
 <
 	int,
 	2
->::type
+>
 dim2;
 }
 }
