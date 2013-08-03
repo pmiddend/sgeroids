@@ -30,10 +30,10 @@ alda::message::make_class
 			<
 				sgeroids::model::serialization::message::adapted_types::message,
 				sgeroids::model::serialization::message::types::message::update
-			>::type
+			>
 		>
 	>
->::type
+>
 update;
 }
 }

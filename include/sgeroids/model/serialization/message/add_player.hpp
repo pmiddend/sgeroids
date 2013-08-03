@@ -32,7 +32,7 @@ alda::message::make_class
 			<
 				sgeroids::model::serialization::message::adapted_types::message,
 				sgeroids::model::serialization::message::types::message::add_player
-			>::type,
+			>,
 			majutsu::role
 			<
 				sgeroids::model::serialization::message::adapted_types::string,
@@ -40,7 +40,7 @@ alda::message::make_class
 			>
 		>
 	>
->::type
+>
 add_player;
 }
 }

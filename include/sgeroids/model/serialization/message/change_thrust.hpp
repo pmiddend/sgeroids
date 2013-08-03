@@ -34,7 +34,7 @@ alda::message::make_class
 			<
 				sgeroids::model::serialization::message::adapted_types::message,
 				sgeroids::model::serialization::message::types::message::change_thrust
-			>::type,
+			>,
 			majutsu::role
 			<
 				sgeroids::model::serialization::message::adapted_types::entity_id,
@@ -47,7 +47,7 @@ alda::message::make_class
 			>
 		>
 	>
->::type
+>
 change_thrust;
 }
 }

@@ -32,7 +32,7 @@ alda::message::make_class
 			<
 				sgeroids::model::serialization::message::adapted_types::message,
 				sgeroids::model::serialization::message::types::message::rng_seed
-			>::type,
+			>,
 			majutsu::role
 			<
 				sgeroids::model::serialization::message::adapted_types::rng_seed,
@@ -40,7 +40,7 @@ alda::message::make_class
 			>
 		>
 	>
->::type
+>
 rng_seed;
 }
 }
