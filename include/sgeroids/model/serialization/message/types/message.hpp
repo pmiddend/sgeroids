@@ -24,7 +24,7 @@ enum class message
 	rotation_direction,
 	change_thrust,
 	change_firing_mode,
-	size
+	fcppt_maximum = change_firing_mode
 };
 
 }
