@@ -3,6 +3,7 @@
 #include <alda/message/instantiate_concrete.hpp>
 #include <alda/serialization/instantiate_message.hpp>
 #include <alda/serialization/register_message.hpp>
+#include <alda/serialization/load/static_size.hpp>
 
 
 ALDA_MESSAGE_INSTANTIATE_CONCRETE(
