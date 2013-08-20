@@ -54,7 +54,7 @@ include_directories(
 # Boost begin
 find_package(
 	Boost 1.47.0 REQUIRED COMPONENTS
-	chrono
+	filesystem
 	system)
 
 include_directories(
@@ -429,7 +429,7 @@ target_link_libraries(
 	${awl_TARGET}
 	${sge_TARGETS}
 	${alda_TARGET}
-	${Boost_CHRONO_LIBRARY}
+	${Boost_FILESYSTEM_LIBRARY}
 	${Boost_SYSTEMS_LIBRARY}
 )
 
