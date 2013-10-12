@@ -17,7 +17,7 @@
 #include <fcppt/make_unique_ptr.hpp>
 #include <fcppt/optional_dynamic_cast.hpp>
 #include <fcppt/text.hpp>
-#include <fcppt/type_name.hpp>
+#include <fcppt/type_name_from_info.hpp>
 #include <fcppt/assert/unreachable.hpp>
 #include <fcppt/container/ptr/insert_unique_ptr_map.hpp>
 #include <fcppt/log/headers.hpp>
@@ -646,7 +646,7 @@ sgeroids::model::local::object::find_spaceship_by_id_exn(
 				fcppt::insert_to_fcppt_string(
 					_id.get())+
 				FCPPT_TEXT(" refers to an entity of (invalid) type ")+
-				fcppt::type_name(
+				fcppt::type_name_from_info(
 					typeid(
 						*(it->second))));
 

@@ -76,7 +76,7 @@
 #include <fcppt/optional_dynamic_cast.hpp>
 #include <fcppt/optional_impl.hpp>
 #include <fcppt/text.hpp>
-#include <fcppt/type_name.hpp>
+#include <fcppt/type_name_from_info.hpp>
 #include <fcppt/container/ptr/insert_unique_ptr_map.hpp>
 #include <fcppt/container/ptr/push_back_unique_ptr.hpp>
 #include <fcppt/log/headers.hpp>
@@ -412,7 +412,7 @@ sgeroids::view::planar::object::change_thrust(
 				fcppt::insert_to_fcppt_string(
 					_id.get())+
 				FCPPT_TEXT(" refers to an entity of (invalid) type ")+
-				fcppt::type_name(
+				fcppt::type_name_from_info(
 					typeid(
 						*(it->second))));
 
