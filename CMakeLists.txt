@@ -210,7 +210,6 @@ set(
 	include/sgeroids/model/entity_id.hpp
 	include/sgeroids/model/error_code.hpp
 	include/sgeroids/model/error_code_fwd.hpp
-	include/sgeroids/model/error_function.hpp
 	include/sgeroids/model/firing_mode.hpp
 	include/sgeroids/model/firing_mode_fwd.hpp
 	include/sgeroids/model/local/asteroid_generator/object.hpp
