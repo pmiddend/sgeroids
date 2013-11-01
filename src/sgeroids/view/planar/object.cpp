@@ -16,7 +16,8 @@
 #include <sge/audio/buffer.hpp>
 #include <sge/audio/buffer_shared_ptr.hpp>
 #include <sge/audio/file.hpp>
-#include <sge/audio/loader.hpp>
+#include <sge/audio/load_exn.hpp>
+#include <sge/audio/loader_fwd.hpp>
 #include <sge/audio/player.hpp>
 #include <sge/audio/sound/base.hpp>
 #include <sge/audio/sound/nonpositional_parameters.hpp>
@@ -553,8 +554,12 @@ sgeroids::view::planar::object::create_audio_buffer_from_path(
 	return
 		sge::audio::buffer_shared_ptr(
 			audio_player_.create_buffer(
-				*_audio_loader.load(
-					_path)));
+				*sge::audio::load_exn(
+					_audio_loader,
+					_path
+				)
+			)
+		);
 
 }
 
