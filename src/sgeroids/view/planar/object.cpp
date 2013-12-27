@@ -80,7 +80,8 @@
 #include <fcppt/type_name_from_info.hpp>
 #include <fcppt/container/ptr/insert_unique_ptr_map.hpp>
 #include <fcppt/container/ptr/push_back_unique_ptr.hpp>
-#include <fcppt/log/headers.hpp>
+#include <fcppt/log/_.hpp>
+#include <fcppt/log/debug.hpp>
 #include <fcppt/math/box/structure_cast.hpp>
 #include <fcppt/math/matrix/output.hpp>
 #include <fcppt/math/matrix/scaling.hpp>

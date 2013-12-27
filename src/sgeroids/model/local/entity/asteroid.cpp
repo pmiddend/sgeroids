@@ -6,13 +6,7 @@
 #include <sgeroids/model/local/entity/asteroid.hpp>
 #include <sgeroids/model/local/entity/projectile.hpp>
 #include <fcppt/optional_dynamic_cast.hpp>
-#include <fcppt/log/headers.hpp>
 #include <fcppt/math/vector/arithmetic.hpp>
-#include <fcppt/math/vector/arithmetic.hpp>
-#include <fcppt/config/external_begin.hpp>
-#include <iostream>
-#include <ostream>
-#include <fcppt/config/external_end.hpp>
 
 
 sgeroids::model::local::entity::asteroid::asteroid(
@@ -50,7 +44,6 @@ sgeroids::model::local::entity::asteroid::asteroid(
 	dead_(
 		false)
 {
-	std::cout << "asteroid added" << std::endl;
 }
 
 void

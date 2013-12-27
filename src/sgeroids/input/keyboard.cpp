@@ -7,7 +7,8 @@
 #include <sge/input/keyboard/key_event.hpp>
 #include <fcppt/optional_impl.hpp>
 #include <fcppt/text.hpp>
-#include <fcppt/log/headers.hpp>
+#include <fcppt/log/_.hpp>
+#include <fcppt/log/debug.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <functional>
 #include <fcppt/config/external_end.hpp>
@@ -50,7 +51,8 @@ sgeroids::input::keyboard::keyboard(
 		false),
 	rotation_right_pressed_(
 		false)
-{ FCPPT_LOG_DEBUG(
+{
+	FCPPT_LOG_DEBUG(
 		input::log(),
 		fcppt::log::_ << FCPPT_TEXT("Sending the model the add_player message"));
 
