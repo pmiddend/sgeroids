@@ -23,7 +23,6 @@
 #include <sge/audio/sound/nonpositional_parameters.hpp>
 #include <sge/audio/sound/repeat.hpp>
 #include <sge/charconv/utf8_string_to_fcppt.hpp>
-#include <sge/font/align_h.hpp>
 #include <sge/font/from_fcppt_string.hpp>
 #include <sge/font/lit.hpp>
 #include <sge/font/object.hpp>
@@ -32,6 +31,7 @@
 #include <sge/font/text_parameters.hpp>
 #include <sge/font/ttf_size.hpp>
 #include <sge/font/vector.hpp>
+#include <sge/font/align_h/left.hpp>
 #include <sge/font/draw/static_text.hpp>
 #include <sge/image/color/predef.hpp>
 #include <sge/image/color/format.hpp>
@@ -305,7 +305,7 @@ sgeroids::view::planar::object::score_change(
 				fcppt::insert_to_fcppt_string(
 					_score.get())),
 			sge::font::text_parameters(
-				sge::font::align_h::left),
+				sge::font::align_h::left()),
 			sge::font::vector(
 				0,
 				0
