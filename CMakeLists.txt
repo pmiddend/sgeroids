@@ -104,7 +104,7 @@ find_package(
 	renderer
 	sprite
 	texture
-	parse
+	parsejson
 	resource_tree
 	systems
 	timer
