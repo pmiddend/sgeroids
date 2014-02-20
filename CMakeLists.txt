@@ -1,5 +1,7 @@
-# 2.6 is more or less guesswork
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(
+	VERSION
+	2.8.12
+)
 
 project(
 	sgeroids)
@@ -70,25 +72,12 @@ if(
 endif()
 # boost end
 
-# fcppt begin
 find_package(
 	fcppt REQUIRED)
-include_directories(
-	${fcppt_INCLUDE_DIRS})
-add_definitions(
-	${fcppt_DEFINITIONS})
-# fcppt end
 
-# awl begin
 find_package(
 	awl REQUIRED)
-include_directories(
-	${awl_INCLUDE_DIRS})
-add_definitions(
-	${awl_DEFINITIONS})
-# awl end
 
-# sge begin
 find_package(
 	sge REQUIRED
 	COMPONENTS
@@ -112,26 +101,8 @@ find_package(
 	viewport
 )
 
-include_directories(
-	${sge_INCLUDE_DIRS})
-add_definitions(
-	${sge_DEFINITIONS})
-# sge end
-
-# alda begin
 find_package(
 	alda REQUIRED)
-include_directories(
-	${alda_INCLUDE_DIRS})
-add_definitions(
-	${alda_DEFINITIONS})
-# alda end
-
-# Get rid of a pretty useless warning
-if(CMAKE_COMPILER_IS_GNUCXX OR FCPPT_UTILS_COMPILER_IS_CLANGPP)
-	add_definitions(
-		-Wno-old-style-cast)
-endif()
 
 # Begin media path stuff
 # TODO: How exactly does this path stuff work?
@@ -419,6 +390,10 @@ awl_utils_add_portable_executable(
 	${CMAKE_PROJECT_NAME}
 	"sgeroids::main"
 	${SGEROIDS_FILES})
+
+fcppt_utils_set_target_compiler_flags(
+	${CMAKE_PROJECT_NAME}
+)
 
 # Link to what?
 target_link_libraries(
