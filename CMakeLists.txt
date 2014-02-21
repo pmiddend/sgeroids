@@ -104,6 +104,10 @@ find_package(
 find_package(
 	alda REQUIRED)
 
+fcppt_utils_install_data_dir(
+	INSTALL_DATA_DIR
+)
+
 # Begin media path stuff
 # TODO: How exactly does this path stuff work?
 set(
