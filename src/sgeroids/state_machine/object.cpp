@@ -18,8 +18,8 @@
 #include <sge/renderer/context/scoped_ffp.hpp>
 #include <sge/renderer/device/ffp.hpp>
 #include <sge/renderer/display_mode/optional_object.hpp>
-#include <sge/renderer/parameters/object.hpp>
-#include <sge/renderer/parameters/vsync.hpp>
+#include <sge/renderer/display_mode/parameters.hpp>
+#include <sge/renderer/display_mode/vsync.hpp>
 #include <sge/renderer/pixel_format/color.hpp>
 #include <sge/renderer/pixel_format/depth_stencil.hpp>
 #include <sge/renderer/pixel_format/multi_samples.hpp>
@@ -55,18 +55,18 @@ namespace
 {
 // This helper function takes config file parameters and creates renderer
 // parameters from it.
-sge::renderer::parameters::object const
+sge::systems::renderer
 renderer_parameters_from_config_file(
 	sge::parse::json::object const &_config)
 {
-	sge::renderer::parameters::vsync const vsync_enabled =
+	sge::renderer::display_mode::vsync const vsync_enabled =
 		sge::parse::json::find_and_convert_member<bool>(
 			_config,
 			sge::parse::json::path(FCPPT_TEXT("renderer")) / FCPPT_TEXT("vsync-enabled"))
 		?
-			sge::renderer::parameters::vsync::on
+			sge::renderer::display_mode::vsync::on
 		:
-			sge::renderer::parameters::vsync::off;
+			sge::renderer::display_mode::vsync::off;
 
 	sge::parse::json::value const &multi_sampling_json =
 		sge::parse::json::find_and_convert_member<sge::parse::json::value>(
@@ -104,14 +104,24 @@ renderer_parameters_from_config_file(
 								bit_depth_value)));
 
 	return
-		sge::renderer::parameters::object(
+		sge::systems::renderer(
 			sge::renderer::pixel_format::object(
 				bit_depth_sge,
 				sge::renderer::pixel_format::depth_stencil::off,
 				multi_sampling_sge,
-				sge::renderer::pixel_format::srgb::no),
-			vsync_enabled,
-			sge::renderer::display_mode::optional_object());
+				sge::renderer::pixel_format::srgb::no
+			),
+			sge::renderer::display_mode::parameters(
+				vsync_enabled,
+				sge::renderer::display_mode::optional_object()
+			),
+			sge::viewport::maintain_aspect(
+				sge::viewport::fractional_aspect(
+					1u,
+					1u
+				)
+			)
+		);
 }
 }
 
@@ -137,13 +147,11 @@ sgeroids::state_machine::object::object(
 					sge::parse::json::find_and_convert_member<sge::window::dim>(
 						this->config(),
 						sge::parse::json::path(FCPPT_TEXT("renderer")) / FCPPT_TEXT("window-size")))))
-			(sge::systems::renderer(
+			(
 				renderer_parameters_from_config_file(
-					this->config()),
-				sge::viewport::maintain_aspect(
-					sge::viewport::fractional_aspect(
-						1u,
-						1u))))
+					this->config()
+				)
+			)
 			(sge::systems::input(
 				sge::systems::cursor_option_field::null()))
 			(sge::systems::audio_player_default())
@@ -188,8 +196,8 @@ sgeroids::state_machine::object::run()
 			sgeroids::state_machine::events::tick());
 
 		sge::renderer::context::scoped_ffp const scoped_block(
-			systems_.renderer_ffp(),
-			systems_.renderer_ffp().onscreen_target());
+			systems_.renderer_device_ffp(),
+			systems_.renderer_device_ffp().onscreen_target());
 
 		this->process_event(
 			sgeroids::state_machine::events::render(
