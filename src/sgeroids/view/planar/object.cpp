@@ -48,7 +48,7 @@
 #include <sge/renderer/projection/rect.hpp>
 #include <sge/renderer/state/ffp/transform/mode.hpp>
 #include <sge/renderer/state/ffp/transform/object.hpp>
-#include <sge/renderer/state/ffp/transform/object_scoped_ptr.hpp>
+#include <sge/renderer/state/ffp/transform/object_unique_ptr.hpp>
 #include <sge/renderer/state/ffp/transform/parameters.hpp>
 #include <sge/renderer/state/ffp/transform/scoped.hpp>
 #include <sge/renderer/texture/create_planar_from_path.hpp>
@@ -291,7 +291,7 @@ sgeroids::view::planar::object::score_change(
 		return;
 	}
 
-	score_text_.take(
+	score_text_ =
 		fcppt::make_unique_ptr<
 			sge::font::draw::static_text
 		>(
@@ -311,7 +311,7 @@ sgeroids::view::planar::object::score_change(
 				0
 			),
 			sge::image::color::predef::white(),
-			sge::renderer::texture::emulate_srgb::no));
+			sge::renderer::texture::emulate_srgb::no);
 }
 
 void
@@ -426,7 +426,7 @@ void
 sgeroids::view::planar::object::play_area(
 	sgeroids::model::play_area const &_area)
 {
-	background_.take(
+	background_ =
 		fcppt::make_unique_ptr<
 			background::object
 		>(
@@ -436,7 +436,7 @@ sgeroids::view::planar::object::play_area(
 			_area,
 			rng_,
 			background::star_size(3500),
-			background::star_count(500u)));
+			background::star_count(500u));
 
 	projection_matrix_ =
 		sge::renderer::projection::orthogonal(
@@ -482,7 +482,7 @@ sgeroids::view::planar::object::render(
 		.back_buffer(
 			sge::image::color::predef::black()));
 
-	sge::renderer::state::ffp::transform::object_scoped_ptr const transform_state(
+	sge::renderer::state::ffp::transform::object_unique_ptr const transform_state(
 		renderer_.create_transform_state(
 			sge::renderer::state::ffp::transform::parameters(
 				projection_matrix_)));

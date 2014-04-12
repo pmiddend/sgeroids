@@ -189,12 +189,12 @@ sgeroids::model::local::object::process_message(
 		*alda::message::make_concrete_ptr<sgeroids::model::serialization::message::adapted_types::message>(
 			_message));
 
-	rng_.take(
+	rng_ =
 		fcppt::make_unique_ptr<sgeroids::random_generator>(
 			sgeroids::random_generator::seed(
-				_message.get<sgeroids::model::serialization::message::roles::seed>())));
+				_message.get<sgeroids::model::serialization::message::roles::seed>()));
 
-	asteroid_generator_.take(
+	asteroid_generator_ =
 		fcppt::make_unique_ptr<sgeroids::model::local::asteroid_generator::object>(
 			*rng_,
 			this->play_area(),
@@ -205,7 +205,7 @@ sgeroids::model::local::object::process_message(
 				std::placeholders::_2,
 				std::placeholders::_3,
 				std::placeholders::_4,
-				std::placeholders::_5)));
+				std::placeholders::_5));
 }
 
 void

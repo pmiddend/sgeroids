@@ -12,7 +12,7 @@
 #include <sgeroids/view/planar/sprite/ordered_collection.hpp>
 #include <sgeroids/view/planar/player_name.hpp>
 #include <sge/audio/player_fwd.hpp>
-#include <sge/audio/sound/base_scoped_ptr.hpp>
+#include <sge/audio/sound/base_unique_ptr.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>
 #include <fcppt/random/variate_decl.hpp>
 #include <fcppt/random/distribution/basic_decl.hpp>
@@ -69,7 +69,7 @@ private:
 		texture_on_;
 	planar::sprite::object sprite_;
 	sge::audio::player &audio_player_;
-	sge::audio::sound::base_scoped_ptr const thrust_sound_;
+	sge::audio::sound::base_unique_ptr const thrust_sound_;
 	planar::callbacks::add_particle const add_particle_;
 	typedef fcppt::random::distribution::basic<
 		fcppt::random::distribution::parameters::uniform_int<

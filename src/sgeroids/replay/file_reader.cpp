@@ -15,10 +15,10 @@ sgeroids::replay::file_reader::file_reader(
 	FCPPT_ASSERT_PRE(
 		input_stream_.is_open());
 
-	replay_.take(
+	replay_ =
 		fcppt::make_unique_ptr<sgeroids::replay::object>(
 			_model,
-			input_stream_));
+			input_stream_);
 }
 
 void

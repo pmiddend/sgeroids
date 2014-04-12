@@ -4,10 +4,10 @@
 #include <sgeroids/model/base_fwd.hpp>
 #include <sgeroids/replay/object_fwd.hpp>
 #include <fcppt/noncopyable.hpp>
-#include <fcppt/scoped_ptr.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include <boost/filesystem/path.hpp>
+#include <memory>
 #include <fcppt/config/external_end.hpp>
 
 
@@ -30,7 +30,7 @@ public:
 	~file_reader();
 private:
 	boost::filesystem::ifstream input_stream_;
-	fcppt::scoped_ptr<sgeroids::replay::object> replay_;
+	std::unique_ptr<sgeroids::replay::object> replay_;
 };
 }
 }

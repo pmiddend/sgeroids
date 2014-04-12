@@ -12,12 +12,12 @@
 #include <sgeroids/model/local/entity/unique_base_ptr.hpp>
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/optional.hpp>
-#include <fcppt/scoped_ptr.hpp>
 #include <fcppt/signal/auto_connection.hpp>
 #include <fcppt/signal/object.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/ptr_container/ptr_map.hpp>
 #include <iosfwd>
+#include <memory>
 #include <fcppt/config/external_end.hpp>
 
 
@@ -37,6 +37,7 @@ class object
 FCPPT_NONCOPYABLE(
 	object);
 public:
+	explicit
 	object(
 		std::ostream &);
 
@@ -150,10 +151,10 @@ private:
 	entity_map;
 
 	std::ostream &serialization_output_;
-	fcppt::scoped_ptr<sgeroids::random_generator> rng_;
+	std::unique_ptr<sgeroids::random_generator> rng_;
 	model::entity_id::value_type next_id_;
 	entity_map entities_;
-	fcppt::scoped_ptr<asteroid_generator::object> asteroid_generator_;
+	std::unique_ptr<asteroid_generator::object> asteroid_generator_;
 	fcppt::signal::object<model::callbacks::add_spaceship_function> add_spaceship_;
 	fcppt::signal::object<model::callbacks::remove_spaceship_function> remove_spaceship_;
 	fcppt::signal::object<model::callbacks::add_asteroid_function> add_asteroid_;

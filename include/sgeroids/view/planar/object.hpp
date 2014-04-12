@@ -14,28 +14,28 @@
 #include <sge/audio/buffer_shared_ptr.hpp>
 #include <sge/audio/loader_fwd.hpp>
 #include <sge/audio/player_fwd.hpp>
-#include <sge/audio/sound/base_scoped_ptr.hpp>
+#include <sge/audio/sound/base_unique_ptr.hpp>
 #include <sge/font/system_fwd.hpp>
 #include <sge/font/draw/static_text_fwd.hpp>
-#include <sge/font/object_scoped_ptr.hpp>
+#include <sge/font/object_unique_ptr.hpp>
 #include <sge/image2d/system_fwd.hpp>
 #include <sge/renderer/matrix4.hpp>
 #include <sge/renderer/context/ffp_fwd.hpp>
 #include <sge/renderer/device/ffp_fwd.hpp>
-#include <sge/renderer/vertex/declaration_scoped_ptr.hpp>
+#include <sge/renderer/vertex/declaration_unique_ptr.hpp>
 #include <sge/sprite/state/choices.hpp>
 #include <sge/sprite/state/object_decl.hpp>
 #include <sge/sprite/state/with_blend.hpp>
 #include <sge/sprite/state/with_rasterizer.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>
 #include <fcppt/noncopyable.hpp>
-#include <fcppt/scoped_ptr_impl.hpp>
 #include <fcppt/math/box/object_impl.hpp>
 #include <fcppt/math/matrix/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/mpl/vector/vector10.hpp>
 #include <boost/ptr_container/ptr_map.hpp>
+#include <memory>
 #include <fcppt/config/external_end.hpp>
 
 
@@ -188,25 +188,25 @@ private:
 	sgeroids::random_generator rng_;
 	planar::texture_tree texture_tree_;
 	planar::audio_buffer_tree audio_buffer_tree_;
-	sge::audio::sound::base_scoped_ptr const firing_sound_;
-	sge::renderer::vertex::declaration_scoped_ptr const sprite_vertex_declaration_;
+	sge::audio::sound::base_unique_ptr const firing_sound_;
+	sge::renderer::vertex::declaration_unique_ptr const sprite_vertex_declaration_;
 	planar::sprite::dynamic_buffers dynamic_buffers_;
 	planar::sprite::ordered_collection dynamic_collection_;
 	sprite_state sprite_state_;
 	sge::renderer::matrix4 projection_matrix_;
 	entity_map entities_;
-	fcppt::scoped_ptr<background::object> background_;
+	std::unique_ptr<background::object> background_;
 	particle_vector particles_;
-	sge::font::object_scoped_ptr score_font_;
+	sge::font::object_unique_ptr score_font_;
 
 	typedef
-	fcppt::scoped_ptr
+	std::unique_ptr
 	<
 		sge::font::draw::static_text
 	>
-	static_text_scoped_ptr;
+	static_text_unique_ptr;
 
-	static_text_scoped_ptr score_text_;
+	static_text_unique_ptr score_text_;
 
 	/**
 	\brief This function is called by the texture tree to create a texture resource out of a path
