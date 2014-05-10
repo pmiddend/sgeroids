@@ -2,7 +2,16 @@
 #include <sgeroids/input/log.hpp>
 #include <sgeroids/math/unit_magnitude.hpp>
 #include <sgeroids/model/base.hpp>
+#include <sgeroids/model/serialization/message/add_player.hpp>
 #include <sgeroids/model/serialization/message/change_thrust.hpp>
+#include <sgeroids/model/serialization/message/change_firing_mode.hpp>
+#include <sgeroids/model/serialization/message/remove_player.hpp>
+#include <sgeroids/model/serialization/message/rotation_direction.hpp>
+#include <sgeroids/model/serialization/message/roles/entity_id.hpp>
+#include <sgeroids/model/serialization/message/roles/firing_mode.hpp>
+#include <sgeroids/model/serialization/message/roles/player_name.hpp>
+#include <sgeroids/model/serialization/message/roles/rotation_direction.hpp>
+#include <sgeroids/model/serialization/message/roles/thrust.hpp>
 #include <sge/input/keyboard/device.hpp>
 #include <sge/input/keyboard/key_event.hpp>
 #include <fcppt/optional_impl.hpp>
@@ -58,7 +67,8 @@ sgeroids::input::keyboard::keyboard(
 
 	model_.process_message(
 		sgeroids::model::serialization::message::add_player(
-			_name.get()));
+			sgeroids::model::serialization::message::roles::player_name{} =
+				_name.get()));
 }
 
 sge::input::keyboard::device &
@@ -84,7 +94,8 @@ sgeroids::input::keyboard::~keyboard()
 	if(id_.get())
 		model_.process_message(
 			sgeroids::model::serialization::message::remove_player(
-				name_.get()));
+				sgeroids::model::serialization::message::roles::player_name{} =
+					name_.get()));
 }
 
 void
@@ -102,13 +113,15 @@ sgeroids::input::keyboard::key(
 		case sge::input::keyboard::key_code::w:
 			model_.process_message(
 				sgeroids::model::serialization::message::change_thrust(
-					id_.get()->get(),
-					static_cast<sgeroids::model::serialization::message::types::int_>(
-						e.pressed()
-						?
-							100
-						:
-							0)));
+					sgeroids::model::serialization::message::roles::entity_id{} =
+						id_.get()->get(),
+					sgeroids::model::serialization::message::roles::thrust{} =
+						static_cast<sgeroids::model::serialization::message::types::int_>(
+							e.pressed()
+							?
+								100
+							:
+								0)));
 			break;
 		case sge::input::keyboard::key_code::a:
 			rotation_left_pressed_ =
@@ -121,13 +134,15 @@ sgeroids::input::keyboard::key(
 		case sge::input::keyboard::key_code::space:
 			model_.process_message(
 				sgeroids::model::serialization::message::change_firing_mode(
-					id_.get()->get(),
-					static_cast<sgeroids::model::serialization::message::types::enum_>(
-						e.pressed()
-						?
-							model::firing_mode::enabled
-						:
-							model::firing_mode::disabled)));
+					sgeroids::model::serialization::message::roles::entity_id{} =
+						id_.get()->get(),
+					sgeroids::model::serialization::message::roles::firing_mode{} =
+						static_cast<sgeroids::model::serialization::message::types::enum_>(
+							e.pressed()
+							?
+								model::firing_mode::enabled
+							:
+								model::firing_mode::disabled)));
 			break;
 		default:
 			break;
@@ -137,18 +152,20 @@ sgeroids::input::keyboard::key(
 
 	model_.process_message(
 		sgeroids::model::serialization::message::rotation_direction(
-			id_.get()->get(),
-			static_cast<sgeroids::model::serialization::message::types::int_>(
-				(rotation_left_pressed_ == rotation_right_pressed_
-				?
-					0
-				:
-					rotation_right_pressed_
+			sgeroids::model::serialization::message::roles::entity_id{} =
+				id_.get()->get(),
+			sgeroids::model::serialization::message::roles::rotation_direction{} =
+				static_cast<sgeroids::model::serialization::message::types::int_>(
+					(rotation_left_pressed_ == rotation_right_pressed_
 					?
-						1
+						0
 					:
-						-1)
-				* rotation_speed * sgeroids::math::unit_magnitude())));
+						rotation_right_pressed_
+						?
+							1
+						:
+							-1)
+					* rotation_speed * sgeroids::math::unit_magnitude())));
 }
 
 void

@@ -152,7 +152,8 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 	if(!replay_file_reader_)
 		model_->process_message(
 			sgeroids::model::serialization::message::rng_seed(
-				fcppt::random::generator::seed_from_chrono<sgeroids::random_generator::seed>().get()));
+				sgeroids::model::serialization::message::roles::seed{} =
+					fcppt::random::generator::seed_from_chrono<sgeroids::random_generator::seed>().get()));
 }
 
 boost::statechart::result
