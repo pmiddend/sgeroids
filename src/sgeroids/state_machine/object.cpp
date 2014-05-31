@@ -157,13 +157,11 @@ sgeroids::state_machine::object::object(
 			(sge::systems::audio_player_default())
 			(sge::systems::font())
 			(sge::systems::image2d(
-				sge::image::capabilities_field::null(),
 				sge::media::optional_extension_set(
 					fcppt::assign::make_container<sge::media::extension_set>(
 						sge::media::extension(
 							FCPPT_TEXT("png"))))))
 			(sge::systems::audio_loader(
-				sge::audio::loader_capabilities_field::null(),
 				sge::media::optional_extension_set(
 					fcppt::assign::make_container<sge::media::extension_set>(
 						sge::media::extension(
