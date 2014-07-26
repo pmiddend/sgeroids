@@ -34,12 +34,12 @@
 #include <sge/systems/image2d.hpp>
 #include <sge/systems/list.hpp>
 #include <sge/systems/make_list.hpp>
+#include <sge/systems/original_window.hpp>
 #include <sge/systems/renderer.hpp>
 #include <sge/systems/window.hpp>
 #include <sge/timer/scoped_frame_limiter.hpp>
 #include <sge/viewport/fractional_aspect.hpp>
 #include <sge/viewport/maintain_aspect.hpp>
-#include <sge/window/parameters.hpp>
 #include <sge/window/system.hpp>
 #include <sge/window/title.hpp>
 #include <awl/main/exit_code.hpp>
@@ -140,7 +140,7 @@ sgeroids::state_machine::object::object(
 	systems_(
 		sge::systems::make_list
 			(sge::systems::window(
-				sge::window::parameters(
+				sge::systems::original_window(
 					sge::window::title(
 						FCPPT_TEXT("sgeroids-")+
 						sgeroids::version()),
