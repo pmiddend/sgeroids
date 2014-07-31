@@ -34,8 +34,9 @@
 #include <fcppt/config/external_begin.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/mpl/vector/vector10.hpp>
-#include <boost/ptr_container/ptr_map.hpp>
+#include <map>
 #include <memory>
+#include <vector>
 #include <fcppt/config/external_end.hpp>
 
 
@@ -158,11 +159,17 @@ public:
 	~object();
 private:
 	typedef
-	boost::ptr_map<model::entity_id::value_type,entity::base>
+	std::map<
+		model::entity_id::value_type,
+		std::unique_ptr
+		<
+			entity::base
+		>
+	>
 	entity_map;
 
 	typedef
-	boost::ptr_vector<particle::object>
+	std::vector<particle::object>
 	particle_vector;
 
 	typedef

@@ -8,7 +8,6 @@
 #include <fcppt/insert_to_fcppt_string.hpp>
 #include <fcppt/make_unique_ptr.hpp>
 #include <fcppt/text.hpp>
-#include <fcppt/container/ptr/push_back_unique_ptr.hpp>
 #include <fcppt/log/_.hpp>
 #include <fcppt/log/debug.hpp>
 #include <fcppt/signal/connection.hpp>
@@ -61,9 +60,10 @@ sgeroids::input::manager::keyboard_discover(
 			<< FCPPT_TEXT("Discovered a keyboard! Assigning ID: ")
 			<< last_keyboard_id_);
 
-	fcppt::container::ptr::push_back_unique_ptr(
-		keyboards_,
-		fcppt::make_unique_ptr<input::keyboard>(
+	keyboards_.push_back(
+		fcppt::make_unique_ptr<
+			input::keyboard
+		>(
 			model_,
 			e.get(),
 			player_name_id));
@@ -83,7 +83,7 @@ sgeroids::input::manager::keyboard_remove(
 		it != keyboards_.end();
 		++it)
 	{
-		if(&(it->device()) == &(e.get()))
+		if(&((*it)->device()) == &(e.get()))
 		{
 			keyboards_.erase(
 				it);

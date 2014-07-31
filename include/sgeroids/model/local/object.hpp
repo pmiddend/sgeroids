@@ -15,8 +15,8 @@
 #include <fcppt/signal/auto_connection.hpp>
 #include <fcppt/signal/object.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <boost/ptr_container/ptr_map.hpp>
 #include <iosfwd>
+#include <map>
 #include <memory>
 #include <fcppt/config/external_end.hpp>
 
@@ -147,7 +147,12 @@ public:
 	~object();
 private:
 	typedef
-	boost::ptr_map<model::entity_id::value_type,entity::base>
+	std::map<
+		model::entity_id::value_type,
+		std::unique_ptr<
+			entity::base
+		>
+	>
 	entity_map;
 
 	std::ostream &serialization_output_;

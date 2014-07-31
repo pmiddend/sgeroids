@@ -39,7 +39,7 @@ sgeroids::input::keyboard::keyboard(
 				this,
 				std::placeholders::_1))),
 	add_spaceship_connection_(
-		model_.add_spaceship_callback(
+		model_.get().add_spaceship_callback(
 			std::bind(
 				&keyboard::add_spaceship,
 				this,
@@ -47,7 +47,7 @@ sgeroids::input::keyboard::keyboard(
 				std::placeholders::_2,
 				std::placeholders::_3))),
 	remove_spaceship_connection_(
-		model_.remove_spaceship_callback(
+		model_.get().remove_spaceship_callback(
 			std::bind(
 				&keyboard::remove_spaceship,
 				this,
@@ -65,7 +65,7 @@ sgeroids::input::keyboard::keyboard(
 		input::log(),
 		fcppt::log::_ << FCPPT_TEXT("Sending the model the add_player message"));
 
-	model_.process_message(
+	model_.get().process_message(
 		sgeroids::model::serialization::message::add_player(
 			sgeroids::model::serialization::message::roles::player_name{} =
 				_name.get()));
@@ -74,7 +74,7 @@ sgeroids::input::keyboard::keyboard(
 sge::input::keyboard::device &
 sgeroids::input::keyboard::device() const
 {
-	return device_;
+	return device_.get();
 }
 
 sgeroids::model::player_name const &
@@ -92,7 +92,7 @@ sgeroids::input::keyboard::id() const
 sgeroids::input::keyboard::~keyboard()
 {
 	if(id_.get())
-		model_.process_message(
+		model_.get().process_message(
 			sgeroids::model::serialization::message::remove_player(
 				sgeroids::model::serialization::message::roles::player_name{} =
 					name_.get()));
@@ -111,7 +111,7 @@ sgeroids::input::keyboard::key(
 	switch(e.key_code())
 	{
 		case sge::input::keyboard::key_code::w:
-			model_.process_message(
+			model_.get().process_message(
 				sgeroids::model::serialization::message::change_thrust(
 					sgeroids::model::serialization::message::roles::entity_id{} =
 						id_.get()->get(),
@@ -132,7 +132,7 @@ sgeroids::input::keyboard::key(
 				e.pressed();
 			break;
 		case sge::input::keyboard::key_code::space:
-			model_.process_message(
+			model_.get().process_message(
 				sgeroids::model::serialization::message::change_firing_mode(
 					sgeroids::model::serialization::message::roles::entity_id{} =
 						id_.get()->get(),
@@ -150,7 +150,7 @@ sgeroids::input::keyboard::key(
 
 	int const rotation_speed = 3;
 
-	model_.process_message(
+	model_.get().process_message(
 		sgeroids::model::serialization::message::rotation_direction(
 			sgeroids::model::serialization::message::roles::entity_id{} =
 				id_.get()->get(),

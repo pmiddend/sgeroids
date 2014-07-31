@@ -29,6 +29,15 @@ public:
 		particle::velocity const &,
 		particle::lifespan const &);
 
+	object(
+		object &&
+	);
+
+	object &
+	operator=(
+		object &&
+	);
+
 	void
 	update();
 

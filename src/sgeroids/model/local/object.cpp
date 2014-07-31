@@ -19,7 +19,6 @@
 #include <fcppt/text.hpp>
 #include <fcppt/type_name_from_info.hpp>
 #include <fcppt/assert/unreachable.hpp>
-#include <fcppt/container/ptr/insert_unique_ptr_map.hpp>
 #include <fcppt/log/_.hpp>
 #include <fcppt/log/debug.hpp>
 #include <fcppt/math/box/center.hpp>
@@ -31,6 +30,7 @@
 #include <array>
 #include <cstdlib>
 #include <functional>
+#include <iterator>
 #include <memory>
 #include <utility>
 #include <typeinfo>
@@ -312,11 +312,11 @@ sgeroids::model::local::object::process_message(
 	model::radius const ship_radius =
 		to_add->radius();
 
-	fcppt::container::ptr::insert_unique_ptr_map(
-		entities_,
-		next_id_,
-		std::move(
-			to_add));
+	entities_.insert(
+		std::make_pair(
+			next_id_,
+			std::move(
+				to_add)));
 
 	FCPPT_LOG_DEBUG(
 		model::log(),
@@ -493,7 +493,6 @@ sgeroids::model::local::object::entity_updates()
 		it->second->update();
 		if(it->second->dead())
 		{
-			
 			fcppt::optional<entity::spaceship &> maybe_ship =
 				fcppt::optional_dynamic_cast<entity::spaceship &>(
 					*(it->second)
@@ -522,7 +521,7 @@ sgeroids::model::local::object::collision_detection_broadphase()
 {
 	for(entity_map::iterator left = entities_.begin(); left != entities_.end(); ++left)
 	{
-		for(entity_map::iterator right = boost::next(left); right != entities_.end(); ++right)
+		for(entity_map::iterator right = std::next(left); right != entities_.end(); ++right)
 		{
 			this->collision_detection_narrow_phase(
 				*(left->second),
@@ -678,11 +677,11 @@ void
 sgeroids::model::local::object::insert_entity(
 	entity::unique_base_ptr new_entity)
 {
-	fcppt::container::ptr::insert_unique_ptr_map(
-		entities_,
-		next_id_++,
-		std::move(
-			new_entity));
+	entities_.insert(
+		std::make_pair(
+			next_id_++,
+			std::move(
+				new_entity)));
 }
 
 void
@@ -729,11 +728,11 @@ sgeroids::model::local::object::asteroid_generated(
 					std::placeholders::_1,
 					std::placeholders::_2))));
 
-	fcppt::container::ptr::insert_unique_ptr_map(
-		entities_,
-		next_id_,
-		std::move(
-			to_add));
+	entities_.insert(
+		std::make_pair(
+			next_id_,
+			std::move(
+				to_add)));
 
 	add_asteroid_(
 		model::entity_id(
@@ -788,11 +787,11 @@ sgeroids::model::local::object::insert_projectile(
 	model::radius const radius =
 		to_add->radius();
 
-	fcppt::container::ptr::insert_unique_ptr_map(
-		entities_,
-		next_id_,
-		std::move(
-			to_add));
+	entities_.insert(
+		std::make_pair(
+			next_id_,
+			std::move(
+				to_add)));
 
 	add_projectile_(
 		model::entity_id(
@@ -914,11 +913,11 @@ sgeroids::model::local::object::asteroid_died(
 						std::placeholders::_2
 						))));
 
-		fcppt::container::ptr::insert_unique_ptr_map(
-			entities_,
-			next_id_,
-			std::move(
-				to_add));
+		entities_.insert(
+			std::make_pair(
+				next_id_,
+				std::move(
+					to_add)));
 
 		add_asteroid_(
 			model::entity_id(

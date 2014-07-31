@@ -9,7 +9,8 @@
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/signal/scoped_connection.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <boost/ptr_container/ptr_vector.hpp>
+#include <memory>
+#include <vector>
 #include <fcppt/config/external_end.hpp>
 
 
@@ -29,7 +30,11 @@ public:
 	~manager();
 private:
 	typedef
-	boost::ptr_vector<input::keyboard>
+	std::vector<
+		std::unique_ptr<
+			input::keyboard
+		>
+	>
 	keyboard_sequence;
 
 	sgeroids::model::base &model_;

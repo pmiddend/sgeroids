@@ -78,8 +78,6 @@
 #include <fcppt/optional_impl.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/type_name_from_info.hpp>
-#include <fcppt/container/ptr/insert_unique_ptr_map.hpp>
-#include <fcppt/container/ptr/push_back_unique_ptr.hpp>
 #include <fcppt/log/_.hpp>
 #include <fcppt/log/debug.hpp>
 #include <fcppt/math/box/structure_cast.hpp>
@@ -91,7 +89,9 @@
 #include <algorithm>
 #include <functional>
 #include <typeinfo>
+#include <utility>
 #include <fcppt/config/external_end.hpp>
+
 
 sgeroids::view::planar::object::object(
 	sge::renderer::device::ffp &_renderer,
@@ -172,27 +172,27 @@ sgeroids::view::planar::object::add_spaceship(
 		fcppt::log::_
 			<< FCPPT_TEXT("Adding spaceship"));
 
-	fcppt::container::ptr::insert_unique_ptr_map(
-		entities_,
-		_id.get(),
-		fcppt::make_unique_ptr<entity::spaceship>(
-			dynamic_collection_,
-			texture_tree_,
-			audio_player_,
-			audio_buffer_tree_,
-			planar::callbacks::add_particle(
-				std::bind(
-					&object::add_particle,
-					this,
-					std::placeholders::_1,
-					std::placeholders::_2,
-					std::placeholders::_3)),
-			rng_,
-			planar::radius_to_screen_space(
-				_radius),
-			sgeroids::view::planar::player_name(
-				sge::charconv::utf8_string_to_fcppt(
-					_player_name.get()))));
+	entities_.insert(
+		std::make_pair(
+			_id.get(),
+			fcppt::make_unique_ptr<entity::spaceship>(
+				dynamic_collection_,
+				texture_tree_,
+				audio_player_,
+				audio_buffer_tree_,
+				planar::callbacks::add_particle(
+					std::bind(
+						&object::add_particle,
+						this,
+						std::placeholders::_1,
+						std::placeholders::_2,
+						std::placeholders::_3)),
+				rng_,
+				planar::radius_to_screen_space(
+					_radius),
+				sgeroids::view::planar::player_name(
+					sge::charconv::utf8_string_to_fcppt(
+						_player_name.get())))));
 }
 
 void
@@ -207,14 +207,14 @@ sgeroids::view::planar::object::add_asteroid(
 			<< _radius.get()
 			<< FCPPT_TEXT("\""));
 
-	fcppt::container::ptr::insert_unique_ptr_map(
-		entities_,
-		_id.get(),
-		fcppt::make_unique_ptr<entity::asteroid>(
-			dynamic_collection_,
-			texture_tree_,
-			planar::radius_to_screen_space(
-				_radius)));
+	entities_.insert(
+		std::make_pair(
+			_id.get(),
+			fcppt::make_unique_ptr<entity::asteroid>(
+				dynamic_collection_,
+				texture_tree_,
+				planar::radius_to_screen_space(
+					_radius))));
 }
 
 void
@@ -223,12 +223,13 @@ sgeroids::view::planar::object::add_projectile(
 {
 	firing_sound_->play(
 		sge::audio::sound::repeat::once);
-	fcppt::container::ptr::insert_unique_ptr_map(
-		entities_,
-		_id.get(),
-		fcppt::make_unique_ptr<entity::bullet>(
-			dynamic_collection_,
-			texture_tree_));
+
+	entities_.insert(
+		std::make_pair(
+			_id.get(),
+			fcppt::make_unique_ptr<entity::bullet>(
+				dynamic_collection_,
+				texture_tree_)));
 }
 
 void
@@ -237,11 +238,8 @@ sgeroids::view::planar::object::add_particle(
 	particle::velocity const &_velocity,
 	particle::lifespan const &_lifespan)
 {
-	fcppt::container::ptr::push_back_unique_ptr(
-		particles_,
-		fcppt::make_unique_ptr<
-			particle::object
-		>(
+	particles_.push_back(
+		particle::object(
 			dynamic_collection_,
 			texture_tree_,
 			_position,

@@ -49,6 +49,15 @@ sgeroids::view::planar::particle::object::object(
 {
 }
 
+sgeroids::view::planar::particle::object::object(
+	object &&
+) = default;
+
+sgeroids::view::planar::particle::object &
+sgeroids::view::planar::particle::object::operator=(
+	object &&
+) = default;
+
 bool
 sgeroids::view::planar::particle::object::dead()
 {
