@@ -5,7 +5,7 @@
 #include <sgeroids/model/log.hpp>
 #include <sgeroids/model/local/entity/asteroid.hpp>
 #include <sgeroids/model/local/entity/projectile.hpp>
-#include <fcppt/optional_dynamic_cast.hpp>
+#include <fcppt/cast/try_dynamic.hpp>
 #include <fcppt/math/vector/arithmetic.hpp>
 
 
@@ -127,7 +127,7 @@ sgeroids::model::local::entity::asteroid::collides_with(
 		return;
 
 	fcppt::optional<entity::projectile const &> p(
-		fcppt::optional_dynamic_cast<entity::projectile const &>(
+		fcppt::cast::try_dynamic<entity::projectile const &>(
 			_other));
 
 	// If we're not colliding with a projectile, do nothing.

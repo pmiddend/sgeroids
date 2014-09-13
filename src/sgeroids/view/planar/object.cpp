@@ -74,10 +74,10 @@
 #include <fcppt/insert_to_fcppt_string.hpp>
 #include <fcppt/make_shared_ptr.hpp>
 #include <fcppt/make_unique_ptr.hpp>
-#include <fcppt/optional_dynamic_cast.hpp>
 #include <fcppt/optional_impl.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/type_name_from_info.hpp>
+#include <fcppt/cast/try_dynamic.hpp>
 #include <fcppt/log/_.hpp>
 #include <fcppt/log/debug.hpp>
 #include <fcppt/math/box/structure_cast.hpp>
@@ -275,7 +275,7 @@ sgeroids::view::planar::object::score_change(
 	}
 
 	fcppt::optional<entity::spaceship &> maybe_a_ship(
-		fcppt::optional_dynamic_cast<entity::spaceship &>(
+		fcppt::cast::try_dynamic<entity::spaceship &>(
 			*(it->second)));
 
 	if(!maybe_a_ship)
@@ -402,7 +402,7 @@ sgeroids::view::planar::object::change_thrust(
 					_id.get()));
 
 	fcppt::optional<entity::spaceship &> maybe_a_ship(
-		fcppt::optional_dynamic_cast<entity::spaceship &>(
+		fcppt::cast::try_dynamic<entity::spaceship &>(
 			*(it->second)));
 
 	 if(!maybe_a_ship)

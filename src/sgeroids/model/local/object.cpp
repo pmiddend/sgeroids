@@ -15,10 +15,10 @@
 #include <alda/serialization/serialize.hpp>
 #include <fcppt/insert_to_fcppt_string.hpp>
 #include <fcppt/make_unique_ptr.hpp>
-#include <fcppt/optional_dynamic_cast.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/type_name_from_info.hpp>
 #include <fcppt/assert/unreachable.hpp>
+#include <fcppt/cast/try_dynamic.hpp>
 #include <fcppt/log/_.hpp>
 #include <fcppt/log/debug.hpp>
 #include <fcppt/math/box/center.hpp>
@@ -248,7 +248,7 @@ sgeroids::model::local::object::process_message(
 		++it)
 	{
 		fcppt::optional<entity::spaceship const &> maybe_a_ship(
-			fcppt::optional_dynamic_cast<entity::spaceship const &>(
+			fcppt::cast::try_dynamic<entity::spaceship const &>(
 				*(it->second)));
 
 		if(!maybe_a_ship)
@@ -366,7 +366,7 @@ sgeroids::model::local::object::process_message(
 		++it)
 	{
 		fcppt::optional<entity::spaceship &> maybe_a_ship(
-			fcppt::optional_dynamic_cast<entity::spaceship &>(
+			fcppt::cast::try_dynamic<entity::spaceship &>(
 				*(it->second)));
 
 		if(!maybe_a_ship)
@@ -494,7 +494,7 @@ sgeroids::model::local::object::entity_updates()
 		if(it->second->dead())
 		{
 			fcppt::optional<entity::spaceship &> maybe_ship =
-				fcppt::optional_dynamic_cast<entity::spaceship &>(
+				fcppt::cast::try_dynamic<entity::spaceship &>(
 					*(it->second)
 				);
 			if (maybe_ship)
@@ -565,18 +565,18 @@ sgeroids::model::local::object::collision_detection_narrow_phase(
 
 		fcppt::optional<entity::asteroid const &>
 			left_is_asteroid(
-				fcppt::optional_dynamic_cast<entity::asteroid const &>(
+				fcppt::cast::try_dynamic<entity::asteroid const &>(
 					_left)),
 			right_is_asteroid(
-				fcppt::optional_dynamic_cast<entity::asteroid const &>(
+				fcppt::cast::try_dynamic<entity::asteroid const &>(
 					_right));
 
 		fcppt::optional<entity::projectile const &>
 			left_is_projectile(
-				fcppt::optional_dynamic_cast<entity::projectile const &>(
+				fcppt::cast::try_dynamic<entity::projectile const &>(
 					_left)),
 			right_is_projectile(
-				fcppt::optional_dynamic_cast<entity::projectile const &>(
+				fcppt::cast::try_dynamic<entity::projectile const &>(
 					_right));
 
 		if(left_is_asteroid && right_is_projectile)
@@ -612,7 +612,7 @@ sgeroids::model::local::object::find_spaceship_by_id(
 			>();
 
 	fcppt::optional<entity::spaceship &> maybe_a_ship(
-		fcppt::optional_dynamic_cast<entity::spaceship &>(
+		fcppt::cast::try_dynamic<entity::spaceship &>(
 			*(it->second)));
 
 	 return maybe_a_ship;
@@ -636,7 +636,7 @@ sgeroids::model::local::object::find_spaceship_by_id_exn(
 					_id.get()));
 
 	fcppt::optional<entity::spaceship &> maybe_a_ship(
-		fcppt::optional_dynamic_cast<entity::spaceship &>(
+		fcppt::cast::try_dynamic<entity::spaceship &>(
 			*(it->second)));
 
 	 if(!maybe_a_ship)
