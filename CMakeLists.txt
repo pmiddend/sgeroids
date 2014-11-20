@@ -404,6 +404,7 @@ target_link_libraries(
 	${CMAKE_PROJECT_NAME}
 	${fcppt_core_TARGET}
 	${fcppt_filesystem_TARGET}
+	${fcppt_log_TARGET}
 	${awl_TARGET}
 	${sge_TARGETS}
 	${alda_TARGET}

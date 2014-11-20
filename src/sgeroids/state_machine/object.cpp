@@ -143,7 +143,8 @@ sgeroids::state_machine::object::object(
 				sge::systems::original_window(
 					sge::window::title(
 						FCPPT_TEXT("sgeroids-")+
-						sgeroids::version()),
+						sgeroids::version()))
+				.dim(
 					sge::parse::json::find_and_convert_member<sge::window::dim>(
 						this->config(),
 						sge::parse::json::path(FCPPT_TEXT("renderer")) / FCPPT_TEXT("window-size")))))
