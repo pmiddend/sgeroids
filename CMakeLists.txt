@@ -30,11 +30,13 @@ file(
 
 namespace sgeroids
 {
-inline fcppt::string const
+inline fcppt::string
 build_version()
 {
 	return
-		FCPPT_TEXT(\"@SGEROIDS_VERSION@\");
+		FCPPT_TEXT(
+			\"@SGEROIDS_VERSION@\"
+		);
 }
 }
 

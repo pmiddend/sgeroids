@@ -77,6 +77,7 @@
 #include <fcppt/optional_impl.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/type_name_from_info.hpp>
+#include <fcppt/cast/int_to_float_fun.hpp>
 #include <fcppt/cast/try_dynamic.hpp>
 #include <fcppt/log/_.hpp>
 #include <fcppt/log/debug.hpp>
@@ -438,7 +439,10 @@ sgeroids::view::planar::object::play_area(
 
 	projection_matrix_ =
 		sge::renderer::projection::orthogonal(
-			fcppt::math::box::structure_cast<sge::renderer::projection::rect>(
+			fcppt::math::box::structure_cast<
+				sge::renderer::projection::rect,
+				fcppt::cast::int_to_float_fun
+			>(
 				_area.get()),
 			// 0 and 10 are just guesses
 			sge::renderer::projection::near(
