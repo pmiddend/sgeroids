@@ -4,13 +4,13 @@
 #include <sgeroids/random_generator_fwd.hpp>
 #include <sgeroids/model/thrust.hpp>
 #include <sgeroids/view/planar/audio_buffer_tree_fwd.hpp>
+#include <sgeroids/view/planar/player_name.hpp>
 #include <sgeroids/view/planar/radius.hpp>
 #include <sgeroids/view/planar/texture_tree_fwd.hpp>
 #include <sgeroids/view/planar/callbacks/add_particle.hpp>
 #include <sgeroids/view/planar/entity/base.hpp>
 #include <sgeroids/view/planar/sprite/object.hpp>
 #include <sgeroids/view/planar/sprite/ordered_collection.hpp>
-#include <sgeroids/view/planar/player_name.hpp>
 #include <sge/audio/player_fwd.hpp>
 #include <sge/audio/sound/base_unique_ptr.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>

@@ -1,8 +1,8 @@
 #ifndef SGEROIDS_MODEL_LOCAL_ENTITY_ASTEROID_HPP_INCLUDED
 #define SGEROIDS_MODEL_LOCAL_ENTITY_ASTEROID_HPP_INCLUDED
 
-#include <sgeroids/model/play_area.hpp>
 #include <sgeroids/model/entity_id.hpp>
+#include <sgeroids/model/play_area.hpp>
 #include <sgeroids/model/rotation_direction.hpp>
 #include <sgeroids/model/thrust.hpp>
 #include <sgeroids/model/vector2.hpp>

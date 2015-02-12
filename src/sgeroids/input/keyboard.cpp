@@ -3,8 +3,8 @@
 #include <sgeroids/math/unit_magnitude.hpp>
 #include <sgeroids/model/base.hpp>
 #include <sgeroids/model/serialization/message/add_player.hpp>
-#include <sgeroids/model/serialization/message/change_thrust.hpp>
 #include <sgeroids/model/serialization/message/change_firing_mode.hpp>
+#include <sgeroids/model/serialization/message/change_thrust.hpp>
 #include <sgeroids/model/serialization/message/remove_player.hpp>
 #include <sgeroids/model/serialization/message/rotation_direction.hpp>
 #include <sgeroids/model/serialization/message/roles/entity_id.hpp>

@@ -3,13 +3,13 @@
 #include <sgeroids/math/discrete_sin.hpp>
 #include <sgeroids/math/unit_magnitude.hpp>
 #include <sgeroids/view/planar/audio_buffer_tree.hpp>
+#include <sgeroids/view/planar/player_name.hpp>
 #include <sgeroids/view/planar/sprite_size_from_texture_and_radius.hpp>
 #include <sgeroids/view/planar/texture_tree.hpp>
 #include <sgeroids/view/planar/callbacks/add_particle.hpp>
 #include <sgeroids/view/planar/entity/spaceship.hpp>
 #include <sgeroids/view/planar/sprite/dim.hpp>
 #include <sgeroids/view/planar/sprite/parameters.hpp>
-#include <sgeroids/view/planar/player_name.hpp>
 #include <sge/audio/buffer.hpp>
 #include <sge/audio/sound/base.hpp>
 #include <sge/audio/sound/nonpositional_parameters.hpp>

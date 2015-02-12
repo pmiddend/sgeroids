@@ -15,9 +15,9 @@
 #include <sge/audio/loader_fwd.hpp>
 #include <sge/audio/player_fwd.hpp>
 #include <sge/audio/sound/base_unique_ptr.hpp>
+#include <sge/font/object_unique_ptr.hpp>
 #include <sge/font/system_fwd.hpp>
 #include <sge/font/draw/static_text_fwd.hpp>
-#include <sge/font/object_unique_ptr.hpp>
 #include <sge/image2d/system_fwd.hpp>
 #include <sge/renderer/matrix4.hpp>
 #include <sge/renderer/context/ffp_fwd.hpp>

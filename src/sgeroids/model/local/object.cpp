@@ -3,10 +3,10 @@
 #include <sgeroids/model/dim2.hpp>
 #include <sgeroids/model/error_code.hpp>
 #include <sgeroids/model/log.hpp>
-#include <sgeroids/model/vector2.hpp>
-#include <sgeroids/model/local/object.hpp>
 #include <sgeroids/model/score.hpp>
 #include <sgeroids/model/spaceship_id.hpp>
+#include <sgeroids/model/vector2.hpp>
+#include <sgeroids/model/local/object.hpp>
 #include <sgeroids/model/local/asteroid_generator/object.hpp>
 #include <sgeroids/model/local/entity/asteroid.hpp>
 #include <sgeroids/model/local/entity/projectile.hpp>
@@ -32,8 +32,8 @@
 #include <functional>
 #include <iterator>
 #include <memory>
-#include <utility>
 #include <typeinfo>
+#include <utility>
 #include <fcppt/config/external_end.hpp>
 
 

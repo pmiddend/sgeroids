@@ -1,8 +1,8 @@
 #ifndef SGEROIDS_SYSTEMS_FWD_HPP_INCLUDED
 #define SGEROIDS_SYSTEMS_FWD_HPP_INCLUDED
 
-#include <sge/systems/keyboard_collector_fwd.hpp>
 #include <sge/systems/instance_fwd.hpp>
+#include <sge/systems/keyboard_collector_fwd.hpp>
 #include <sge/systems/renderer_caps.hpp>
 #include <sge/systems/with_audio_loader_fwd.hpp>
 #include <sge/systems/with_audio_player_fwd.hpp>

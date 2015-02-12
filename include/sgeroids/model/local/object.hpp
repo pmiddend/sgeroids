@@ -3,8 +3,8 @@
 
 #include <sgeroids/random_generator.hpp>
 #include <sgeroids/model/base.hpp>
-#include <sgeroids/model/velocity.hpp>
 #include <sgeroids/model/spaceship_id.hpp>
+#include <sgeroids/model/velocity.hpp>
 #include <sgeroids/model/local/error_context.hpp>
 #include <sgeroids/model/local/asteroid_generator/object_fwd.hpp>
 #include <sgeroids/model/local/entity/asteroid_fwd.hpp>
