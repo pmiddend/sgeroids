@@ -14,6 +14,7 @@
 #include <sgeroids/model/serialization/message/roles/thrust.hpp>
 #include <sge/input/keyboard/device.hpp>
 #include <sge/input/keyboard/key_event.hpp>
+#include <fcppt/maybe_void.hpp>
 #include <fcppt/optional_impl.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/log/_.hpp>
@@ -91,7 +92,7 @@ sgeroids::input::keyboard::id() const
 
 sgeroids::input::keyboard::~keyboard()
 {
-	if(id_.get())
+	if(id_.get().has_value())
 		model_.get().process_message(
 			sgeroids::model::serialization::message::remove_player(
 				sgeroids::model::serialization::message::roles::player_name{} =
@@ -100,21 +101,39 @@ sgeroids::input::keyboard::~keyboard()
 
 void
 sgeroids::input::keyboard::key(
-	sge::input::keyboard::key_event const &e)
+	sge::input::keyboard::key_event const &_event
+)
 {
-	if(
-		!id_.get())
-	{
-		return;
-	}
+	fcppt::maybe_void(
+		id_.get(),
+		[
+			&_event,
+			this
+		](
+			sgeroids::model::entity_id const _id
+		)
+		{
+			this->key_impl(
+				_event,
+				_id
+			);
+		}
+	);
+}
 
+void
+sgeroids::input::keyboard::key_impl(
+	sge::input::keyboard::key_event const &e,
+	sgeroids::model::entity_id const _id
+)
+{
 	switch(e.key_code())
 	{
 		case sge::input::keyboard::key_code::w:
 			model_.get().process_message(
 				sgeroids::model::serialization::message::change_thrust(
 					sgeroids::model::serialization::message::roles::entity_id{} =
-						id_.get()->get(),
+						_id.get(),
 					sgeroids::model::serialization::message::roles::thrust{} =
 						static_cast<sgeroids::model::serialization::message::types::int_>(
 							e.pressed()
@@ -135,7 +154,7 @@ sgeroids::input::keyboard::key(
 			model_.get().process_message(
 				sgeroids::model::serialization::message::change_firing_mode(
 					sgeroids::model::serialization::message::roles::entity_id{} =
-						id_.get()->get(),
+						_id.get(),
 					sgeroids::model::serialization::message::roles::firing_mode{} =
 						static_cast<sgeroids::model::serialization::message::types::enum_>(
 							e.pressed()
@@ -153,7 +172,7 @@ sgeroids::input::keyboard::key(
 	model_.get().process_message(
 		sgeroids::model::serialization::message::rotation_direction(
 			sgeroids::model::serialization::message::roles::entity_id{} =
-				id_.get()->get(),
+				_id.get(),
 			sgeroids::model::serialization::message::roles::rotation_direction{} =
 				static_cast<sgeroids::model::serialization::message::types::int_>(
 					(rotation_left_pressed_ == rotation_right_pressed_
@@ -182,7 +201,7 @@ sgeroids::input::keyboard::add_spaceship(
 			fcppt::log::_
 				<< FCPPT_TEXT("We got an ID: ") << _entity_id.get());
 		id_ =
-			input::optional_entity_id(
+			sgeroids::input::optional_entity_id(
 				fcppt::optional<model::entity_id>(
 					_entity_id));
 	}
@@ -199,6 +218,8 @@ sgeroids::input::keyboard::remove_spaceship(
 			fcppt::log::_
 				<< FCPPT_TEXT("In function ")
 				<< __FUNCTION__);
-		id_ = fcppt::optional<sgeroids::model::entity_id>();
+
+		id_ = sgeroids::input::optional_entity_id(
+			fcppt::optional<model::entity_id>());
 	}
 }

@@ -130,8 +130,12 @@ sgeroids::view::planar::background::object::object(
 						sprite_collection_.connection(
 							0))
 					.texture(
-						texture_tree_.get(
-							sge::resource_tree::path() / FCPPT_TEXT("star")))
+						sgeroids::view::planar::sprite::object::texture_type{
+							texture_tree_.get(
+								sge::resource_tree::path() / FCPPT_TEXT("star")
+							)
+						}
+					)
 					.size(
 						planar::sprite_size_from_texture_and_radius(
 							*texture_tree_.get(
@@ -153,8 +157,12 @@ sgeroids::view::planar::background::object::object(
 					sprite_collection_.connection(
 						2))
 				.texture(
-					texture_tree_.get(
-							sge::resource_tree::path() / FCPPT_TEXT("planet")))
+					sgeroids::view::planar::sprite::object::texture_type{
+						texture_tree_.get(
+							sge::resource_tree::path() / FCPPT_TEXT("planet")
+						)
+					}
+				)
 				.size(
 					planar::sprite_size_from_texture_and_radius(
 						*texture_tree_.get(
@@ -176,8 +184,11 @@ sgeroids::view::planar::background::object::object(
 					sprite_collection_.connection(
 						1))
 				.texture(
-					texture_tree_.get(
-							sge::resource_tree::path() / FCPPT_TEXT("nebula")))
+					sgeroids::view::planar::sprite::object::texture_type{
+						texture_tree_.get(
+							sge::resource_tree::path() / FCPPT_TEXT("nebula"))
+					}
+				)
 				.size(
 					planar::sprite_size_from_texture_and_radius(
 						*texture_tree_.get(

@@ -74,7 +74,9 @@
 #include <fcppt/insert_to_fcppt_string.hpp>
 #include <fcppt/make_shared_ptr.hpp>
 #include <fcppt/make_unique_ptr.hpp>
+#include <fcppt/maybe.hpp>
 #include <fcppt/optional_impl.hpp>
+#include <fcppt/optional_to_exception.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/type_name_from_info.hpp>
 #include <fcppt/cast/int_to_float_fun.hpp>
@@ -275,42 +277,50 @@ sgeroids::view::planar::object::score_change(
 		return;
 	}
 
-	fcppt::optional<entity::spaceship &> maybe_a_ship(
+	fcppt::maybe(
 		fcppt::cast::try_dynamic<entity::spaceship &>(
-			*(it->second)));
-
-	if(!maybe_a_ship)
-	{
-		FCPPT_LOG_DEBUG(
-			view::log(),
-			fcppt::log::_ <<
-				FCPPT_TEXT("view: score_change: not a spaceship: id ")+
-					fcppt::insert_to_fcppt_string(
-						_id.get()));
-		return;
-	}
-
-	score_text_ =
-		fcppt::make_unique_ptr<
-			sge::font::draw::static_text
-		>(
-			renderer_,
-			*score_font_,
-			sge::font::from_fcppt_string(
-				fcppt::insert_to_fcppt_string(
-					maybe_a_ship->player_name())) +
-			SGE_FONT_LIT(": ") +
-			sge::font::from_fcppt_string(
-				fcppt::insert_to_fcppt_string(
-					_score.get())),
-			sge::font::text_parameters(
-				sge::font::align_h::left()),
-			sge::font::vector(
-				0,
-				0
-			),
-			sge::image::color::predef::white(),
-			sge::renderer::texture::emulate_srgb::no);
+			*(it->second)
+		),
+		[
+			_id
+		]{
+			FCPPT_LOG_DEBUG(
+				view::log(),
+				fcppt::log::_ <<
+					FCPPT_TEXT("view: score_change: not a spaceship: id ")+
+						fcppt::insert_to_fcppt_string(
+							_id.get()));
+		},
+		[
+			_score,
+			this
+		](
+			entity::spaceship const &_maybe_a_ship
+		)
+		{
+			score_text_ =
+				fcppt::make_unique_ptr<
+					sge::font::draw::static_text
+				>(
+					renderer_,
+					*score_font_,
+					sge::font::from_fcppt_string(
+						fcppt::insert_to_fcppt_string(
+							_maybe_a_ship.player_name())) +
+					SGE_FONT_LIT(": ") +
+					sge::font::from_fcppt_string(
+						fcppt::insert_to_fcppt_string(
+							_score.get())),
+					sge::font::text_parameters(
+						sge::font::align_h::left()),
+					sge::font::vector(
+						0,
+						0
+					),
+					sge::image::color::predef::white(),
+					sge::renderer::texture::emulate_srgb::no);
+		}
+	);
 }
 
 void
@@ -402,22 +412,25 @@ sgeroids::view::planar::object::change_thrust(
 				fcppt::insert_to_fcppt_string(
 					_id.get()));
 
-	fcppt::optional<entity::spaceship &> maybe_a_ship(
+	fcppt::optional_to_exception(
 		fcppt::cast::try_dynamic<entity::spaceship &>(
-			*(it->second)));
-
-	 if(!maybe_a_ship)
-	 	throw
-			sgeroids::exception(
-				FCPPT_TEXT("view: change_thrust: The entity id ")+
-				fcppt::insert_to_fcppt_string(
-					_id.get())+
-				FCPPT_TEXT(" refers to an entity of (invalid) type ")+
-				fcppt::type_name_from_info(
-					typeid(
-						*(it->second))));
-
-	 maybe_a_ship->change_thrust(
+			*(it->second)
+		),
+		[
+			_id,
+			it
+		]{
+			return
+				sgeroids::exception(
+					FCPPT_TEXT("view: change_thrust: The entity id ")+
+					fcppt::insert_to_fcppt_string(
+						_id.get())+
+					FCPPT_TEXT(" refers to an entity of (invalid) type ")+
+					fcppt::type_name_from_info(
+						typeid(
+							*(it->second))));
+		}
+	).change_thrust(
 		 _thrust);
 }
 

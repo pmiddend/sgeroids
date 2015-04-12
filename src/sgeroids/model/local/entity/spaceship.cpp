@@ -171,7 +171,7 @@ void
 sgeroids::model::local::entity::spaceship::collides_with(
 	entity::base &_other)
 {
-	if(fcppt::cast::try_dynamic<entity::asteroid const &>(_other))
+	if(fcppt::cast::try_dynamic<entity::asteroid const &>(_other).has_value())
 		this->kill();
 }
 

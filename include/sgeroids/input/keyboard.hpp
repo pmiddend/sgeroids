@@ -50,12 +50,18 @@ private:
 	fcppt::signal::scoped_connection add_spaceship_connection_;
 	fcppt::signal::scoped_connection remove_spaceship_connection_;
 	sgeroids::model::player_name name_;
-	input::optional_entity_id id_;
+	sgeroids::input::optional_entity_id id_;
 	bool rotation_left_pressed_,rotation_right_pressed_;
 
 	void
 	key(
 		sge::input::keyboard::key_event const &);
+
+	void
+	key_impl(
+		sge::input::keyboard::key_event const &,
+		sgeroids::model::entity_id
+	);
 
 	void
 	add_spaceship(

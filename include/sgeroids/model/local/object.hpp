@@ -147,11 +147,15 @@ public:
 	~object();
 private:
 	typedef
+	std::unique_ptr<
+		sgeroids::model::local::entity::base
+	>
+	entity_unique_ptr;
+
+	typedef
 	std::map<
 		model::entity_id::value_type,
-		std::unique_ptr<
-			entity::base
-		>
+		entity_unique_ptr
 	>
 	entity_map;
 

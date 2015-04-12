@@ -28,8 +28,12 @@ sgeroids::view::planar::entity::bullet::bullet(
 						sge::resource_tree::path() / FCPPT_TEXT("bullet")),
 					planar::radius(sgeroids::math::unit_magnitude() * 1024 * 32)))
 			.texture(
-				_texture_tree.get(
-						sge::resource_tree::path() / FCPPT_TEXT("bullet")))
+				sgeroids::view::planar::sprite::object::texture_type{
+					_texture_tree.get(
+						sge::resource_tree::path() / FCPPT_TEXT("bullet")
+					)
+				}
+			)
 			.rotation(
 				0)
 			.any_color(

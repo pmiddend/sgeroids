@@ -5,6 +5,7 @@
 #include <sgeroids/model/log.hpp>
 #include <sgeroids/model/local/entity/asteroid.hpp>
 #include <sgeroids/model/local/entity/projectile.hpp>
+#include <fcppt/maybe_void.hpp>
 #include <fcppt/cast/try_dynamic.hpp>
 #include <fcppt/math/vector/arithmetic.hpp>
 
@@ -126,38 +127,45 @@ sgeroids::model::local::entity::asteroid::collides_with(
 	if(dead_)
 		return;
 
-	fcppt::optional<entity::projectile const &> p(
-		fcppt::cast::try_dynamic<entity::projectile const &>(
-			_other));
-
 	// If we're not colliding with a projectile, do nothing.
 	// TODO: Shall we do something here in case we're colliding with a spaceship?
-	if(!p)
-		return;
+	fcppt::maybe_void(
+		fcppt::cast::try_dynamic<
+			sgeroids::model::local::entity::projectile const &
+		>(
+			_other
+		),
+		[
+			this
+		](
+			sgeroids::model::local::entity::projectile const &_projectile
+		)
+		{
+			// Decrease health. This could depend on the projectile later on, but
+			// currently, just subtract a constant amount.
+			health_ -= 50;
 
-	// Decrease health. This could depend on the projectile later on, but
-	// currently, just subtract a constant amount.
-	health_ -= 50;
+			// If we died, we have to tell the model, since new asteroids might
+			// need to be spawned (and we're not responsible for spawning them).
+			if(health_ < 0)
+			{
+				dead_ =
+					true;
 
-	// If we died, we have to tell the model, since new asteroids might
-	// need to be spawned (and we're not responsible for spawning them).
-	if(health_ < 0)
-	{
-		dead_ =
-			true;
-
-		asteroid_died_(
-			*this,
-			p->owner_id());
-	}
-	// If we didn't die, our trajectory changes
-	else
-	{
-		// TODO: No inertia here: We need to take the mass into account
-		// (larger asteroids aren't as easily deflected)
-		velocity_ +=
-			p->velocity().get()/2;
-	}
+				asteroid_died_(
+					*this,
+					_projectile.owner_id());
+			}
+			// If we didn't die, our trajectory changes
+			else
+			{
+				// TODO: No inertia here: We need to take the mass into account
+				// (larger asteroids aren't as easily deflected)
+				velocity_ +=
+					_projectile.velocity().get()/2;
+			}
+		}
+	);
 }
 
 sgeroids::model::local::entity::asteroid::~asteroid()

@@ -35,7 +35,10 @@ sprite_init(
 				*texture,
 				_radius))
 		.texture(
-			texture)
+			sgeroids::view::planar::sprite::object::texture_type{
+				texture
+			}
+		)
 		.rotation(
 			0)
 		.any_color(

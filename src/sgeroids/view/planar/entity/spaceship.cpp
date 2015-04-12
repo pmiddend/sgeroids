@@ -56,7 +56,10 @@ sgeroids::view::planar::entity::spaceship::spaceship(
 					*texture_off_,
 					_radius))
 			.texture(
-				texture_off_)
+				sgeroids::view::planar::sprite::object::texture_type{
+					texture_off_
+				}
+			)
 			.rotation(
 				0)
 			.any_color(
@@ -134,13 +137,19 @@ sgeroids::view::planar::entity::spaceship::change_thrust(
 	{
 		thrust_ = true;
 		sprite_.texture(
-			texture_on_);
+			sgeroids::view::planar::sprite::object::texture_type{
+				texture_on_
+			}
+		);
 	}
 	else
 	{
 		thrust_ = false;
 		sprite_.texture(
-			texture_off_);
+			sgeroids::view::planar::sprite::object::texture_type{
+				texture_off_
+			}
+		);
 	}
 }
 

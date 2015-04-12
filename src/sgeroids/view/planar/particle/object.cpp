@@ -30,8 +30,12 @@ sgeroids::view::planar::particle::object::object(
 						sge::resource_tree::path() / FCPPT_TEXT("exhaust")),
 					planar::radius(1000 * 1000 * 32)))
 			.texture(
-				_texture_tree.get(
-					sge::resource_tree::path() / FCPPT_TEXT("exhaust")))
+				sgeroids::view::planar::sprite::object::texture_type{
+					_texture_tree.get(
+						sge::resource_tree::path() / FCPPT_TEXT("exhaust")
+					)
+				}
+			)
 			.rotation(
 				0)
 			.center(

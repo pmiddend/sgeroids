@@ -15,10 +15,14 @@
 #include <alda/serialization/serialize.hpp>
 #include <fcppt/insert_to_fcppt_string.hpp>
 #include <fcppt/make_unique_ptr.hpp>
+#include <fcppt/maybe_void.hpp>
+#include <fcppt/maybe_void_multi.hpp>
+#include <fcppt/optional_to_exception.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/type_name_from_info.hpp>
 #include <fcppt/assert/unreachable.hpp>
 #include <fcppt/cast/try_dynamic.hpp>
+#include <fcppt/container/find_opt.hpp>
 #include <fcppt/log/_.hpp>
 #include <fcppt/log/debug.hpp>
 #include <fcppt/math/box/center.hpp>
@@ -242,30 +246,38 @@ sgeroids::model::local::object::process_message(
 	// First, search for a player with the given name. If one already
 	// exists, we have to signal an error.
 	for(
-		entity_map::const_iterator it =
-			entities_.begin();
-		it != entities_.end();
-		++it)
+		auto const &entity
+		:
+		entities_
+	)
 	{
-		fcppt::optional<entity::spaceship const &> maybe_a_ship(
-			fcppt::cast::try_dynamic<entity::spaceship const &>(
-				*(it->second)));
+		fcppt::maybe_void(
+			fcppt::cast::try_dynamic<
+				sgeroids::model::local::entity::spaceship const &
+			>(
+				*entity.second
+			),
+			[
+				&player_name,
+				this
+			](
+				sgeroids::model::local::entity::spaceship const &_maybe_a_ship
+			)
+			{
+				if(_maybe_a_ship.player_name().get() == player_name.get())
+				{
+					FCPPT_LOG_DEBUG(
+						model::log(),
+						fcppt::log::_
+							<< FCPPT_TEXT("Got add_player with existing player name"));
 
-		if(!maybe_a_ship)
-			continue;
+					error_(
+						sgeroids::model::error_code::name_not_available);
 
-		if(maybe_a_ship->player_name().get() == player_name.get())
-		{
-			FCPPT_LOG_DEBUG(
-				model::log(),
-				fcppt::log::_
-					<< FCPPT_TEXT("Got add_player with existing player name"));
-
-			error_(
-				sgeroids::model::error_code::name_not_available);
-
-			return;
-		}
+					return;
+				}
+			}
+		);
 	}
 
 	// Now we know: There's no other player with that name. We can add
@@ -360,30 +372,32 @@ sgeroids::model::local::object::process_message(
 			<< FCPPT_TEXT("Removing a player"));
 
 	for(
-		entity_map::iterator it =
-			entities_.begin();
-		it != entities_.end();
-		++it)
+		auto const &entity
+		:
+		entities_
+	)
 	{
-		fcppt::optional<entity::spaceship &> maybe_a_ship(
+		fcppt::maybe_void(
 			fcppt::cast::try_dynamic<entity::spaceship &>(
-				*(it->second)));
+				*entity.second
+			),
+			[
+				&player_name
+			](
+				entity::spaceship &_maybe_a_ship
+			)
+			{
+				/*
+				FCPPT_LOG_DEBUG(
+					model::log(),
+					fcppt::log::_
+						<< FCPPT_TEXT("Testing the ship ") << maybe_a_ship->player_name().get());
+						*/
 
-		if(!maybe_a_ship)
-			continue;
-
-		/*
-		FCPPT_LOG_DEBUG(
-			model::log(),
-			fcppt::log::_
-				<< FCPPT_TEXT("Testing the ship ") << maybe_a_ship->player_name().get());
-				*/
-
-		if(maybe_a_ship->player_name().get() == player_name.get())
-		{
-			maybe_a_ship->kill();
-			return;
-		}
+				if(_maybe_a_ship.player_name().get() == player_name.get())
+					_maybe_a_ship.kill();
+			}
+		);
 	}
 }
 
@@ -493,13 +507,21 @@ sgeroids::model::local::object::entity_updates()
 		it->second->update();
 		if(it->second->dead())
 		{
-			fcppt::optional<entity::spaceship &> maybe_ship =
+			fcppt::maybe_void(
 				fcppt::cast::try_dynamic<entity::spaceship &>(
 					*(it->second)
-				);
-			if (maybe_ship)
-				remove_spaceship_(
-					maybe_ship->player_name());
+				),
+				[
+					this
+				](
+					entity::spaceship &_maybe_ship
+				)
+				{
+					remove_spaceship_(
+						_maybe_ship.player_name());
+				}
+			);
+
 			remove_entity_(
 				model::entity_id(
 					it->first));
@@ -563,35 +585,53 @@ sgeroids::model::local::object::collision_detection_narrow_phase(
 		_right.collides_with(
 			_left);
 
-		fcppt::optional<entity::asteroid const &>
-			left_is_asteroid(
-				fcppt::cast::try_dynamic<entity::asteroid const &>(
-					_left)),
-			right_is_asteroid(
-				fcppt::cast::try_dynamic<entity::asteroid const &>(
-					_right));
+		fcppt::maybe_void_multi(
+			[
+				_left_id,
+				_right_id,
+				this
+			](
+				sgeroids::model::local::entity::asteroid const &,
+				sgeroids::model::local::entity::projectile const &
+			)
+			{
+				collide_projectile_asteroid_(
+					model::projectile_id(
+						_right_id.get()),
+					model::asteroid_id(
+						_left_id.get()));
+			},
+			fcppt::cast::try_dynamic<entity::asteroid const &>(
+				_left
+			),
+			fcppt::cast::try_dynamic<entity::projectile const &>(
+				_right
+			)
+		);
 
-		fcppt::optional<entity::projectile const &>
-			left_is_projectile(
-				fcppt::cast::try_dynamic<entity::projectile const &>(
-					_left)),
-			right_is_projectile(
-				fcppt::cast::try_dynamic<entity::projectile const &>(
-					_right));
-
-		if(left_is_asteroid && right_is_projectile)
-			collide_projectile_asteroid_(
-				model::projectile_id(
-					_right_id.get()),
-				model::asteroid_id(
-					_left_id.get()));
-		else if(right_is_asteroid && left_is_projectile)
-			collide_projectile_asteroid_(
-				model::projectile_id(
-					_left_id.get()),
-				model::asteroid_id(
-					_right_id.get()));
-
+		fcppt::maybe_void_multi(
+			[
+				_left_id,
+				_right_id,
+				this
+			](
+				sgeroids::model::local::entity::projectile const &,
+				sgeroids::model::local::entity::asteroid const &
+			)
+			{
+				collide_projectile_asteroid_(
+					model::projectile_id(
+						_left_id.get()),
+					model::asteroid_id(
+						_right_id.get()));
+			},
+			fcppt::cast::try_dynamic<entity::projectile const &>(
+				_left
+			),
+			fcppt::cast::try_dynamic<entity::asteroid const &>(
+				_right
+			)
+		);
 	}
 }
 
@@ -621,36 +661,54 @@ sgeroids::model::local::object::find_spaceship_by_id(
 sgeroids::model::local::entity::spaceship &
 sgeroids::model::local::object::find_spaceship_by_id_exn(
 	sgeroids::model::entity_id const &_id,
-	sgeroids::model::local::error_context const &_context)
+	sgeroids::model::local::error_context const &_context
+)
 {
-	entity_map::iterator it =
-		entities_.find(
-			_id.get());
-
-	if(it == entities_.end())
-		throw
-			sgeroids::exception(
-				_context.get()+
-				FCPPT_TEXT(": unknown entity id ")+
-				fcppt::insert_to_fcppt_string(
-					_id.get()));
-
-	fcppt::optional<entity::spaceship &> maybe_a_ship(
-		fcppt::cast::try_dynamic<entity::spaceship &>(
-			*(it->second)));
-
-	 if(!maybe_a_ship)
-	 	throw
-			sgeroids::exception(
-				_context.get()+FCPPT_TEXT(": The entity id ")+
-				fcppt::insert_to_fcppt_string(
-					_id.get())+
-				FCPPT_TEXT(" refers to an entity of (invalid) type ")+
-				fcppt::type_name_from_info(
-					typeid(
-						*(it->second))));
-
-	 return *maybe_a_ship;
+	return
+		fcppt::optional_to_exception(
+			fcppt::cast::try_dynamic<
+				sgeroids::model::local::entity::spaceship &
+			>(
+				*fcppt::optional_to_exception(
+					fcppt::container::find_opt(
+						entities_,
+						_id.get()
+					),
+					[
+						_id,
+						&_context
+					]{
+						return
+							sgeroids::exception(
+								_context.get()
+								+
+								FCPPT_TEXT(": unknown entity id ")
+								+
+								fcppt::insert_to_fcppt_string(
+									_id.get()
+								)
+							);
+					}
+				)
+			),
+			[
+				_id,
+				&_context
+			]{
+				return
+					sgeroids::exception(
+						_context.get()
+						+
+						FCPPT_TEXT(": The entity id ")
+						+
+						fcppt::insert_to_fcppt_string(
+							_id.get()
+						)
+						+
+						FCPPT_TEXT(" refers to an entity of (invalid) type ")
+					);
+			}
+		);
 }
 
 void
@@ -822,23 +880,29 @@ sgeroids::model::local::object::asteroid_died(
 		fcppt::log::_
 			<< FCPPT_TEXT("An asteroid died, checking if we need to create another one"));
 
-	fcppt::optional<
-		sgeroids::model::local::entity::spaceship &
-	>
-	killer(
+	fcppt::maybe_void(
 		this->find_spaceship_by_id(
-			_killer_id));
-
-	if (killer) // only if it's an existing spaceship entity
-	{
-		killer->increase_score(
-			model::score(
-				100));
-
-		score_change_(
+			_killer_id
+		),
+		[
 			_killer_id,
-			killer->score());
-	}
+			this
+		](
+			sgeroids::model::local::entity::spaceship &_killer
+		)
+		{
+			_killer.increase_score(
+				sgeroids::model::score(
+					100
+				)
+			);
+
+			score_change_(
+				_killer_id,
+				_killer.score()
+			);
+		}
+	);
 
 	destroy_asteroid_(
 		_entity_id);
