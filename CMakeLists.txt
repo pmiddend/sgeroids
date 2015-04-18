@@ -319,7 +319,6 @@ set(
 	include/sgeroids/view/planar/sprite/object.hpp
 	include/sgeroids/view/planar/sprite/order.hpp
 	include/sgeroids/view/planar/sprite/ordered_collection.hpp
-	include/sgeroids/view/planar/sprite/parameters.hpp
 	include/sgeroids/view/planar/sprite/static_buffers.hpp
 	include/sgeroids/view/planar/sprite/static_range.hpp
 	include/sgeroids/view/planar/sprite/type_choices.hpp

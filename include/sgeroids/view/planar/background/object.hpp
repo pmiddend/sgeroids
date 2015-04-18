@@ -19,6 +19,7 @@
 #include <sge/sprite/state/object_decl.hpp>
 #include <sge/sprite/state/with_blend.hpp>
 #include <sge/sprite/state/with_rasterizer.hpp>
+#include <fcppt/math/box/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/mpl/vector/vector10.hpp>
 #include <vector>

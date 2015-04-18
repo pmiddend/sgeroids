@@ -5,15 +5,12 @@
 #include <sgeroids/view/planar/texture_tree.hpp>
 #include <sgeroids/view/planar/background/object.hpp>
 #include <sgeroids/view/planar/sprite/dim.hpp>
-#include <sgeroids/view/planar/sprite/parameters.hpp>
 #include <sge/image/color/predef.hpp>
-#include <sge/image/color/any/object.hpp>
+#include <sge/image/color/any/convert.hpp>
 #include <sge/renderer/context/core_fwd.hpp>
 #include <sge/renderer/device/core_fwd.hpp>
 #include <sge/renderer/vertex/declaration_fwd.hpp>
 #include <sge/resource_tree/path.hpp>
-#include <sge/sprite/center.hpp>
-#include <sge/sprite/parameters.hpp>
 #include <sge/sprite/buffers/option.hpp>
 #include <sge/sprite/buffers/parameters.hpp>
 #include <sge/sprite/compare/default.hpp>
@@ -22,6 +19,12 @@
 #include <sge/sprite/render/parameters.hpp>
 #include <sge/sprite/render/range_impl.hpp>
 #include <sge/sprite/render/range_with_options.hpp>
+#include <sge/sprite/roles/center.hpp>
+#include <sge/sprite/roles/color.hpp>
+#include <sge/sprite/roles/connection.hpp>
+#include <sge/sprite/roles/rotation.hpp>
+#include <sge/sprite/roles/size.hpp>
+#include <sge/sprite/roles/texture0.hpp>
 #include <sge/sprite/state/default_options.hpp>
 #include <sge/sprite/state/object_impl.hpp>
 #include <sge/sprite/state/parameters_impl.hpp>
@@ -125,84 +128,104 @@ sgeroids::view::planar::background::object::object(
 	)
 		sprites_.push_back(
 			planar::sprite::object(
-				planar::sprite::parameters()
-					.connection(
-						sprite_collection_.connection(
-							0))
-					.texture(
-						sgeroids::view::planar::sprite::object::texture_type{
-							texture_tree_.get(
-								sge::resource_tree::path() / FCPPT_TEXT("star")
-							)
-						}
-					)
-					.size(
-						planar::sprite_size_from_texture_and_radius(
-							*texture_tree_.get(
-								sge::resource_tree::path() / FCPPT_TEXT("star")),
-							planar::radius(random_radius())))
-					.center(
-						planar::sprite::object::vector(
-							random_x(),
-							random_y()))
-					.rotation(
-						0)
-					.any_color(
-						sge::image::color::predef::white())));
-
-	sprites_.push_back(
-		planar::sprite::object(
-			planar::sprite::parameters()
-				.connection(
+				sge::sprite::roles::connection{} =
 					sprite_collection_.connection(
-						2))
-				.texture(
+						0
+					),
+				sge::sprite::roles::texture0{} =
 					sgeroids::view::planar::sprite::object::texture_type{
 						texture_tree_.get(
-							sge::resource_tree::path() / FCPPT_TEXT("planet")
+							sge::resource_tree::path() / FCPPT_TEXT("star")
 						)
-					}
-				)
-				.size(
+					},
+				sge::sprite::roles::size{} =
 					planar::sprite_size_from_texture_and_radius(
 						*texture_tree_.get(
-							sge::resource_tree::path() / FCPPT_TEXT("planet")),
-						planar::radius(30 * random_radius())))
-				.center(
+							sge::resource_tree::path() / FCPPT_TEXT("star")),
+						planar::radius(random_radius())
+					),
+				sge::sprite::roles::center{} =
 					planar::sprite::object::vector(
 						random_x(),
-						random_y()))
-				.rotation(
-					random_angle())
-				.any_color(
-					sge::image::color::predef::white())));
+						random_y()
+					),
+				sge::sprite::roles::rotation{} =
+					0.f,
+				sge::sprite::roles::color{} =
+					sge::image::color::any::convert<
+						sgeroids::view::planar::sprite::color_format
+					>(
+						sge::image::color::predef::white()
+					)
+			)
+		);
 
 	sprites_.push_back(
 		planar::sprite::object(
-			planar::sprite::parameters()
-				.connection(
-					sprite_collection_.connection(
-						1))
-				.texture(
-					sgeroids::view::planar::sprite::object::texture_type{
-						texture_tree_.get(
-							sge::resource_tree::path() / FCPPT_TEXT("nebula"))
-					}
+			sge::sprite::roles::connection{} =
+				sprite_collection_.connection(
+					2
+				),
+			sge::sprite::roles::texture0{} =
+				sgeroids::view::planar::sprite::object::texture_type{
+					texture_tree_.get(
+						sge::resource_tree::path() / FCPPT_TEXT("planet")
+					)
+				},
+			sge::sprite::roles::size{} =
+				planar::sprite_size_from_texture_and_radius(
+					*texture_tree_.get(
+						sge::resource_tree::path() / FCPPT_TEXT("planet")),
+					planar::radius(30 * random_radius())
+				),
+			sge::sprite::roles::center{} =
+				planar::sprite::object::vector(
+					random_x(),
+					random_y()
+				),
+			sge::sprite::roles::rotation{} =
+				random_angle(),
+			sge::sprite::roles::color{} =
+				sge::image::color::any::convert<
+					sgeroids::view::planar::sprite::color_format
+				>(
+					sge::image::color::predef::white()
 				)
-				.size(
-					planar::sprite_size_from_texture_and_radius(
-						*texture_tree_.get(
-							sge::resource_tree::path() / FCPPT_TEXT("nebula")),
-						planar::radius(math::unit_magnitude() * 1024 * 1024)))
-				.center(
-					planar::sprite::object::vector(
-						random_x(),
-						random_y()))
-				.rotation(
-					random_angle())
-				.any_color(
-					sge::image::color::predef::white())));
+		)
+	);
 
+	sprites_.push_back(
+		planar::sprite::object(
+			sge::sprite::roles::connection{} =
+				sprite_collection_.connection(
+					1
+				),
+			sge::sprite::roles::texture0{} =
+				sgeroids::view::planar::sprite::object::texture_type{
+					texture_tree_.get(
+						sge::resource_tree::path() / FCPPT_TEXT("nebula"))
+				},
+			sge::sprite::roles::size{} =
+				planar::sprite_size_from_texture_and_radius(
+					*texture_tree_.get(
+						sge::resource_tree::path() / FCPPT_TEXT("nebula")),
+					planar::radius(math::unit_magnitude() * 1024 * 1024)
+				),
+			sge::sprite::roles::center{} =
+				planar::sprite::object::vector(
+					random_x(),
+					random_y()
+				),
+			sge::sprite::roles::rotation{} =
+				random_angle(),
+			sge::sprite::roles::color{} =
+				sge::image::color::any::convert<
+					sgeroids::view::planar::sprite::color_format
+				>(
+					sge::image::color::predef::white()
+				)
+		)
+	);
 
 	sprite_render_range_ =
 		sge::sprite::geometry::sort_and_update(

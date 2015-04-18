@@ -7,9 +7,12 @@
 #include <sge/sprite/config/custom_center.hpp>
 #include <sge/sprite/config/intrusive.hpp>
 #include <sge/sprite/config/normal_size.hpp>
+#include <sge/sprite/config/pos.hpp>
+#include <sge/sprite/config/pos_option.hpp>
 #include <sge/sprite/config/texture_coordinates.hpp>
 #include <sge/sprite/config/texture_level_count.hpp>
 #include <sge/sprite/config/texture_ownership.hpp>
+#include <sge/sprite/config/texture_size_option.hpp>
 #include <sge/sprite/config/with_color.hpp>
 #include <sge/sprite/config/with_rotation.hpp>
 #include <sge/sprite/config/with_texture.hpp>
@@ -30,7 +33,14 @@ typedef
 sge::sprite::config::choices
 <
 	sprite::type_choices,
-	sge::sprite::config::normal_size,
+	sge::sprite::config::pos
+	<
+		sge::sprite::config::pos_option::center
+	>,
+	sge::sprite::config::normal_size
+	<
+		sge::sprite::config::texture_size_option::never
+	>,
 	boost::mpl::vector4
 	<
 		sge::sprite::config::with_texture

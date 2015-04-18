@@ -8,18 +8,22 @@
 #include <sgeroids/view/planar/texture_tree.hpp>
 #include <sgeroids/view/planar/callbacks/add_particle.hpp>
 #include <sgeroids/view/planar/entity/spaceship.hpp>
+#include <sgeroids/view/planar/sprite/color_format.hpp>
 #include <sgeroids/view/planar/sprite/dim.hpp>
-#include <sgeroids/view/planar/sprite/parameters.hpp>
 #include <sge/audio/buffer.hpp>
 #include <sge/audio/sound/base.hpp>
 #include <sge/audio/sound/nonpositional_parameters.hpp>
 #include <sge/audio/sound/repeat.hpp>
 #include <sge/image/color/predef.hpp>
-#include <sge/image/color/any/object.hpp>
+#include <sge/image/color/any/convert.hpp>
 #include <sge/resource_tree/path.hpp>
-#include <sge/sprite/center.hpp>
-#include <sge/sprite/parameters.hpp>
 #include <sge/sprite/intrusive/ordered/collection.hpp>
+#include <sge/sprite/roles/center.hpp>
+#include <sge/sprite/roles/color.hpp>
+#include <sge/sprite/roles/connection.hpp>
+#include <sge/sprite/roles/rotation.hpp>
+#include <sge/sprite/roles/size.hpp>
+#include <sge/sprite/roles/texture0.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/math/vector/arithmetic.hpp>
 #include <fcppt/random/variate_impl.hpp>
@@ -47,23 +51,30 @@ sgeroids::view::planar::entity::spaceship::spaceship(
 		_texture_tree.get(
 			sge::resource_tree::path() / FCPPT_TEXT("spaceship") / FCPPT_TEXT("on"))),
 	sprite_(
-		planar::sprite::parameters()
-			.connection(
-				_collection.connection(
-					3))
-			.size(
-				planar::sprite_size_from_texture_and_radius(
-					*texture_off_,
-					_radius))
-			.texture(
-				sgeroids::view::planar::sprite::object::texture_type{
-					texture_off_
-				}
-			)
-			.rotation(
-				0)
-			.any_color(
-				sge::image::color::predef::white())),
+		sge::sprite::roles::connection{} =
+			_collection.connection(
+				3
+			),
+		sge::sprite::roles::size{} =
+			planar::sprite_size_from_texture_and_radius(
+				*texture_off_,
+				_radius
+			),
+		sge::sprite::roles::texture0{} =
+			sgeroids::view::planar::sprite::object::texture_type{
+				texture_off_
+			},
+		sge::sprite::roles::rotation{} =
+			0.f,
+		sge::sprite::roles::color{} =
+			sge::image::color::any::convert<
+				sgeroids::view::planar::sprite::color_format
+			>(
+				sge::image::color::predef::white()
+			),
+		sge::sprite::roles::center{} =
+			sgeroids::view::planar::sprite::object::vector::null()
+	),
 	audio_player_(
 		_audio_player),
 	thrust_sound_(
@@ -94,8 +105,7 @@ void
 sgeroids::view::planar::entity::spaceship::position(
 	planar::position const &_position)
 {
-	sge::sprite::center(
-		sprite_,
+	sprite_.center(
 		_position.get());
 }
 
@@ -113,8 +123,7 @@ sgeroids::view::planar::entity::spaceship::update()
 	if (thrust_)
 		add_particle_(
 			planar::position(
-				sge::sprite::center(
-					sprite_)
+				sprite_.center()
 			),
 			planar::particle::velocity(
 					2000 * planar::vector2(
