@@ -4,7 +4,6 @@
 #include <sgeroids/view/planar/sprite/color_format.hpp>
 #include <sgeroids/view/planar/sprite/type_choices.hpp>
 #include <sge/sprite/config/choices.hpp>
-#include <sge/sprite/config/custom_center.hpp>
 #include <sge/sprite/config/intrusive.hpp>
 #include <sge/sprite/config/normal_size.hpp>
 #include <sge/sprite/config/pos.hpp>
@@ -49,10 +48,7 @@ sge::sprite::config::choices
 			sge::sprite::config::texture_coordinates::automatic,
 			sge::sprite::config::texture_ownership::shared
 		>,
-		sge::sprite::config::with_rotation
-		<
-			sge::sprite::config::custom_center<false>
-		>,
+		sge::sprite::config::with_rotation,
 		sge::sprite::config::with_color
 		<
 			planar::sprite::color_format
