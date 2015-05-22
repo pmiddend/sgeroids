@@ -8,6 +8,7 @@
 #include <fcppt/maybe_void.hpp>
 #include <fcppt/cast/try_dynamic.hpp>
 #include <fcppt/math/vector/arithmetic.hpp>
+#include <fcppt/math/vector/comparison.hpp>
 
 
 sgeroids::model::local::entity::asteroid::asteroid(
