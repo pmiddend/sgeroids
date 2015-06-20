@@ -8,7 +8,6 @@
 #include <sgeroids/model/serialization/message/roles/rotation_direction.hpp>
 #include <alda/message/make_class.hpp>
 #include <alda/message/make_id.hpp>
-#include <majutsu/composite.hpp>
 #include <majutsu/role.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/mpl/vector/vector10.hpp>
@@ -26,25 +25,22 @@ namespace message
 typedef
 alda::message::make_class
 <
-	majutsu::composite
+	boost::mpl::vector3
 	<
-		boost::mpl::vector3
+		alda::message::make_id
 		<
-			alda::message::make_id
-			<
-				sgeroids::model::serialization::message::adapted_types::message,
-				sgeroids::model::serialization::message::types::message::rotation_direction
-			>,
-			majutsu::role
-			<
-				sgeroids::model::serialization::message::adapted_types::entity_id,
-				sgeroids::model::serialization::message::roles::entity_id
-			>,
-			majutsu::role
-			<
-				sgeroids::model::serialization::message::adapted_types::int_,
-				sgeroids::model::serialization::message::roles::rotation_direction
-			>
+			sgeroids::model::serialization::message::adapted_types::message,
+			sgeroids::model::serialization::message::types::message::rotation_direction
+		>,
+		majutsu::role
+		<
+			sgeroids::model::serialization::message::adapted_types::entity_id,
+			sgeroids::model::serialization::message::roles::entity_id
+		>,
+		majutsu::role
+		<
+			sgeroids::model::serialization::message::adapted_types::int_,
+			sgeroids::model::serialization::message::roles::rotation_direction
 		>
 	>
 >
