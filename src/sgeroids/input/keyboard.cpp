@@ -127,7 +127,7 @@ sgeroids::input::keyboard::key_impl(
 	sgeroids::model::entity_id const _id
 )
 {
-	switch(e.key_code())
+	switch(e.key().code())
 	{
 		case sge::input::keyboard::key_code::w:
 			model_.get().process_message(
