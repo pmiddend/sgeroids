@@ -32,6 +32,7 @@
 #include <sge/font/ttf_size.hpp>
 #include <sge/font/vector.hpp>
 #include <sge/font/align_h/left.hpp>
+#include <sge/font/align_h/variant.hpp>
 #include <sge/font/draw/static_text.hpp>
 #include <sge/image/color/format.hpp>
 #include <sge/image/color/predef.hpp>
@@ -313,7 +314,8 @@ sgeroids::view::planar::object::score_change(
 						fcppt::insert_to_fcppt_string(
 							_score.get())),
 					sge::font::text_parameters(
-						sge::font::align_h::left()),
+						sge::font::align_h::variant(
+							sge::font::align_h::left())),
 					sge::font::vector(
 						0,
 						0

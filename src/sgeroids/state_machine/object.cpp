@@ -37,6 +37,7 @@
 #include <sge/systems/original_window.hpp>
 #include <sge/systems/renderer.hpp>
 #include <sge/systems/window.hpp>
+#include <sge/systems/window_source.hpp>
 #include <sge/timer/scoped_frame_limiter.hpp>
 #include <sge/viewport/fractional_aspect.hpp>
 #include <sge/viewport/maintain_aspect.hpp>
@@ -46,7 +47,6 @@
 #include <awl/main/exit_success.hpp>
 #include <fcppt/insert_to_fcppt_string.hpp>
 #include <fcppt/text.hpp>
-#include <fcppt/assign/make_container.hpp>
 #include <fcppt/container/bitfield/object_impl.hpp>
 #include <fcppt/variant/holds_type.hpp>
 
@@ -138,35 +138,64 @@ sgeroids::state_machine::object::object(
 				_argc,
 				_argv))),
 	systems_(
-		sge::systems::make_list
-			(sge::systems::window(
-				sge::systems::original_window(
-					sge::window::title(
-						FCPPT_TEXT("sgeroids-")+
-						sgeroids::version()))
-				.dim(
-					sge::parse::json::find_and_convert_member<sge::window::dim>(
-						this->config(),
-						sge::parse::json::path(FCPPT_TEXT("renderer")) / FCPPT_TEXT("window-size")))))
-			(
-				renderer_parameters_from_config_file(
-					this->config()
+		sge::systems::make_list(
+			sge::systems::window(
+				sge::systems::window_source(
+					sge::systems::original_window(
+						sge::window::title(
+							FCPPT_TEXT("sgeroids-")
+							+
+							sgeroids::version()
+						)
+					)
+					.dim(
+						sge::parse::json::find_and_convert_member<
+							sge::window::dim
+						>(
+							this->config(),
+							sge::parse::json::path(
+								FCPPT_TEXT("renderer")
+							)
+							/
+							FCPPT_TEXT("window-size")
+						)
+					)
 				)
 			)
-			(sge::systems::input(
-				sge::systems::cursor_option_field::null()))
-			(sge::systems::audio_player_default())
-			(sge::systems::font())
-			(sge::systems::image2d(
+		)(
+			renderer_parameters_from_config_file(
+				this->config()
+			)
+		)(
+			sge::systems::input(
+				sge::systems::cursor_option_field::null()
+			)
+		)(
+			sge::systems::audio_player_default()
+		)(
+			sge::systems::font()
+		)(
+			sge::systems::image2d(
 				sge::media::optional_extension_set(
-					fcppt::assign::make_container<sge::media::extension_set>(
+					sge::media::extension_set{
 						sge::media::extension(
-							FCPPT_TEXT("png"))))))
-			(sge::systems::audio_loader(
+							FCPPT_TEXT("png")
+						)
+					}
+				)
+			)
+		)(
+			sge::systems::audio_loader(
 				sge::media::optional_extension_set(
-					fcppt::assign::make_container<sge::media::extension_set>(
+					sge::media::extension_set{
 						sge::media::extension(
-							FCPPT_TEXT("ogg")))))))
+							FCPPT_TEXT("ogg")
+						)
+					}
+				)
+			)
+		)
+	)
 {
 }
 
