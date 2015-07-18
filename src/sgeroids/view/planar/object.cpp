@@ -149,7 +149,9 @@ sgeroids::view::planar::object::object(
 		sge::sprite::state::parameters<
 			sprite_state_choices
 		>()),
-	projection_matrix_(),
+	projection_matrix_(
+		sge::renderer::matrix4::identity()
+	),
 	entities_(),
 	background_(),
 	particles_(),
