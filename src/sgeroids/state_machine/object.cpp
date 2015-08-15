@@ -41,6 +41,7 @@
 #include <sge/timer/scoped_frame_limiter.hpp>
 #include <sge/viewport/fractional_aspect.hpp>
 #include <sge/viewport/maintain_aspect.hpp>
+#include <sge/viewport/optional_resize_callback.hpp>
 #include <sge/window/system.hpp>
 #include <sge/window/title.hpp>
 #include <awl/main/exit_code.hpp>
@@ -115,12 +116,14 @@ renderer_parameters_from_config_file(
 				vsync_enabled,
 				sge::renderer::display_mode::optional_object()
 			),
-			sge::viewport::maintain_aspect(
-				sge::viewport::fractional_aspect(
-					1u,
-					1u
+			sge::viewport::optional_resize_callback{
+				sge::viewport::maintain_aspect(
+					sge::viewport::fractional_aspect(
+						1u,
+						1u
+					)
 				)
-			)
+			}
 		);
 }
 }

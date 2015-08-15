@@ -8,6 +8,7 @@
 #include <sgeroids/model/vector2.hpp>
 #include <sgeroids/model/local/object.hpp>
 #include <sgeroids/model/local/asteroid_generator/object.hpp>
+#include <sgeroids/model/local/callbacks/asteroid_generation.hpp>
 #include <sgeroids/model/local/entity/asteroid.hpp>
 #include <sgeroids/model/local/entity/projectile.hpp>
 #include <sgeroids/model/local/entity/spaceship.hpp>
@@ -202,14 +203,18 @@ sgeroids::model::local::object::process_message(
 		fcppt::make_unique_ptr<sgeroids::model::local::asteroid_generator::object>(
 			*rng_,
 			this->play_area(),
-			std::bind(
-				&object::asteroid_generated,
-				this,
-				std::placeholders::_1,
-				std::placeholders::_2,
-				std::placeholders::_3,
-				std::placeholders::_4,
-				std::placeholders::_5));
+			sgeroids::model::local::callbacks::asteroid_generation{
+				std::bind(
+					&object::asteroid_generated,
+					this,
+					std::placeholders::_1,
+					std::placeholders::_2,
+					std::placeholders::_3,
+					std::placeholders::_4,
+					std::placeholders::_5
+				)
+			}
+		);
 }
 
 void

@@ -3,22 +3,22 @@
 #include <fcppt/io/clog.hpp>
 #include <fcppt/log/level.hpp>
 #include <fcppt/log/location_fwd.hpp>
-#include <fcppt/log/parameters/object.hpp>
-#include <fcppt/log/parameters/with_context.hpp>
+#include <fcppt/log/parameters.hpp>
 
 
-fcppt::log::parameters::object
+fcppt::log::parameters
 sgeroids::log_parameters(
 	fcppt::log::location const &_location)
 {
 	return
-		fcppt::log::parameters::with_context(
-			sgeroids::log_context(),
-			_location)
-		.level_defaults(
+		fcppt::log::parameters(
 			fcppt::io::clog(),
-			fcppt::log::level::debug)
+			fcppt::log::level::debug
+		).context_location(
+			sgeroids::log_context(),
+			_location
+		)
 		.enabled(
-			true);
-
+			true
+		);
 }

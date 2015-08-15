@@ -2,6 +2,8 @@
 #include <sgeroids/input/log.hpp>
 #include <sgeroids/math/unit_magnitude.hpp>
 #include <sgeroids/model/base.hpp>
+#include <sgeroids/model/callbacks/add_spaceship.hpp>
+#include <sgeroids/model/callbacks/remove_spaceship.hpp>
 #include <sgeroids/model/serialization/message/add_player.hpp>
 #include <sgeroids/model/serialization/message/change_firing_mode.hpp>
 #include <sgeroids/model/serialization/message/change_thrust.hpp>
@@ -13,6 +15,7 @@
 #include <sgeroids/model/serialization/message/roles/rotation_direction.hpp>
 #include <sgeroids/model/serialization/message/roles/thrust.hpp>
 #include <sge/input/keyboard/device.hpp>
+#include <sge/input/keyboard/key_callback.hpp>
 #include <sge/input/keyboard/key_event.hpp>
 #include <fcppt/maybe_void.hpp>
 #include <fcppt/optional_impl.hpp>
@@ -35,24 +38,39 @@ sgeroids::input::keyboard::keyboard(
 		_device),
 	key_connection_(
 		_device.key_callback(
-			std::bind(
-				&keyboard::key,
-				this,
-				std::placeholders::_1))),
+			sge::input::keyboard::key_callback{
+				std::bind(
+					&keyboard::key,
+					this,
+					std::placeholders::_1
+				)
+			}
+		)
+	),
 	add_spaceship_connection_(
 		model_.get().add_spaceship_callback(
-			std::bind(
-				&keyboard::add_spaceship,
-				this,
-				std::placeholders::_1,
-				std::placeholders::_2,
-				std::placeholders::_3))),
+			sgeroids::model::callbacks::add_spaceship{
+				std::bind(
+					&keyboard::add_spaceship,
+					this,
+					std::placeholders::_1,
+					std::placeholders::_2,
+					std::placeholders::_3
+				)
+			}
+		)
+	),
 	remove_spaceship_connection_(
 		model_.get().remove_spaceship_callback(
-			std::bind(
-				&keyboard::remove_spaceship,
-				this,
-				std::placeholders::_1))),
+			sgeroids::model::callbacks::remove_spaceship{
+				std::bind(
+					&keyboard::remove_spaceship,
+					this,
+					std::placeholders::_1
+				)
+			}
+		)
+	),
 	name_(
 		_name),
 	id_(

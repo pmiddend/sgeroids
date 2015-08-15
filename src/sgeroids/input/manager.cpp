@@ -3,7 +3,9 @@
 #include <sgeroids/input/manager.hpp>
 #include <sge/charconv/fcppt_string_to_utf8.hpp>
 #include <sge/input/processor.hpp>
+#include <sge/input/keyboard/discover_callback.hpp>
 #include <sge/input/keyboard/discover_event.hpp>
+#include <sge/input/keyboard/remove_callback.hpp>
 #include <sge/input/keyboard/remove_event.hpp>
 #include <fcppt/insert_to_fcppt_string.hpp>
 #include <fcppt/make_unique_ptr.hpp>
@@ -25,16 +27,26 @@ sgeroids::input::manager::manager(
 	keyboards_(),
 	keyboard_discover_connection_(
 		_input_processor.keyboard_discover_callback(
-			std::bind(
-				&manager::keyboard_discover,
-				this,
-				std::placeholders::_1))),
+			sge::input::keyboard::discover_callback{
+				std::bind(
+					&manager::keyboard_discover,
+					this,
+					std::placeholders::_1
+				)
+			}
+		)
+	),
 	keyboard_remove_connection_(
 		_input_processor.keyboard_remove_callback(
-			std::bind(
-				&manager::keyboard_remove,
-				this,
-				std::placeholders::_1))),
+			sge::input::keyboard::remove_callback{
+				std::bind(
+					&manager::keyboard_remove,
+					this,
+					std::placeholders::_1
+				)
+			}
+		)
+	),
 	last_keyboard_id_(
 		0)
 {

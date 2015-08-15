@@ -70,82 +70,143 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 		this->context<state_machine::object>().systems().keyboard_collector().key_callback(
 			sge::input::keyboard::action(
 				sge::input::keyboard::key_code::escape,
-				std::bind(
-					&state_machine::object::exit_mainloop,
-					&(this->context<state_machine::object>()))))),
+				sge::input::keyboard::action_callback{
+					std::bind(
+						&state_machine::object::exit_mainloop,
+						&(this->context<state_machine::object>())
+					)
+				}
+			)
+		)
+	),
 	add_spaceship_connection_(
 		model_->add_spaceship_callback(
-			std::bind(
-				&view::base::add_spaceship,
-				view_.get(),
-				std::placeholders::_1,
-				std::placeholders::_2,
-				std::placeholders::_3))),
+			sgeroids::model::callbacks::add_spaceship{
+				std::bind(
+					&view::base::add_spaceship,
+					view_.get(),
+					std::placeholders::_1,
+					std::placeholders::_2,
+					std::placeholders::_3
+				)
+			}
+		)
+	),
 	add_asteroid_connection_(
 		model_->add_asteroid_callback(
-			std::bind(
-				&view::base::add_asteroid,
-				view_.get(),
-				std::placeholders::_1,
-				std::placeholders::_2))),
+			sgeroids::model::callbacks::add_asteroid{
+				std::bind(
+					&view::base::add_asteroid,
+					view_.get(),
+					std::placeholders::_1,
+					std::placeholders::_2
+				)
+			}
+		)
+	),
 	add_projectile_connection_(
 		model_->add_projectile_callback(
-			std::bind(
-				&view::base::add_projectile,
-				view_.get(),
-				std::placeholders::_1))),
+			sgeroids::model::callbacks::add_projectile{
+				std::bind(
+					&view::base::add_projectile,
+					view_.get(),
+					std::placeholders::_1
+				)
+			}
+		)
+	),
 	collide_projectile_asteroid_connection_(
 		model_->collide_projectile_asteroid_callback(
-			std::bind(
-				&view::base::collide_projectile_asteroid,
-				view_.get(),
-				std::placeholders::_1,
-				std::placeholders::_2))),
+			sgeroids::model::callbacks::collide_projectile_asteroid{
+				std::bind(
+					&view::base::collide_projectile_asteroid,
+					view_.get(),
+					std::placeholders::_1,
+					std::placeholders::_2
+				)
+			}
+		)
+	),
 	score_change_connection_(
 		model_->score_change_callback(
-			std::bind(
-				&view::base::score_change,
-				view_.get(),
-				std::placeholders::_1,
-				std::placeholders::_2))),
+			sgeroids::model::callbacks::score_change{
+				std::bind(
+					&view::base::score_change,
+					view_.get(),
+					std::placeholders::_1,
+					std::placeholders::_2
+				)
+			}
+		)
+	),
 	destroy_asteroid_connection_(
 		model_->destroy_asteroid_callback(
-			std::bind(
-				&view::base::destroy_asteroid,
-				view_.get(),
-				std::placeholders::_1))),
+			sgeroids::model::callbacks::destroy_asteroid{
+				std::bind(
+					&view::base::destroy_asteroid,
+					view_.get(),
+					std::placeholders::_1
+				)
+			}
+		)
+	),
 	remove_entity_connection_(
 		model_->remove_entity_callback(
-			std::bind(
-				&view::base::remove_entity,
-				view_.get(),
-				std::placeholders::_1))),
+			sgeroids::model::callbacks::remove_entity{
+				std::bind(
+					&view::base::remove_entity,
+					view_.get(),
+					std::placeholders::_1
+				)
+			}
+		)
+	),
 	position_entity_connection_(
 		model_->position_entity_callback(
-			std::bind(
-				&view::base::position_entity,
-				view_.get(),
-				std::placeholders::_1,
-				std::placeholders::_2))),
+			sgeroids::model::callbacks::position_entity{
+				std::bind(
+					&view::base::position_entity,
+					view_.get(),
+					std::placeholders::_1,
+					std::placeholders::_2
+				)
+			}
+		)
+	),
 	rotation_entity_connection_(
 		model_->rotation_entity_callback(
-			std::bind(
-				&view::base::rotation_entity,
-				view_.get(),
-				std::placeholders::_1,
-				std::placeholders::_2))),
+			sgeroids::model::callbacks::rotation_entity{
+				std::bind(
+					&view::base::rotation_entity,
+					view_.get(),
+					std::placeholders::_1,
+					std::placeholders::_2
+				)
+			}
+		)
+	),
 	gameover_connection_(
 		model_->gameover_callback(
-			std::bind(
-				&view::base::gameover,
-				view_.get()))),
+			sgeroids::model::callbacks::gameover{
+				std::bind(
+					&view::base::gameover,
+					view_.get()
+				)
+			}
+		)
+	),
 	change_thrust_connection_(
 		model_->change_thrust_callback(
-			std::bind(
-				&view::base::change_thrust,
-				view_.get(),
-				std::placeholders::_1,
-				std::placeholders::_2)))
+			sgeroids::model::callbacks::change_thrust{
+				std::bind(
+					&view::base::change_thrust,
+					view_.get(),
+					std::placeholders::_1,
+					std::placeholders::_2
+				)
+			}
+		)
+	)
 {
 	view_->play_area(
 		model_->play_area());

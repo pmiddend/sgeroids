@@ -113,22 +113,30 @@ sgeroids::view::planar::object::object(
 		sgeroids::random_generator_seed()),
 	texture_tree_(
 		sgeroids::media_path() / FCPPT_TEXT("images"),
-		std::bind(
-			&object::create_texture_from_path,
-			this,
-			std::ref(
-				_image_system),
-			std::placeholders::_1),
-		rng_),
+		sgeroids::view::planar::texture_tree::path_to_resource_function{
+			std::bind(
+				&object::create_texture_from_path,
+				this,
+				std::ref(
+					_image_system),
+				std::placeholders::_1
+			)
+		},
+		rng_
+	),
 	audio_buffer_tree_(
 		sgeroids::media_path() / FCPPT_TEXT("sounds"),
-		std::bind(
-			&object::create_audio_buffer_from_path,
-			this,
-			std::ref(
-				_audio_loader),
-			std::placeholders::_1),
-		rng_),
+		sgeroids::view::planar::audio_buffer_tree::path_to_resource_function{
+			std::bind(
+				&object::create_audio_buffer_from_path,
+				this,
+				std::ref(
+					_audio_loader),
+				std::placeholders::_1
+			)
+		},
+		rng_
+	),
 	firing_sound_(
 		audio_buffer_tree_.get(
 			sge::resource_tree::path() / FCPPT_TEXT("lazor")

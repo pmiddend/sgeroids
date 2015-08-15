@@ -2,9 +2,7 @@
 #define SGEROIDS_MODEL_LOCAL_CALLBACKS_ROTATION_ENTITY_NO_ID_HPP_INCLUDED
 
 #include <sgeroids/model/local/callbacks/rotation_entity_no_id_function.hpp>
-#include <fcppt/config/external_begin.hpp>
-#include <functional>
-#include <fcppt/config/external_end.hpp>
+#include <fcppt/function_impl.hpp>
 
 namespace sgeroids
 {
@@ -20,7 +18,7 @@ namespace callbacks
 \see sgeroids::model::local::callbacks::position_entity_no_id
 */
 typedef
-std::function<callbacks::rotation_entity_no_id_function>
+fcppt::function<callbacks::rotation_entity_no_id_function>
 rotation_entity_no_id;
 }
 }
