@@ -23,7 +23,7 @@
 #include <fcppt/type_name_from_info.hpp>
 #include <fcppt/assert/unreachable.hpp>
 #include <fcppt/cast/try_dynamic.hpp>
-#include <fcppt/container/find_opt.hpp>
+#include <fcppt/container/find_opt_mapped.hpp>
 #include <fcppt/log/_.hpp>
 #include <fcppt/log/debug.hpp>
 #include <fcppt/math/box/center.hpp>
@@ -675,7 +675,7 @@ sgeroids::model::local::object::find_spaceship_by_id_exn(
 				sgeroids::model::local::entity::spaceship &
 			>(
 				*fcppt::optional_to_exception(
-					fcppt::container::find_opt(
+					fcppt::container::find_opt_mapped(
 						entities_,
 						_id.get()
 					),
