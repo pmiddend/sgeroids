@@ -1,6 +1,7 @@
 #ifndef SGEROIDS_MATH_WRAP_POINT_IN_TORUS_HPP_INCLUDED
 #define SGEROIDS_MATH_WRAP_POINT_IN_TORUS_HPP_INCLUDED
 
+#include <fcppt/make_int_range_count.hpp>
 #include <fcppt/math/box/object_impl.hpp>
 #include <fcppt/math/vector/object_impl.hpp>
 
@@ -15,15 +16,13 @@ wrap_point_in_torus(
 	fcppt::math::vector::object<T,VN,S> p,
 	fcppt::math::box::object<T,N> const &b)
 {
-	typedef
-	fcppt::math::vector::object<T,VN,S>
-	vector;
-
-	typedef typename
-	vector::size_type
-	size_type;
-
-	for(size_type i = 0; i < p.size(); ++i)
+	for(
+		auto const i
+		:
+		fcppt::make_int_range_count(
+			VN::value
+		)
+	)
 	{
 		T const
 			left =

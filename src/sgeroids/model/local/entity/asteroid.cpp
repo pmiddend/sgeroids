@@ -9,6 +9,7 @@
 #include <fcppt/cast/try_dynamic.hpp>
 #include <fcppt/math/vector/arithmetic.hpp>
 #include <fcppt/math/vector/comparison.hpp>
+#include <fcppt/math/vector/null.hpp>
 
 
 sgeroids::model::local::entity::asteroid::asteroid(
@@ -59,7 +60,13 @@ sgeroids::model::local::entity::asteroid::update()
 			position_,
 			play_area_);
 
-	if(velocity_ != vector2::null())
+	if(
+		velocity_
+		!=
+		fcppt::math::vector::null<
+			vector2
+		>()
+	)
 		position_entity_(
 			model::position(
 				position_));

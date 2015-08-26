@@ -8,6 +8,7 @@
 #include <fcppt/cast/try_dynamic.hpp>
 #include <fcppt/math/vector/arithmetic.hpp>
 #include <fcppt/math/vector/comparison.hpp>
+#include <fcppt/math/vector/null.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <algorithm>
 #include <fcppt/config/external_end.hpp>
@@ -36,7 +37,10 @@ sgeroids::model::local::entity::spaceship::spaceship(
 	position_(
 		_position.get()),
 	velocity_(
-		vector2::null()),
+		fcppt::math::vector::null<
+			vector2
+		>()
+	),
 	rotation_(
 		_rotation.get()),
 	rotation_direction_(
@@ -71,7 +75,13 @@ sgeroids::model::local::entity::spaceship::update()
 			position_,
 			play_area_);
 
-	if(velocity_ != vector2::null())
+	if(
+		velocity_
+		!=
+		fcppt::math::vector::null<
+			vector2
+		>()
+	)
 		position_entity_(
 			model::position(
 				position_));

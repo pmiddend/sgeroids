@@ -15,6 +15,7 @@
 #include <sge/sprite/roles/size.hpp>
 #include <sge/sprite/roles/texture0.hpp>
 #include <fcppt/text.hpp>
+#include <fcppt/math/vector/null.hpp>
 
 
 namespace
@@ -54,7 +55,9 @@ sprite_init(
 					sge::image::color::predef::white()
 				),
 			sge::sprite::roles::center{} =
-				sgeroids::view::planar::sprite::object::vector::null()
+				fcppt::math::vector::null<
+					sgeroids::view::planar::sprite::object::vector
+				>()
 		);
 }
 

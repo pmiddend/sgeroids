@@ -26,6 +26,7 @@
 #include <sge/sprite/roles/texture0.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/math/vector/arithmetic.hpp>
+#include <fcppt/math/vector/null.hpp>
 #include <fcppt/random/variate_impl.hpp>
 #include <fcppt/random/distribution/basic_impl.hpp>
 #include <fcppt/random/distribution/parameters/uniform_int_impl.hpp>
@@ -73,7 +74,9 @@ sgeroids::view::planar::entity::spaceship::spaceship(
 				sge::image::color::predef::white()
 			),
 		sge::sprite::roles::center{} =
-			sgeroids::view::planar::sprite::object::vector::null()
+			fcppt::math::vector::null<
+				sgeroids::view::planar::sprite::object::vector
+			>()
 	),
 	audio_player_(
 		_audio_player),

@@ -86,6 +86,7 @@
 #include <fcppt/log/_.hpp>
 #include <fcppt/log/debug.hpp>
 #include <fcppt/math/box/structure_cast.hpp>
+#include <fcppt/math/matrix/identity.hpp>
 #include <fcppt/math/matrix/output.hpp>
 #include <fcppt/math/matrix/scaling.hpp>
 #include <fcppt/math/vector/output.hpp>
@@ -158,7 +159,9 @@ sgeroids::view::planar::object::object(
 			sprite_state_choices
 		>()),
 	projection_matrix_(
-		sge::renderer::matrix4::identity()
+		fcppt::math::matrix::identity<
+			sge::renderer::matrix4
+		>()
 	),
 	entities_(),
 	background_(),
