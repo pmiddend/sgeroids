@@ -5,6 +5,7 @@
 #include <sgeroids/model/vector2.hpp>
 #include <sgeroids/model/local/asteroid_generator/object.hpp>
 #include <sgeroids/model/local/asteroid_generator/play_area_side.hpp>
+#include <fcppt/assert/unreachable.hpp>
 #include <fcppt/math/vector/arithmetic.hpp>
 #include <fcppt/math/vector/object_impl.hpp>
 #include <fcppt/random/variate_impl.hpp>
@@ -116,39 +117,43 @@ sgeroids::model::local::asteroid_generator::object::update()
 	int const chosen_radius =
 		radius_rng_();
 
-	model::vector2 chosen_position;
+	sgeroids::model::vector2 const chosen_position(
+		[
+			chosen_side,
+			chosen_radius,
+			this
+		]{
+			switch(chosen_side)
+			{
+				case play_area_side::left:
+					return
+						sgeroids::model::vector2(
+							play_area_.left() - chosen_radius,
+							play_area_y_rng_()
+						);
+				case play_area_side::right:
+					return
+						sgeroids::model::vector2(
+							play_area_.right() + chosen_radius,
+							play_area_y_rng_()
+						);
+				case play_area_side::top:
+					return
+						sgeroids::model::vector2(
+							play_area_x_rng_(),
+							play_area_.top() - chosen_radius
+						);
+				case play_area_side::bottom:
+					return
+						sgeroids::model::vector2(
+							play_area_x_rng_(),
+							play_area_.bottom() + chosen_radius
+						);
+			}
 
-	switch(chosen_side)
-	{
-		case play_area_side::left:
-			chosen_position.x() =
-				play_area_.left() - chosen_radius;
-
-			chosen_position.y() =
-				play_area_y_rng_();
-			break;
-		case play_area_side::right:
-			chosen_position.x() =
-				play_area_.right() + chosen_radius;
-
-			chosen_position.y() =
-				play_area_y_rng_();
-			break;
-		case play_area_side::top:
-			chosen_position.y() =
-				play_area_.top() - chosen_radius;
-
-			chosen_position.x() =
-				play_area_x_rng_();
-			break;
-		case play_area_side::bottom:
-			chosen_position.y() =
-				play_area_.bottom() + chosen_radius;
-
-			chosen_position.x() =
-				play_area_x_rng_();
-			break;
-	}
+			FCPPT_ASSERT_UNREACHABLE;
+		}()
+	);
 
 	int const chosen_velocity_angle =
 		velocity_angle_rng_();
