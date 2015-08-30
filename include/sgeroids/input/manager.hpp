@@ -7,9 +7,9 @@
 #include <sge/input/keyboard/discover_event_fwd.hpp>
 #include <sge/input/keyboard/remove_event_fwd.hpp>
 #include <fcppt/noncopyable.hpp>
+#include <fcppt/unique_ptr_impl.hpp>
 #include <fcppt/signal/scoped_connection.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <memory>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
@@ -31,8 +31,8 @@ public:
 private:
 	typedef
 	std::vector<
-		std::unique_ptr<
-			input::keyboard
+		fcppt::unique_ptr<
+			sgeroids::input::keyboard
 		>
 	>
 	keyboard_sequence;

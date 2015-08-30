@@ -9,13 +9,14 @@
 #include <sgeroids/state_machine/events/tick.hpp>
 #include <sgeroids/view/unique_base_ptr.hpp>
 #include <fcppt/noncopyable.hpp>
+#include <fcppt/optional_impl.hpp>
+#include <fcppt/unique_ptr_impl.hpp>
 #include <fcppt/signal/scoped_connection.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include <boost/mpl/vector/vector10.hpp>
 #include <boost/statechart/custom_reaction.hpp>
 #include <boost/statechart/state.hpp>
-#include <memory>
 #include <fcppt/config/external_end.hpp>
 
 
@@ -60,8 +61,27 @@ private:
 	boost::filesystem::ofstream model_serialization_output_;
 	sgeroids::model::unique_base_ptr model_;
 	sgeroids::view::unique_base_ptr view_;
-	std::unique_ptr<sgeroids::input::manager> const input_manager_;
-	std::unique_ptr<sgeroids::replay::file_reader> const replay_file_reader_;
+
+	typedef
+	fcppt::optional<
+		fcppt::unique_ptr<
+			sgeroids::input::manager
+		>
+	>
+	optional_input_manager_unique_ptr;
+
+	optional_input_manager_unique_ptr const input_manager_;
+
+	typedef
+	fcppt::optional<
+		fcppt::unique_ptr<
+			sgeroids::replay::file_reader
+		>
+	>
+	optional_replay_file_reader_unique_ptr;
+
+	optional_replay_file_reader_unique_ptr const replay_file_reader_;
+
 	fcppt::signal::scoped_connection escape_exit_connection_;
 
 	// Connections from the model to the view

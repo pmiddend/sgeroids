@@ -17,7 +17,7 @@
 #include <sge/audio/sound/base_unique_ptr.hpp>
 #include <sge/font/object_unique_ptr.hpp>
 #include <sge/font/system_fwd.hpp>
-#include <sge/font/draw/static_text_fwd.hpp>
+#include <sge/font/draw/static_text.hpp>
 #include <sge/image2d/system_fwd.hpp>
 #include <sge/renderer/matrix4.hpp>
 #include <sge/renderer/context/ffp_fwd.hpp>
@@ -29,13 +29,14 @@
 #include <sge/sprite/state/with_rasterizer.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>
 #include <fcppt/noncopyable.hpp>
+#include <fcppt/optional_impl.hpp>
+#include <fcppt/unique_ptr_impl.hpp>
 #include <fcppt/math/box/object_impl.hpp>
 #include <fcppt/math/matrix/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/mpl/vector/vector10.hpp>
 #include <map>
-#include <memory>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
@@ -161,8 +162,7 @@ private:
 	typedef
 	std::map<
 		model::entity_id::value_type,
-		std::unique_ptr
-		<
+		fcppt::unique_ptr<
 			entity::base
 		>
 	>
@@ -202,18 +202,27 @@ private:
 	sprite_state sprite_state_;
 	sge::renderer::matrix4 projection_matrix_;
 	entity_map entities_;
-	std::unique_ptr<background::object> background_;
+
+	typedef
+	fcppt::optional<
+		fcppt::unique_ptr<
+			background::object
+		>
+	>
+	optional_background_unique_ptr;
+
+	optional_background_unique_ptr background_;
+
 	particle_vector particles_;
 	sge::font::object_unique_ptr score_font_;
 
 	typedef
-	std::unique_ptr
-	<
+	fcppt::optional<
 		sge::font::draw::static_text
 	>
-	static_text_unique_ptr;
+	optional_static_text;
 
-	static_text_unique_ptr score_text_;
+	optional_static_text score_text_;
 
 	/**
 	\brief This function is called by the texture tree to create a texture resource out of a path

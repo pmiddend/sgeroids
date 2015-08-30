@@ -74,13 +74,15 @@
 #include <sge/texture/part_raw_ptr.hpp>
 #include <fcppt/insert_to_fcppt_string.hpp>
 #include <fcppt/make_shared_ptr.hpp>
-#include <fcppt/make_unique_ptr.hpp>
+#include <fcppt/make_unique_ptr_fcppt.hpp>
 #include <fcppt/maybe.hpp>
+#include <fcppt/maybe_void.hpp>
 #include <fcppt/optional_impl.hpp>
 #include <fcppt/optional_to_exception.hpp>
 #include <fcppt/strong_typedef_output.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/type_name_from_info.hpp>
+#include <fcppt/unique_ptr_to_base.hpp>
 #include <fcppt/cast/int_to_float_fun.hpp>
 #include <fcppt/cast/try_dynamic.hpp>
 #include <fcppt/log/_.hpp>
@@ -190,10 +192,14 @@ sgeroids::view::planar::object::add_spaceship(
 		fcppt::log::_
 			<< FCPPT_TEXT("Adding spaceship"));
 
-	entities_.insert(
-		std::make_pair(
-			_id.get(),
-			fcppt::make_unique_ptr<entity::spaceship>(
+	entities_.emplace(
+		_id.get(),
+		fcppt::unique_ptr_to_base<
+			sgeroids::view::planar::entity::base
+		>(
+			fcppt::make_unique_ptr_fcppt<
+				entity::spaceship
+			>(
 				dynamic_collection_,
 				texture_tree_,
 				audio_player_,
@@ -210,7 +216,12 @@ sgeroids::view::planar::object::add_spaceship(
 					_radius),
 				sgeroids::view::planar::player_name(
 					sge::charconv::utf8_string_to_fcppt(
-						_player_name.get())))));
+						_player_name.get()
+					)
+				)
+			)
+		)
+	);
 }
 
 void
@@ -225,10 +236,12 @@ sgeroids::view::planar::object::add_asteroid(
 			<< _radius.get()
 			<< FCPPT_TEXT("\""));
 
-	entities_.insert(
-		std::make_pair(
-			_id.get(),
-			fcppt::make_unique_ptr<entity::asteroid>(
+	entities_.emplace(
+		_id.get(),
+		fcppt::unique_ptr_to_base<
+			sgeroids::view::planar::entity::base
+		>(
+			fcppt::make_unique_ptr_fcppt<entity::asteroid>(
 				dynamic_collection_,
 				texture_tree_,
 				planar::radius_to_screen_space(
@@ -242,10 +255,12 @@ sgeroids::view::planar::object::add_projectile(
 	firing_sound_->play(
 		sge::audio::sound::repeat::once);
 
-	entities_.insert(
-		std::make_pair(
-			_id.get(),
-			fcppt::make_unique_ptr<entity::bullet>(
+	entities_.emplace(
+		_id.get(),
+		fcppt::unique_ptr_to_base<
+			sgeroids::view::planar::entity::base
+		>(
+			fcppt::make_unique_ptr_fcppt<entity::bullet>(
 				dynamic_collection_,
 				texture_tree_)));
 }
@@ -314,27 +329,28 @@ sgeroids::view::planar::object::score_change(
 		)
 		{
 			score_text_ =
-				fcppt::make_unique_ptr<
-					sge::font::draw::static_text
-				>(
-					renderer_,
-					*score_font_,
-					sge::font::from_fcppt_string(
-						fcppt::insert_to_fcppt_string(
-							_maybe_a_ship.player_name())) +
-					SGE_FONT_LIT(": ") +
-					sge::font::from_fcppt_string(
-						fcppt::insert_to_fcppt_string(
-							_score.get())),
-					sge::font::text_parameters(
-						sge::font::align_h::variant(
-							sge::font::align_h::left())),
-					sge::font::vector(
-						0,
-						0
-					),
-					sge::image::color::predef::white(),
-					sge::renderer::texture::emulate_srgb::no);
+				optional_static_text(
+					sge::font::draw::static_text(
+						renderer_,
+						*score_font_,
+						sge::font::from_fcppt_string(
+							fcppt::insert_to_fcppt_string(
+								_maybe_a_ship.player_name())) +
+						SGE_FONT_LIT(": ") +
+						sge::font::from_fcppt_string(
+							fcppt::insert_to_fcppt_string(
+								_score.get())),
+						sge::font::text_parameters(
+							sge::font::align_h::variant(
+								sge::font::align_h::left())),
+						sge::font::vector(
+							0,
+							0
+						),
+						sge::image::color::predef::white(),
+						sge::renderer::texture::emulate_srgb::no
+					)
+				);
 		}
 	);
 }
@@ -455,16 +471,19 @@ sgeroids::view::planar::object::play_area(
 	sgeroids::model::play_area const &_area)
 {
 	background_ =
-		fcppt::make_unique_ptr<
-			background::object
-		>(
-			renderer_,
-			*sprite_vertex_declaration_,
-			texture_tree_,
-			_area,
-			rng_,
-			background::star_size(3500),
-			background::star_count(500u));
+		optional_background_unique_ptr(
+			fcppt::make_unique_ptr_fcppt<
+				background::object
+			>(
+				renderer_,
+				*sprite_vertex_declaration_,
+				texture_tree_,
+				_area,
+				rng_,
+				background::star_size(3500),
+				background::star_count(500u)
+			)
+		);
 
 	projection_matrix_ =
 		sge::renderer::projection::orthogonal(
@@ -523,8 +542,19 @@ sgeroids::view::planar::object::render(
 		sge::renderer::state::ffp::transform::mode::projection,
 		*transform_state);
 
-	background_->render(
-		_render_context);
+	fcppt::maybe_void(
+		background_,
+		[
+			&_render_context
+		](
+			auto const &_background
+		)
+		{
+			_background->render(
+				_render_context
+			);
+		}
+	);
 
 	sge::sprite::intrusive::process::ordered_with_options
 	<
@@ -543,11 +573,19 @@ sgeroids::view::planar::object::render(
 		>(
 			sge::sprite::state::vertex_options::declaration));
 
-	if(
-		score_text_
-	)
-		score_text_->draw(
-			_render_context);
+	fcppt::maybe_void(
+		score_text_,
+		[
+			&_render_context
+		](
+			sge::font::draw::static_text &_score_text
+		)
+		{
+			_score_text.draw(
+				_render_context
+			);
+		}
+	);
 }
 
 void

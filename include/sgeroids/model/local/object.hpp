@@ -12,12 +12,12 @@
 #include <sgeroids/model/local/entity/unique_base_ptr.hpp>
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/optional.hpp>
+#include <fcppt/unique_ptr_impl.hpp>
 #include <fcppt/signal/auto_connection.hpp>
 #include <fcppt/signal/object.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <iosfwd>
 #include <map>
-#include <memory>
 #include <fcppt/config/external_end.hpp>
 
 
@@ -147,7 +147,7 @@ public:
 	~object();
 private:
 	typedef
-	std::unique_ptr<
+	fcppt::unique_ptr<
 		sgeroids::model::local::entity::base
 	>
 	entity_unique_ptr;
@@ -160,10 +160,38 @@ private:
 	entity_map;
 
 	std::ostream &serialization_output_;
-	std::unique_ptr<sgeroids::random_generator> rng_;
+
+	typedef
+	fcppt::unique_ptr<
+		sgeroids::random_generator
+	>
+	random_generator_unique_ptr;
+
+	typedef
+	fcppt::optional<
+		random_generator_unique_ptr
+	>
+	optional_random_generator_unique_ptr;
+
+	optional_random_generator_unique_ptr rng_;
+
 	model::entity_id::value_type next_id_;
 	entity_map entities_;
-	std::unique_ptr<asteroid_generator::object> asteroid_generator_;
+
+	typedef
+	fcppt::unique_ptr<
+		asteroid_generator::object
+	>
+	asteroid_generator_unique_ptr;
+
+	typedef
+	fcppt::optional<
+		asteroid_generator_unique_ptr
+	>
+	optional_asteroid_generator_unique_ptr;
+
+	optional_asteroid_generator_unique_ptr asteroid_generator_;
+
 	fcppt::signal::object<model::callbacks::add_spaceship_function> add_spaceship_;
 	fcppt::signal::object<model::callbacks::remove_spaceship_function> remove_spaceship_;
 	fcppt::signal::object<model::callbacks::add_asteroid_function> add_asteroid_;

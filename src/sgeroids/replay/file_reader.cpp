@@ -1,7 +1,9 @@
 #include <sgeroids/replay/file_reader.hpp>
 #include <sgeroids/replay/object.hpp>
-#include <fcppt/make_unique_ptr.hpp>
 #include <fcppt/assert/pre.hpp>
+#include <fcppt/config/external_begin.hpp>
+#include <memory>
+#include <fcppt/config/external_end.hpp>
 
 
 sgeroids::replay::file_reader::file_reader(
@@ -16,7 +18,7 @@ sgeroids::replay::file_reader::file_reader(
 		input_stream_.is_open());
 
 	replay_ =
-		fcppt::make_unique_ptr<sgeroids::replay::object>(
+		std::make_unique<sgeroids::replay::object>(
 			_model,
 			input_stream_);
 }

@@ -6,7 +6,9 @@
 #include <sge/input/keyboard/device.hpp>
 #include <sge/input/keyboard/key_code.hpp>
 #include <sge/parse/json/find_and_convert_member.hpp>
-#include <fcppt/make_unique_ptr.hpp>
+#include <fcppt/make_unique_ptr_fcppt.hpp>
+#include <fcppt/maybe_void.hpp>
+#include <fcppt/unique_ptr_to_base.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/random/generator/seed_from_chrono.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -28,27 +30,52 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 					FCPPT_TEXT("serialization")) /
 					FCPPT_TEXT("output-file")))),
 	model_(
-		fcppt::make_unique_ptr<sgeroids::model::local::object>(
-			model_serialization_output_)),
+		fcppt::unique_ptr_to_base<
+			sgeroids::model::base
+		>(
+			fcppt::make_unique_ptr_fcppt<
+				sgeroids::model::local::object
+			>(
+				model_serialization_output_
+			)
+		)
+	),
 	view_(
-		fcppt::make_unique_ptr<sgeroids::view::planar::object>(
-			this->context<state_machine::object>().systems().renderer_device_ffp(),
-			this->context<state_machine::object>().systems().font_system(),
-			this->context<state_machine::object>().systems().image_system(),
-			this->context<state_machine::object>().systems().audio_loader(),
-			this->context<state_machine::object>().systems().audio_player())),
+		fcppt::unique_ptr_to_base<
+			sgeroids::view::base
+		>(
+			fcppt::make_unique_ptr_fcppt<
+				sgeroids::view::planar::object
+			>(
+				this->context<state_machine::object>().systems().renderer_device_ffp(),
+				this->context<state_machine::object>().systems().font_system(),
+				this->context<state_machine::object>().systems().image_system(),
+				this->context<state_machine::object>().systems().audio_loader(),
+				this->context<state_machine::object>().systems().audio_player()
+			)
+		)
+	),
 	input_manager_(
 		sge::parse::json::find_and_convert_member<fcppt::string>(
 			this->context<state_machine::object>().config(),
 			sge::parse::json::path(
-				FCPPT_TEXT("serialization")) /
-				FCPPT_TEXT("input-file")).empty()
+				FCPPT_TEXT("serialization")
+			)
+			/
+			FCPPT_TEXT("input-file")
+		).empty()
 		?
-			fcppt::make_unique_ptr<sgeroids::input::manager>(
-				this->context<state_machine::object>().systems().input_processor(),
-				*model_)
+			optional_input_manager_unique_ptr(
+				fcppt::make_unique_ptr_fcppt<
+					sgeroids::input::manager
+				>(
+					this->context<state_machine::object>().systems().input_processor(),
+					*model_
+				)
+			)
 		:
-			std::unique_ptr<sgeroids::input::manager>()),
+			optional_input_manager_unique_ptr()
+	),
 	replay_file_reader_(
 		sge::parse::json::find_and_convert_member<fcppt::string>(
 			this->context<state_machine::object>().config(),
@@ -56,16 +83,24 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 				FCPPT_TEXT("serialization")) /
 				FCPPT_TEXT("input-file")).empty()
 		?
-			std::unique_ptr<sgeroids::replay::file_reader>()
+			optional_replay_file_reader_unique_ptr()
 		:
-			fcppt::make_unique_ptr<sgeroids::replay::file_reader>(
-				*model_,
-				boost::filesystem::path(
-					sge::parse::json::find_and_convert_member<fcppt::string>(
-						this->context<state_machine::object>().config(),
-						sge::parse::json::path(
-							FCPPT_TEXT("serialization")) /
-							FCPPT_TEXT("input-file"))))),
+			optional_replay_file_reader_unique_ptr(
+				fcppt::make_unique_ptr_fcppt<sgeroids::replay::file_reader>(
+					*model_,
+					boost::filesystem::path(
+						sge::parse::json::find_and_convert_member<fcppt::string>(
+							this->context<state_machine::object>().config(),
+							sge::parse::json::path(
+								FCPPT_TEXT("serialization")
+							)
+							/
+							FCPPT_TEXT("input-file")
+						)
+					)
+				)
+			)
+	),
 	escape_exit_connection_(
 		this->context<state_machine::object>().systems().keyboard_collector().key_callback(
 			sge::input::keyboard::action(
@@ -84,7 +119,7 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 			sgeroids::model::callbacks::add_spaceship{
 				std::bind(
 					&view::base::add_spaceship,
-					view_.get(),
+					view_.get_pointer(),
 					std::placeholders::_1,
 					std::placeholders::_2,
 					std::placeholders::_3
@@ -97,7 +132,7 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 			sgeroids::model::callbacks::add_asteroid{
 				std::bind(
 					&view::base::add_asteroid,
-					view_.get(),
+					view_.get_pointer(),
 					std::placeholders::_1,
 					std::placeholders::_2
 				)
@@ -109,7 +144,7 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 			sgeroids::model::callbacks::add_projectile{
 				std::bind(
 					&view::base::add_projectile,
-					view_.get(),
+					view_.get_pointer(),
 					std::placeholders::_1
 				)
 			}
@@ -120,7 +155,7 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 			sgeroids::model::callbacks::collide_projectile_asteroid{
 				std::bind(
 					&view::base::collide_projectile_asteroid,
-					view_.get(),
+					view_.get_pointer(),
 					std::placeholders::_1,
 					std::placeholders::_2
 				)
@@ -132,7 +167,7 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 			sgeroids::model::callbacks::score_change{
 				std::bind(
 					&view::base::score_change,
-					view_.get(),
+					view_.get_pointer(),
 					std::placeholders::_1,
 					std::placeholders::_2
 				)
@@ -144,7 +179,7 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 			sgeroids::model::callbacks::destroy_asteroid{
 				std::bind(
 					&view::base::destroy_asteroid,
-					view_.get(),
+					view_.get_pointer(),
 					std::placeholders::_1
 				)
 			}
@@ -155,7 +190,7 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 			sgeroids::model::callbacks::remove_entity{
 				std::bind(
 					&view::base::remove_entity,
-					view_.get(),
+					view_.get_pointer(),
 					std::placeholders::_1
 				)
 			}
@@ -166,7 +201,7 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 			sgeroids::model::callbacks::position_entity{
 				std::bind(
 					&view::base::position_entity,
-					view_.get(),
+					view_.get_pointer(),
 					std::placeholders::_1,
 					std::placeholders::_2
 				)
@@ -178,7 +213,7 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 			sgeroids::model::callbacks::rotation_entity{
 				std::bind(
 					&view::base::rotation_entity,
-					view_.get(),
+					view_.get_pointer(),
 					std::placeholders::_1,
 					std::placeholders::_2
 				)
@@ -190,7 +225,7 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 			sgeroids::model::callbacks::gameover{
 				std::bind(
 					&view::base::gameover,
-					view_.get()
+					view_.get_pointer()
 				)
 			}
 		)
@@ -200,7 +235,7 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 			sgeroids::model::callbacks::change_thrust{
 				std::bind(
 					&view::base::change_thrust,
-					view_.get(),
+					view_.get_pointer(),
 					std::placeholders::_1,
 					std::placeholders::_2
 				)
@@ -211,7 +246,9 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 	view_->play_area(
 		model_->play_area());
 
-	if(!replay_file_reader_)
+	if(
+		!replay_file_reader_.has_value()
+	)
 		model_->process_message(
 			sgeroids::model::serialization::message::rng_seed(
 				sgeroids::model::serialization::message::roles::seed{} =
@@ -222,8 +259,15 @@ boost::statechart::result
 sgeroids::state_machine::states::ingame::superstate::react(
 	state_machine::events::tick const &)
 {
-	if(replay_file_reader_)
-		replay_file_reader_->update();
+	fcppt::maybe_void(
+		replay_file_reader_,
+		[](
+			auto const &_replay
+		)
+		{
+			_replay->update();
+		}
+	);
 
 	model_->process_message(
 		sgeroids::model::serialization::message::update());
