@@ -14,6 +14,7 @@
 #include <sge/sprite/roles/rotation.hpp>
 #include <sge/sprite/roles/size.hpp>
 #include <sge/sprite/roles/texture0.hpp>
+#include <fcppt/text.hpp>
 
 
 sgeroids::view::planar::particle::object::object(

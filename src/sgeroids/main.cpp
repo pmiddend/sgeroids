@@ -5,6 +5,7 @@
 #include <awl/main/exit_code.hpp>
 #include <awl/main/exit_failure.hpp>
 #include <awl/main/function_context.hpp>
+#include <fcppt/exception.hpp>
 #include <fcppt/scoped_state_machine.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/io/cerr.hpp>
