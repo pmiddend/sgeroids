@@ -95,7 +95,7 @@ sgeroids::view::planar::background::object::object(
 			int_distribution::param_type::min(
 				0),
 			int_distribution::param_type::max(
-				play_area_.get().w())));
+				play_area_.get().size().w())));
 
 	int_rng random_y(
 		_rng,
@@ -103,7 +103,7 @@ sgeroids::view::planar::background::object::object(
 			int_distribution::param_type::min(
 				0),
 			int_distribution::param_type::max(
-				play_area_.get().h())));
+				play_area_.get().size().h())));
 
 	float_rng random_angle(
 		_rng,
