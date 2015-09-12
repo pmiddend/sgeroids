@@ -6,7 +6,7 @@
 #include <sge/input/keyboard/device.hpp>
 #include <sge/input/keyboard/key_code.hpp>
 #include <sge/parse/json/find_and_convert_member.hpp>
-#include <fcppt/make_unique_ptr_fcppt.hpp>
+#include <fcppt/make_unique_ptr.hpp>
 #include <fcppt/maybe_void.hpp>
 #include <fcppt/unique_ptr_to_base.hpp>
 #include <fcppt/text.hpp>
@@ -33,7 +33,7 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 		fcppt::unique_ptr_to_base<
 			sgeroids::model::base
 		>(
-			fcppt::make_unique_ptr_fcppt<
+			fcppt::make_unique_ptr<
 				sgeroids::model::local::object
 			>(
 				model_serialization_output_
@@ -44,7 +44,7 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 		fcppt::unique_ptr_to_base<
 			sgeroids::view::base
 		>(
-			fcppt::make_unique_ptr_fcppt<
+			fcppt::make_unique_ptr<
 				sgeroids::view::planar::object
 			>(
 				this->context<state_machine::object>().systems().renderer_device_ffp(),
@@ -66,7 +66,7 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 		).empty()
 		?
 			optional_input_manager_unique_ptr(
-				fcppt::make_unique_ptr_fcppt<
+				fcppt::make_unique_ptr<
 					sgeroids::input::manager
 				>(
 					this->context<state_machine::object>().systems().input_processor(),
@@ -86,7 +86,7 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 			optional_replay_file_reader_unique_ptr()
 		:
 			optional_replay_file_reader_unique_ptr(
-				fcppt::make_unique_ptr_fcppt<sgeroids::replay::file_reader>(
+				fcppt::make_unique_ptr<sgeroids::replay::file_reader>(
 					*model_,
 					boost::filesystem::path(
 						sge::parse::json::find_and_convert_member<fcppt::string>(

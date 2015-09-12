@@ -74,7 +74,7 @@
 #include <sge/texture/part_raw_ptr.hpp>
 #include <fcppt/insert_to_fcppt_string.hpp>
 #include <fcppt/make_shared_ptr.hpp>
-#include <fcppt/make_unique_ptr_fcppt.hpp>
+#include <fcppt/make_unique_ptr.hpp>
 #include <fcppt/maybe.hpp>
 #include <fcppt/maybe_void.hpp>
 #include <fcppt/optional_impl.hpp>
@@ -197,7 +197,7 @@ sgeroids::view::planar::object::add_spaceship(
 		fcppt::unique_ptr_to_base<
 			sgeroids::view::planar::entity::base
 		>(
-			fcppt::make_unique_ptr_fcppt<
+			fcppt::make_unique_ptr<
 				entity::spaceship
 			>(
 				dynamic_collection_,
@@ -241,7 +241,7 @@ sgeroids::view::planar::object::add_asteroid(
 		fcppt::unique_ptr_to_base<
 			sgeroids::view::planar::entity::base
 		>(
-			fcppt::make_unique_ptr_fcppt<entity::asteroid>(
+			fcppt::make_unique_ptr<entity::asteroid>(
 				dynamic_collection_,
 				texture_tree_,
 				planar::radius_to_screen_space(
@@ -260,7 +260,7 @@ sgeroids::view::planar::object::add_projectile(
 		fcppt::unique_ptr_to_base<
 			sgeroids::view::planar::entity::base
 		>(
-			fcppt::make_unique_ptr_fcppt<entity::bullet>(
+			fcppt::make_unique_ptr<entity::bullet>(
 				dynamic_collection_,
 				texture_tree_)));
 }
@@ -472,7 +472,7 @@ sgeroids::view::planar::object::play_area(
 {
 	background_ =
 		optional_background_unique_ptr(
-			fcppt::make_unique_ptr_fcppt<
+			fcppt::make_unique_ptr<
 				background::object
 			>(
 				renderer_,

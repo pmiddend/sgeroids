@@ -8,7 +8,7 @@
 #include <sge/input/keyboard/remove_callback.hpp>
 #include <sge/input/keyboard/remove_event.hpp>
 #include <fcppt/insert_to_fcppt_string.hpp>
-#include <fcppt/make_unique_ptr_fcppt.hpp>
+#include <fcppt/make_unique_ptr.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/log/_.hpp>
 #include <fcppt/log/debug.hpp>
@@ -73,7 +73,7 @@ sgeroids::input::manager::keyboard_discover(
 			<< last_keyboard_id_);
 
 	keyboards_.push_back(
-		fcppt::make_unique_ptr_fcppt<
+		fcppt::make_unique_ptr<
 			input::keyboard
 		>(
 			model_,

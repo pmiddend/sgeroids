@@ -15,7 +15,7 @@
 #include <alda/message/make_concrete_ptr.hpp>
 #include <alda/serialization/serialize.hpp>
 #include <fcppt/insert_to_fcppt_string.hpp>
-#include <fcppt/make_unique_ptr_fcppt.hpp>
+#include <fcppt/make_unique_ptr.hpp>
 #include <fcppt/maybe_void.hpp>
 #include <fcppt/maybe_void_multi.hpp>
 #include <fcppt/optional_assign.hpp>
@@ -199,7 +199,7 @@ sgeroids::model::local::object::process_message(
 	random_generator_unique_ptr const &rng(
 		fcppt::optional_assign(
 			rng_,
-			fcppt::make_unique_ptr_fcppt<
+			fcppt::make_unique_ptr<
 				sgeroids::random_generator
 			>(
 				sgeroids::random_generator::seed(
@@ -213,7 +213,7 @@ sgeroids::model::local::object::process_message(
 
 	asteroid_generator_ =
 		optional_asteroid_generator_unique_ptr(
-			fcppt::make_unique_ptr_fcppt<
+			fcppt::make_unique_ptr<
 				sgeroids::model::local::asteroid_generator::object
 			>(
 				*rng,
@@ -325,7 +325,7 @@ sgeroids::model::local::object::process_message(
 	fcppt::unique_ptr<
 		sgeroids::model::local::entity::spaceship
 	> to_add(
-		fcppt::make_unique_ptr_fcppt<
+		fcppt::make_unique_ptr<
 			sgeroids::model::local::entity::spaceship
 		>(
 			player_name,
@@ -804,7 +804,7 @@ sgeroids::model::local::object::asteroid_generated(
 		fcppt::unique_ptr_to_base<
 			sgeroids::model::local::entity::base
 		>(
-			fcppt::make_unique_ptr_fcppt<
+			fcppt::make_unique_ptr<
 				entity::asteroid
 			>(
 				_position,
@@ -873,7 +873,7 @@ sgeroids::model::local::object::insert_projectile(
 	fcppt::unique_ptr<
 		entity::projectile
 	> to_add(
-		fcppt::make_unique_ptr_fcppt<
+		fcppt::make_unique_ptr<
 			entity::projectile
 		>(
 			_position,
@@ -1009,7 +1009,7 @@ sgeroids::model::local::object::asteroid_died(
 			fcppt::unique_ptr_to_base<
 				sgeroids::model::local::entity::base
 			>(
-				fcppt::make_unique_ptr_fcppt<
+				fcppt::make_unique_ptr<
 					sgeroids::model::local::entity::asteroid
 				>(
 					new_position,
