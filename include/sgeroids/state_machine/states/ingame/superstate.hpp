@@ -11,7 +11,7 @@
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/optional_impl.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
-#include <fcppt/signal/scoped_connection.hpp>
+#include <fcppt/signal/auto_connection.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include <boost/mpl/vector/vector10.hpp>
@@ -82,20 +82,20 @@ private:
 
 	optional_replay_file_reader_unique_ptr const replay_file_reader_;
 
-	fcppt::signal::scoped_connection escape_exit_connection_;
+	fcppt::signal::auto_connection const escape_exit_connection_;
 
 	// Connections from the model to the view
-	fcppt::signal::scoped_connection add_spaceship_connection_;
-	fcppt::signal::scoped_connection add_asteroid_connection_;
-	fcppt::signal::scoped_connection add_projectile_connection_;
-	fcppt::signal::scoped_connection collide_projectile_asteroid_connection_;
-	fcppt::signal::scoped_connection score_change_connection_;
-	fcppt::signal::scoped_connection destroy_asteroid_connection_;
-	fcppt::signal::scoped_connection remove_entity_connection_;
-	fcppt::signal::scoped_connection position_entity_connection_;
-	fcppt::signal::scoped_connection rotation_entity_connection_;
-	fcppt::signal::scoped_connection gameover_connection_;
-	fcppt::signal::scoped_connection change_thrust_connection_;
+	fcppt::signal::auto_connection const add_spaceship_connection_;
+	fcppt::signal::auto_connection const add_asteroid_connection_;
+	fcppt::signal::auto_connection const add_projectile_connection_;
+	fcppt::signal::auto_connection const collide_projectile_asteroid_connection_;
+	fcppt::signal::auto_connection const score_change_connection_;
+	fcppt::signal::auto_connection const destroy_asteroid_connection_;
+	fcppt::signal::auto_connection const remove_entity_connection_;
+	fcppt::signal::auto_connection const position_entity_connection_;
+	fcppt::signal::auto_connection const rotation_entity_connection_;
+	fcppt::signal::auto_connection const gameover_connection_;
+	fcppt::signal::auto_connection const change_thrust_connection_;
 };
 }
 }
