@@ -2,9 +2,10 @@
 #include <sgeroids/replay/file_reader.hpp>
 #include <sgeroids/state_machine/states/ingame/superstate.hpp>
 #include <sgeroids/view/planar/object.hpp>
+#include <sge/input/key/action_callback.hpp>
+#include <sge/input/key/code.hpp>
 #include <sge/input/keyboard/action.hpp>
 #include <sge/input/keyboard/device.hpp>
-#include <sge/input/keyboard/key_code.hpp>
 #include <sge/parse/json/find_and_convert_member.hpp>
 #include <fcppt/make_unique_ptr.hpp>
 #include <fcppt/maybe_void.hpp>
@@ -104,8 +105,8 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 	escape_exit_connection_(
 		this->context<state_machine::object>().systems().keyboard_collector().key_callback(
 			sge::input::keyboard::action(
-				sge::input::keyboard::key_code::escape,
-				sge::input::keyboard::action_callback{
+				sge::input::key::code::escape,
+				sge::input::key::action_callback{
 					std::bind(
 						&state_machine::object::exit_mainloop,
 						&(this->context<state_machine::object>())

@@ -14,6 +14,7 @@
 #include <sgeroids/model/serialization/message/roles/player_name.hpp>
 #include <sgeroids/model/serialization/message/roles/rotation_direction.hpp>
 #include <sgeroids/model/serialization/message/roles/thrust.hpp>
+#include <sge/input/key/code.hpp>
 #include <sge/input/keyboard/device.hpp>
 #include <sge/input/keyboard/key_callback.hpp>
 #include <sge/input/keyboard/key_event.hpp>
@@ -147,7 +148,7 @@ sgeroids::input::keyboard::key_impl(
 {
 	switch(e.key().code())
 	{
-		case sge::input::keyboard::key_code::w:
+		case sge::input::key::code::w:
 			model_.get().process_message(
 				sgeroids::model::serialization::message::change_thrust(
 					sgeroids::model::serialization::message::roles::entity_id{} =
@@ -160,15 +161,15 @@ sgeroids::input::keyboard::key_impl(
 							:
 								0)));
 			break;
-		case sge::input::keyboard::key_code::a:
+		case sge::input::key::code::a:
 			rotation_left_pressed_ =
 				e.pressed();
 			break;
-		case sge::input::keyboard::key_code::d:
+		case sge::input::key::code::d:
 			rotation_right_pressed_ =
 				e.pressed();
 			break;
-		case sge::input::keyboard::key_code::space:
+		case sge::input::key::code::space:
 			model_.get().process_message(
 				sgeroids::model::serialization::message::change_firing_mode(
 					sgeroids::model::serialization::message::roles::entity_id{} =
