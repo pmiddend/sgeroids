@@ -8,7 +8,7 @@
 #include <sge/input/keyboard/remove_event_fwd.hpp>
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
-#include <fcppt/signal/scoped_connection.hpp>
+#include <fcppt/signal/optional_auto_connection.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
@@ -39,8 +39,8 @@ private:
 
 	sgeroids::model::base &model_;
 	keyboard_sequence keyboards_;
-	fcppt::signal::scoped_connection keyboard_discover_connection_;
-	fcppt::signal::scoped_connection keyboard_remove_connection_;
+	fcppt::signal::optional_auto_connection const keyboard_discover_connection_;
+	fcppt::signal::optional_auto_connection const keyboard_remove_connection_;
 	unsigned last_keyboard_id_;
 
 	void
