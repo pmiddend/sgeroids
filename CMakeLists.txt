@@ -123,7 +123,9 @@ sge_config_add_custom_path(
 	${CMAKE_PROJECT_NAME}
 	media
 	${CMAKE_SOURCE_DIR}/media
-	${INSTALL_MEDIA_DIR})
+	${INSTALL_MEDIA_DIR}
+	MEDIA_PATH_INCLUDES
+)
 # end media path stuff
 
 # We don't want relative includes a la: #include "../foo/bar", so we partition
@@ -398,6 +400,12 @@ awl_utils_add_portable_executable(
 
 fcppt_utils_set_target_compiler_flags(
 	${CMAKE_PROJECT_NAME}
+)
+
+target_include_directories(
+	${CMAKE_PROJECT_NAME}
+	PRIVATE
+	${MEDIA_PATH_INCLUDES}
 )
 
 # Link to what?
