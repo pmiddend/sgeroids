@@ -3,6 +3,7 @@
 
 #include <sgeroids/model/serialization/message/types/enum.hpp>
 #include <alda/bindings/fundamental.hpp>
+#include <alda/serialization/endianness.hpp>
 
 
 namespace sgeroids
@@ -18,7 +19,8 @@ namespace adapted_types
 typedef
 alda::bindings::fundamental
 <
-	sgeroids::model::serialization::message::types::enum_
+	sgeroids::model::serialization::message::types::enum_,
+	alda::serialization::endianness()
 >
 enum_;
 }

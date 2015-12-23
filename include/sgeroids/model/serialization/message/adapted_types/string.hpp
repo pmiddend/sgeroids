@@ -4,6 +4,11 @@
 #include <sgeroids/model/serialization/message/adapted_types/char_type.hpp>
 #include <sgeroids/model/serialization/message/types/string.hpp>
 #include <alda/bindings/dynamic_len.hpp>
+#include <alda/bindings/unsigned.hpp>
+#include <alda/serialization/endianness.hpp>
+#include <fcppt/config/external_begin.hpp>
+#include <cstdint>
+#include <fcppt/config/external_end.hpp>
 
 
 namespace sgeroids
@@ -20,7 +25,11 @@ typedef
 alda::bindings::dynamic_len
 <
 	sgeroids::model::serialization::message::types::string,
-	sgeroids::model::serialization::message::adapted_types::char_type
+	sgeroids::model::serialization::message::adapted_types::char_type,
+	alda::bindings::unsigned_<
+		std::uint16_t,
+		alda::serialization::endianness()
+	>
 >
 string;
 }

@@ -3,6 +3,7 @@
 
 #include <sgeroids/model/serialization/message/types/int.hpp>
 #include <alda/bindings/fundamental.hpp>
+#include <alda/serialization/endianness.hpp>
 
 
 namespace sgeroids
@@ -18,7 +19,8 @@ namespace adapted_types
 typedef
 alda::bindings::fundamental
 <
-	sgeroids::model::serialization::message::types::int_
+	sgeroids::model::serialization::message::types::int_,
+	alda::serialization::endianness()
 >
 int_;
 }
