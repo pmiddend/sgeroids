@@ -16,10 +16,10 @@
 #include <alda/serialization/serialize.hpp>
 #include <fcppt/insert_to_fcppt_string.hpp>
 #include <fcppt/make_unique_ptr.hpp>
-#include <fcppt/maybe_void.hpp>
-#include <fcppt/maybe_void_multi.hpp>
-#include <fcppt/optional_assign.hpp>
-#include <fcppt/optional_to_exception.hpp>
+#include <fcppt/optional/maybe_void.hpp>
+#include <fcppt/optional/maybe_void_multi.hpp>
+#include <fcppt/optional/assign.hpp>
+#include <fcppt/optional/to_exception.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/type_name_from_info.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
@@ -197,7 +197,7 @@ sgeroids::model::local::object::process_message(
 			_message));
 
 	random_generator_unique_ptr const &rng(
-		fcppt::optional_assign(
+		fcppt::optional::assign(
 			rng_,
 			fcppt::make_unique_ptr<
 				sgeroids::random_generator
@@ -245,7 +245,7 @@ sgeroids::model::local::object::process_message(
 	this->entity_updates();
 	this->collision_detection_broadphase();
 
-	fcppt::maybe_void(
+	fcppt::optional::maybe_void(
 		asteroid_generator_,
 		[](
 			asteroid_generator_unique_ptr const &_generator
@@ -281,7 +281,7 @@ sgeroids::model::local::object::process_message(
 		entities_
 	)
 	{
-		fcppt::maybe_void(
+		fcppt::optional::maybe_void(
 			fcppt::cast::try_dynamic<
 				sgeroids::model::local::entity::spaceship const &
 			>(
@@ -421,7 +421,7 @@ sgeroids::model::local::object::process_message(
 		entities_
 	)
 	{
-		fcppt::maybe_void(
+		fcppt::optional::maybe_void(
 			fcppt::cast::try_dynamic<entity::spaceship &>(
 				*entity.second
 			),
@@ -551,7 +551,7 @@ sgeroids::model::local::object::entity_updates()
 		it->second->update();
 		if(it->second->dead())
 		{
-			fcppt::maybe_void(
+			fcppt::optional::maybe_void(
 				fcppt::cast::try_dynamic<entity::spaceship &>(
 					*(it->second)
 				),
@@ -629,7 +629,7 @@ sgeroids::model::local::object::collision_detection_narrow_phase(
 		_right.collides_with(
 			_left);
 
-		fcppt::maybe_void_multi(
+		fcppt::optional::maybe_void_multi(
 			[
 				_left_id,
 				_right_id,
@@ -653,7 +653,7 @@ sgeroids::model::local::object::collision_detection_narrow_phase(
 			)
 		);
 
-		fcppt::maybe_void_multi(
+		fcppt::optional::maybe_void_multi(
 			[
 				_left_id,
 				_right_id,
@@ -679,7 +679,7 @@ sgeroids::model::local::object::collision_detection_narrow_phase(
 	}
 }
 
-fcppt::optional<
+fcppt::optional::object<
 	sgeroids::model::local::entity::spaceship &
 >
 sgeroids::model::local::object::find_spaceship_by_id(
@@ -691,11 +691,11 @@ sgeroids::model::local::object::find_spaceship_by_id(
 
 	if(it == entities_.end())
 		return
-			fcppt::optional<
+			fcppt::optional::object<
 				sgeroids::model::local::entity::spaceship &
 			>();
 
-	fcppt::optional<entity::spaceship &> maybe_a_ship(
+	fcppt::optional::object<entity::spaceship &> maybe_a_ship(
 		fcppt::cast::try_dynamic<entity::spaceship &>(
 			*(it->second)));
 
@@ -709,11 +709,11 @@ sgeroids::model::local::object::find_spaceship_by_id_exn(
 )
 {
 	return
-		fcppt::optional_to_exception(
+		fcppt::optional::to_exception(
 			fcppt::cast::try_dynamic<
 				sgeroids::model::local::entity::spaceship &
 			>(
-				*fcppt::optional_to_exception(
+				*fcppt::optional::to_exception(
 					fcppt::container::find_opt_mapped(
 						entities_,
 						_id.get()
@@ -939,7 +939,7 @@ sgeroids::model::local::object::asteroid_died(
 		fcppt::log::_
 			<< FCPPT_TEXT("An asteroid died, checking if we need to create another one"));
 
-	fcppt::maybe_void(
+	fcppt::optional::maybe_void(
 		this->find_spaceship_by_id(
 			_killer_id
 		),

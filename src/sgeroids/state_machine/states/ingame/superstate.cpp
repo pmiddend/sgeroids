@@ -8,7 +8,7 @@
 #include <sge/input/keyboard/device.hpp>
 #include <sge/parse/json/find_and_convert_member.hpp>
 #include <fcppt/make_unique_ptr.hpp>
-#include <fcppt/maybe_void.hpp>
+#include <fcppt/optional/maybe_void.hpp>
 #include <fcppt/unique_ptr_to_base.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/random/generator/seed_from_chrono.hpp>
@@ -260,7 +260,7 @@ boost::statechart::result
 sgeroids::state_machine::states::ingame::superstate::react(
 	state_machine::events::tick const &)
 {
-	fcppt::maybe_void(
+	fcppt::optional::maybe_void(
 		replay_file_reader_,
 		[](
 			auto const &_replay

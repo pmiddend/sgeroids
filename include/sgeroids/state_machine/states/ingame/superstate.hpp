@@ -9,7 +9,7 @@
 #include <sgeroids/state_machine/events/tick.hpp>
 #include <sgeroids/view/unique_base_ptr.hpp>
 #include <fcppt/noncopyable.hpp>
-#include <fcppt/optional_impl.hpp>
+#include <fcppt/optional/object_impl.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
 #include <fcppt/signal/auto_connection.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -63,7 +63,7 @@ private:
 	sgeroids::view::unique_base_ptr view_;
 
 	typedef
-	fcppt::optional<
+	fcppt::optional::object<
 		fcppt::unique_ptr<
 			sgeroids::input::manager
 		>
@@ -73,7 +73,7 @@ private:
 	optional_input_manager_unique_ptr const input_manager_;
 
 	typedef
-	fcppt::optional<
+	fcppt::optional::object<
 		fcppt::unique_ptr<
 			sgeroids::replay::file_reader
 		>

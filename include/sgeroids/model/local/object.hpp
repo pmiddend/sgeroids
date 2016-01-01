@@ -11,7 +11,7 @@
 #include <sgeroids/model/local/entity/spaceship_fwd.hpp>
 #include <sgeroids/model/local/entity/unique_base_ptr.hpp>
 #include <fcppt/noncopyable.hpp>
-#include <fcppt/optional.hpp>
+#include <fcppt/optional/object.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
 #include <fcppt/signal/auto_connection.hpp>
 #include <fcppt/signal/object.hpp>
@@ -168,7 +168,7 @@ private:
 	random_generator_unique_ptr;
 
 	typedef
-	fcppt::optional<
+	fcppt::optional::object<
 		random_generator_unique_ptr
 	>
 	optional_random_generator_unique_ptr;
@@ -185,7 +185,7 @@ private:
 	asteroid_generator_unique_ptr;
 
 	typedef
-	fcppt::optional<
+	fcppt::optional::object<
 		asteroid_generator_unique_ptr
 	>
 	optional_asteroid_generator_unique_ptr;
@@ -248,7 +248,7 @@ private:
 	find_spaceship_by_id_exn, except it returns an optional spaceship
 	instead of throwing errors when it doesn't find one.
 	*/
-	fcppt::optional<
+	fcppt::optional::object<
 		sgeroids::model::local::entity::spaceship &
 	>
 	find_spaceship_by_id(

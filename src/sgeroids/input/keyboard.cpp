@@ -18,8 +18,8 @@
 #include <sge/input/keyboard/device.hpp>
 #include <sge/input/keyboard/key_callback.hpp>
 #include <sge/input/keyboard/key_event.hpp>
-#include <fcppt/maybe_void.hpp>
-#include <fcppt/optional_impl.hpp>
+#include <fcppt/optional/maybe_void.hpp>
+#include <fcppt/optional/object_impl.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/log/_.hpp>
 #include <fcppt/log/debug.hpp>
@@ -123,7 +123,7 @@ sgeroids::input::keyboard::key(
 	sge::input::keyboard::key_event const &_event
 )
 {
-	fcppt::maybe_void(
+	fcppt::optional::maybe_void(
 		id_.get(),
 		[
 			&_event,
@@ -221,7 +221,7 @@ sgeroids::input::keyboard::add_spaceship(
 				<< FCPPT_TEXT("We got an ID: ") << _entity_id.get());
 		id_ =
 			sgeroids::input::optional_entity_id(
-				fcppt::optional<model::entity_id>(
+				fcppt::optional::object<model::entity_id>(
 					_entity_id));
 	}
 }
@@ -239,6 +239,6 @@ sgeroids::input::keyboard::remove_spaceship(
 				<< __FUNCTION__);
 
 		id_ = sgeroids::input::optional_entity_id(
-			fcppt::optional<model::entity_id>());
+			fcppt::optional::object<model::entity_id>());
 	}
 }

@@ -29,7 +29,7 @@
 #include <sge/sprite/state/with_rasterizer.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>
 #include <fcppt/noncopyable.hpp>
-#include <fcppt/optional_impl.hpp>
+#include <fcppt/optional/object_impl.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
 #include <fcppt/math/box/object_impl.hpp>
 #include <fcppt/math/matrix/object_impl.hpp>
@@ -204,7 +204,7 @@ private:
 	entity_map entities_;
 
 	typedef
-	fcppt::optional<
+	fcppt::optional::object<
 		fcppt::unique_ptr<
 			background::object
 		>
@@ -217,7 +217,7 @@ private:
 	sge::font::object_unique_ptr score_font_;
 
 	typedef
-	fcppt::optional<
+	fcppt::optional::object<
 		sge::font::draw::static_text
 	>
 	optional_static_text;

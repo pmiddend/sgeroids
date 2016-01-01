@@ -75,10 +75,10 @@
 #include <fcppt/insert_to_fcppt_string.hpp>
 #include <fcppt/make_shared_ptr.hpp>
 #include <fcppt/make_unique_ptr.hpp>
-#include <fcppt/maybe.hpp>
-#include <fcppt/maybe_void.hpp>
-#include <fcppt/optional_impl.hpp>
-#include <fcppt/optional_to_exception.hpp>
+#include <fcppt/optional/maybe.hpp>
+#include <fcppt/optional/maybe_void.hpp>
+#include <fcppt/optional/object_impl.hpp>
+#include <fcppt/optional/to_exception.hpp>
 #include <fcppt/strong_typedef_output.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/type_name_from_info.hpp>
@@ -307,7 +307,7 @@ sgeroids::view::planar::object::score_change(
 		return;
 	}
 
-	fcppt::maybe(
+	fcppt::optional::maybe(
 		fcppt::cast::try_dynamic<entity::spaceship &>(
 			*(it->second)
 		),
@@ -444,7 +444,7 @@ sgeroids::view::planar::object::change_thrust(
 				fcppt::insert_to_fcppt_string(
 					_id.get()));
 
-	fcppt::optional_to_exception(
+	fcppt::optional::to_exception(
 		fcppt::cast::try_dynamic<entity::spaceship &>(
 			*(it->second)
 		),
@@ -542,7 +542,7 @@ sgeroids::view::planar::object::render(
 		sge::renderer::state::ffp::transform::mode::projection,
 		*transform_state);
 
-	fcppt::maybe_void(
+	fcppt::optional::maybe_void(
 		background_,
 		[
 			&_render_context
@@ -573,7 +573,7 @@ sgeroids::view::planar::object::render(
 		>(
 			sge::sprite::state::vertex_options::declaration));
 
-	fcppt::maybe_void(
+	fcppt::optional::maybe_void(
 		score_text_,
 		[
 			&_render_context
