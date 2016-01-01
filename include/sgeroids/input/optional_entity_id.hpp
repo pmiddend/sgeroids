@@ -2,8 +2,9 @@
 #define SGEROIDS_INPUT_OPTIONAL_ENTITY_ID_HPP_INCLUDED
 
 #include <sgeroids/model/entity_id.hpp>
-#include <fcppt/optional/object_fwd.hpp>
 #include <fcppt/strong_typedef.hpp>
+#include <fcppt/optional/object_fwd.hpp>
+
 
 namespace sgeroids
 {

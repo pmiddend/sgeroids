@@ -9,8 +9,8 @@
 #include <sge/input/keyboard/device_fwd.hpp>
 #include <sge/input/keyboard/key_event_fwd.hpp>
 #include <fcppt/noncopyable.hpp>
-#include <fcppt/optional/object.hpp>
 #include <fcppt/reference_wrapper.hpp>
+#include <fcppt/optional/object.hpp>
 #include <fcppt/signal/auto_connection.hpp>
 
 

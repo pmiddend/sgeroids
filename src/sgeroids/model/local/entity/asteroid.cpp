@@ -5,11 +5,11 @@
 #include <sgeroids/model/log.hpp>
 #include <sgeroids/model/local/entity/asteroid.hpp>
 #include <sgeroids/model/local/entity/projectile.hpp>
-#include <fcppt/optional/maybe_void.hpp>
 #include <fcppt/cast/try_dynamic.hpp>
 #include <fcppt/math/vector/arithmetic.hpp>
 #include <fcppt/math/vector/comparison.hpp>
 #include <fcppt/math/vector/null.hpp>
+#include <fcppt/optional/maybe_void.hpp>
 
 
 sgeroids::model::local::entity::asteroid::asteroid(

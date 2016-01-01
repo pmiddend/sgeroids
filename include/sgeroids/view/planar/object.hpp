@@ -29,10 +29,10 @@
 #include <sge/sprite/state/with_rasterizer.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>
 #include <fcppt/noncopyable.hpp>
-#include <fcppt/optional/object_impl.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
 #include <fcppt/math/box/object_impl.hpp>
 #include <fcppt/math/matrix/object_impl.hpp>
+#include <fcppt/optional/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/mpl/vector/vector10.hpp>
