@@ -75,6 +75,7 @@
 #include <fcppt/insert_to_fcppt_string.hpp>
 #include <fcppt/make_shared_ptr.hpp>
 #include <fcppt/make_unique_ptr.hpp>
+#include <fcppt/reference_wrapper_impl.hpp>
 #include <fcppt/strong_typedef_output.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/type_name_from_info.hpp>
@@ -308,7 +309,7 @@ sgeroids::view::planar::object::score_change(
 	}
 
 	fcppt::optional::maybe(
-		fcppt::cast::try_dynamic<entity::spaceship &>(
+		fcppt::cast::try_dynamic<entity::spaceship>(
 			*(it->second)
 		),
 		[
@@ -325,7 +326,9 @@ sgeroids::view::planar::object::score_change(
 			_score,
 			this
 		](
-			entity::spaceship const &_maybe_a_ship
+			fcppt::reference_wrapper<
+				entity::spaceship
+			> const _maybe_a_ship
 		)
 		{
 			score_text_ =
@@ -335,7 +338,7 @@ sgeroids::view::planar::object::score_change(
 						*score_font_,
 						sge::font::from_fcppt_string(
 							fcppt::insert_to_fcppt_string(
-								_maybe_a_ship.player_name())) +
+								_maybe_a_ship.get().player_name())) +
 						SGE_FONT_LIT(": ") +
 						sge::font::from_fcppt_string(
 							fcppt::insert_to_fcppt_string(
@@ -445,7 +448,7 @@ sgeroids::view::planar::object::change_thrust(
 					_id.get()));
 
 	fcppt::optional::to_exception(
-		fcppt::cast::try_dynamic<entity::spaceship &>(
+		fcppt::cast::try_dynamic<entity::spaceship>(
 			*(it->second)
 		),
 		[
@@ -462,7 +465,7 @@ sgeroids::view::planar::object::change_thrust(
 						typeid(
 							*(it->second))));
 		}
-	).change_thrust(
+	).get().change_thrust(
 		 _thrust);
 }
 

@@ -5,6 +5,7 @@
 #include <sgeroids/model/log.hpp>
 #include <sgeroids/model/local/entity/asteroid.hpp>
 #include <sgeroids/model/local/entity/projectile.hpp>
+#include <fcppt/reference_wrapper_impl.hpp>
 #include <fcppt/cast/try_dynamic.hpp>
 #include <fcppt/math/vector/arithmetic.hpp>
 #include <fcppt/math/vector/comparison.hpp>
@@ -139,14 +140,16 @@ sgeroids::model::local::entity::asteroid::collides_with(
 	// TODO: Shall we do something here in case we're colliding with a spaceship?
 	fcppt::optional::maybe_void(
 		fcppt::cast::try_dynamic<
-			sgeroids::model::local::entity::projectile const &
+			sgeroids::model::local::entity::projectile const
 		>(
 			_other
 		),
 		[
 			this
 		](
-			sgeroids::model::local::entity::projectile const &_projectile
+			fcppt::reference_wrapper<
+				sgeroids::model::local::entity::projectile const
+			> const _projectile
 		)
 		{
 			// Decrease health. This could depend on the projectile later on, but
@@ -162,7 +165,7 @@ sgeroids::model::local::entity::asteroid::collides_with(
 
 				asteroid_died_(
 					*this,
-					_projectile.owner_id());
+					_projectile.get().owner_id());
 			}
 			// If we didn't die, our trajectory changes
 			else
@@ -170,7 +173,7 @@ sgeroids::model::local::entity::asteroid::collides_with(
 				// TODO: No inertia here: We need to take the mass into account
 				// (larger asteroids aren't as easily deflected)
 				velocity_ +=
-					_projectile.velocity().get()/2;
+					_projectile.get().velocity().get()/2;
 			}
 		}
 	);

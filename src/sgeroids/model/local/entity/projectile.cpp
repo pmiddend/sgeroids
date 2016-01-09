@@ -107,7 +107,7 @@ void
 sgeroids::model::local::entity::projectile::collides_with(
 	entity::base &_other)
 {
-	if(fcppt::cast::try_dynamic<entity::asteroid const &>(_other).has_value())
+	if(fcppt::cast::try_dynamic<entity::asteroid const>(_other).has_value())
 		was_hit_ =
 			true;
 }

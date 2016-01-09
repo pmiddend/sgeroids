@@ -13,6 +13,7 @@
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
 #include <fcppt/optional/object.hpp>
+#include <fcppt/optional/reference.hpp>
 #include <fcppt/signal/auto_connection.hpp>
 #include <fcppt/signal/object.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -248,8 +249,8 @@ private:
 	find_spaceship_by_id_exn, except it returns an optional spaceship
 	instead of throwing errors when it doesn't find one.
 	*/
-	fcppt::optional::object<
-		sgeroids::model::local::entity::spaceship &
+	fcppt::optional::reference<
+		sgeroids::model::local::entity::spaceship
 	>
 	find_spaceship_by_id(
 		sgeroids::model::spaceship_id const &);
