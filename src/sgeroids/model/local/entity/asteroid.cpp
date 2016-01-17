@@ -5,7 +5,7 @@
 #include <sgeroids/model/log.hpp>
 #include <sgeroids/model/local/entity/asteroid.hpp>
 #include <sgeroids/model/local/entity/projectile.hpp>
-#include <fcppt/reference_wrapper_impl.hpp>
+#include <fcppt/reference_impl.hpp>
 #include <fcppt/cast/try_dynamic.hpp>
 #include <fcppt/math/vector/arithmetic.hpp>
 #include <fcppt/math/vector/comparison.hpp>
@@ -147,7 +147,7 @@ sgeroids::model::local::entity::asteroid::collides_with(
 		[
 			this
 		](
-			fcppt::reference_wrapper<
+			fcppt::reference<
 				sgeroids::model::local::entity::projectile const
 			> const _projectile
 		)

@@ -16,7 +16,7 @@
 #include <alda/serialization/serialize.hpp>
 #include <fcppt/insert_to_fcppt_string.hpp>
 #include <fcppt/make_unique_ptr.hpp>
-#include <fcppt/reference_wrapper_impl.hpp>
+#include <fcppt/reference_impl.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/type_name_from_info.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
@@ -293,7 +293,7 @@ sgeroids::model::local::object::process_message(
 				&player_name,
 				this
 			](
-				fcppt::reference_wrapper<
+				fcppt::reference<
 					sgeroids::model::local::entity::spaceship const
 				> const _maybe_a_ship
 			)
@@ -432,7 +432,7 @@ sgeroids::model::local::object::process_message(
 			[
 				&player_name
 			](
-				fcppt::reference_wrapper<
+				fcppt::reference<
 					entity::spaceship
 				> const _maybe_a_ship
 			)
@@ -564,7 +564,7 @@ sgeroids::model::local::object::entity_updates()
 				[
 					this
 				](
-					fcppt::reference_wrapper<
+					fcppt::reference<
 						entity::spaceship
 					> const _maybe_ship
 				)
@@ -643,10 +643,10 @@ sgeroids::model::local::object::collision_detection_narrow_phase(
 				_right_id,
 				this
 			](
-				fcppt::reference_wrapper<
+				fcppt::reference<
 					sgeroids::model::local::entity::asteroid const
 				>,
-				fcppt::reference_wrapper<
+				fcppt::reference<
 					sgeroids::model::local::entity::projectile const
 				>
 			)
@@ -671,10 +671,10 @@ sgeroids::model::local::object::collision_detection_narrow_phase(
 				_right_id,
 				this
 			](
-				fcppt::reference_wrapper<
+				fcppt::reference<
 					sgeroids::model::local::entity::projectile const
 				>,
-				fcppt::reference_wrapper<
+				fcppt::reference<
 					sgeroids::model::local::entity::asteroid const
 				>
 			)
@@ -961,7 +961,7 @@ sgeroids::model::local::object::asteroid_died(
 			_killer_id,
 			this
 		](
-			fcppt::reference_wrapper<
+			fcppt::reference<
 				sgeroids::model::local::entity::spaceship
 			> const _killer
 		)

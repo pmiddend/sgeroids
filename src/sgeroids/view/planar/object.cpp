@@ -75,7 +75,7 @@
 #include <fcppt/insert_to_fcppt_string.hpp>
 #include <fcppt/make_shared_ptr.hpp>
 #include <fcppt/make_unique_ptr.hpp>
-#include <fcppt/reference_wrapper_impl.hpp>
+#include <fcppt/reference_impl.hpp>
 #include <fcppt/strong_typedef_output.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/type_name_from_info.hpp>
@@ -326,7 +326,7 @@ sgeroids::view::planar::object::score_change(
 			_score,
 			this
 		](
-			fcppt::reference_wrapper<
+			fcppt::reference<
 				entity::spaceship
 			> const _maybe_a_ship
 		)

@@ -9,7 +9,7 @@
 #include <sge/input/keyboard/device_fwd.hpp>
 #include <sge/input/keyboard/key_event_fwd.hpp>
 #include <fcppt/noncopyable.hpp>
-#include <fcppt/reference_wrapper.hpp>
+#include <fcppt/reference.hpp>
 #include <fcppt/optional/object.hpp>
 #include <fcppt/signal/auto_connection.hpp>
 
@@ -39,11 +39,11 @@ public:
 
 	~keyboard();
 private:
-	fcppt::reference_wrapper<
+	fcppt::reference<
 		sgeroids::model::base
 	> model_;
 
-	fcppt::reference_wrapper<
+	fcppt::reference<
 		sge::input::keyboard::device
 	> device_;
 	fcppt::signal::auto_connection const key_connection_;
