@@ -3,7 +3,6 @@
 
 #include <sgeroids/model/serialization/message/types/char_type.hpp>
 #include <alda/bindings/fundamental.hpp>
-#include <alda/serialization/endianness.hpp>
 
 
 namespace sgeroids
@@ -19,8 +18,7 @@ namespace adapted_types
 typedef
 alda::bindings::fundamental
 <
-	sgeroids::model::serialization::message::types::char_type,
-	alda::serialization::endianness()
+	sgeroids::model::serialization::message::types::char_type
 >
 char_type;
 }

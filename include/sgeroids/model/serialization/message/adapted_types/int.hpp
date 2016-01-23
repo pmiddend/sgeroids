@@ -2,7 +2,7 @@
 #define SGEROIDS_MODEL_SERIALIZATION_MESSAGE_ADAPTED_TYPES_INT_HPP_INCLUDED
 
 #include <sgeroids/model/serialization/message/types/int.hpp>
-#include <alda/bindings/fundamental.hpp>
+#include <alda/bindings/signed.hpp>
 #include <alda/serialization/endianness.hpp>
 
 
@@ -17,7 +17,7 @@ namespace message
 namespace adapted_types
 {
 typedef
-alda::bindings::fundamental
+alda::bindings::signed_
 <
 	sgeroids::model::serialization::message::types::int_,
 	alda::serialization::endianness()

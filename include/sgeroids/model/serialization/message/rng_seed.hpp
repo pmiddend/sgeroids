@@ -4,7 +4,7 @@
 #include <sgeroids/model/serialization/message/adapted_types/message.hpp>
 #include <sgeroids/model/serialization/message/adapted_types/rng_seed.hpp>
 #include <sgeroids/model/serialization/message/roles/seed.hpp>
-#include <alda/message/make_class.hpp>
+#include <alda/message/record.hpp>
 #include <alda/message/make_id.hpp>
 #include <majutsu/role.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -21,15 +21,15 @@ namespace serialization
 namespace message
 {
 typedef
-alda::message::make_class
+alda::message::record
 <
-	boost::mpl::vector2
+	alda::message::make_id
 	<
-		alda::message::make_id
-		<
-			sgeroids::model::serialization::message::adapted_types::message,
-			sgeroids::model::serialization::message::types::message::rng_seed
-		>,
+		sgeroids::model::serialization::message::adapted_types::message,
+		sgeroids::model::serialization::message::types::message::rng_seed
+	>,
+	boost::mpl::vector1
+	<
 		majutsu::role
 		<
 			sgeroids::model::serialization::message::adapted_types::rng_seed,

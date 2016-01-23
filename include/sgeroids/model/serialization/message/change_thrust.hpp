@@ -6,7 +6,7 @@
 #include <sgeroids/model/serialization/message/adapted_types/message.hpp>
 #include <sgeroids/model/serialization/message/roles/entity_id.hpp>
 #include <sgeroids/model/serialization/message/roles/thrust.hpp>
-#include <alda/message/make_class.hpp>
+#include <alda/message/record.hpp>
 #include <alda/message/make_id.hpp>
 #include <majutsu/role.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -23,15 +23,15 @@ namespace serialization
 namespace message
 {
 typedef
-alda::message::make_class
+alda::message::record
 <
-	boost::mpl::vector3
+	alda::message::make_id
 	<
-		alda::message::make_id
-		<
-			sgeroids::model::serialization::message::adapted_types::message,
-			sgeroids::model::serialization::message::types::message::change_thrust
-		>,
+		sgeroids::model::serialization::message::adapted_types::message,
+		sgeroids::model::serialization::message::types::message::change_thrust
+	>,
+	boost::mpl::vector2
+	<
 		majutsu::role
 		<
 			sgeroids::model::serialization::message::adapted_types::entity_id,
