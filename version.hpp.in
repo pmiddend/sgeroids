@@ -1,0 +1,19 @@
+#ifndef SGEROIDS_BUILD_VERSION_HPP_INCLUDED
+#define SGEROIDS_BUILD_VERSION_HPP_INCLUDED
+
+#include <fcppt/text.hpp>
+#include <fcppt/string.hpp>
+
+namespace sgeroids
+{
+inline fcppt::string
+build_version()
+{
+	return
+		FCPPT_TEXT(
+			"@SGEROIDS_VERSION@"
+		);
+}
+}
+
+#endif

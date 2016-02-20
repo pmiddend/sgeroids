@@ -18,37 +18,12 @@ set(
 	SGEROIDS_VERSION
 	"${SGEROIDS_MAJOR_VERSION}.${SGEROIDS_MINOR_VERSION}.${SGEROIDS_MICRO_VERSION}")
 
-file(
-	WRITE
-	${CMAKE_CURRENT_BINARY_DIR}/version.hpp.in
-"
-#ifndef SGEROIDS_BUILD_VERSION_HPP_INCLUDED
-#define SGEROIDS_BUILD_VERSION_HPP_INCLUDED
-
-#include <fcppt/text.hpp>
-#include <fcppt/string.hpp>
-
-namespace sgeroids
-{
-inline fcppt::string
-build_version()
-{
-	return
-		FCPPT_TEXT(
-			\"@SGEROIDS_VERSION@\"
-		);
-}
-}
-
-#endif
-")
-
 set(
 	SGEROIDS_CONFIG_INCLUDE_DIR
 	${CMAKE_BINARY_DIR}/sgeroidsconfig/include)
 
 configure_file(
-	${CMAKE_CURRENT_BINARY_DIR}/version.hpp.in
+	${CMAKE_CURRENT_SOURCE_DIR}/version.hpp.in
 	${SGEROIDS_CONFIG_INCLUDE_DIR}/sgeroids/build/version.hpp)
 
 include_directories(
