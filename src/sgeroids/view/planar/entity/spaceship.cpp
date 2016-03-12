@@ -38,7 +38,6 @@
 sgeroids::view::planar::entity::spaceship::spaceship(
 	sgeroids::view::planar::sprite::ordered_collection &_collection,
 	sgeroids::view::planar::texture_tree &_texture_tree,
-	sge::audio::player &_audio_player,
 	sgeroids::view::planar::audio_buffer_tree &_audio_buffer_tree,
 	sgeroids::view::planar::callbacks::add_particle const &_add_particle,
 	sgeroids::random_generator &_rng,
@@ -78,8 +77,6 @@ sgeroids::view::planar::entity::spaceship::spaceship(
 				sgeroids::view::planar::sprite::object::vector
 			>()
 	),
-	audio_player_(
-		_audio_player),
 	thrust_sound_(
 		_audio_buffer_tree.get(
 			sge::resource_tree::path() / FCPPT_TEXT("thrust")

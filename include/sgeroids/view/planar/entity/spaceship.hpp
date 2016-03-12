@@ -11,7 +11,6 @@
 #include <sgeroids/view/planar/entity/base.hpp>
 #include <sgeroids/view/planar/sprite/object.hpp>
 #include <sgeroids/view/planar/sprite/ordered_collection.hpp>
-#include <sge/audio/player_fwd.hpp>
 #include <sge/audio/sound/base_unique_ptr.hpp>
 #include <sge/texture/const_part_shared_ptr.hpp>
 #include <fcppt/random/variate_decl.hpp>
@@ -37,7 +36,6 @@ public:
 	spaceship(
 		sgeroids::view::planar::sprite::ordered_collection &,
 		sgeroids::view::planar::texture_tree &,
-		sge::audio::player &,
 		sgeroids::view::planar::audio_buffer_tree &,
 		sgeroids::view::planar::callbacks::add_particle const &,
 		sgeroids::random_generator &,
@@ -68,7 +66,6 @@ private:
 		texture_off_,
 		texture_on_;
 	planar::sprite::object sprite_;
-	sge::audio::player &audio_player_;
 	sge::audio::sound::base_unique_ptr const thrust_sound_;
 	planar::callbacks::add_particle const add_particle_;
 	typedef fcppt::random::distribution::basic<

@@ -203,7 +203,6 @@ sgeroids::view::planar::object::add_spaceship(
 			>(
 				dynamic_collection_,
 				texture_tree_,
-				audio_player_,
 				audio_buffer_tree_,
 				planar::callbacks::add_particle(
 					std::bind(
@@ -455,15 +454,22 @@ sgeroids::view::planar::object::change_thrust(
 			_id,
 			it
 		]{
+			auto const &entity(
+				*it->second
+			);
+
 			return
-				sgeroids::exception(
+				sgeroids::exception{
 					FCPPT_TEXT("view: change_thrust: The entity id ")+
 					fcppt::insert_to_fcppt_string(
 						_id.get())+
 					FCPPT_TEXT(" refers to an entity of (invalid) type ")+
 					fcppt::type_name_from_info(
 						typeid(
-							*(it->second))));
+							entity
+						)
+					)
+				};
 		}
 	).get().change_thrust(
 		 _thrust);
