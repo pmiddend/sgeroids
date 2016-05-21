@@ -22,7 +22,7 @@
 #include <fcppt/unique_ptr_impl.hpp>
 #include <fcppt/unique_ptr_to_base.hpp>
 #include <fcppt/assert/unreachable.hpp>
-#include <fcppt/cast/try_dynamic.hpp>
+#include <fcppt/cast/dynamic.hpp>
 #include <fcppt/container/find_opt_mapped.hpp>
 #include <fcppt/log/_.hpp>
 #include <fcppt/log/debug.hpp>
@@ -284,7 +284,7 @@ sgeroids::model::local::object::process_message(
 	)
 	{
 		fcppt::optional::maybe_void(
-			fcppt::cast::try_dynamic<
+			fcppt::cast::dynamic<
 				sgeroids::model::local::entity::spaceship const
 			>(
 				*entity.second
@@ -426,7 +426,7 @@ sgeroids::model::local::object::process_message(
 	)
 	{
 		fcppt::optional::maybe_void(
-			fcppt::cast::try_dynamic<entity::spaceship>(
+			fcppt::cast::dynamic<entity::spaceship>(
 				*entity.second
 			),
 			[
@@ -558,7 +558,7 @@ sgeroids::model::local::object::entity_updates()
 		if(it->second->dead())
 		{
 			fcppt::optional::maybe_void(
-				fcppt::cast::try_dynamic<entity::spaceship>(
+				fcppt::cast::dynamic<entity::spaceship>(
 					*(it->second)
 				),
 				[
@@ -657,10 +657,10 @@ sgeroids::model::local::object::collision_detection_narrow_phase(
 					model::asteroid_id(
 						_left_id.get()));
 			},
-			fcppt::cast::try_dynamic<entity::asteroid const>(
+			fcppt::cast::dynamic<entity::asteroid const>(
 				_left
 			),
-			fcppt::cast::try_dynamic<entity::projectile const>(
+			fcppt::cast::dynamic<entity::projectile const>(
 				_right
 			)
 		);
@@ -685,10 +685,10 @@ sgeroids::model::local::object::collision_detection_narrow_phase(
 					model::asteroid_id(
 						_right_id.get()));
 			},
-			fcppt::cast::try_dynamic<entity::projectile const>(
+			fcppt::cast::dynamic<entity::projectile const>(
 				_left
 			),
-			fcppt::cast::try_dynamic<entity::asteroid const>(
+			fcppt::cast::dynamic<entity::asteroid const>(
 				_right
 			)
 		);
@@ -712,7 +712,7 @@ sgeroids::model::local::object::find_spaceship_by_id(
 			>();
 
 	return
-		fcppt::cast::try_dynamic<entity::spaceship>(
+		fcppt::cast::dynamic<entity::spaceship>(
 			*(it->second));
 }
 
@@ -724,7 +724,7 @@ sgeroids::model::local::object::find_spaceship_by_id_exn(
 {
 	return
 		fcppt::optional::to_exception(
-			fcppt::cast::try_dynamic<
+			fcppt::cast::dynamic<
 				sgeroids::model::local::entity::spaceship
 			>(
 				*fcppt::optional::to_exception(

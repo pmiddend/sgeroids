@@ -6,7 +6,7 @@
 #include <sgeroids/model/local/entity/asteroid.hpp>
 #include <sgeroids/model/local/entity/projectile.hpp>
 #include <fcppt/reference_impl.hpp>
-#include <fcppt/cast/try_dynamic.hpp>
+#include <fcppt/cast/dynamic.hpp>
 #include <fcppt/math/vector/arithmetic.hpp>
 #include <fcppt/math/vector/comparison.hpp>
 #include <fcppt/math/vector/null.hpp>
@@ -139,7 +139,7 @@ sgeroids::model::local::entity::asteroid::collides_with(
 	// If we're not colliding with a projectile, do nothing.
 	// TODO: Shall we do something here in case we're colliding with a spaceship?
 	fcppt::optional::maybe_void(
-		fcppt::cast::try_dynamic<
+		fcppt::cast::dynamic<
 			sgeroids::model::local::entity::projectile const
 		>(
 			_other

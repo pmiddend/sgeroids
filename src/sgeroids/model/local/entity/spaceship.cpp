@@ -5,7 +5,7 @@
 #include <sgeroids/model/log.hpp>
 #include <sgeroids/model/local/entity/asteroid.hpp>
 #include <sgeroids/model/local/entity/spaceship.hpp>
-#include <fcppt/cast/try_dynamic.hpp>
+#include <fcppt/cast/dynamic.hpp>
 #include <fcppt/math/vector/arithmetic.hpp>
 #include <fcppt/math/vector/comparison.hpp>
 #include <fcppt/math/vector/null.hpp>
@@ -182,7 +182,7 @@ void
 sgeroids::model::local::entity::spaceship::collides_with(
 	entity::base &_other)
 {
-	if(fcppt::cast::try_dynamic<entity::asteroid const>(_other).has_value())
+	if(fcppt::cast::dynamic<entity::asteroid const>(_other).has_value())
 		this->kill();
 }
 
