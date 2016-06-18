@@ -36,24 +36,17 @@ find_package(
 	filesystem
 	system)
 
-include_directories(
-	${Boost_INCLUDE_DIR})
-link_directories(
-	${Boost_LIBRARY_DIRS})
-
-# boost-1.48 is broken with fusion, workaround
-if(
-	MSVC AND ${Boost_VERSION} STREQUAL "104800")
-	add_definitions(
-		-D BOOST_FUSION_DONT_USE_PREPROCESSED_FILES)
-endif()
-# boost end
-
 find_package(
 	fcppt REQUIRED)
 
 find_package(
 	awl REQUIRED)
+
+# FIXME
+find_package(
+	majutsu
+	REQUIRED
+)
 
 find_package(
 	sge REQUIRED
