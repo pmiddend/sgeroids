@@ -49,6 +49,11 @@ find_package(
 )
 
 find_package(
+	mizuiro
+	REQUIRED
+)
+
+find_package(
 	sge REQUIRED
 	COMPONENTS
 	audio
