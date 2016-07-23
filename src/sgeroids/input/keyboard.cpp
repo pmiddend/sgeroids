@@ -1,5 +1,4 @@
 #include <sgeroids/input/keyboard.hpp>
-#include <sgeroids/input/log.hpp>
 #include <sgeroids/math/unit_magnitude.hpp>
 #include <sgeroids/model/base.hpp>
 #include <sgeroids/model/callbacks/add_spaceship.hpp>
@@ -21,6 +20,7 @@
 #include <fcppt/text.hpp>
 #include <fcppt/log/_.hpp>
 #include <fcppt/log/debug.hpp>
+#include <fcppt/log/object_fwd.hpp>
 #include <fcppt/optional/maybe_void.hpp>
 #include <fcppt/optional/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -29,10 +29,14 @@
 
 
 sgeroids::input::keyboard::keyboard(
+	fcppt::log::object &_log,
 	sgeroids::model::base &_model,
 	sge::input::keyboard::device &_device,
 	sgeroids::model::player_name const &_name)
 :
+	log_{
+		_log
+	},
 	model_(
 		_model),
 	device_(
@@ -82,7 +86,7 @@ sgeroids::input::keyboard::keyboard(
 		false)
 {
 	FCPPT_LOG_DEBUG(
-		input::log(),
+		log_,
 		fcppt::log::_ << FCPPT_TEXT("Sending the model the add_player message"));
 
 	model_.get().process_message(
@@ -216,7 +220,7 @@ sgeroids::input::keyboard::add_spaceship(
 	if(name_ == _name)
 	{
 		FCPPT_LOG_DEBUG(
-			input::log(),
+			log_,
 			fcppt::log::_
 				<< FCPPT_TEXT("We got an ID: ") << _entity_id.get());
 		id_ =
@@ -233,7 +237,7 @@ sgeroids::input::keyboard::remove_spaceship(
 	if(name_ == _name)
 	{
 		FCPPT_LOG_DEBUG(
-			input::log(),
+			log_,
 			fcppt::log::_
 				<< FCPPT_TEXT("In function ")
 				<< __FUNCTION__);

@@ -2,7 +2,6 @@
 #include <sgeroids/math/discrete_sin.hpp>
 #include <sgeroids/math/unit_magnitude.hpp>
 #include <sgeroids/math/wrap_point_in_torus.hpp>
-#include <sgeroids/model/log.hpp>
 #include <sgeroids/model/spaceship_id.hpp>
 #include <sgeroids/model/local/entity/asteroid.hpp>
 #include <sgeroids/model/local/entity/projectile.hpp>

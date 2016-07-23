@@ -114,11 +114,8 @@ set(
 	include/sgeroids/exception.hpp
 	include/sgeroids/input/keyboard.hpp
 	include/sgeroids/input/keyboard_fwd.hpp
-	include/sgeroids/input/log.hpp
 	include/sgeroids/input/manager.hpp
 	include/sgeroids/input/optional_entity_id.hpp
-	include/sgeroids/log.hpp
-	include/sgeroids/log_context.hpp
 	include/sgeroids/log_location.hpp
 	include/sgeroids/log_parameters.hpp
 	include/sgeroids/main.hpp
@@ -190,7 +187,6 @@ set(
 	include/sgeroids/model/local/entity/unique_base_ptr.hpp
 	include/sgeroids/model/local/error_context.hpp
 	include/sgeroids/model/local/object.hpp
-	include/sgeroids/model/log.hpp
 	include/sgeroids/model/play_area.hpp
 	include/sgeroids/model/player_name.hpp
 	include/sgeroids/model/position.hpp
@@ -263,7 +259,6 @@ set(
 	include/sgeroids/version.hpp
 	include/sgeroids/view/base.hpp
 	include/sgeroids/view/base_fwd.hpp
-	include/sgeroids/view/log.hpp
 	include/sgeroids/view/planar/audio_buffer_tree.hpp
 	include/sgeroids/view/planar/audio_buffer_tree_fwd.hpp
 	include/sgeroids/view/planar/background/object.hpp
@@ -305,10 +300,7 @@ set(
 	src/sgeroids/app_name.cpp
 	src/sgeroids/exception.cpp
 	src/sgeroids/input/keyboard.cpp
-	src/sgeroids/input/log.cpp
 	src/sgeroids/input/manager.cpp
-	src/sgeroids/log.cpp
-	src/sgeroids/log_context.cpp
 	src/sgeroids/log_location.cpp
 	src/sgeroids/log_parameters.cpp
 	src/sgeroids/main.cpp
@@ -323,7 +315,6 @@ set(
 	src/sgeroids/model/local/entity/projectile.cpp
 	src/sgeroids/model/local/entity/spaceship.cpp
 	src/sgeroids/model/local/object.cpp
-	src/sgeroids/model/log.cpp
 	src/sgeroids/model/serialization/global_context.cpp
 	src/sgeroids/model/serialization/message/add_player.cpp
 	src/sgeroids/model/serialization/message/base.cpp
@@ -343,7 +334,6 @@ set(
 	src/sgeroids/state_machine/states/ingame/superstate.cpp
 	src/sgeroids/version.cpp
 	src/sgeroids/view/base.cpp
-	src/sgeroids/view/log.cpp
 	src/sgeroids/view/planar/audio_buffer_tree.cpp
 	src/sgeroids/view/planar/background/object.cpp
 	src/sgeroids/view/planar/entity/asteroid.cpp

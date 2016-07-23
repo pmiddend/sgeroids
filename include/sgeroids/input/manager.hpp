@@ -8,6 +8,8 @@
 #include <sge/input/keyboard/remove_event_fwd.hpp>
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
+#include <fcppt/log/context_fwd.hpp>
+#include <fcppt/log/object.hpp>
 #include <fcppt/signal/optional_auto_connection.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <vector>
@@ -24,6 +26,7 @@ FCPPT_NONCOPYABLE(
 	manager);
 public:
 	manager(
+		fcppt::log::context &,
 		sge::input::processor &,
 		sgeroids::model::base &);
 
@@ -37,6 +40,7 @@ private:
 	>
 	keyboard_sequence;
 
+	fcppt::log::object log_;
 	sgeroids::model::base &model_;
 	keyboard_sequence keyboards_;
 	fcppt::signal::optional_auto_connection const keyboard_discover_connection_;

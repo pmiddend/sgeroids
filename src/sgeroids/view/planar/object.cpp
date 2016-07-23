@@ -1,11 +1,12 @@
 #include <sgeroids/exception.hpp>
+#include <sgeroids/log_location.hpp>
+#include <sgeroids/log_parameters.hpp>
 #include <sgeroids/media_path.hpp>
 #include <sgeroids/random_generator_seed.hpp>
 #include <sgeroids/model/asteroid_id.hpp>
 #include <sgeroids/model/entity_id.hpp>
 #include <sgeroids/model/projectile_id.hpp>
 #include <sgeroids/model/spaceship_id.hpp>
-#include <sgeroids/view/log.hpp>
 #include <sgeroids/view/planar/object.hpp>
 #include <sgeroids/view/planar/player_name.hpp>
 #include <sgeroids/view/planar/radius_to_screen_space.hpp>
@@ -83,7 +84,9 @@
 #include <fcppt/cast/int_to_float_fun.hpp>
 #include <fcppt/cast/dynamic.hpp>
 #include <fcppt/log/_.hpp>
+#include <fcppt/log/context_fwd.hpp>
 #include <fcppt/log/debug.hpp>
+#include <fcppt/log/name.hpp>
 #include <fcppt/math/box/structure_cast.hpp>
 #include <fcppt/math/matrix/identity.hpp>
 #include <fcppt/math/matrix/output.hpp>
@@ -103,12 +106,22 @@
 
 
 sgeroids::view::planar::object::object(
+	fcppt::log::context &_log_context,
 	sge::renderer::device::ffp &_renderer,
 	sge::font::system &_font_system,
 	sge::image2d::system &_image_system,
 	sge::audio::loader &_audio_loader,
 	sge::audio::player &_audio_player)
 :
+	log_{
+		_log_context,
+		sgeroids::log_location(),
+		sgeroids::log_parameters(
+			fcppt::log::name{
+				FCPPT_TEXT("view")
+			}
+		)
+	},
 	renderer_(
 		_renderer),
 	audio_player_(
@@ -189,7 +202,7 @@ sgeroids::view::planar::object::add_spaceship(
 	model::player_name const &_player_name)
 {
 	FCPPT_LOG_DEBUG(
-		view::log(),
+		log_,
 		fcppt::log::_
 			<< FCPPT_TEXT("Adding spaceship"));
 
@@ -230,7 +243,7 @@ sgeroids::view::planar::object::add_asteroid(
 	model::radius const &_radius)
 {
 	FCPPT_LOG_DEBUG(
-		view::log(),
+		log_,
 		fcppt::log::_
 			<< FCPPT_TEXT("Adding asteroid with radius \"")
 			<< _radius.get()
@@ -299,7 +312,7 @@ sgeroids::view::planar::object::score_change(
 	if(it == entities_.end())
 	{
 		FCPPT_LOG_DEBUG(
-			view::log(),
+			log_,
 			fcppt::log::_ <<
 				FCPPT_TEXT("view: score_change: unknown entity id ")+
 					fcppt::insert_to_fcppt_string(
@@ -312,10 +325,11 @@ sgeroids::view::planar::object::score_change(
 			*(it->second)
 		),
 		[
+			this,
 			_id
 		]{
 			FCPPT_LOG_DEBUG(
-				view::log(),
+				log_,
 				fcppt::log::_ <<
 					FCPPT_TEXT("view: score_change: not a spaceship: id ")+
 						fcppt::insert_to_fcppt_string(
@@ -368,7 +382,7 @@ sgeroids::view::planar::object::remove_entity(
 	model::entity_id const &_id)
 {
 	FCPPT_LOG_DEBUG(
-		view::log(),
+		log_,
 		fcppt::log::_
 			<< FCPPT_TEXT("Removing entity"));
 
@@ -411,7 +425,7 @@ sgeroids::view::planar::object::rotation_entity(
 {
 	/*
 	FCPPT_LOG_DEBUG(
-		view::log(),
+		log_,
 		fcppt::log::_
 			<< FCPPT_TEXT("New rotation for entity ")
 			<< _id.get()

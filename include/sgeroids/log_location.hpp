@@ -1,13 +1,13 @@
 #ifndef SGEROIDS_LOG_LOCATION_HPP_INCLUDED
 #define SGEROIDS_LOG_LOCATION_HPP_INCLUDED
 
-#include <fcppt/log/location_fwd.hpp>
+#include <fcppt/log/location.hpp>
 
 
 namespace sgeroids
 {
 
-fcppt::log::location const
+fcppt::log::location
 log_location();
 
 }

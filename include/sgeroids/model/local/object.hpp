@@ -12,6 +12,8 @@
 #include <sgeroids/model/local/entity/unique_base_ptr.hpp>
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
+#include <fcppt/log/context_fwd.hpp>
+#include <fcppt/log/object.hpp>
 #include <fcppt/optional/object.hpp>
 #include <fcppt/optional/reference.hpp>
 #include <fcppt/signal/auto_connection.hpp>
@@ -38,8 +40,8 @@ class object
 FCPPT_NONCOPYABLE(
 	object);
 public:
-	explicit
 	object(
+		fcppt::log::context &,
 		std::ostream &);
 
 	fcppt::signal::auto_connection
@@ -159,6 +161,8 @@ private:
 		entity_unique_ptr
 	>
 	entity_map;
+
+	fcppt::log::object log_;
 
 	std::ostream &serialization_output_;
 

@@ -1,5 +1,6 @@
+#include <sgeroids/log_location.hpp>
+#include <sgeroids/log_parameters.hpp>
 #include <sgeroids/input/keyboard.hpp>
-#include <sgeroids/input/log.hpp>
 #include <sgeroids/input/manager.hpp>
 #include <sge/charconv/fcppt_string_to_utf8.hpp>
 #include <sge/input/processor.hpp>
@@ -11,7 +12,9 @@
 #include <fcppt/make_unique_ptr.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/log/_.hpp>
+#include <fcppt/log/context_fwd.hpp>
 #include <fcppt/log/debug.hpp>
+#include <fcppt/log/name.hpp>
 #include <fcppt/signal/connection.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <functional>
@@ -19,9 +22,19 @@
 
 
 sgeroids::input::manager::manager(
+	fcppt::log::context &_log_context,
 	sge::input::processor &_input_processor,
 	sgeroids::model::base &_model)
 :
+	log_{
+		_log_context,
+		sgeroids::log_location(),
+		sgeroids::log_parameters(
+			fcppt::log::name{
+				FCPPT_TEXT("input")
+			}
+		)
+	},
 	model_(
 		_model),
 	keyboards_(),
@@ -67,7 +80,7 @@ sgeroids::input::manager::keyboard_discover(
 				++last_keyboard_id_)));
 
 	FCPPT_LOG_DEBUG(
-		input::log(),
+		log_,
 		fcppt::log::_
 			<< FCPPT_TEXT("Discovered a keyboard! Assigning ID: ")
 			<< last_keyboard_id_);
@@ -76,6 +89,7 @@ sgeroids::input::manager::keyboard_discover(
 		fcppt::make_unique_ptr<
 			input::keyboard
 		>(
+			log_,
 			model_,
 			e.get(),
 			player_name_id));
@@ -86,7 +100,7 @@ sgeroids::input::manager::keyboard_remove(
 	sge::input::keyboard::remove_event const &e)
 {
 	FCPPT_LOG_DEBUG(
-		input::log(),
+		log_,
 		fcppt::log::_ << FCPPT_TEXT("Removed a keyboard!"));
 
 	for(

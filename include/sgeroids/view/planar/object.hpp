@@ -30,6 +30,8 @@
 #include <sge/texture/const_part_shared_ptr.hpp>
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
+#include <fcppt/log/context_fwd.hpp>
+#include <fcppt/log/object.hpp>
 #include <fcppt/math/box/object_impl.hpp>
 #include <fcppt/math/matrix/object_impl.hpp>
 #include <fcppt/optional/object_impl.hpp>
@@ -83,6 +85,7 @@ FCPPT_NONCOPYABLE(
 	object);
 public:
 	object(
+		fcppt::log::context &,
 		sge::renderer::device::ffp &,
 		sge::font::system &,
 		sge::image2d::system &,
@@ -190,6 +193,7 @@ private:
 	>
 	sprite_state;
 
+	fcppt::log::object log_;
 	sge::renderer::device::ffp &renderer_;
 	sge::audio::player &audio_player_;
 	sgeroids::random_generator rng_;

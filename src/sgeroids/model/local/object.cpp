@@ -1,8 +1,9 @@
 #include <sgeroids/exception.hpp>
+#include <sgeroids/log_location.hpp>
+#include <sgeroids/log_parameters.hpp>
 #include <sgeroids/math/unit_magnitude.hpp>
 #include <sgeroids/model/dim2.hpp>
 #include <sgeroids/model/error_code.hpp>
-#include <sgeroids/model/log.hpp>
 #include <sgeroids/model/score.hpp>
 #include <sgeroids/model/spaceship_id.hpp>
 #include <sgeroids/model/vector2.hpp>
@@ -25,7 +26,9 @@
 #include <fcppt/cast/dynamic.hpp>
 #include <fcppt/container/find_opt_mapped.hpp>
 #include <fcppt/log/_.hpp>
+#include <fcppt/log/context_fwd.hpp>
 #include <fcppt/log/debug.hpp>
+#include <fcppt/log/name.hpp>
 #include <fcppt/math/box/center.hpp>
 #include <fcppt/math/box/object_impl.hpp>
 #include <fcppt/math/dim/object_impl.hpp>
@@ -47,8 +50,18 @@
 
 
 sgeroids::model::local::object::object(
+	fcppt::log::context &_log_context,
 	std::ostream &_serialization_output)
 :
+	log_{
+		_log_context,
+		sgeroids::log_location(),
+		sgeroids::log_parameters(
+			fcppt::log::name{
+				FCPPT_TEXT("model")
+			}
+		)
+	},
 	serialization_output_(
 		_serialization_output),
 	rng_(),
@@ -271,7 +284,7 @@ sgeroids::model::local::object::process_message(
 		_message.get<sgeroids::model::serialization::message::roles::player_name>());
 
 	FCPPT_LOG_DEBUG(
-		model::log(),
+		log_,
 		fcppt::log::_
 			<< FCPPT_TEXT("Adding new player"));
 
@@ -301,7 +314,7 @@ sgeroids::model::local::object::process_message(
 				if(_maybe_a_ship.get().player_name().get() == player_name.get())
 				{
 					FCPPT_LOG_DEBUG(
-						model::log(),
+						log_,
 						fcppt::log::_
 							<< FCPPT_TEXT("Got add_player with existing player name"));
 
@@ -379,7 +392,7 @@ sgeroids::model::local::object::process_message(
 	);
 
 	FCPPT_LOG_DEBUG(
-		model::log(),
+		log_,
 		fcppt::log::_
 			<< FCPPT_TEXT("Sending add_spaceship signal."));
 
@@ -415,7 +428,7 @@ sgeroids::model::local::object::process_message(
 		_message.get<sgeroids::model::serialization::message::roles::player_name>());
 
 	FCPPT_LOG_DEBUG(
-		model::log(),
+		log_,
 		fcppt::log::_
 			<< FCPPT_TEXT("Removing a player"));
 
@@ -439,7 +452,7 @@ sgeroids::model::local::object::process_message(
 			{
 				/*
 				FCPPT_LOG_DEBUG(
-					model::log(),
+					log_,
 					fcppt::log::_
 						<< FCPPT_TEXT("Testing the ship ") << maybe_a_ship->player_name().get());
 						*/
@@ -809,7 +822,7 @@ sgeroids::model::local::object::asteroid_generated(
 	model::velocity const &_velocity)
 {
 	FCPPT_LOG_DEBUG(
-		model::log(),
+		log_,
 		fcppt::log::_
 			<< FCPPT_TEXT("Got an asteroid generation, creating entity"));
 
@@ -880,7 +893,7 @@ sgeroids::model::local::object::insert_projectile(
 	model::rotation const &_rotation)
 {
 	FCPPT_LOG_DEBUG(
-		model::log(),
+		log_,
 		fcppt::log::_
 			<< FCPPT_TEXT("Inserting projectile"));
 
@@ -949,7 +962,7 @@ sgeroids::model::local::object::asteroid_died(
 	model::spaceship_id const &_killer_id)
 {
 	FCPPT_LOG_DEBUG(
-		model::log(),
+		log_,
 		fcppt::log::_
 			<< FCPPT_TEXT("An asteroid died, checking if we need to create another one"));
 

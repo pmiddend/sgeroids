@@ -37,6 +37,7 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 			fcppt::make_unique_ptr<
 				sgeroids::model::local::object
 			>(
+				this->context<state_machine::object>().systems().log_context(),
 				model_serialization_output_
 			)
 		)
@@ -48,6 +49,7 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 			fcppt::make_unique_ptr<
 				sgeroids::view::planar::object
 			>(
+				this->context<state_machine::object>().systems().log_context(),
 				this->context<state_machine::object>().systems().renderer_device_ffp(),
 				this->context<state_machine::object>().systems().font_system(),
 				this->context<state_machine::object>().systems().image_system(),
@@ -70,6 +72,7 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 				fcppt::make_unique_ptr<
 					sgeroids::input::manager
 				>(
+					this->context<state_machine::object>().systems().log_context(),
 					this->context<state_machine::object>().systems().input_processor(),
 					*model_
 				)

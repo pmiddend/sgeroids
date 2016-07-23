@@ -10,6 +10,7 @@
 #include <sge/input/keyboard/key_event_fwd.hpp>
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/reference.hpp>
+#include <fcppt/log/object_fwd.hpp>
 #include <fcppt/optional/object.hpp>
 #include <fcppt/signal/auto_connection.hpp>
 
@@ -24,6 +25,7 @@ FCPPT_NONCOPYABLE(
 	keyboard);
 public:
 	keyboard(
+		fcppt::log::object &,
 		sgeroids::model::base &,
 		sge::input::keyboard::device &,
 		sgeroids::model::player_name const &);
@@ -39,6 +41,8 @@ public:
 
 	~keyboard();
 private:
+	fcppt::log::object &log_;
+
 	fcppt::reference<
 		sgeroids::model::base
 	> model_;
