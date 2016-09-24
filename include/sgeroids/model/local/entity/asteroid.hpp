@@ -31,7 +31,6 @@ class asteroid
 FCPPT_NONCOPYABLE(
 	asteroid);
 public:
-	explicit
 	asteroid(
 		model::position const &,
 		model::rotation const &,
@@ -44,31 +43,39 @@ public:
 		local::callbacks::asteroid_died const &);
 
 	void
-	update();
+	update()
+	override;
 
 	bool
-	dead() const;
+	dead() const
+	override;
 
 	model::position const
-	position() const;
+	position() const
+	override;
 
 	model::rotation const
-	rotation() const;
+	rotation() const
+	override;
 
 	model::rotation_direction const
 	rotation_direction() const;
 
 	model::radius const
-	radius() const;
+	radius() const
+	override;
 
 	model::velocity const
 	velocity() const;
 
 	void
 	collides_with(
-		entity::base &);
+		entity::base &
+	)
+	override;
 
-	~asteroid();
+	~asteroid()
+	override;
 private:
 	model::rect const play_area_;
 	int const radius_;

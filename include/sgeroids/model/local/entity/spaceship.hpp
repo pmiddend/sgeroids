@@ -44,22 +44,27 @@ public:
 	player_name() const;
 
 	void
-	update();
+	update()
+	override;
 
 	bool
-	dead() const;
+	dead() const
+	override;
 
 	void
 	kill();
 
 	model::position const
-	position() const;
+	position() const
+	override;
 
 	model::rotation const
-	rotation() const;
+	rotation() const
+	override;
 
 	model::radius const
-	radius() const;
+	radius() const
+	override;
 
 	model::score const
 	score() const;
@@ -70,7 +75,9 @@ public:
 
 	void
 	collides_with(
-		entity::base &);
+		entity::base &
+	)
+	override;
 
 	void
 	rotation_direction(
@@ -84,7 +91,8 @@ public:
 	thrust(
 		model::thrust const &);
 
-	~spaceship();
+	~spaceship()
+	override;
 private:
 	model::player_name const player_name_;
 	model::rect const play_area_;

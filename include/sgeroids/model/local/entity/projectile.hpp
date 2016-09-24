@@ -27,7 +27,6 @@ class projectile
 FCPPT_NONCOPYABLE(
 	projectile);
 public:
-	explicit
 	projectile(
 		sgeroids::model::position const &,
 		sgeroids::model::rotation const &,
@@ -37,19 +36,24 @@ public:
 		sgeroids::model::local::callbacks::rotation_entity_no_id const &);
 
 	void
-	update();
+	update()
+	override;
 
 	bool
-	dead() const;
+	dead() const
+	override;
 
 	sgeroids::model::position const
-	position() const;
+	position() const
+	override;
 
 	sgeroids::model::rotation const
-	rotation() const;
+	rotation() const
+	override;
 
 	sgeroids::model::radius const
-	radius() const;
+	radius() const
+	override;
 
 	sgeroids::model::velocity const
 	velocity() const;
@@ -59,9 +63,12 @@ public:
 
 	void
 	collides_with(
-		entity::base &);
+		entity::base &
+	)
+	override;
 
-	~projectile();
+	~projectile()
+	override;
 private:
 	sgeroids::model::rect const play_area_;
 	sgeroids::model::local::callbacks::position_entity_no_id const position_entity_;

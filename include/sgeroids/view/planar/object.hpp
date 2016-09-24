@@ -96,71 +96,99 @@ public:
 	add_spaceship(
 		model::entity_id const &,
 		model::radius const &,
-		model::player_name const &);
+		model::player_name const &
+	)
+	override;
 
 	void
 	add_asteroid(
 		model::entity_id const &,
-		model::radius const &);
+		model::radius const &
+	)
+	override;
 
 	void
 	add_projectile(
-		model::entity_id const &);
+		model::entity_id const &
+	)
+	override;
 
 	void
 	add_particle(
 		planar::position const &,
 		particle::velocity const &,
-		particle::lifespan const &);
+		particle::lifespan const &
+	);
 
 	void
 	collide_projectile_asteroid(
 		model::projectile_id const &,
-		model::asteroid_id const &);
+		model::asteroid_id const &
+	)
+	override;
 
 	void
 	score_change(
 		model::spaceship_id const &,
-		model::score const &);
+		model::score const &
+	)
+	override;
 
 	void
 	destroy_asteroid(
-		model::entity_id const &);
+		model::entity_id const &
+	)
+	override;
 
 	void
 	remove_entity(
-		model::entity_id const &);
+		model::entity_id const &
+	)
+	override;
 
 	void
 	position_entity(
 		model::entity_id const &,
-		model::position const &);
+		model::position const &
+	)
+	override;
 
 	void
 	rotation_entity(
 		model::entity_id const &,
-		model::rotation const &);
+		model::rotation const &
+	)
+	override;
 
 	void
 	change_thrust(
 		model::entity_id const &,
-		model::thrust const &);
+		model::thrust const &
+	)
+	override;
 
 	void
 	play_area(
-		sgeroids::model::play_area const &);
+		sgeroids::model::play_area const &i
+	)
+	override;
 
 	void
-	gameover();
+	gameover()
+	override;
 
 	void
-	update();
+	update()
+	override;
 
 	void
 	render(
-		sge::renderer::context::ffp &);
+		sge::renderer::context::ffp &
+	)
+	override;
 
-	~object();
+	~object()
+	override;
 private:
 	typedef
 	std::map<

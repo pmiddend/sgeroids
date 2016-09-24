@@ -42,67 +42,98 @@ FCPPT_NONCOPYABLE(
 public:
 	object(
 		fcppt::log::context &,
-		std::ostream &);
+		std::ostream &
+	);
 
 	fcppt::signal::auto_connection
 	add_spaceship_callback(
-		sgeroids::model::callbacks::add_spaceship const &);
+		sgeroids::model::callbacks::add_spaceship const &
+	)
+	override;
 
 	fcppt::signal::auto_connection
 	remove_spaceship_callback(
-		sgeroids::model::callbacks::remove_spaceship const &);
+		sgeroids::model::callbacks::remove_spaceship const &
+	)
+	override;
 
 	fcppt::signal::auto_connection
 	add_asteroid_callback(
-		sgeroids::model::callbacks::add_asteroid const &);
+		sgeroids::model::callbacks::add_asteroid const &
+	)
+	override;
 
 	fcppt::signal::auto_connection
 	add_projectile_callback(
-		sgeroids::model::callbacks::add_projectile const &);
+		sgeroids::model::callbacks::add_projectile const &
+	)
+	override;
 
 	fcppt::signal::auto_connection
 	collide_projectile_asteroid_callback(
-		sgeroids::model::callbacks::collide_projectile_asteroid const &);
+		sgeroids::model::callbacks::collide_projectile_asteroid const &
+	)
+	override;
 
 	fcppt::signal::auto_connection
 	score_change_callback(
-		sgeroids::model::callbacks::score_change const &);
+		sgeroids::model::callbacks::score_change const &
+	)
+	override;
 
 	fcppt::signal::auto_connection
 	destroy_asteroid_callback(
-		sgeroids::model::callbacks::destroy_asteroid const &);
+		sgeroids::model::callbacks::destroy_asteroid const &
+	)
+	override;
 
 	fcppt::signal::auto_connection
 	remove_entity_callback(
-		sgeroids::model::callbacks::remove_entity const &);
+		sgeroids::model::callbacks::remove_entity const &
+	)
+	override;
 
 	fcppt::signal::auto_connection
 	position_entity_callback(
-		sgeroids::model::callbacks::position_entity const &);
+		sgeroids::model::callbacks::position_entity const &
+	)
+	override;
 
 	fcppt::signal::auto_connection
 	rotation_entity_callback(
-		sgeroids::model::callbacks::rotation_entity const &);
+		sgeroids::model::callbacks::rotation_entity const &
+	)
+	override;
 
 	fcppt::signal::auto_connection
 	gameover_callback(
-		sgeroids::model::callbacks::gameover const &);
+		sgeroids::model::callbacks::gameover const &
+	)
+	override;
 
 	fcppt::signal::auto_connection
 	error_callback(
-		sgeroids::model::callbacks::error const &);
+		sgeroids::model::callbacks::error const &
+	)
+	override;
 
 	fcppt::signal::auto_connection
 	change_thrust_callback(
-		sgeroids::model::callbacks::change_thrust const &);
+		sgeroids::model::callbacks::change_thrust const &
+	)
+	override;
 
 	void
 	process_message(
-		sgeroids::model::serialization::message::rng_seed const &);
+		sgeroids::model::serialization::message::rng_seed const &
+	)
+	override;
 
 	void
 	process_message(
-		sgeroids::model::serialization::message::update const &);
+		sgeroids::model::serialization::message::update const &
+	)
+	override;
 
 	/**
 	\brief Try to add a player with the given name
@@ -114,13 +145,17 @@ public:
 	*/
 	void
 	process_message(
-		sgeroids::model::serialization::message::add_player const &);
+		sgeroids::model::serialization::message::add_player const &
+	)
+	override;
 	/**
 	\brief Remove a player
 	*/
 	void
 	process_message(
-		sgeroids::model::serialization::message::remove_player const &);
+		sgeroids::model::serialization::message::remove_player const &
+	)
+	override;
 
 	/**
 	\brief Set rotation (turning) of a spaceship
@@ -134,20 +169,28 @@ public:
 	*/
 	void
 	process_message(
-		sgeroids::model::serialization::message::rotation_direction const &);
+		sgeroids::model::serialization::message::rotation_direction const &
+	)
+	override;
 
 	void
 	process_message(
-		sgeroids::model::serialization::message::change_thrust const &);
+		sgeroids::model::serialization::message::change_thrust const &
+	)
+	override;
 
 	void
 	process_message(
-		sgeroids::model::serialization::message::change_firing_mode const &);
+		sgeroids::model::serialization::message::change_firing_mode const &
+	)
+	override;
 
 	model::play_area const
-	play_area() const;
+	play_area() const
+	override;
 
-	~object();
+	~object()
+	override;
 private:
 	typedef
 	fcppt::unique_ptr<

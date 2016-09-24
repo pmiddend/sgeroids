@@ -28,16 +28,22 @@ public:
 
 	void
 	position(
-		planar::position const &);
+		planar::position const &
+	)
+	override;
 
 	void
 	rotation(
-		planar::rotation const &);
+		planar::rotation const &
+	)
+	override;
 
 	void
-	update();
+	update()
+	override;
 
-	~bullet();
+	~bullet()
+	override;
 private:
 	planar::sprite::object sprite_;
 };

@@ -44,14 +44,19 @@ public:
 
 	void
 	position(
-		planar::position const &);
+		planar::position const &
+	)
+	override;
 
 	void
 	rotation(
-		planar::rotation const &);
+		planar::rotation const &
+	)
+	override;
 
 	void
-	update();
+	update()
+	override;
 
 	void
 	change_thrust(
@@ -60,7 +65,8 @@ public:
 	sgeroids::view::planar::player_name const &
 	player_name() const;
 
-	~spaceship();
+	~spaceship()
+	override;
 private:
 	sge::texture::const_part_shared_ptr const
 		texture_off_,
