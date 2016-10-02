@@ -42,12 +42,6 @@ find_package(
 find_package(
 	awl REQUIRED)
 
-# FIXME
-find_package(
-	majutsu
-	REQUIRED
-)
-
 find_package(
 	mizuiro
 	REQUIRED

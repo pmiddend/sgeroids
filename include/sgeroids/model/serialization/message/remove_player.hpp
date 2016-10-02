@@ -6,7 +6,7 @@
 #include <sgeroids/model/serialization/message/roles/player_name.hpp>
 #include <alda/message/record.hpp>
 #include <alda/message/make_id.hpp>
-#include <majutsu/role.hpp>
+#include <fcppt/record/element.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/mpl/vector/vector10.hpp>
 #include <fcppt/config/external_end.hpp>
@@ -30,10 +30,10 @@ alda::message::record
 	>,
 	boost::mpl::vector1
 	<
-		majutsu::role
+		fcppt::record::element
 		<
-			sgeroids::model::serialization::message::adapted_types::string,
-			sgeroids::model::serialization::message::roles::player_name
+			sgeroids::model::serialization::message::roles::player_name,
+			sgeroids::model::serialization::message::adapted_types::string
 		>
 	>
 >

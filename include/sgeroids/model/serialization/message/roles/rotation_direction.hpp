@@ -1,7 +1,7 @@
 #ifndef SGEROIDS_MODEL_SERIALIZATION_MESSAGE_ROLES_ROTATION_DIRECTION_HPP_INCLUDED
 #define SGEROIDS_MODEL_SERIALIZATION_MESSAGE_ROLES_ROTATION_DIRECTION_HPP_INCLUDED
 
-#include <majutsu/make_role_tag.hpp>
+#include <fcppt/record/make_label.hpp>
 
 
 namespace sgeroids
@@ -14,7 +14,7 @@ namespace message
 {
 namespace roles
 {
-MAJUTSU_MAKE_ROLE_TAG(
+FCPPT_RECORD_MAKE_LABEL(
 	rotation_direction
 );
 }

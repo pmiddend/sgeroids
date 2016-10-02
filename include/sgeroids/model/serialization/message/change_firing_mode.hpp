@@ -8,7 +8,7 @@
 #include <sgeroids/model/serialization/message/roles/firing_mode.hpp>
 #include <alda/message/record.hpp>
 #include <alda/message/make_id.hpp>
-#include <majutsu/role.hpp>
+#include <fcppt/record/element.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <boost/mpl/vector/vector10.hpp>
 #include <fcppt/config/external_end.hpp>
@@ -32,15 +32,15 @@ alda::message::record
 	>,
 	boost::mpl::vector2
 	<
-		majutsu::role
+		fcppt::record::element
 		<
-			sgeroids::model::serialization::message::adapted_types::entity_id,
-			sgeroids::model::serialization::message::roles::entity_id
+			sgeroids::model::serialization::message::roles::entity_id,
+			sgeroids::model::serialization::message::adapted_types::entity_id
 		>,
-		majutsu::role
+		fcppt::record::element
 		<
-			sgeroids::model::serialization::message::adapted_types::enum_,
-			sgeroids::model::serialization::message::roles::firing_mode
+			sgeroids::model::serialization::message::roles::firing_mode,
+			sgeroids::model::serialization::message::adapted_types::enum_
 		>
 	>
 >
