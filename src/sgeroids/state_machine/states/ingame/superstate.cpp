@@ -7,9 +7,11 @@
 #include <sge/input/keyboard/action.hpp>
 #include <sge/input/keyboard/device.hpp>
 #include <sge/parse/json/find_and_convert_member.hpp>
+#include <alda/message/init_record.hpp>
 #include <fcppt/make_unique_ptr.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/unique_ptr_to_base.hpp>
+#include <fcppt/unit.hpp>
 #include <fcppt/optional/maybe_void.hpp>
 #include <fcppt/random/generator/seed_from_chrono.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -254,9 +256,13 @@ sgeroids::state_machine::states::ingame::superstate::superstate(
 		!replay_file_reader_.has_value()
 	)
 		model_->process_message(
-			sgeroids::model::serialization::message::rng_seed(
+			alda::message::init_record<
+				sgeroids::model::serialization::message::rng_seed
+			>(
 				sgeroids::model::serialization::message::roles::seed{} =
-					fcppt::random::generator::seed_from_chrono<sgeroids::random_generator::seed>().get()));
+					fcppt::random::generator::seed_from_chrono<sgeroids::random_generator::seed>().get()
+			)
+		);
 }
 
 boost::statechart::result
@@ -274,7 +280,10 @@ sgeroids::state_machine::states::ingame::superstate::react(
 	);
 
 	model_->process_message(
-		sgeroids::model::serialization::message::update());
+		sgeroids::model::serialization::message::update{
+			fcppt::unit{}
+		}
+	);
 
 	view_->update();
 

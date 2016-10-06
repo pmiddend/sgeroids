@@ -38,6 +38,7 @@
 #include <fcppt/optional/maybe_void_multi.hpp>
 #include <fcppt/optional/reference.hpp>
 #include <fcppt/optional/to_exception.hpp>
+#include <fcppt/record/get.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <algorithm>
 #include <array>
@@ -218,9 +219,11 @@ sgeroids::model::local::object::process_message(
 				sgeroids::random_generator
 			>(
 				sgeroids::random_generator::seed(
-					_message.get<
+					fcppt::record::get<
 						sgeroids::model::serialization::message::roles::seed
-					>()
+					>(
+						_message.get()
+					)
 				)
 			)
 		)
@@ -277,11 +280,20 @@ sgeroids::model::local::object::process_message(
 {
 	alda::serialization::serialize(
 		serialization_output_,
-		*alda::message::make_concrete_ptr<sgeroids::model::serialization::message::adapted_types::message>(
-			_message));
+		*alda::message::make_concrete_ptr<
+			sgeroids::model::serialization::message::adapted_types::message
+		>(
+			_message
+		)
+	);
 
 	sgeroids::model::player_name const player_name(
-		_message.get<sgeroids::model::serialization::message::roles::player_name>());
+		fcppt::record::get<
+			sgeroids::model::serialization::message::roles::player_name
+		>(
+			_message.get()
+		)
+	);
 
 	FCPPT_LOG_DEBUG(
 		log_,
@@ -425,7 +437,12 @@ sgeroids::model::local::object::process_message(
 			_message));
 
 	sgeroids::model::player_name const player_name(
-		_message.get<sgeroids::model::serialization::message::roles::player_name>());
+		fcppt::record::get<
+			sgeroids::model::serialization::message::roles::player_name
+		>(
+			_message.get()
+		)
+	);
 
 	FCPPT_LOG_DEBUG(
 		log_,
@@ -474,10 +491,20 @@ sgeroids::model::local::object::process_message(
 			_message));
 
 	model::entity_id const id(
-		_message.get<sgeroids::model::serialization::message::roles::entity_id>());
+		fcppt::record::get<
+			sgeroids::model::serialization::message::roles::entity_id
+		>(
+			_message.get()
+		)
+	);
 
 	model::rotation_direction const rotation_direction(
-		_message.get<sgeroids::model::serialization::message::roles::rotation_direction>());
+		fcppt::record::get<
+			sgeroids::model::serialization::message::roles::rotation_direction
+		>(
+			_message.get()
+		)
+	);
 
 	entity::spaceship &ship =
 		this->find_spaceship_by_id_exn(
@@ -499,10 +526,20 @@ sgeroids::model::local::object::process_message(
 			_message));
 
 	model::entity_id const id(
-		_message.get<sgeroids::model::serialization::message::roles::entity_id>());
+		fcppt::record::get<
+			sgeroids::model::serialization::message::roles::entity_id
+		>(
+			_message.get()
+		)
+	);
 
 	model::thrust const thrust(
-		_message.get<sgeroids::model::serialization::message::roles::thrust>());
+		fcppt::record::get<
+			sgeroids::model::serialization::message::roles::thrust
+		>(
+			_message.get()
+		)
+	);
 
 	entity::spaceship &ship =
 		this->find_spaceship_by_id_exn(
@@ -528,11 +565,22 @@ sgeroids::model::local::object::process_message(
 			_message));
 
 	model::entity_id const id(
-		_message.get<sgeroids::model::serialization::message::roles::entity_id>());
+		fcppt::record::get<
+			sgeroids::model::serialization::message::roles::entity_id
+		>(
+			_message.get()
+		)
+	);
 
 	model::firing_mode const firing_mode(
 		static_cast<model::firing_mode>(
-			_message.get<sgeroids::model::serialization::message::roles::firing_mode>()));
+			fcppt::record::get<
+				sgeroids::model::serialization::message::roles::firing_mode
+			>(
+				_message.get()
+			)
+		)
+	);
 
 	entity::spaceship &ship =
 		this->find_spaceship_by_id_exn(

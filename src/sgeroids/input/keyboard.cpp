@@ -17,6 +17,7 @@
 #include <sge/input/keyboard/device.hpp>
 #include <sge/input/keyboard/key_callback.hpp>
 #include <sge/input/keyboard/key_event.hpp>
+#include <alda/message/init_record.hpp>
 #include <fcppt/text.hpp>
 #include <fcppt/log/_.hpp>
 #include <fcppt/log/debug.hpp>
@@ -90,9 +91,14 @@ sgeroids::input::keyboard::keyboard(
 		fcppt::log::_ << FCPPT_TEXT("Sending the model the add_player message"));
 
 	model_.get().process_message(
-		sgeroids::model::serialization::message::add_player(
+		alda::message::init_record<
+			sgeroids::model::serialization::message::add_player
+		>(
 			sgeroids::model::serialization::message::roles::player_name{} =
-				_name.get()));
+				_name.get()
+		)
+	);
+
 }
 
 sge::input::keyboard::device &
@@ -117,9 +123,13 @@ sgeroids::input::keyboard::~keyboard()
 {
 	if(id_.get().has_value())
 		model_.get().process_message(
-			sgeroids::model::serialization::message::remove_player(
+			alda::message::init_record<
+				sgeroids::model::serialization::message::remove_player
+			>(
 				sgeroids::model::serialization::message::roles::player_name{} =
-					name_.get()));
+					name_.get()
+			)
+		);
 }
 
 void
@@ -154,7 +164,9 @@ sgeroids::input::keyboard::key_impl(
 	{
 		case sge::input::key::code::w:
 			model_.get().process_message(
-				sgeroids::model::serialization::message::change_thrust(
+				alda::message::init_record<
+					sgeroids::model::serialization::message::change_thrust
+				>(
 					sgeroids::model::serialization::message::roles::entity_id{} =
 						_id.get(),
 					sgeroids::model::serialization::message::roles::thrust{} =
@@ -163,7 +175,10 @@ sgeroids::input::keyboard::key_impl(
 							?
 								100
 							:
-								0)));
+								0
+						)
+				)
+			);
 			break;
 		case sge::input::key::code::a:
 			rotation_left_pressed_ =
@@ -175,7 +190,9 @@ sgeroids::input::keyboard::key_impl(
 			break;
 		case sge::input::key::code::space:
 			model_.get().process_message(
-				sgeroids::model::serialization::message::change_firing_mode(
+				alda::message::init_record<
+					sgeroids::model::serialization::message::change_firing_mode
+				>(
 					sgeroids::model::serialization::message::roles::entity_id{} =
 						_id.get(),
 					sgeroids::model::serialization::message::roles::firing_mode{} =
@@ -184,7 +201,10 @@ sgeroids::input::keyboard::key_impl(
 							?
 								model::firing_mode::enabled
 							:
-								model::firing_mode::disabled)));
+								model::firing_mode::disabled
+						)
+				)
+			);
 			break;
 		default:
 			break;
@@ -193,7 +213,9 @@ sgeroids::input::keyboard::key_impl(
 	int const rotation_speed = 3;
 
 	model_.get().process_message(
-		sgeroids::model::serialization::message::rotation_direction(
+		alda::message::init_record<
+			sgeroids::model::serialization::message::rotation_direction
+		>(
 			sgeroids::model::serialization::message::roles::entity_id{} =
 				_id.get(),
 			sgeroids::model::serialization::message::roles::rotation_direction{} =
@@ -207,7 +229,10 @@ sgeroids::input::keyboard::key_impl(
 							1
 						:
 							-1)
-					* rotation_speed * sgeroids::math::unit_magnitude())));
+					* rotation_speed * sgeroids::math::unit_magnitude()
+				)
+		)
+	);
 }
 
 void

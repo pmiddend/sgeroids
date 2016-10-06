@@ -4,12 +4,10 @@
 #include <sgeroids/model/serialization/message/adapted_types/message.hpp>
 #include <sgeroids/model/serialization/message/adapted_types/rng_seed.hpp>
 #include <sgeroids/model/serialization/message/roles/seed.hpp>
-#include <alda/message/record.hpp>
+#include <alda/bindings/record_variadic.hpp>
+#include <alda/message/object.hpp>
 #include <alda/message/make_id.hpp>
 #include <fcppt/record/element.hpp>
-#include <fcppt/config/external_begin.hpp>
-#include <boost/mpl/vector/vector10.hpp>
-#include <fcppt/config/external_end.hpp>
 
 
 namespace sgeroids
@@ -21,14 +19,14 @@ namespace serialization
 namespace message
 {
 typedef
-alda::message::record
+alda::message::object
 <
 	alda::message::make_id
 	<
 		sgeroids::model::serialization::message::adapted_types::message,
 		sgeroids::model::serialization::message::types::message::rng_seed
 	>,
-	boost::mpl::vector1
+	alda::bindings::record_variadic
 	<
 		fcppt::record::element
 		<

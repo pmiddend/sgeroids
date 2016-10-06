@@ -3,11 +3,9 @@
 
 #include <sgeroids/model/serialization/message/adapted_types/message.hpp>
 #include <sgeroids/model/serialization/message/types/message.hpp>
-#include <alda/message/record.hpp>
+#include <alda/bindings/unit.hpp>
+#include <alda/message/object.hpp>
 #include <alda/message/make_id.hpp>
-#include <fcppt/config/external_begin.hpp>
-#include <boost/mpl/vector/vector10.hpp>
-#include <fcppt/config/external_end.hpp>
 
 
 namespace sgeroids
@@ -19,16 +17,14 @@ namespace serialization
 namespace message
 {
 typedef
-alda::message::record
+alda::message::object
 <
 	alda::message::make_id
 	<
 		sgeroids::model::serialization::message::adapted_types::message,
 		sgeroids::model::serialization::message::types::message::update
 	>,
-	boost::mpl::vector0
-	<
-	>
+	alda::bindings::unit
 >
 update;
 }
