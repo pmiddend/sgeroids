@@ -6,6 +6,9 @@ cmake_minimum_required(
 project(
 	sgeroids)
 
+find_package(
+	fcppt REQUIRED)
+
 include(
 	FcpptCMakeUtils)
 
@@ -35,9 +38,6 @@ find_package(
 	Boost 1.47.0 REQUIRED COMPONENTS
 	filesystem
 	system)
-
-find_package(
-	fcppt REQUIRED)
 
 find_package(
 	awl REQUIRED)
@@ -73,15 +73,14 @@ find_package(
 find_package(
 	alda REQUIRED)
 
-fcppt_utils_install_data_dir(
-	INSTALL_DATA_DIR
-)
+include(
+	GNUInstallDirs)
 
 # Begin media path stuff
 # TODO: How exactly does this path stuff work?
 set(
 	INSTALL_MEDIA_DIR
-	${INSTALL_DATA_DIR}/media)
+	${FCPPT_UTILS_INSTALL_DATA_DIR}/media)
 
 include(
 	SGECustomPath)
@@ -90,7 +89,7 @@ sge_config_add_custom_path(
 	${CMAKE_PROJECT_NAME}
 	media
 	${CMAKE_SOURCE_DIR}/media
-	${INSTALL_MEDIA_DIR}
+	${CMAKE_INSTALL_PREFIX}/${INSTALL_MEDIA_DIR}
 	MEDIA_PATH_INCLUDES
 )
 # end media path stuff
@@ -382,7 +381,7 @@ install(
 	TARGETS
 	${CMAKE_PROJECT_NAME}
 	DESTINATION
-	${INSTALL_BINARY_DIR})
+	${CMAKE_INSTALL_BINDIR})
 
 # doc begin
 option(
