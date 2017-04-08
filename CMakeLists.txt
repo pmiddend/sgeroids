@@ -367,6 +367,7 @@ target_include_directories(
 # Link to what?
 target_link_libraries(
 	${CMAKE_PROJECT_NAME}
+	PRIVATE
 	${fcppt_core_TARGET}
 	${fcppt_filesystem_TARGET}
 	${fcppt_log_TARGET}
