@@ -4,8 +4,8 @@
 #include <sgeroids/view/planar/sprite/color_format.hpp>
 #include <sgeroids/view/planar/sprite/dim.hpp>
 #include <sgeroids/view/planar/sprite/object.hpp>
+#include <sge/image/color/convert.hpp>
 #include <sge/image/color/predef.hpp>
-#include <sge/image/color/any/convert.hpp>
 #include <sge/resource_tree/path.hpp>
 #include <sge/sprite/intrusive/ordered/collection.hpp>
 #include <sge/sprite/roles/center.hpp>
@@ -49,7 +49,7 @@ sprite_init(
 			sge::sprite::roles::rotation{} =
 				0.f,
 			sge::sprite::roles::color{} =
-				sge::image::color::any::convert<
+				sge::image::color::convert<
 					sgeroids::view::planar::sprite::color_format
 				>(
 					sge::image::color::predef::white()

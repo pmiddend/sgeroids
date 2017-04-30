@@ -14,8 +14,8 @@
 #include <sge/audio/sound/base.hpp>
 #include <sge/audio/sound/nonpositional_parameters.hpp>
 #include <sge/audio/sound/repeat.hpp>
+#include <sge/image/color/convert.hpp>
 #include <sge/image/color/predef.hpp>
-#include <sge/image/color/any/convert.hpp>
 #include <sge/resource_tree/path.hpp>
 #include <sge/sprite/intrusive/ordered/collection.hpp>
 #include <sge/sprite/roles/center.hpp>
@@ -67,7 +67,7 @@ sgeroids::view::planar::entity::spaceship::spaceship(
 		sge::sprite::roles::rotation{} =
 			0.f,
 		sge::sprite::roles::color{} =
-			sge::image::color::any::convert<
+			sge::image::color::convert<
 				sgeroids::view::planar::sprite::color_format
 			>(
 				sge::image::color::predef::white()

@@ -5,8 +5,8 @@
 #include <sgeroids/view/planar/texture_tree.hpp>
 #include <sgeroids/view/planar/background/object.hpp>
 #include <sgeroids/view/planar/sprite/dim.hpp>
+#include <sge/image/color/convert.hpp>
 #include <sge/image/color/predef.hpp>
-#include <sge/image/color/any/convert.hpp>
 #include <sge/renderer/context/core_fwd.hpp>
 #include <sge/renderer/device/core_fwd.hpp>
 #include <sge/renderer/vertex/declaration_fwd.hpp>
@@ -152,7 +152,7 @@ sgeroids::view::planar::background::object::object(
 				sge::sprite::roles::rotation{} =
 					0.f,
 				sge::sprite::roles::color{} =
-					sge::image::color::any::convert<
+					sge::image::color::convert<
 						sgeroids::view::planar::sprite::color_format
 					>(
 						sge::image::color::predef::white()
@@ -186,7 +186,7 @@ sgeroids::view::planar::background::object::object(
 			sge::sprite::roles::rotation{} =
 				random_angle(),
 			sge::sprite::roles::color{} =
-				sge::image::color::any::convert<
+				sge::image::color::convert<
 					sgeroids::view::planar::sprite::color_format
 				>(
 					sge::image::color::predef::white()
@@ -219,7 +219,7 @@ sgeroids::view::planar::background::object::object(
 			sge::sprite::roles::rotation{} =
 				random_angle(),
 			sge::sprite::roles::color{} =
-				sge::image::color::any::convert<
+				sge::image::color::convert<
 					sgeroids::view::planar::sprite::color_format
 				>(
 					sge::image::color::predef::white()

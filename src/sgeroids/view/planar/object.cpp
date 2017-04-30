@@ -35,8 +35,8 @@
 #include <sge/font/align_h/left.hpp>
 #include <sge/font/align_h/variant.hpp>
 #include <sge/font/draw/static_text.hpp>
-#include <sge/image/color/format.hpp>
 #include <sge/image/color/predef.hpp>
+#include <sge/image/color/any/object.hpp>
 #include <sge/image2d/file.hpp>
 #include <sge/image2d/system.hpp>
 #include <sge/renderer/matrix4.hpp>
@@ -363,7 +363,9 @@ sgeroids::view::planar::object::score_change(
 							0,
 							0
 						),
-						sge::image::color::predef::white(),
+						sge::image::color::any::object{
+							sge::image::color::predef::white()
+						},
 						sge::renderer::texture::emulate_srgb::no
 					)
 				);
@@ -553,7 +555,11 @@ sgeroids::view::planar::object::render(
 	_render_context.clear(
 		sge::renderer::clear::parameters()
 		.back_buffer(
-			sge::image::color::predef::black()));
+			sge::image::color::any::object{
+				sge::image::color::predef::black()
+			}
+		)
+	);
 
 	sge::renderer::state::ffp::transform::object_unique_ptr const transform_state(
 		renderer_.create_transform_state(
