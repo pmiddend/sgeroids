@@ -4,7 +4,7 @@
 #include <fcppt/use.hpp>
 #include <fcppt/math/size_type.hpp>
 #include <fcppt/math/box/object_impl.hpp>
-#include <fcppt/math/vector/at_c.hpp>
+#include <fcppt/math/vector/at.hpp>
 #include <fcppt/math/vector/init.hpp>
 #include <fcppt/math/vector/object_impl.hpp>
 #include <fcppt/math/vector/static.hpp>
@@ -43,21 +43,21 @@ wrap_point_in_torus(
 
 				T const
 					left{
-						fcppt::math::vector::at_c<
+						fcppt::math::vector::at<
 							index::value
 						>(
 							b.pos()
 						)
 					},
 					right{
-						fcppt::math::vector::at_c<
+						fcppt::math::vector::at<
 							index::value
 						>(
 							b.max()
 						)
 					},
 					x{
-						fcppt::math::vector::at_c<
+						fcppt::math::vector::at<
 							index::value
 						>(
 							p
